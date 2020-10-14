@@ -1,0 +1,21 @@
+{
+  "extended": {
+    "es": {
+      "filter": {
+        "bool": {
+          "must": [
+          ]
+        }
+      }
+    }
+  },
+  "sheet": [
+    ".es(index=kibana_sample_data_ecommerce, metric=sum:taxless_total_price, timefield=order_date)"
+  ],
+  "time": {
+    "from": "2019-08-11T13:12:30.379Z",
+    "interval": "1w",
+    "timezone": "UTC",
+    "to": "2020-08-11T13:12:30.380Z"
+  }
+}

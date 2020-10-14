@@ -1,2 +1,36 @@
-*.class
+# eclipse conf file
+.settings
+.classpath
+.project
+.manager
+.scala_dependencies
+.cache
+
+# idea conf files
+.idea
+*.iml
+*.ipr
+*.iws
+
+# building
+target
+build
+null
+tmp
+temp
+dist
+test-output
 *.log
+*.class
+
+# misc
+.DS_Store
+
+# project files to ignore
+!/results/.gitkeep
+
+# kibana cloud config
+src/test/resources/config/**
+
+#
+java_pid*.hprof

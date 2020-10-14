@@ -1,0 +1,102 @@
+{
+  "params":{
+    "ignoreThrottled":true,
+    "preference":1594134589547,
+    "index":"kibana_sample_data_ecommerce",
+    "body":{
+      "version":true,
+      "size":500,
+      "sort":[
+        {
+          "order_date":{
+            "order":"desc",
+            "unmapped_type":"boolean"
+          }
+        }
+      ],
+      "aggs":{
+        "2":{
+          "date_histogram":{
+            "field":"order_date",
+            "fixed_interval":"30s",
+            "time_zone":"Europe/Berlin",
+            "min_doc_count":1
+          }
+        }
+      },
+      "stored_fields":[
+        "*"
+      ],
+      "script_fields":{
+
+      },
+      "docvalue_fields":[
+        {
+          "field":"customer_birth_date",
+          "format":"date_time"
+        },
+        {
+          "field":"order_date",
+          "format":"date_time"
+        },
+        {
+          "field":"products.created_on",
+          "format":"date_time"
+        }
+      ],
+      "_source":{
+        "excludes":[
+
+        ]
+      },
+      "query":{
+        "bool":{
+          "must":[
+
+          ],
+          "filter":[
+            {
+              "match_all":{
+
+              }
+            },
+            {
+              "range":{
+                "order_date":{
+                  "gte":"2020-07-07T14:54:51.376Z",
+                  "lte":"2020-07-07T15:09:51.376Z",
+                  "format":"strict_date_optional_time"
+                }
+              }
+            }
+          ],
+          "should":[
+
+          ],
+          "must_not":[
+
+          ]
+        }
+      },
+      "highlight":{
+        "pre_tags":[
+          "@kibana-highlighted-field@"
+        ],
+        "post_tags":[
+          "@/kibana-highlighted-field@"
+        ],
+        "fields":{
+          "*":{
+
+          }
+        },
+        "fragment_size":2147483647
+      }
+    },
+    "rest_total_hits_as_int":true,
+    "ignore_unavailable":true,
+    "ignore_throttled":true,
+    "timeout":"30000ms"
+  },
+  "serverStrategy":"es"
+}
