@@ -17,12 +17,12 @@ mvn gatling:test
 You need to add a new .conf file with valid configuration, e.g. cloud-7.9.2.conf
 ```
 mvn install
-export env=cloud-7.9.2 && mvn gatling:test
+export env=cloud-7.9.2 && mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.<MySimulation>
 ```
 
 **How to ingest test results**
 
-By default ingestion is disabled. Test results are ingested in the same ES instance, that is used for testing.
+By default ingestion is disabled. To ingest tests results, set env variable:
 ```
-export ingest=true && mvn gatling:test
+export ingest=true
 ```

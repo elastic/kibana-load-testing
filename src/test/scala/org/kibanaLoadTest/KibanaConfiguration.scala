@@ -35,5 +35,11 @@ import org.kibanaLoadTest.helpers.Version
     this.esHost = config.getString("es.host")
     this.esPort = config.getInt("es.port")
     this.esScheme = config.getString("es.scheme")
+
+    // Print basic information about environment
+    println(s"Base URL = ${this.baseUrl}")
+    println(s"Kibana version = ${this.buildVersion}")
+    println(s"Security Enabled = ${this.isSecurityEnabled}")
+    println(s"Auth payload = ${this.loginPayload}")
   }
 }
