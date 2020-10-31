@@ -1,6 +1,6 @@
 package org.kibanaLoadTest
 
-import com.typesafe.config.ConfigFactory
+import com.typesafe.config._
 import org.kibanaLoadTest.helpers.Version
 
  class KibanaConfiguration {
@@ -16,12 +16,11 @@ import org.kibanaLoadTest.helpers.Version
   var esHost = ""
   var esPort  = 9200
   var esScheme = ""
+  var deploymentId: Option[String] = None
 
-  def this(configName: String) {
+   def this(config: Config) {
     this()
-    val is = getClass.getClassLoader.getResourceAsStream(configName)
-    val source = scala.io.Source.fromInputStream(is).mkString
-    val config = ConfigFactory.parseString(source)
+    this.deploymentId = if (config.hasPath("deploymentId")) {Option(config.getString("deploymentId"))} else None
     this.baseUrl = Option(System.getenv("host")).getOrElse(config.getString("app.host"))
     this.buildVersion = Option(System.getenv("version")).getOrElse(config.getString("app.version"))
     this.isSecurityEnabled = config.getBoolean("security.on")
@@ -32,14 +31,12 @@ import org.kibanaLoadTest.helpers.Version
     this.isAbove79x = new Version(this.buildVersion).isAbove79x
     this.loginPayload = if (this.isAbove79x) newLoginPayload else oldLoginPayload
     this.loginStatusCode = if (this.isAbove79x) 200 else 204
-    this.esHost = config.getString("es.host")
-    this.esPort = config.getInt("es.port")
-    this.esScheme = config.getString("es.scheme")
-
-    // Print basic information about environment
-    println(s"Base URL = ${this.baseUrl}")
-    println(s"Kibana version = ${this.buildVersion}")
-    println(s"Security Enabled = ${this.isSecurityEnabled}")
-    println(s"Auth payload = ${this.loginPayload}")
   }
+
+   def print(): Unit = {
+     println(s"Base URL = ${this.baseUrl}")
+     println(s"Kibana version = ${this.buildVersion}")
+     println(s"Security Enabled = ${this.isSecurityEnabled}")
+     println(s"Auth payload = ${this.loginPayload}")
+   }
 }
