@@ -7,7 +7,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.{Calendar, Date, TimeZone}
 
-import com.typesafe.config.ConfigFactory
+import com.typesafe.config.{Config, ConfigFactory}
 
 import scala.io.Source
 
@@ -28,6 +28,12 @@ object Helper {
     val sdf = new SimpleDateFormat(dateFormat)
     sdf.setTimeZone(TimeZone.getTimeZone("UTC"))
     sdf.format(new Date(timestamp))
+  }
+
+  def readResourceConfigFile(configName: String): Config = {
+    val is = getClass.getClassLoader.getResourceAsStream(configName)
+    val source = scala.io.Source.fromInputStream(is).mkString
+    ConfigFactory.parseString(source)
   }
 
   def loadJsonString(filePath: String): String = {
