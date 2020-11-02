@@ -17,7 +17,14 @@ object LogParser {
       if (strLine.startsWith("REQUEST")) {
         val values = strLine.split("\t")
         // [REQUEST, USER_ID, <empty>, NAME, REQUEST_FIRST_BYTE_TIME, RESPONSE_LAST_BYTE_TIME, STATUS, MESSAGE]
-        requests += new Request(Integer.valueOf(values(1)), values(3), values(4).toLong, values(5).toLong, values(6), values(7))
+        requests += new Request(
+          Integer.valueOf(values(1)),
+          values(3),
+          values(4).toLong,
+          values(5).toLong,
+          values(6),
+          values(7)
+        )
       }
       strLine = br.readLine
     }

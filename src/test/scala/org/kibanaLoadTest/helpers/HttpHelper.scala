@@ -15,12 +15,18 @@ class HttpHelper(appConfig: KibanaConfiguration) {
 
   def loginIfNeeded(): HttpHelper = {
     if (appConfig.isSecurityEnabled) {
-      val loginRequest = new HttpPost(appConfig.baseUrl + "/internal/security/login")
-      loginHeaders foreach { case (key, value) => loginRequest.addHeader(key, value) }
+      val loginRequest = new HttpPost(
+        appConfig.baseUrl + "/internal/security/login"
+      )
+      loginHeaders foreach {
+        case (key, value) => loginRequest.addHeader(key, value)
+      }
       loginRequest.setEntity(new StringEntity(appConfig.loginPayload))
       val loginResponse = httpClient.execute(loginRequest)
 
-      if (loginResponse.getStatusLine.getStatusCode != appConfig.loginStatusCode) {
+      if (
+        loginResponse.getStatusLine.getStatusCode != appConfig.loginStatusCode
+      ) {
         throw new RuntimeException("Login to Kibana failed")
       }
     }
@@ -28,7 +34,9 @@ class HttpHelper(appConfig: KibanaConfiguration) {
   }
 
   def removeSampleData(data: String): HttpHelper = {
-    val sampleDataRequest = new HttpDelete(appConfig.baseUrl + s"/api/sample_data/${data}")
+    val sampleDataRequest = new HttpDelete(
+      appConfig.baseUrl + s"/api/sample_data/${data}"
+    )
     sampleDataRequest.addHeader("Connection", "keep-alive")
     sampleDataRequest.addHeader("kbn-version", appConfig.buildVersion)
 
@@ -41,7 +49,9 @@ class HttpHelper(appConfig: KibanaConfiguration) {
   }
 
   def addSampleData(data: String): HttpHelper = {
-    val sampleDataRequest = new HttpPost(appConfig.baseUrl + s"/api/sample_data/${data}")
+    val sampleDataRequest = new HttpPost(
+      appConfig.baseUrl + s"/api/sample_data/${data}"
+    )
     sampleDataRequest.addHeader("Connection", "keep-alive")
     sampleDataRequest.addHeader("kbn-version", appConfig.buildVersion)
 

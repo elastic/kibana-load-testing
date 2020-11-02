@@ -8,12 +8,14 @@ import java.time.format.DateTimeFormatter
 import java.util.{Calendar, Date, TimeZone}
 
 import com.typesafe.config.{Config, ConfigFactory}
+import org.slf4j.{Logger, LoggerFactory}
 
 import scala.io.Source
 
 object Helper {
 
-  val dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+  val dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+  val logger: Logger = LoggerFactory.getLogger("Helper")
 
   def getDate(fieldNumber: Int, daysShift: Int): String = {
     val c: Calendar = Calendar.getInstance
@@ -37,7 +39,10 @@ object Helper {
   }
 
   def loadJsonString(filePath: String): String = {
-    Source.fromURL(getClass.getClassLoader.getResource(filePath)).getLines.mkString
+    Source
+      .fromURL(getClass.getClassLoader.getResource(filePath))
+      .getLines
+      .mkString
   }
 
   def loadKibanaConfig(configName: String): Object = {
@@ -55,10 +60,13 @@ object Helper {
     appConfig
   }
 
-  def getLastReportPath() :String = {
+  def getLastReportPath(): String = {
     val targetPath = Paths.get("target").toAbsolutePath.normalize.toString
     val dir: File = new File(targetPath + File.separator + "gatling")
     val files: Array[File] = dir.listFiles
-    files.toList.filter(file => file.isDirectory).maxBy(file => file.lastModified()).getAbsolutePath
+    files.toList
+      .filter(file => file.isDirectory)
+      .maxBy(file => file.lastModified())
+      .getAbsolutePath
   }
 }

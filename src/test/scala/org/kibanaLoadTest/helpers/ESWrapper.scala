@@ -7,10 +7,13 @@ import org.apache.http.auth.{AuthScope, UsernamePasswordCredentials}
 import org.apache.http.impl.client.BasicCredentialsProvider
 import org.apache.http.impl.nio.client.HttpAsyncClientBuilder
 import org.elasticsearch.action.index.IndexRequest
-import org.elasticsearch.client.{RequestOptions, RestClient, RestHighLevelClient}
+import org.elasticsearch.client.{
+  RequestOptions,
+  RestClient,
+  RestHighLevelClient
+}
 import org.elasticsearch.common.xcontent.XContentType
 import org.kibanaLoadTest.KibanaConfiguration
-
 
 class ESWrapper(config: KibanaConfiguration) {
 
@@ -23,15 +26,20 @@ class ESWrapper(config: KibanaConfiguration) {
       new UsernamePasswordCredentials(config.username, config.password)
     )
 
-    val builder = RestClient.builder(
-      new HttpHost(config.esHost, config.esPort, config.esScheme)
-    ).setHttpClientConfigCallback(
-      (httpClientBuilder: HttpAsyncClientBuilder) =>
-        httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider)
-    ).setRequestConfigCallback(requestConfigBuilder => requestConfigBuilder
-      .setConnectTimeout(30000)
-      .setConnectionRequestTimeout(90000)
-      .setSocketTimeout(90000))
+    val builder = RestClient
+      .builder(
+        new HttpHost(config.esHost, config.esPort, config.esScheme)
+      )
+      .setHttpClientConfigCallback(
+        (httpClientBuilder: HttpAsyncClientBuilder) =>
+          httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider)
+      )
+      .setRequestConfigCallback(requestConfigBuilder =>
+        requestConfigBuilder
+          .setConnectTimeout(30000)
+          .setConnectionRequestTimeout(90000)
+          .setSocketTimeout(90000)
+      )
 
     val client = new RestHighLevelClient(builder)
     val timestamp = Helper.convertDateToUTC(Instant.now.toEpochMilli)
@@ -43,8 +51,12 @@ class ESWrapper(config: KibanaConfiguration) {
           | "timestamp": "${timestamp}",
           | "userId": ${request.userId},
           | "name": "${request.name}",
-          | "requestSendStartTime": "${Helper.convertDateToUTC(request.requestSendStartTime)}",
-          | "responseReceiveEndTime": "${Helper.convertDateToUTC(request.responseReceiveEndTime)}",
+          | "requestSendStartTime": "${Helper.convertDateToUTC(
+          request.requestSendStartTime
+        )}",
+          | "responseReceiveEndTime": "${Helper.convertDateToUTC(
+          request.responseReceiveEndTime
+        )}",
           | "status": "${request.status}",
           | "requestTime": ${request.requestTime},
           | "message": "${request.message}",
@@ -55,7 +67,10 @@ class ESWrapper(config: KibanaConfiguration) {
           |}
       """.stripMargin
 
-      client.index(new IndexRequest("request").source(jsonString, XContentType.JSON), RequestOptions.DEFAULT);
+      client.index(
+        new IndexRequest("request").source(jsonString, XContentType.JSON),
+        RequestOptions.DEFAULT
+      );
 
     })
 
