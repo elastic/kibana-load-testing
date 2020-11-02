@@ -127,7 +127,3 @@ class MySimulation extends BaseSimulation {
   ).maxDuration(10 minutes)
 }
 ```
-
-
-
-

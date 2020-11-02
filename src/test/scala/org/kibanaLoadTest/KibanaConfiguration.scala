@@ -48,7 +48,6 @@ class KibanaConfiguration {
     this.username = config.getString("auth.username")
     this.password = config.getString("auth.password")
     this.isAbove79x = new Version(this.buildVersion).isAbove79x
-    println(s"isAbove=${this.isAbove79x}")
 
     if (
       this.isAbove79x && (!config.hasPathOrNull("auth.providerType") || !config
