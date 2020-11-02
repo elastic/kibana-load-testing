@@ -9,7 +9,14 @@ class Request {
   var status = "";
   var message = "";
 
-  def this(userId: Int, name: String, startTime: Long, endTime: Long, status: String, message: String) {
+  def this(
+      userId: Int,
+      name: String,
+      startTime: Long,
+      endTime: Long,
+      status: String,
+      message: String
+  ) {
     this()
     this.userId = userId
     this.name = name
@@ -21,7 +28,8 @@ class Request {
   }
 
   override def toString: String = {
-    val baseStr = s"""${userId} - ${name} - ${requestSendStartTime} - ${responseReceiveEndTime} - ${requestTime} - ${status}"""
+    val baseStr =
+      s"""${userId} - ${name} - ${requestSendStartTime} - ${responseReceiveEndTime} - ${requestTime} - ${status}"""
     if (message.length == 0) baseStr else s"""${baseStr} - ${message}"""
   }
 }
