@@ -1,6 +1,7 @@
 package org.kibanaLoadTest.helpers
 
 import java.io.File
+import java.net.{MalformedURLException, URL}
 import java.nio.file.Paths
 import java.text.SimpleDateFormat
 import java.time.ZoneId
@@ -68,5 +69,18 @@ object Helper {
       .filter(file => file.isDirectory)
       .maxBy(file => file.lastModified())
       .getAbsolutePath
+  }
+
+  def validateUrl(str: String, errorMsg: String): String = {
+    try {
+      val url = new URL(str)
+      url.toURI
+      str.replaceAll("/$", "")
+    } catch {
+      case ex: MalformedURLException =>
+        throw new RuntimeException(s"${errorMsg}\n ${ex.getMessage}")
+      case ex: Exception =>
+        throw new RuntimeException(s"Unknown error ${ex.getMessage}")
+    }
   }
 }
