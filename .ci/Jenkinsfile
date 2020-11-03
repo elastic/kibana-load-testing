@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+    tools {
+        maven 'Maven 3.6.3'
+        jdk 'java-11-openjdk'
+    }
+    stages {
+        stage ('Initialize') {
+            steps {
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                '''
+            }
+        }
+
+        stage ('Build') {
+            steps {
+                sh '''
+                    mvn -Dmaven.test.failure.ignore=true install
+                    export API_KEY=<cloud_key>
+                    export deployConfig=config/deploy/7.9.3.conf
+                    mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
+                '''
+            }
+            post {
+                success {
+                   sh '''
+                   echo "Report ingestion will be added later"
+                '''
+                }
+            }
+        }
+    }
+}
