@@ -1,9 +1,5 @@
 pipeline {
-    agent any
-    tools {
-        maven 'Maven 3.6.3'
-        jdk 'java-11-openjdk'
-    }
+    agent { label 'docker && tests-xl-highmem' }
     stages {
         stage ('Initialize') {
             steps {
@@ -16,12 +12,15 @@ pipeline {
 
         stage ('Build') {
             steps {
+              withVaultSecret(secret: vaultSecret, secret_field: 'cloud_staging_api_key', variable_name: 'API_KEY')  {
                 sh '''
-                    mvn -Dmaven.test.failure.ignore=true install
-                    export API_KEY=<cloud_key>
+                    export API_KEY=${API_KEY}
                     export deployConfig=config/deploy/7.9.3.conf
+                    mvn -Dmaven.test.failure.ignore=true install
                     mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
                 '''
+              }
+
             }
             post {
                 success {
