@@ -1,6 +1,6 @@
 package org.kibanaLoadTest.helpers
 
-import java.io.File
+import java.io.{File, ObjectOutputStream, PrintWriter}
 import java.net.{MalformedURLException, URL}
 import java.nio.file.Paths
 import java.text.SimpleDateFormat
@@ -61,9 +61,12 @@ object Helper {
     appConfig
   }
 
+  def getTargetPath(): String = {
+    Paths.get("target").toAbsolutePath.normalize.toString
+  }
+
   def getLastReportPath(): String = {
-    val targetPath = Paths.get("target").toAbsolutePath.normalize.toString
-    val dir: File = new File(targetPath + File.separator + "gatling")
+    val dir: File = new File(getTargetPath() + File.separator + "gatling")
     val files: Array[File] = dir.listFiles
     files.toList
       .filter(file => file.isDirectory)
@@ -71,10 +74,17 @@ object Helper {
       .getAbsolutePath
   }
 
-  def validateUrl(str: String, errorMsg: String): String = {
+  def validateUrl(
+      str: String,
+      errorMsg: String,
+      checkPort: Boolean = true
+  ): String = {
     try {
       val url = new URL(str)
       url.toURI
+      if (checkPort) {
+        url.getPort
+      }
       str.replaceAll("/$", "")
     } catch {
       case ex: MalformedURLException =>
@@ -82,5 +92,22 @@ object Helper {
       case ex: Exception =>
         throw new RuntimeException(s"Unknown error ${ex.getMessage}")
     }
+  }
+
+  def writeMapToFile(data: Map[String, String], filePath: String): Unit = {
+    new PrintWriter(filePath) {
+      data.foreach {
+        case (k, v) =>
+          write(k + "=" + v)
+          write("\n")
+      }
+      close()
+    }
+  }
+
+  def readFileToMap(filePath: String): Map[String, String] = {
+    val lines =
+      Source.fromFile(filePath).getLines().filter(str => !str.trim.isEmpty)
+    lines.map(str => (str.split("=")(0), str.split("=")(1))).toMap
   }
 }

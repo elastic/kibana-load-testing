@@ -1,5 +1,6 @@
 package org.kibanaLoadTest.helpers
 
+import java.nio.file.{Files, Paths}
 import java.time.Instant
 
 import org.apache.http.HttpHost
@@ -13,12 +14,28 @@ import org.elasticsearch.client.{
   RestHighLevelClient
 }
 import org.elasticsearch.common.xcontent.XContentType
-import org.kibanaLoadTest.KibanaConfiguration
+import org.kibanaLoadTest.ESConfiguration
+import org.slf4j.{Logger, LoggerFactory}
 
-class ESWrapper(config: KibanaConfiguration) {
+class ESWrapper(config: ESConfiguration) {
 
-  def ingest(logFilePath: String, scenario: String): Unit = {
+  val logger: Logger = LoggerFactory.getLogger("ES_Client")
+
+  def ingest(logFilePath: String, metaFilePath: String): Unit = {
+
+    if (!Files.exists(Paths.get(logFilePath))) {
+      throw new RuntimeException(s"Report file is not found ${logFilePath}")
+    }
+
+    if (!Files.exists(Paths.get(logFilePath))) {
+      throw new RuntimeException(
+        s"Deployment file is not found ${metaFilePath}"
+      )
+    }
+
     val requests = LogParser.getRequests(logFilePath)
+    val simulationClass = LogParser.getSimulationClass(logFilePath)
+    val meta = Helper.readFileToMap(metaFilePath)
 
     val credentialsProvider = new BasicCredentialsProvider
     credentialsProvider.setCredentials(
@@ -28,7 +45,7 @@ class ESWrapper(config: KibanaConfiguration) {
 
     val builder = RestClient
       .builder(
-        new HttpHost(config.esHost, config.esPort, config.esScheme)
+        HttpHost.create(config.host)
       )
       .setHttpClientConfigCallback(
         (httpClientBuilder: HttpAsyncClientBuilder) =>
@@ -41,9 +58,11 @@ class ESWrapper(config: KibanaConfiguration) {
           .setSocketTimeout(90000)
       )
 
+    logger.info(s"login to ES instance: ${config.host}")
     val client = new RestHighLevelClient(builder)
     val timestamp = Helper.convertDateToUTC(Instant.now.toEpochMilli)
 
+    logger.info(s"ingesting Gatling report: ${requests.size} records")
     requests.par.foreach(request => {
       val jsonString: String =
         s"""
@@ -60,10 +79,9 @@ class ESWrapper(config: KibanaConfiguration) {
           | "status": "${request.status}",
           | "requestTime": ${request.requestTime},
           | "message": "${request.message}",
-          | "version": "${config.buildVersion}",
-          | "baseUrl": "${config.baseUrl}",
-          | "securityEnabled": "${config.isSecurityEnabled}",
-          | "scenario": "${scenario}"
+          | "version": "${meta("version")}",
+          | "baseUrl": "${meta("baseUrl")}",
+          | "scenario": "${simulationClass}"
           |}
       """.stripMargin
 
@@ -74,6 +92,7 @@ class ESWrapper(config: KibanaConfiguration) {
 
     })
 
+    logger.info("closing connection")
     client.close()
   }
 }

@@ -16,7 +16,7 @@ pipeline {
                 sh '''
                     export API_KEY=${API_KEY}
                     export deployConfig=config/deploy/7.9.3.conf
-                    mvn -Dmaven.test.failure.ignore=true install
+                    mvn clean -Dmaven.test.failure.ignore=true compile
                     mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
                 '''
               }
@@ -24,9 +24,16 @@ pipeline {
             }
             post {
                 success {
-                   sh '''
-                   echo "Report ingestion will be added later"
-                '''
+                  def vaultSecret = 'secret/kibana-issues/prod/coverage/elasticsearch'
+                  withVaultSecret(secret: vaultSecret, secret_field: 'host', variable_name: 'HOST_FROM_VAULT') {
+                    withVaultSecret(secret: vaultSecret, secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
+                      withVaultSecret(secret: vaultSecret, secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
+                        sh '''
+                          mvn exec:java -Dexec.mainClass=org.kibanaLoadTest.ingest.Main -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false
+                        '''
+                      }
+                    }
+                  }
                 }
             }
         }
