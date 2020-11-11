@@ -41,7 +41,7 @@ class KibanaConfiguration {
     // read required values
     this.baseUrl = Helper.validateUrl(
       config.getString("app.host"),
-      s"'app.host' should be a valid URL"
+      s"'app.host' should be a valid Kibana URL"
     )
     this.buildVersion = config.getString("app.version")
     this.isSecurityEnabled = config.getBoolean("security.on")

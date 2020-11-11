@@ -1,5 +1,8 @@
 package org.kibanaLoadTest.simulation
 
+import java.io.File
+import java.nio.file.Paths
+
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import org.kibanaLoadTest.KibanaConfiguration
@@ -21,8 +24,24 @@ class BaseSimulation extends Simulation {
     // use existing deployment or local instance
   } else new KibanaConfiguration(Helper.readResourceConfigFile(envConfig))
 
+  val lastDeploymentFilePath = Paths
+    .get("target")
+    .toAbsolutePath
+    .normalize
+    .toString + File.separator + "lastDeployment.txt"
+
   before {
     appConfig.print()
+
+    // saving deployment info to target/lastDeployment.txt"
+    if (appConfig.deploymentId.isDefined) {
+      val meta = Map(
+        "deploymentId" -> appConfig.deploymentId.get,
+        "baseUrl" -> appConfig.baseUrl,
+        "version" -> appConfig.buildVersion
+      )
+      Helper.writeMapToFile(meta, lastDeploymentFilePath)
+    }
 
     // load sample data
     new HttpHelper(appConfig)
