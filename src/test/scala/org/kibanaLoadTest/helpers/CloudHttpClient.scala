@@ -154,7 +154,9 @@ class CloudHttpClient {
 
   def deleteDeployment(id: String): Unit = {
     logger.info(s"deleteDeployment: Deployment ${id}")
-    val deleteRequest = new HttpPost(baseUrl + s"/${id}/_shutdown")
+    val deleteRequest = new HttpPost(
+      baseUrl + s"/${id}/_shutdown?hide=true&skip_snapshot=true"
+    )
     deleteRequest.addHeader("Authorization", s"ApiKey ${API_KEY}")
     val response = httpClient.execute(deleteRequest)
     logger.info(
