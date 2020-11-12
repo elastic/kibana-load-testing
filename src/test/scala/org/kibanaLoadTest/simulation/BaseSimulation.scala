@@ -6,7 +6,7 @@ import java.nio.file.Paths
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import org.kibanaLoadTest.KibanaConfiguration
-import org.kibanaLoadTest.helpers.{CloudHttpClient, Helper, HttpHelper}
+import org.kibanaLoadTest.helpers.{CloudHttpClient, Helper, HttpHelper, Version}
 import org.slf4j.{Logger, LoggerFactory}
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
 
@@ -70,6 +70,8 @@ class BaseSimulation extends Simulation {
 
   def createDeployment(deployConfigName: String): KibanaConfiguration = {
     val config = Helper.readResourceConfigFile(deployConfigName)
+    val version = new Version(config.getString("version"))
+    val providerName = if (version.isAbove79x) "cloud-basic" else "basic-cloud"
     val cloudClient = new CloudHttpClient
     val payload = cloudClient.preparePayload(config)
     val metadata = cloudClient.createDeployment(payload)
@@ -84,13 +86,13 @@ class BaseSimulation extends Simulation {
       .withValue("app.host", ConfigValueFactory.fromAnyRef(host))
       .withValue(
         "app.version",
-        ConfigValueFactory.fromAnyRef(config.getString("version"))
+        ConfigValueFactory.fromAnyRef(version.get)
       )
       .withValue("security.on", ConfigValueFactory.fromAnyRef(true))
       .withValue("auth.providerType", ConfigValueFactory.fromAnyRef("basic"))
       .withValue(
         "auth.providerName",
-        ConfigValueFactory.fromAnyRef("basic-cloud")
+        ConfigValueFactory.fromAnyRef(providerName)
       )
       .withValue(
         "auth.username",
