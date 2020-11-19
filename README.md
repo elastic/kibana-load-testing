@@ -1,6 +1,6 @@
 # kibana-load-testing
 
-**Running simulation against a local instance**
+## Running simulation against a local instance
 - Start ES and Kibana instances
 - Update Kibana configuration in /resources/config/local.conf file
 ```
@@ -26,7 +26,7 @@ mvn install
 mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.<MySimulation>
 ```
 
-**Running simulation against existing cloud deployment**
+## Running simulation against existing cloud deployment
 - Create Elastic Cloud deployment
 - Add a new configuration file, e.g. `config/cloud-7.10.0.conf`
 ```
@@ -53,7 +53,7 @@ export env=config/cloud-7.9.2.conf
 mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.<MySimulation>
 ```
 
-**Running simulation against newly created cloud deployment**
+## Running simulation against newly created cloud deployment
 - Generate API_KEY for your cloud user account
 - Add a new deployment configuration file, e.g. `config/deploy/cloud-7.9.3.conf`
 ```
@@ -95,7 +95,7 @@ simulation org.kibanaLoadTest.simulation.DemoJourney completed in 429 seconds
 10:01:09.440 [INFO ] httpClient - deleteDeployment: Finished with status code 200
 ```
 
-**Adding new simulation**
+## Adding new simulation
 
 The simplest way is to add new class in `simulation` package:
 ```
@@ -127,3 +127,9 @@ class MySimulation extends BaseSimulation {
   ).maxDuration(10 minutes)
 }
 ```
+
+## Running tests from VM
+
+Follow [guide](VM_SETUP.md)
+ to setup VM and run tests on it
+
