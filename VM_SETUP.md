@@ -1,4 +1,4 @@
-#Running project on GCP VM
+# Running project on GCP VM
 
 While running tests from a local machine against cloud instance results can
 be not accurate because of unstable internet connection or extra latency.
@@ -6,7 +6,7 @@ be not accurate because of unstable internet connection or extra latency.
 In order to improve results accuracy it is better to run tests in the same data center
 (region), where cluster is deployed.
 
-##Create new VM
+## Create new VM
 
 Create a new CPU-optimized VM with any Container Optimized OS in the same region where
 Elastic Stack will be deployed:
