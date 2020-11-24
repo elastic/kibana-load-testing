@@ -12,6 +12,7 @@ pipeline {
 
         stage ('Build') {
             steps {
+              def vaultSecret = 'secret/kibana-issues/dev/cloud-staging-api-key'
               withVaultSecret(secret: vaultSecret, secret_field: 'cloud_staging_api_key', variable_name: 'API_KEY')  {
                 sh '''
                     export API_KEY=${API_KEY}
