@@ -17,7 +17,10 @@ pipeline {
             steps {
               withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'cloud_staging_api_key', variable_name: 'API_KEY')  {
                 sh '''
-                    export API_KEY=${API_KEY}
+                    ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\\/]*\\//--/g' -e 's/^/   /' -e 's/-/|/\'
+                    echo "API_KEY value is"
+                    echo "$API_KEY"
+                    export API_KEY=$API_KEY
                     export deployConfig=config/deploy/7.9.3.conf
                     mvn clean -Dmaven.test.failure.ignore=true compile
                     mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
