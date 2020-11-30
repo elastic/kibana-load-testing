@@ -20,7 +20,7 @@ pipeline {
                     cd kibana-load-testing
                     export API_KEY=$API_KEY
                     export deployConfig=config/deploy/7.9.3.conf
-                    mvn clean -Dmaven.test.failure.ignore=true compile
+                    mvn clean -Dmaven.test.failure.ignore=true compile -q
                     mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
                 '''
               }
