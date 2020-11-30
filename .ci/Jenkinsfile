@@ -1,3 +1,7 @@
+#!/usr/bin/env groovy
+library 'kibana-pipeline-library'
+kibanaLibrary.load() // load from the Jenkins instance
+
 pipeline {
     agent { label 'docker && tests-xl-highmem' }
     stages {
@@ -12,8 +16,7 @@ pipeline {
 
         stage ('Build') {
             steps {
-              def vaultSecret = 'secret/kibana-issues/dev/cloud-staging-api-key'
-              withVaultSecret(secret: vaultSecret, secret_field: 'cloud_staging_api_key', variable_name: 'API_KEY')  {
+              withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'cloud_staging_api_key', variable_name: 'API_KEY')  {
                 sh '''
                     export API_KEY=${API_KEY}
                     export deployConfig=config/deploy/7.9.3.conf
@@ -25,10 +28,9 @@ pipeline {
             }
             post {
                 success {
-                  def vaultSecret = 'secret/kibana-issues/prod/coverage/elasticsearch'
-                  withVaultSecret(secret: vaultSecret, secret_field: 'host', variable_name: 'HOST_FROM_VAULT') {
-                    withVaultSecret(secret: vaultSecret, secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
-                      withVaultSecret(secret: vaultSecret, secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
+                  withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'host', variable_name: 'HOST_FROM_VAULT') {
+                    withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
+                      withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
                         sh '''
                           mvn exec:java -Dexec.mainClass=org.kibanaLoadTest.ingest.Main -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false
                         '''
