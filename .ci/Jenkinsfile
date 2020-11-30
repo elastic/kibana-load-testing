@@ -1,6 +1,5 @@
 #!/usr/bin/env groovy
 library 'kibana-pipeline-library'
-kibanaLibrary.load() // load from the Jenkins instance
 
 pipeline {
     agent { label 'docker && tests-xl-highmem' }
