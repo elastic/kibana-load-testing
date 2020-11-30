@@ -15,7 +15,7 @@ pipeline {
 
         stage ('Build') {
             steps {
-              withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'cloud_staging_api_key', variable_name: 'API_KEY')  {
+              withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY')  {
                 sh '''
                     ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\\/]*\\//--/g' -e 's/^/   /' -e 's/-/|/\'
                     echo "API_KEY value is"
