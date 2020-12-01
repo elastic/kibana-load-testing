@@ -18,7 +18,6 @@ pipeline {
               withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY')  {
                 sh '''
                     cd kibana-load-testing
-                    export API_KEY=$API_KEY
                     export deployConfig=config/deploy/7.9.3.conf
                     mvn clean -q -Dmaven.test.failure.ignore=true compile
                     mvn gatling:test -q -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
@@ -32,8 +31,9 @@ pipeline {
                     withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
                       withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
                         sh '''
+                          ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\\\\/]*\\\\//--/g' -e 's/^/   /' -e 's/-/|/\\\'
                           cd kibana-load-testing
-                          # mvn exec:java -Dexec.mainClass=org.kibanaLoadTest.ingest.Main -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false
+                          mvn exec:java -Dexec.mainClass=org.kibanaLoadTest.ingest.Main -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false
                         '''
                       }
                     }
