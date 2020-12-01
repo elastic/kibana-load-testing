@@ -20,6 +20,7 @@ import org.slf4j.{Logger, LoggerFactory}
 class ESWrapper(config: ESConfiguration) {
 
   val logger: Logger = LoggerFactory.getLogger("ES_Client")
+  val indexName = "gatling-data"
 
   def ingest(logFilePath: String, metaFilePath: String): Unit = {
 
@@ -86,7 +87,7 @@ class ESWrapper(config: ESConfiguration) {
       """.stripMargin
 
       client.index(
-        new IndexRequest("request").source(jsonString, XContentType.JSON),
+        new IndexRequest(indexName).source(jsonString, XContentType.JSON),
         RequestOptions.DEFAULT
       );
 
