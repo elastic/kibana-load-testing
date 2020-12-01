@@ -33,7 +33,6 @@ pipeline {
                       withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
                         sh '''
                           cd kibana-load-testing
-                          echo "ingesting"
                           # mvn exec:java -Dexec.mainClass=org.kibanaLoadTest.ingest.Main -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false
                         '''
                       }
