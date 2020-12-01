@@ -31,7 +31,6 @@ pipeline {
                     withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
                       withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
                         sh '''
-                          ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\\\\/]*\\\\//--/g' -e 's/^/   /' -e 's/-/|/\\\'
                           cd kibana-load-testing
                           mvn exec:java -Dexec.mainClass=org.kibanaLoadTest.ingest.Main -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false
                         '''
