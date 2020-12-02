@@ -132,8 +132,18 @@ class CloudHttpClient {
       s"waitForClusterToStart: waitTime ${waitTime}ms, poolingInterval ${poolingInterval}ms"
     )
     while (!started && poolingInterval > 0) {
-      val statuses = getInstanceStatus(deploymentId)
-      if (statuses.values.filter(s => s != "started").size == 0) {
+      var statuses = Map.empty[String, String]
+      try {
+        statuses = getInstanceStatus(deploymentId)
+      } catch {
+        case ex: Exception =>
+          logger.error(ex.getMessage)
+      }
+      if (
+        !statuses.isEmpty && statuses.values
+          .filter(s => s != "started")
+          .size == 0
+      ) {
         logger.info(s"waitForClusterToStart: Deployment is ready!")
         started = true
       } else {
