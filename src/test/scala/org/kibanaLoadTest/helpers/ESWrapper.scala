@@ -28,6 +28,7 @@ class ESWrapper(config: ESConfiguration) {
       throw new RuntimeException(s"Report file is not found ${logFilePath}")
     }
 
+    logger.info(s"login to ES instance: ${config.host}")
     if (!Files.exists(Paths.get(logFilePath))) {
       throw new RuntimeException(
         s"Deployment file is not found ${metaFilePath}"
@@ -69,7 +70,6 @@ class ESWrapper(config: ESConfiguration) {
         s"""
           |{
           | "timestamp": "${timestamp}",
-          | "userId": ${request.userId},
           | "name": "${request.name}",
           | "requestSendStartTime": "${Helper.convertDateToUTC(
           request.requestSendStartTime

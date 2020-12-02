@@ -1,7 +1,6 @@
 package org.kibanaLoadTest.helpers
 
 class Request {
-  var userId = 0;
   var name = "";
   var requestSendStartTime = 0L;
   var responseReceiveEndTime = 0L;
@@ -10,7 +9,6 @@ class Request {
   var message = "";
 
   def this(
-      userId: Int,
       name: String,
       startTime: Long,
       endTime: Long,
@@ -18,7 +16,6 @@ class Request {
       message: String
   ) {
     this()
-    this.userId = userId
     this.name = name
     this.requestSendStartTime = startTime
     this.responseReceiveEndTime = endTime
@@ -29,7 +26,7 @@ class Request {
 
   override def toString: String = {
     val baseStr =
-      s"""${userId} - ${name} - ${requestSendStartTime} - ${responseReceiveEndTime} - ${requestTime} - ${status}"""
+      s"""${name} - ${requestSendStartTime} - ${responseReceiveEndTime} - ${requestTime} - ${status}"""
     if (message.length == 0) baseStr else s"""${baseStr} - ${message}"""
   }
 }

@@ -15,15 +15,14 @@ object LogParser {
       // [REQUEST	10		login	1601482441483	1601482441868	OK	]
       // [REQUEST	3		get bootstrap.js	1601482441914	1601482441965	KO	regex(\/(.*)',).findAll.exists, found nothing]
       if (strLine.startsWith("REQUEST")) {
-        val values = strLine.split("\t")
-        // [REQUEST, USER_ID, <empty>, NAME, REQUEST_FIRST_BYTE_TIME, RESPONSE_LAST_BYTE_TIME, STATUS, MESSAGE]
+        val values = strLine.replaceAll("[\\t]{2,}", "\t").split("\t")
+        // [REQUEST, NAME, REQUEST_FIRST_BYTE_TIME, RESPONSE_LAST_BYTE_TIME, STATUS, MESSAGE]
         requests += new Request(
-          Integer.valueOf(values(1)),
-          values(3),
-          values(4).toLong,
-          values(5).toLong,
-          values(6),
-          values(7)
+          values(1),
+          values(2).toLong,
+          values(3).toLong,
+          values(4),
+          values(5)
         )
       }
       strLine = br.readLine
