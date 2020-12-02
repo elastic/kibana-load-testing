@@ -13,7 +13,8 @@ import spray.json.lenses.JsonLenses._
 import spray.json.DefaultJsonProtocol._
 
 class CloudHttpClient {
-
+  private var DEPLOYMENT_READY_TIMOEOUT = 5 * 60 * 1000 // 5 min
+  private val DEPLOYMENT_POLLING_INTERVAL = 20 * 1000 // 20 sec
   private val httpClient = HttpClientBuilder.create.build
   private val deployPayloadTemplate = "cloudPayload/createDeployment.json"
   private val baseUrl = "https://staging.found.no/api/v1/deployments"
@@ -126,8 +127,8 @@ class CloudHttpClient {
 
   def waitForClusterToStart(deploymentId: String) = {
     var started = false
-    var waitTime = 5 * 60 * 1000 // 5 min
-    val poolingInterval = 20 * 1000 // 20 sec
+    var waitTime = DEPLOYMENT_READY_TIMOEOUT
+    var poolingInterval = DEPLOYMENT_POLLING_INTERVAL
     logger.info(
       s"waitForClusterToStart: waitTime ${waitTime}ms, poolingInterval ${poolingInterval}ms"
     )
