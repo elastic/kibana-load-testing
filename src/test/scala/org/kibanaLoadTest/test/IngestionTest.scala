@@ -11,7 +11,7 @@ import org.kibanaLoadTest.helpers.{ESWrapper, Helper, LogParser}
 
 class IngestionTest {
 
-  val expCollectionSize = 1308
+  val expCollectionSize = 799
   val expRequestString = "login - 1606920743240 - 1606920743948 - 708 - OK"
 
   @Test

@@ -9,21 +9,21 @@ import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.{CloudHttpClient, Helper, HttpHelper, Version}
 import org.slf4j.{Logger, LoggerFactory}
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
-import io.gatling.commons.util.TypeHelper.TypeValidator
 import spray.json.lenses.JsonLenses._
 import spray.json.DefaultJsonProtocol._
 
 class BaseSimulation extends Simulation {
   val logger: Logger = LoggerFactory.getLogger("Base Simulation")
-  // "config/deploy/7.9.3.conf"
-  val deployConfig = Option(System.getenv("deployConfig"))
+  val CLOUD_DEPLOY_CONFIG = "config/deploy/default.conf"
+  // "7.11.0-SNAPSHOT"
+  val cloudDeploy = Option(System.getenv("cloudDeploy"))
   // "config/cloud-7.9.2.conf"
   val envConfig = Option(System.getenv("env")).getOrElse("config/local.conf")
 
   // appConfig is used to run load tests
-  val appConfig = if (deployConfig.isDefined) {
+  val appConfig = if (cloudDeploy.isDefined) {
     // create new deployment on Cloud
-    createDeployment(deployConfig.get)
+    createDeployment(cloudDeploy.get)
     // use existing deployment or local instance
   } else new KibanaConfiguration(Helper.readResourceConfigFile(envConfig))
 
@@ -70,9 +70,9 @@ class BaseSimulation extends Simulation {
     }
   }
 
-  def createDeployment(deployConfigName: String): KibanaConfiguration = {
-    val config = Helper.readResourceConfigFile(deployConfigName)
-    val version = new Version(config.getString("version"))
+  def createDeployment(stackVersion: String): KibanaConfiguration = {
+    val config = Helper.readResourceConfigFile(CLOUD_DEPLOY_CONFIG)
+    val version = new Version(stackVersion)
     val providerName = if (version.isAbove79x) "cloud-basic" else "basic-cloud"
     val cloudClient = new CloudHttpClient
     val payload = cloudClient.preparePayload(config)

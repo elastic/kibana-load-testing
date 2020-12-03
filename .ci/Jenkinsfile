@@ -18,7 +18,7 @@ pipeline {
               withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY')  {
                 sh '''
                     cd kibana-load-testing
-                    export deployConfig=config/deploy/7.9.3.conf
+                    export deployCloud=7.10.0
                     mvn clean -q -Dmaven.test.failure.ignore=true compile
                     mvn gatling:test -q -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
                 '''
