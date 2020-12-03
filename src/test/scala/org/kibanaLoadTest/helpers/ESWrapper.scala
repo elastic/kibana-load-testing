@@ -28,7 +28,6 @@ class ESWrapper(config: ESConfiguration) {
       throw new RuntimeException(s"Report file is not found ${logFilePath}")
     }
 
-    logger.info(s"login to ES instance: ${config.host}")
     if (!Files.exists(Paths.get(logFilePath))) {
       throw new RuntimeException(
         s"Deployment file is not found ${metaFilePath}"
