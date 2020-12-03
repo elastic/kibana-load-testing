@@ -38,6 +38,7 @@ class BaseSimulation extends Simulation {
 
     // saving deployment info to target/lastDeployment.txt"
     if (appConfig.deploymentId.isDefined) {
+      logger.info(s"Getting Kibana status info")
       val response = new HttpHelper(appConfig).getStatus()
       val meta = Map(
         "deploymentId" -> appConfig.deploymentId.get,
@@ -51,6 +52,7 @@ class BaseSimulation extends Simulation {
     }
 
     // load sample data
+    logger.info(s"Loading sample data")
     new HttpHelper(appConfig).addSampleData("ecommerce")
 
   }
@@ -62,6 +64,7 @@ class BaseSimulation extends Simulation {
     } else {
       // remove sample data
       try {
+        logger.info(s"Removing sample data")
         new HttpHelper(appConfig).removeSampleData("ecommerce")
       } catch {
         case e: java.lang.RuntimeException =>

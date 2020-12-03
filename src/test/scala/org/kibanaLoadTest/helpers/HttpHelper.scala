@@ -39,53 +39,83 @@ class HttpHelper(appConfig: KibanaConfiguration) {
   }
 
   def removeSampleData(data: String): Unit = {
+    var statusCode = 500
+    var responseBody = ""
     val httpClient = HttpClientBuilder.create.build
-    this.loginIfNeeded(httpClient)
-    val sampleDataRequest = new HttpDelete(
-      appConfig.baseUrl + s"/api/sample_data/${data}"
-    )
-    sampleDataRequest.addHeader("Connection", "keep-alive")
-    sampleDataRequest.addHeader("kbn-version", appConfig.buildVersion)
+    try {
+      this.loginIfNeeded(httpClient)
+      val sampleDataRequest = new HttpDelete(
+        appConfig.baseUrl + s"/api/sample_data/${data}"
+      )
+      sampleDataRequest.addHeader("Connection", "keep-alive")
+      sampleDataRequest.addHeader("kbn-version", appConfig.buildVersion)
 
-    val sampleDataResponse = httpClient.execute(sampleDataRequest)
-    httpClient.close()
+      val sampleDataResponse = httpClient.execute(sampleDataRequest)
+      statusCode = sampleDataResponse.getStatusLine.getStatusCode
+      responseBody = EntityUtils.toString(sampleDataResponse.getEntity, "UTF-8")
+    } catch {
+      case _: Throwable => {
+        logger.error("Exception occurred during unloading sample data")
+      }
+    } finally {
+      httpClient.close()
+    }
 
-    if (sampleDataResponse.getStatusLine.getStatusCode != 204) {
+    if (statusCode != 204) {
       throw new RuntimeException(
-        s"Deleting sample data failed: ${EntityUtils
-          .toString(sampleDataResponse.getEntity, "UTF-8")}"
+        s"Deleting sample data failed: ${responseBody}"
       )
     }
   }
 
-  def addSampleData(data: String): HttpHelper = {
+  def addSampleData(data: String): Unit = {
+    var statusCode = 500
+    var responseBody = ""
     val httpClient = HttpClientBuilder.create.build
-    this.loginIfNeeded(httpClient)
-    val sampleDataRequest = new HttpPost(
-      appConfig.baseUrl + s"/api/sample_data/${data}"
-    )
-    sampleDataRequest.addHeader("Connection", "keep-alive")
-    sampleDataRequest.addHeader("kbn-version", appConfig.buildVersion)
+    try {
+      this.loginIfNeeded(httpClient)
+      val sampleDataRequest = new HttpPost(
+        appConfig.baseUrl + s"/api/sample_data/${data}"
+      )
+      sampleDataRequest.addHeader("Connection", "keep-alive")
+      sampleDataRequest.addHeader("kbn-version", appConfig.buildVersion)
 
-    val sampleDataResponse = httpClient.execute(sampleDataRequest)
-    httpClient.close()
+      val sampleDataResponse = httpClient.execute(sampleDataRequest)
+      statusCode = sampleDataResponse.getStatusLine.getStatusCode
+      responseBody = EntityUtils.toString(sampleDataResponse.getEntity, "UTF-8")
+    } catch {
+      case _: Throwable => {
+        logger.error("Exception occurred during loading sample data")
+      }
+    } finally {
+      httpClient.close()
+    }
 
-    if (sampleDataResponse.getStatusLine.getStatusCode != 200) {
+    if (statusCode != 200) {
       throw new RuntimeException(
-        s"Adding sample data failed: ${EntityUtils.toString(sampleDataResponse.getEntity, "UTF-8")}"
+        s"Adding sample data failed: ${responseBody}"
       )
     }
-    this
   }
 
   def getStatus(): String = {
+    var responseBody = ""
     val httpClient = HttpClientBuilder.create.build
-    this.loginIfNeeded(httpClient)
-    val statusRequest = new HttpGet(
-      appConfig.baseUrl + "/api/status"
-    )
-    val response = httpClient.execute(statusRequest)
-    httpClient.close()
-    EntityUtils.toString(response.getEntity)
+    try {
+      this.loginIfNeeded(httpClient)
+      val statusRequest = new HttpGet(
+        appConfig.baseUrl + "/api/status"
+      )
+      val statusResponse = httpClient.execute(statusRequest)
+      responseBody = EntityUtils.toString(statusResponse.getEntity, "UTF-8")
+    } catch {
+      case _: Throwable => {
+        logger.error("Exception occurred during getting Kibana status")
+      }
+    } finally {
+      httpClient.close()
+    }
+
+    responseBody
   }
 }
