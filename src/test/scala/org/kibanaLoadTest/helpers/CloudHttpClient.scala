@@ -32,7 +32,9 @@ class CloudHttpClient {
       s"preparePayload: Using ${deployPayloadTemplate} payload template"
     )
     val template = Helper.loadJsonString(deployPayloadTemplate)
-    logger.info(s"preparePayload: Using ${config.toString}")
+    logger.info(
+      s"preparePayload: Stack version ${stackVersion} with ${config.toString} configuration"
+    )
 
     val payload = template
       .update('name ! set[String](s"load-testing-${Instant.now.toEpochMilli}"))
