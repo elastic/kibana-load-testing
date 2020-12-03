@@ -60,7 +60,7 @@ mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJou
 ```
 mvn install
 export API_KEY=<your_cloud_key>
-export export cloudDeploy=7.11.0-SNAPSHOT
+export cloudDeploy=7.11.0-SNAPSHOT
 mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
 ```
 
@@ -118,6 +118,5 @@ class MySimulation extends BaseSimulation {
 
 ## Running tests from VM
 
-Follow [guide](VM_SETUP.md)
- to setup VM and run tests on it
+Follow [guide](VM_SETUP.md) to setup VM and run tests on it
 
