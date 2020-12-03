@@ -3,6 +3,7 @@ package org.kibanaLoadTest.helpers
 import org.apache.http.client.methods.{HttpDelete, HttpPost}
 import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.HttpClientBuilder
+import org.apache.http.util.EntityUtils
 import org.kibanaLoadTest.KibanaConfiguration
 
 class HttpHelper(appConfig: KibanaConfiguration) {
@@ -27,7 +28,9 @@ class HttpHelper(appConfig: KibanaConfiguration) {
       if (
         loginResponse.getStatusLine.getStatusCode != appConfig.loginStatusCode
       ) {
-        throw new RuntimeException("Login to Kibana failed")
+        throw new RuntimeException(
+          s"Login to Kibana failed: ${EntityUtils.toString(loginResponse.getEntity, "UTF-8")}"
+        )
       }
     }
     this
@@ -43,7 +46,9 @@ class HttpHelper(appConfig: KibanaConfiguration) {
     val sampleDataResponse = httpClient.execute(sampleDataRequest)
 
     if (sampleDataResponse.getStatusLine.getStatusCode != 204) {
-      println("Deleting sample data failed")
+      throw new RuntimeException(
+        s"Deleting sample data failed: ${EntityUtils.toString(sampleDataResponse.getEntity, "UTF-8")}"
+      )
     }
     this
   }
@@ -58,7 +63,9 @@ class HttpHelper(appConfig: KibanaConfiguration) {
     val sampleDataResponse = httpClient.execute(sampleDataRequest)
 
     if (sampleDataResponse.getStatusLine.getStatusCode != 200) {
-      println("Adding sample data failed")
+      throw new RuntimeException(
+        s"Adding sample data failed: ${EntityUtils.toString(sampleDataResponse.getEntity, "UTF-8")}"
+      )
     }
     this
   }
