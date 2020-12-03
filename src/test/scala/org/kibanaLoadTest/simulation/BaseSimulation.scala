@@ -16,14 +16,14 @@ class BaseSimulation extends Simulation {
   val logger: Logger = LoggerFactory.getLogger("Base Simulation")
   val CLOUD_DEPLOY_CONFIG = "config/deploy/default.conf"
   // "7.11.0-SNAPSHOT"
-  val cloudDeploy = Option(System.getenv("cloudDeploy"))
+  val cloudDeployVersion = Option(System.getenv("cloudDeploy"))
   // "config/cloud-7.9.2.conf"
   val envConfig = Option(System.getenv("env")).getOrElse("config/local.conf")
 
   // appConfig is used to run load tests
-  val appConfig = if (cloudDeploy.isDefined) {
+  val appConfig = if (cloudDeployVersion.isDefined) {
     // create new deployment on Cloud
-    createDeployment(cloudDeploy.get)
+    createDeployment(cloudDeployVersion.get)
     // use existing deployment or local instance
   } else new KibanaConfiguration(Helper.readResourceConfigFile(envConfig))
 
@@ -75,7 +75,7 @@ class BaseSimulation extends Simulation {
     val version = new Version(stackVersion)
     val providerName = if (version.isAbove79x) "cloud-basic" else "basic-cloud"
     val cloudClient = new CloudHttpClient
-    val payload = cloudClient.preparePayload(config)
+    val payload = cloudClient.preparePayload(stackVersion, config)
     val metadata = cloudClient.createDeployment(payload)
     cloudClient.waitForClusterToStart(metadata("deploymentId"))
     val host = cloudClient.getKibanaUrl(metadata("deploymentId"))

@@ -27,7 +27,7 @@ class CloudHttpClient {
     .get
   val logger: Logger = LoggerFactory.getLogger("httpClient")
 
-  def preparePayload(config: Config): String = {
+  def preparePayload(stackVersion: String, config: Config): String = {
     logger.info(
       s"preparePayload: Using ${deployPayloadTemplate} payload template"
     )
@@ -39,9 +39,7 @@ class CloudHttpClient {
       .update(
         'resources / 'elasticsearch / element(
           0
-        ) / 'plan / 'elasticsearch / 'version ! set[String](
-          config.getString("version")
-        )
+        ) / 'plan / 'elasticsearch / 'version ! set[String](stackVersion)
       )
       .update(
         'resources / 'elasticsearch / element(
@@ -58,7 +56,7 @@ class CloudHttpClient {
       .update(
         'resources / 'kibana / element(0) / 'plan / 'kibana / 'version ! set[
           String
-        ](config.getString("version"))
+        ](stackVersion)
       )
       .update(
         'resources / 'kibana / element(0) / 'plan / 'cluster_topology / element(
@@ -68,7 +66,7 @@ class CloudHttpClient {
       )
       .update(
         'resources / 'apm / element(0) / 'plan / 'apm / 'version ! set[String](
-          config.getString("version")
+          stackVersion
         )
       )
 
