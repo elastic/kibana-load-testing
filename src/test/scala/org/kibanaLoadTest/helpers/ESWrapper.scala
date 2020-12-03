@@ -81,6 +81,8 @@ class ESWrapper(config: ESConfiguration) {
           | "requestTime": ${request.requestTime},
           | "message": "${request.message}",
           | "version": "${meta("version")}",
+          | "buildHash": "${meta("buildHash")}",
+          | "buildNumber": ${meta("buildNumber")},
           | "baseUrl": "${meta("baseUrl")}",
           | "scenario": "${simulationClass}"
           |}

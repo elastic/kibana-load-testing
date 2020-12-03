@@ -9,6 +9,9 @@ import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.{CloudHttpClient, Helper, HttpHelper, Version}
 import org.slf4j.{Logger, LoggerFactory}
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
+import io.gatling.commons.util.TypeHelper.TypeValidator
+import spray.json.lenses.JsonLenses._
+import spray.json.DefaultJsonProtocol._
 
 class BaseSimulation extends Simulation {
   val logger: Logger = LoggerFactory.getLogger("Base Simulation")
@@ -35,19 +38,21 @@ class BaseSimulation extends Simulation {
 
     // saving deployment info to target/lastDeployment.txt"
     if (appConfig.deploymentId.isDefined) {
+      val response = new HttpHelper(appConfig).getStatus()
       val meta = Map(
         "deploymentId" -> appConfig.deploymentId.get,
         "baseUrl" -> appConfig.baseUrl,
-        "version" -> appConfig.buildVersion
+        "version" -> appConfig.buildVersion,
+        "buildHash" -> response.extract[String]('version / 'build_hash),
+        "buildNumber" -> response
+          .extract[Int]('version / 'build_number)
       )
       Helper.writeMapToFile(meta, lastDeploymentFilePath)
     }
 
     // load sample data
-    new HttpHelper(appConfig)
-      .loginIfNeeded()
-      .addSampleData("ecommerce")
-      .closeConnection()
+    new HttpHelper(appConfig).addSampleData("ecommerce")
+
   }
 
   after {
@@ -57,10 +62,7 @@ class BaseSimulation extends Simulation {
     } else {
       // remove sample data
       try {
-        new HttpHelper(appConfig)
-          .loginIfNeeded()
-          .removeSampleData("ecommerce")
-          .closeConnection()
+        new HttpHelper(appConfig).removeSampleData("ecommerce")
       } catch {
         case e: java.lang.RuntimeException =>
           println(s"Can't remove sample data\n ${e.printStackTrace()}")
