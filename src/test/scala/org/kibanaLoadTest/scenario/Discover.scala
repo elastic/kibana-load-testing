@@ -23,7 +23,6 @@ object Discover {
         Helper.getDate(Calendar.DAY_OF_MONTH, endShift)
       )
   }
-
   private val discoverPayloadQ1 = createPayload(-1, 0)
   private val discoverPayloadQ2 = createPayload(-14, -5)
   private val discoverPayloadQ3 = createPayload(-20, 20)

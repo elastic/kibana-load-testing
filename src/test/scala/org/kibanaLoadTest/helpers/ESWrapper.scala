@@ -18,19 +18,18 @@ import org.kibanaLoadTest.ESConfiguration
 import org.slf4j.{Logger, LoggerFactory}
 
 class ESWrapper(config: ESConfiguration) {
-
   val logger: Logger = LoggerFactory.getLogger("ES_Client")
   val indexName = "gatling-data"
 
   def ingest(logFilePath: String, metaFilePath: String): Unit = {
-
-    if (!Files.exists(Paths.get(logFilePath))) {
-      throw new RuntimeException(s"Report file is not found ${logFilePath}")
-    }
-
     if (!Files.exists(Paths.get(logFilePath))) {
       throw new RuntimeException(
-        s"Deployment file is not found ${metaFilePath}"
+        s"Gatling report file '${logFilePath}' is not found"
+      )
+    }
+    if (!Files.exists(Paths.get(metaFilePath))) {
+      throw new RuntimeException(
+        s"Deployment meta file '${metaFilePath}' is not found"
       )
     }
 
@@ -59,11 +58,11 @@ class ESWrapper(config: ESConfiguration) {
           .setSocketTimeout(90000)
       )
 
-    logger.info(s"login to ES instance: ${config.host}")
+    logger.info(s"Login to ES instance: ${config.host}")
     val client = new RestHighLevelClient(builder)
     val timestamp = Helper.convertDateToUTC(Instant.now.toEpochMilli)
 
-    logger.info(s"ingesting Gatling report: ${requests.size} records")
+    logger.info(s"Ingesting report to stats cluster: ${requests.size} records")
     requests.par.foreach(request => {
       val jsonString: String =
         s"""
@@ -94,7 +93,7 @@ class ESWrapper(config: ESConfiguration) {
 
     })
 
-    logger.info("closing connection")
+    logger.info("Ingestion is completed, closing connection")
     client.close()
   }
 }

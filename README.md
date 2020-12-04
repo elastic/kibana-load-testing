@@ -116,6 +116,11 @@ class MySimulation extends BaseSimulation {
 }
 ```
 
+In order to run your simulation, use the following command:
+```
+mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.MySimulation
+```
+
 ## Running tests from VM
 
 Follow [guide](VM_SETUP.md) to setup VM and run tests on it

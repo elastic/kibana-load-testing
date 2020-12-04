@@ -8,12 +8,10 @@ import org.kibanaLoadTest.KibanaConfiguration
 import org.slf4j.{Logger, LoggerFactory}
 
 class HttpHelper(appConfig: KibanaConfiguration) {
-
   val loginHeaders = Map(
     "Content-Type" -> "application/json",
     "kbn-xsrf" -> "xsrf"
   )
-
   val logger: Logger = LoggerFactory.getLogger("HttpHelper")
 
   def loginIfNeeded(httpClient: CloseableHttpClient): HttpHelper = {

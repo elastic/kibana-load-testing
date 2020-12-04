@@ -14,7 +14,6 @@ import org.slf4j.{Logger, LoggerFactory}
 import scala.io.Source
 
 object Helper {
-
   val dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
   val logger: Logger = LoggerFactory.getLogger("Helper")
 

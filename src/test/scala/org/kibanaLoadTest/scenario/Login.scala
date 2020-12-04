@@ -9,6 +9,7 @@ object Login {
     "Content-Type" -> "application/json",
     "kbn-xsrf" -> "xsrf"
   )
+
   def doLogin(
       isSecurityEnabled: Boolean,
       loginPayload: String,
