@@ -3,31 +3,26 @@ library 'kibana-pipeline-library'
 
 pipeline {
     agent { label 'docker && tests-xl-highmem' }
-    environment {
-        STACK_VERSION = "7.11.0-SNAPSHOT"
-    }
     stages {
         stage ('Initialize') {
             steps {
                 sh '''
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
-                    echo "STACK_VERSION = ${STACK_VERSION}"
                 '''
             }
         }
 
         stage ('Build') {
             steps {
-              withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY')  {
-                sh '''
-                    cd kibana-load-testing
-                    export cloudDeploy=${STACK_VERSION}
-                    mvn clean -q -Dmaven.test.failure.ignore=true compile
-                    mvn gatling:test -q -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
-                '''
-              }
-
+                withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY')  {
+                    sh """
+                        cd kibana-load-testing
+                        export cloudDeploy=${params.STACK_VERSION}
+                        mvn clean -q -Dmaven.test.failure.ignore=true compile
+                        mvn gatling:test -q -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
+                    """
+                }
             }
             post {
                 success {
