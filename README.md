@@ -23,7 +23,7 @@ auth {
 - start test scenario
 ```
 mvn install
-mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.<MySimulation>
+mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
 ```
 
 ## Running simulation against existing cloud deployment
@@ -50,36 +50,24 @@ auth {
 ```
 mvn install
 export env=config/cloud-7.9.2.conf
-mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.<MySimulation>
+mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
 ```
 
 ## Running simulation against newly created cloud deployment
 - Generate API_KEY for your cloud user account
-- Add a new deployment configuration file, e.g. `config/deploy/cloud-7.9.3.conf`
-```
-version = 7.9.3
-
-elasticsearch {
-    deployment_template = "gcp-io-optimized" 
-    memory = 8192
-}
-
-kibana {
-    memory = 1024
-}
-```
+- (Optional) Change deployment template at `resources/config/deploy/default.conf`
 - start test scenario, new deployment will be created before simulation and deleted after it is finished
 ```
 mvn install
 export API_KEY=<your_cloud_key>
-export deployConfig=config/deploy/7.9.3.conf
-mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.<MySimulation>
+export cloudDeploy=7.11.0-SNAPSHOT
+mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
 ```
 
 Follow logs to track deployment status:
 
 ```
-09:40:23.535 [INFO ] httpClient - preparePayload: Using Config(SimpleConfigObject({"elasticsearch":{"deployment_template":"gcp-io-optimized","memory":8192},"kibana":{"memory":1024},"version":"7.9.3"}))
+09:40:23.535 [INFO ] httpClient - preparePayload: Using Config(SimpleConfigObject({"elasticsearch":{"deployment_template":"gcp-io-optimized","memory":8192},"kibana":{"memory":1024},"version":"7.11.0-SNAPSHOT"}))
 09:40:23.593 [INFO ] httpClient - createDeployment: Creating new deployment
 09:40:29.848 [INFO ] httpClient - createDeployment: deployment b76dd4a9255a417ca133fe8edd8157a2 is created
 09:40:29.848 [INFO ] httpClient - waitForClusterToStart: waitTime 300000ms, poolingInterval 20000ms
@@ -130,6 +118,5 @@ class MySimulation extends BaseSimulation {
 
 ## Running tests from VM
 
-Follow [guide](VM_SETUP.md)
- to setup VM and run tests on it
+Follow [guide](VM_SETUP.md) to setup VM and run tests on it
 

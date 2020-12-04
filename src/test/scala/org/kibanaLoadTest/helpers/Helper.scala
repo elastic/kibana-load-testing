@@ -94,7 +94,7 @@ object Helper {
     }
   }
 
-  def writeMapToFile(data: Map[String, String], filePath: String): Unit = {
+  def writeMapToFile(data: Map[String, Any], filePath: String): Unit = {
     new PrintWriter(filePath) {
       data.foreach {
         case (k, v) =>
@@ -105,7 +105,7 @@ object Helper {
     }
   }
 
-  def readFileToMap(filePath: String): Map[String, String] = {
+  def readFileToMap(filePath: String): Map[String, Any] = {
     val lines =
       Source.fromFile(filePath).getLines().filter(str => !str.trim.isEmpty)
     lines.map(str => (str.split("=")(0), str.split("=")(1))).toMap

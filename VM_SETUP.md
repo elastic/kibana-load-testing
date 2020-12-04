@@ -49,7 +49,7 @@ sudo docker run -it -v "$(pwd)":/local/git --name java-maven --rm jamesdbloom/do
 - `test` folder with project should be available in container, start tests as locally
 ```
 export API_KEY=<Your API Key>
-export deployConfig=config/deploy/7.10.0.conf
+export cloudDeploy=7.11.0-SNAPSHOT
 mvn clean -Dmaven.test.failure.ignore=true compile
 mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
 ```

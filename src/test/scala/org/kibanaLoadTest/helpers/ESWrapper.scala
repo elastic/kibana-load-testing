@@ -20,6 +20,7 @@ import org.slf4j.{Logger, LoggerFactory}
 class ESWrapper(config: ESConfiguration) {
 
   val logger: Logger = LoggerFactory.getLogger("ES_Client")
+  val indexName = "gatling-data"
 
   def ingest(logFilePath: String, metaFilePath: String): Unit = {
 
@@ -68,7 +69,6 @@ class ESWrapper(config: ESConfiguration) {
         s"""
           |{
           | "timestamp": "${timestamp}",
-          | "userId": ${request.userId},
           | "name": "${request.name}",
           | "requestSendStartTime": "${Helper.convertDateToUTC(
           request.requestSendStartTime
@@ -80,13 +80,15 @@ class ESWrapper(config: ESConfiguration) {
           | "requestTime": ${request.requestTime},
           | "message": "${request.message}",
           | "version": "${meta("version")}",
+          | "buildHash": "${meta("buildHash")}",
+          | "buildNumber": ${meta("buildNumber")},
           | "baseUrl": "${meta("baseUrl")}",
           | "scenario": "${simulationClass}"
           |}
       """.stripMargin
 
       client.index(
-        new IndexRequest("request").source(jsonString, XContentType.JSON),
+        new IndexRequest(indexName).source(jsonString, XContentType.JSON),
         RequestOptions.DEFAULT
       );
 

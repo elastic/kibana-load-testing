@@ -9,7 +9,9 @@ import org.kibanaLoadTest.helpers.Helper.{getLastReportPath, getTargetPath}
 
 object Main {
   def main(args: Array[String]): Unit = {
-    val host = System.getenv("HOST_FROM_VAULT")
+    val hostValue = System.getenv("HOST_FROM_VAULT")
+    val host =
+      if (hostValue.startsWith("http")) hostValue else "https://" + hostValue
     val username = System.getenv("USER_FROM_VAULT")
     val password = System.getenv("PASS_FROM_VAULT")
 

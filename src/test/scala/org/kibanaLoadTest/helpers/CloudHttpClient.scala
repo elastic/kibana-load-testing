@@ -13,7 +13,8 @@ import spray.json.lenses.JsonLenses._
 import spray.json.DefaultJsonProtocol._
 
 class CloudHttpClient {
-
+  private var DEPLOYMENT_READY_TIMOEOUT = 5 * 60 * 1000 // 5 min
+  private val DEPLOYMENT_POLLING_INTERVAL = 20 * 1000 // 20 sec
   private val httpClient = HttpClientBuilder.create.build
   private val deployPayloadTemplate = "cloudPayload/createDeployment.json"
   private val baseUrl = "https://staging.found.no/api/v1/deployments"
@@ -26,21 +27,21 @@ class CloudHttpClient {
     .get
   val logger: Logger = LoggerFactory.getLogger("httpClient")
 
-  def preparePayload(config: Config): String = {
+  def preparePayload(stackVersion: String, config: Config): String = {
     logger.info(
       s"preparePayload: Using ${deployPayloadTemplate} payload template"
     )
     val template = Helper.loadJsonString(deployPayloadTemplate)
-    logger.info(s"preparePayload: Using ${config.toString}")
+    logger.info(
+      s"preparePayload: Stack version ${stackVersion} with ${config.toString} configuration"
+    )
 
     val payload = template
       .update('name ! set[String](s"load-testing-${Instant.now.toEpochMilli}"))
       .update(
         'resources / 'elasticsearch / element(
           0
-        ) / 'plan / 'elasticsearch / 'version ! set[String](
-          config.getString("version")
-        )
+        ) / 'plan / 'elasticsearch / 'version ! set[String](stackVersion)
       )
       .update(
         'resources / 'elasticsearch / element(
@@ -57,7 +58,7 @@ class CloudHttpClient {
       .update(
         'resources / 'kibana / element(0) / 'plan / 'kibana / 'version ! set[
           String
-        ](config.getString("version"))
+        ](stackVersion)
       )
       .update(
         'resources / 'kibana / element(0) / 'plan / 'cluster_topology / element(
@@ -67,7 +68,7 @@ class CloudHttpClient {
       )
       .update(
         'resources / 'apm / element(0) / 'plan / 'apm / 'version ! set[String](
-          config.getString("version")
+          stackVersion
         )
       )
 
@@ -126,14 +127,24 @@ class CloudHttpClient {
 
   def waitForClusterToStart(deploymentId: String) = {
     var started = false
-    var waitTime = 5 * 60 * 1000 // 5 min
-    val poolingInterval = 20 * 1000 // 20 sec
+    var waitTime = DEPLOYMENT_READY_TIMOEOUT
+    var poolingInterval = DEPLOYMENT_POLLING_INTERVAL
     logger.info(
       s"waitForClusterToStart: waitTime ${waitTime}ms, poolingInterval ${poolingInterval}ms"
     )
     while (!started && poolingInterval > 0) {
-      val statuses = getInstanceStatus(deploymentId)
-      if (statuses.values.filter(s => s != "started").size == 0) {
+      var statuses = Map.empty[String, String]
+      try {
+        statuses = getInstanceStatus(deploymentId)
+      } catch {
+        case ex: Exception =>
+          logger.error(ex.getMessage)
+      }
+      if (
+        !statuses.isEmpty && statuses.values
+          .filter(s => s != "started")
+          .size == 0
+      ) {
         logger.info(s"waitForClusterToStart: Deployment is ready!")
         started = true
       } else {
