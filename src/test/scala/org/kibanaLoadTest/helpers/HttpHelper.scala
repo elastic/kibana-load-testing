@@ -41,8 +41,8 @@ class HttpHelper(appConfig: KibanaConfiguration) {
     var statusCode = 500
     var responseBody = ""
     val httpClient = HttpClientBuilder.create.build
+    this.loginIfNeeded(httpClient)
     try {
-      this.loginIfNeeded(httpClient)
       val sampleDataRequest = new HttpDelete(
         appConfig.baseUrl + s"/api/sample_data/${data}"
       )
@@ -71,8 +71,8 @@ class HttpHelper(appConfig: KibanaConfiguration) {
     var statusCode = 500
     var responseBody = ""
     val httpClient = HttpClientBuilder.create.build
+    this.loginIfNeeded(httpClient)
     try {
-      this.loginIfNeeded(httpClient)
       val sampleDataRequest = new HttpPost(
         appConfig.baseUrl + s"/api/sample_data/${data}"
       )
@@ -100,8 +100,8 @@ class HttpHelper(appConfig: KibanaConfiguration) {
   def getStatus(): String = {
     var responseBody = ""
     val httpClient = HttpClientBuilder.create.build
+    this.loginIfNeeded(httpClient)
     try {
-      this.loginIfNeeded(httpClient)
       val statusRequest = new HttpGet(
         appConfig.baseUrl + "/api/status"
       )
