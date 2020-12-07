@@ -29,7 +29,8 @@ class HttpHelper(appConfig: KibanaConfiguration) {
         loginResponse.getStatusLine.getStatusCode != appConfig.loginStatusCode
       ) {
         throw new RuntimeException(
-          s"Login to Kibana failed: ${EntityUtils.toString(loginResponse.getEntity, "UTF-8")}"
+          s"Login to Kibana failed with code ${loginResponse.getStatusLine.getStatusCode}: ${EntityUtils
+            .toString(loginResponse.getEntity, "UTF-8")}"
         )
       }
     }
@@ -61,7 +62,7 @@ class HttpHelper(appConfig: KibanaConfiguration) {
 
     if (statusCode != 204) {
       throw new RuntimeException(
-        s"Deleting sample data failed: ${responseBody}"
+        s"Deleting sample data failed with code ${statusCode}: ${responseBody}"
       )
     }
   }
@@ -91,7 +92,7 @@ class HttpHelper(appConfig: KibanaConfiguration) {
 
     if (statusCode != 200) {
       throw new RuntimeException(
-        s"Adding sample data failed: ${responseBody}"
+        s"Adding sample data failed with code ${statusCode}: ${responseBody}"
       )
     }
   }
