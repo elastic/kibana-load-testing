@@ -1,10 +1,10 @@
 package org.kibanaLoadTest.test
 
 import java.io.File
-
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.{assertEquals, assertTrue}
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.condition.{EnabledIfEnvironmentVariable}
 import org.kibanaLoadTest.ESConfiguration
 import org.kibanaLoadTest.helpers.Helper.{getLastReportPath, getTargetPath}
 import org.kibanaLoadTest.helpers.{ESWrapper, Helper, LogParser}
@@ -35,6 +35,7 @@ class IngestionTest {
   }
 
   @Test
+  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
   def ingestReportTest(): Unit = {
     val host = System.getenv("HOST_FROM_VAULT")
     val username = System.getenv("USER_FROM_VAULT")
@@ -60,9 +61,15 @@ class IngestionTest {
       "baseUrl" -> "http://localhost:5620",
       "version" -> "8.0.0"
     )
+
+    val filepath =
+      Helper.getTargetPath() + File.separator + "lastDeployment.txt"
     Helper.writeMapToFile(
       meta,
-      Helper.getTargetPath() + File.separator + "lastDeployment.txt"
+      filepath
     );
+
+    val tempFile = new File(filepath)
+    assertTrue(tempFile.exists, s"FIle ${filepath} does not exist")
   }
 }

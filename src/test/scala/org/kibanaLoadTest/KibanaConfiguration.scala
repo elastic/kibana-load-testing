@@ -15,9 +15,6 @@ class KibanaConfiguration {
   var loginPayload = ""
   var loginStatusCode = 200
   var isAbove79x = true
-  var esHost = ""
-  var esPort = 9200
-  var esScheme = ""
   var deploymentId: Option[String] = None
 
   def this(config: Config) {

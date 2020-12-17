@@ -45,21 +45,6 @@ object Helper {
       .mkString
   }
 
-  def loadKibanaConfig(configName: String): Object = {
-    val is = getClass.getClassLoader.getResourceAsStream(configName)
-    val source = scala.io.Source.fromInputStream(is).mkString
-    val config = ConfigFactory.parseString(source)
-
-    object appConfig {
-      val baseUrl = config.getString("app.host")
-      val buildVersion = config.getString("app.version")
-      val isSecurityEnabled = config.getBoolean("security.on")
-      val loginPayload = config.getString("auth.loginPayload")
-    }
-
-    appConfig
-  }
-
   def getTargetPath(): String = {
     Paths.get("target").toAbsolutePath.normalize.toString
   }
