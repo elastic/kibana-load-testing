@@ -1,8 +1,9 @@
 package org.kibanaLoadTest.test
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.{assertEquals, assertThrows}
 import org.junit.jupiter.api.Test
-import org.kibanaLoadTest.helpers.Version
+import org.kibanaLoadTest.KibanaConfiguration
+import org.kibanaLoadTest.helpers.{Helper, Version}
 
 class HelpersTest {
 
@@ -17,4 +18,49 @@ class HelpersTest {
     assertEquals(v4.compareTo(v3), 1)
   }
 
+  @Test
+  def createKibanaConfigTest = {
+    val config = new KibanaConfiguration(
+      Helper.readResourceConfigFile("config/local.conf")
+    )
+    assertEquals(config.baseUrl, "http://localhost:5620")
+    assertEquals(config.buildVersion, "8.0.0")
+    assertEquals(config.isAbove79x, true)
+    assertEquals(config.isSecurityEnabled, true)
+    assertEquals(config.loginStatusCode, 200)
+    assertEquals(
+      config.loginPayload,
+      """{"providerType":"basic","providerName":"basic","currentURL":"http://localhost:5620/login","params":{"username":"elastic","password":"changeme"}}"""
+    )
+    assertEquals(config.deploymentId, None)
+  }
+
+  @Test
+  def validateUrlThrowsExceptionTest = {
+
+    val exceptionThatWasThrown = assertThrows(
+      classOf[RuntimeException],
+      () => {
+        def foo() = Helper.validateUrl("localhost", "Bad Url string")
+
+        foo()
+      }
+    )
+
+    assertEquals(
+      "Bad Url string\n no protocol: localhost",
+      exceptionThatWasThrown.getMessage
+    )
+  }
+
+  @Test
+  def validateUrlCorrectsStringTest = {
+    val validUrl =
+      "https://4c976c670a125.us-central1.gcp.server.no:9243"
+
+    assertEquals(
+      validUrl,
+      Helper.validateUrl(validUrl, "Smth went wrong")
+    )
+  }
 }

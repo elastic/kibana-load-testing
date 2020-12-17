@@ -3,10 +3,11 @@ package org.kibanaLoadTest.test
 import org.junit.jupiter.api.Test
 import org.kibanaLoadTest.helpers.{CloudHttpClient, Helper}
 import org.junit.jupiter.api.Assertions.{assertEquals, assertTrue}
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 
 class CloudAPITest {
-
   @Test
+  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
   def deploymentTest = {
     val stackVersion = "7.10.0"
     val cloudClient = new CloudHttpClient
