@@ -1,0 +1,8 @@
+branches:
+  - name: master
+    protection:
+      strict: true
+      required_pull_request_reviews: null
+      required_status_checks: true
+      restrictions: null
+      enforce_admins: true
