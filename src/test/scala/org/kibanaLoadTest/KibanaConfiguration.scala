@@ -17,7 +17,7 @@ class KibanaConfiguration {
   var isAbove79x = true
   var deploymentId: Option[String] = None
 
-  def this(config: Config) {
+  def this(config: Config) = {
     this()
     // validate config
     if (

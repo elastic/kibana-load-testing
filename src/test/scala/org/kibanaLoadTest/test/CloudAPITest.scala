@@ -8,7 +8,7 @@ import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 class CloudAPITest {
   @Test
   @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
-  def deploymentTest = {
+  def deploymentTest(): Unit = {
     val stackVersion = "7.10.0"
     val cloudClient = new CloudHttpClient
     val config = Helper.readResourceConfigFile("config/deploy/default.conf")

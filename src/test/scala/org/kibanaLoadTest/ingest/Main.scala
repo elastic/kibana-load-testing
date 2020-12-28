@@ -23,9 +23,9 @@ object Main {
     )
 
     val esClient = new ESWrapper(esConfig)
-    val logFilePath = getLastReportPath() + File.separator + "simulation.log"
+    val logFilePath = getLastReportPath + File.separator + "simulation.log"
     val lastDeploymentFilePath =
-      getTargetPath() + File.separator + "lastDeployment.txt"
+      getTargetPath + File.separator + "lastDeployment.txt"
     esClient.ingest(logFilePath, lastDeploymentFilePath)
   }
 }

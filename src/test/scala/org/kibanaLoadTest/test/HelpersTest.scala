@@ -8,7 +8,7 @@ import org.kibanaLoadTest.helpers.{Helper, Version}
 class HelpersTest {
 
   @Test
-  def compareVersionsTest = {
+  def compareVersionsTest(): Unit = {
     val v1 = new Version("7.8.15")
     val v2 = new Version("7.10")
     assertEquals(v1.compareTo(v2), -1)
@@ -19,7 +19,7 @@ class HelpersTest {
   }
 
   @Test
-  def createKibanaConfigTest = {
+  def createKibanaConfigTest(): Unit = {
     val config = new KibanaConfiguration(
       Helper.readResourceConfigFile("config/local.conf")
     )
@@ -36,7 +36,7 @@ class HelpersTest {
   }
 
   @Test
-  def validateUrlThrowsExceptionTest = {
+  def validateUrlThrowsExceptionTest(): Unit = {
 
     val exceptionThatWasThrown = assertThrows(
       classOf[RuntimeException],
@@ -54,7 +54,7 @@ class HelpersTest {
   }
 
   @Test
-  def validateUrlCorrectsStringTest = {
+  def validateUrlCorrectsStringTest(): Unit = {
     val validUrl =
       "https://4c976c670a125.us-central1.gcp.server.no:9243"
 

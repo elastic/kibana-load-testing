@@ -1,13 +1,12 @@
 package org.kibanaLoadTest.helpers
 
-import java.io.{File, ObjectOutputStream, PrintWriter}
+import java.io.{File, PrintWriter}
 import java.net.{MalformedURLException, URL}
 import java.nio.file.Paths
 import java.text.SimpleDateFormat
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.{Calendar, Date, TimeZone}
-
 import com.typesafe.config.{Config, ConfigFactory}
 import org.slf4j.{Logger, LoggerFactory}
 
@@ -23,7 +22,7 @@ object Helper {
     val dtf = DateTimeFormatter
       .ofPattern(dateFormat)
       .withZone(ZoneId.systemDefault())
-    dtf.format(c.getTime().toInstant)
+    dtf.format(c.getTime.toInstant)
   }
 
   def convertDateToUTC(timestamp: Long): String = {
@@ -38,19 +37,17 @@ object Helper {
     ConfigFactory.parseString(source)
   }
 
-  def loadJsonString(filePath: String): String = {
+  def loadJsonString(filePath: String): String =
     Source
       .fromURL(getClass.getClassLoader.getResource(filePath))
-      .getLines
+      .getLines()
       .mkString
-  }
 
-  def getTargetPath(): String = {
+  def getTargetPath: String =
     Paths.get("target").toAbsolutePath.normalize.toString
-  }
 
-  def getLastReportPath(): String = {
-    val dir: File = new File(getTargetPath() + File.separator + "gatling")
+  def getLastReportPath: String = {
+    val dir: File = new File(getTargetPath + File.separator + "gatling")
     val files: Array[File] = dir.listFiles
     files.toList
       .filter(file => file.isDirectory)
@@ -72,7 +69,7 @@ object Helper {
       str.replaceAll("/$", "")
     } catch {
       case ex: MalformedURLException =>
-        throw new RuntimeException(s"${errorMsg}\n ${ex.getMessage}")
+        throw new RuntimeException(s"$errorMsg\n ${ex.getMessage}")
       case ex: Exception =>
         throw new RuntimeException(s"Unknown error ${ex.getMessage}")
     }
@@ -90,8 +87,8 @@ object Helper {
   }
 
   def readFileToMap(filePath: String): Map[String, Any] = {
-    val lines =
-      Source.fromFile(filePath).getLines().filter(str => !str.trim.isEmpty)
+    val lines: Iterator[String] =
+      Source.fromFile(filePath).getLines().filter(str => str.trim.nonEmpty)
     lines.map(str => (str.split("=")(0), str.split("=")(1))).toMap
   }
 }

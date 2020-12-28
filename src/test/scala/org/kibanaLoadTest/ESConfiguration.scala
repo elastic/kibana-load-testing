@@ -8,7 +8,7 @@ class ESConfiguration {
   var password = ""
   var host = ""
 
-  def this(config: Config) {
+  def this(config: Config) = {
     this()
     if (
       !config.hasPathOrNull("host")
