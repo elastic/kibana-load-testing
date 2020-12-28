@@ -1,12 +1,12 @@
 package org.kibanaLoadTest.helpers
 
 class Request {
-  var name = "";
-  var requestSendStartTime = 0L;
-  var responseReceiveEndTime = 0L;
-  var requestTime = 0L;
-  var status = "";
-  var message = "";
+  var name = ""
+  var requestSendStartTime = 0L
+  var responseReceiveEndTime = 0L
+  var requestTime = 0L
+  var status = ""
+  var message = ""
 
   def this(
       name: String,
@@ -14,7 +14,7 @@ class Request {
       endTime: Long,
       status: String,
       message: String
-  ) {
+  ) = {
     this()
     this.name = name
     this.requestSendStartTime = startTime
@@ -25,8 +25,8 @@ class Request {
   }
 
   override def toString: String = {
-    val baseStr =
-      s"""${name} - ${requestSendStartTime} - ${responseReceiveEndTime} - ${requestTime} - ${status}"""
-    if (message.length == 0) baseStr else s"""${baseStr} - ${message}"""
+    val baseStr: String =
+      s"$name - $requestSendStartTime - $responseReceiveEndTime - $requestTime - $status"
+    if (message.isEmpty) baseStr else s"$baseStr - $message"
   }
 }

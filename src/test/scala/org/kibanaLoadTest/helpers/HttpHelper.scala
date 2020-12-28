@@ -44,7 +44,7 @@ class HttpHelper(appConfig: KibanaConfiguration) {
     this.loginIfNeeded(httpClient)
     try {
       val sampleDataRequest = new HttpDelete(
-        appConfig.baseUrl + s"/api/sample_data/${data}"
+        appConfig.baseUrl + s"/api/sample_data/$data"
       )
       sampleDataRequest.addHeader("Connection", "keep-alive")
       sampleDataRequest.addHeader("kbn-version", appConfig.buildVersion)
@@ -53,18 +53,16 @@ class HttpHelper(appConfig: KibanaConfiguration) {
       statusCode = sampleDataResponse.getStatusLine.getStatusCode
       responseBody = EntityUtils.toString(sampleDataResponse.getEntity, "UTF-8")
     } catch {
-      case _: Throwable => {
+      case _: Throwable =>
         logger.error("Exception occurred during unloading sample data")
-      }
     } finally {
       httpClient.close()
     }
 
-    if (statusCode != 204) {
-      throw new RuntimeException(
-        s"Deleting sample data failed with code ${statusCode}: ${responseBody}"
-      )
-    }
+    if (statusCode != 204)
+      throw new RuntimeException {
+        s"Deleting sample data failed with code $statusCode: $responseBody"
+      }
   }
 
   def addSampleData(data: String): Unit = {
@@ -74,7 +72,7 @@ class HttpHelper(appConfig: KibanaConfiguration) {
     this.loginIfNeeded(httpClient)
     try {
       val sampleDataRequest = new HttpPost(
-        appConfig.baseUrl + s"/api/sample_data/${data}"
+        appConfig.baseUrl + ("/api/sample_data/" + data)
       )
       sampleDataRequest.addHeader("Connection", "keep-alive")
       sampleDataRequest.addHeader("kbn-version", appConfig.buildVersion)
@@ -83,21 +81,20 @@ class HttpHelper(appConfig: KibanaConfiguration) {
       statusCode = sampleDataResponse.getStatusLine.getStatusCode
       responseBody = EntityUtils.toString(sampleDataResponse.getEntity, "UTF-8")
     } catch {
-      case _: Throwable => {
+      case _: Throwable =>
         logger.error("Exception occurred during loading sample data")
-      }
     } finally {
       httpClient.close()
     }
 
     if (statusCode != 200) {
       throw new RuntimeException(
-        s"Adding sample data failed with code ${statusCode}: ${responseBody}"
+        "Adding sample data failed with code " + statusCode + ": " + responseBody
       )
     }
   }
 
-  def getStatus(): String = {
+  def getStatus: String = {
     var responseBody = ""
     val httpClient = HttpClientBuilder.create.build
     this.loginIfNeeded(httpClient)

@@ -29,7 +29,7 @@ object LogParser {
     }
     fsStream.close()
 
-    requests.toList;
+    requests.toList
   }
 
   def getSimulationClass(filePath: String): String = {

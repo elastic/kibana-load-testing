@@ -4,7 +4,7 @@ import java.io.File
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
 import org.junit.jupiter.api.Assertions.{assertEquals, assertTrue}
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.condition.{EnabledIfEnvironmentVariable}
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import org.kibanaLoadTest.ESConfiguration
 import org.kibanaLoadTest.helpers.Helper.{getLastReportPath, getTargetPath}
 import org.kibanaLoadTest.helpers.{ESWrapper, Helper, LogParser}
@@ -17,7 +17,7 @@ class IngestionTest {
   @Test
   def parseLogsTest(): Unit = {
     val logFilePath: String = new File(
-      Helper.getTargetPath() + File.separator + "test-classes"
+      Helper.getTargetPath + File.separator + "test-classes"
         + File.separator + "log" + File.separator
         + "simulation.log"
     ).getAbsolutePath
@@ -29,7 +29,7 @@ class IngestionTest {
     )
     assertEquals(
       expRequestString,
-      requests(0).toString,
+      requests.head.toString,
       "Incorrect content in first object"
     )
   }
@@ -48,9 +48,9 @@ class IngestionTest {
     )
 
     val esClient = new ESWrapper(esConfig)
-    val logFilePath = getLastReportPath() + File.separator + "simulation.log"
+    val logFilePath = getLastReportPath + File.separator + "simulation.log"
     val lastDeploymentFilePath =
-      getTargetPath() + File.separator + "lastDeployment.txt"
+      getTargetPath + File.separator + "lastDeployment.txt"
     esClient.ingest(logFilePath, lastDeploymentFilePath)
   }
 
@@ -63,13 +63,13 @@ class IngestionTest {
     )
 
     val filepath =
-      Helper.getTargetPath() + File.separator + "lastDeployment.txt"
+      Helper.getTargetPath + File.separator + "lastDeployment.txt"
     Helper.writeMapToFile(
       meta,
       filepath
-    );
+    )
 
     val tempFile = new File(filepath)
-    assertTrue(tempFile.exists, s"FIle ${filepath} does not exist")
+    assertTrue(tempFile.exists, s"FIle $filepath does not exist")
   }
 }

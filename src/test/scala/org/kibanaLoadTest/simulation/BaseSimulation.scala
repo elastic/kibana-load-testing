@@ -1,33 +1,35 @@
 package org.kibanaLoadTest.simulation
 
-import java.io.File
-import java.nio.file.Paths
-
+import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
+import io.gatling.http.protocol.HttpProtocolBuilder
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.{CloudHttpClient, Helper, HttpHelper, Version}
 import org.slf4j.{Logger, LoggerFactory}
-import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
+import spray.json.DefaultJsonProtocol.{IntJsonFormat, StringJsonFormat}
 import spray.json.lenses.JsonLenses._
-import spray.json.DefaultJsonProtocol._
+
+import java.io.File
+import java.nio.file.Paths
 
 class BaseSimulation extends Simulation {
   val logger: Logger = LoggerFactory.getLogger("Base Simulation")
   val CLOUD_DEPLOY_CONFIG = "config/deploy/default.conf"
   // "7.11.0-SNAPSHOT"
-  val cloudDeployVersion = Option(System.getenv("cloudDeploy"))
+  val cloudDeployVersion: Option[String] = Option(System.getenv("cloudDeploy"))
   // "config/cloud-7.9.2.conf"
-  val envConfig = Option(System.getenv("env")).getOrElse("config/local.conf")
+  val envConfig: String =
+    Option(System.getenv("env")).getOrElse("config/local.conf")
 
   // appConfig is used to run load tests
-  val appConfig = if (cloudDeployVersion.isDefined) {
+  val appConfig: KibanaConfiguration = if (cloudDeployVersion.isDefined) {
     // create new deployment on Cloud
     createDeployment(cloudDeployVersion.get)
     // use existing deployment or local instance
   } else new KibanaConfiguration(Helper.readResourceConfigFile(envConfig))
 
-  val lastDeploymentFilePath = Paths
+  val lastDeploymentFilePath: String = Paths
     .get("target")
     .toAbsolutePath
     .normalize
@@ -39,16 +41,19 @@ class BaseSimulation extends Simulation {
     // saving deployment info to target/lastDeployment.txt"
     if (appConfig.deploymentId.isDefined) {
       logger.info(s"Getting Kibana status info")
-      val response = new HttpHelper(appConfig).getStatus()
-      val meta = Map(
-        "deploymentId" -> appConfig.deploymentId.get,
-        "baseUrl" -> appConfig.baseUrl,
-        "version" -> appConfig.buildVersion,
-        "buildHash" -> response.extract[String]('version / 'build_hash),
-        "buildNumber" -> response
-          .extract[Int]('version / 'build_number)
-      )
-      Helper.writeMapToFile(meta, lastDeploymentFilePath)
+      val response = new HttpHelper(appConfig).getStatus
+      if (response.length > 1) {
+        val meta = Map(
+          "deploymentId" -> appConfig.deploymentId.get,
+          "baseUrl" -> appConfig.baseUrl,
+          "version" -> appConfig.buildVersion,
+          "buildHash" -> response
+            .extract[String](Symbol("version") / Symbol("build_hash")),
+          "buildNumber" -> response
+            .extract[Int](Symbol("version") / Symbol("build_number"))
+        )
+        Helper.writeMapToFile(meta, lastDeploymentFilePath)
+      }
     }
 
     // load sample data
@@ -113,7 +118,7 @@ class BaseSimulation extends Simulation {
 
   logger.info(s"Running ${getClass.getSimpleName} simulation")
 
-  val httpProtocol = http
+  val httpProtocol: HttpProtocolBuilder = http
     .baseUrl(appConfig.baseUrl)
     .inferHtmlResources(
       BlackList(

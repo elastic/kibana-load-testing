@@ -1,14 +1,14 @@
 package org.kibanaLoadTest.simulation
 
 import io.gatling.core.Predef._
+import io.gatling.core.structure.ScenarioBuilder
 import org.kibanaLoadTest.scenario.{Canvas, Dashboard, Discover, Login}
-
 import scala.concurrent.duration.DurationInt
 
 class DemoJourney extends BaseSimulation {
   val scenarioName = s"Kibana demo journey ${appConfig.buildVersion}"
 
-  val scn = scenario(scenarioName)
+  val scn: ScenarioBuilder = scenario(scenarioName)
     .exec(
       Login
         .doLogin(
@@ -16,17 +16,17 @@ class DemoJourney extends BaseSimulation {
           appConfig.loginPayload,
           appConfig.loginStatusCode
         )
-        .pause(5 seconds)
+        .pause(5)
     )
-    .exec(Discover.doQuery(appConfig.baseUrl, defaultHeaders).pause(10 seconds))
-    .exec(Dashboard.load(appConfig.baseUrl, defaultHeaders).pause(10 seconds))
+    .exec(Discover.doQuery(appConfig.baseUrl, defaultHeaders).pause(10))
+    .exec(Dashboard.load(appConfig.baseUrl, defaultHeaders).pause(10))
     .exec(Canvas.loadWorkpad(appConfig.baseUrl, defaultHeaders))
 
   setUp(
     scn
       .inject(
-        constantConcurrentUsers(20) during (3 minute), // 1
-        rampConcurrentUsers(20) to (50) during (3 minute) // 2
+        constantConcurrentUsers(20) during (3 minutes), // 1
+        rampConcurrentUsers(20) to 50 during (3 minutes) // 2
       )
       .protocols(httpProtocol)
   ).maxDuration(15 minutes)
