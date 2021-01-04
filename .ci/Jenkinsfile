@@ -15,6 +15,16 @@ pipeline {
 
         stage ('Build') {
             steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: 'master']],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [],
+                    submoduleCfg: [], userRemoteConfigs: [[
+                        credentialsId: 'f6c7695a-671e-4f4f-a331-acdce44ff9ba',
+                        url: 'git@github.com:elastic/kibana',
+                    ]],
+                ])
                 withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY')  {
                     sh """
                         cd kibana-load-testing
