@@ -29,9 +29,9 @@ pipeline {
                 sh """
                     cd kibana
                     echo "running setup.sh"
-                    /usr/local/bin/runbld -d '${pwd()}' --config ${env.WORKSPACE}/kibana/.ci/runbld_no_junit.yml ./src/dev/ci_setup/setup.sh
+                    ./src/dev/ci_setup/setup.sh
                     echo "running checkout_sibling_es.sh"
-                    /usr/local/bin/runbld -d '${pwd()}' --config ${env.WORKSPACE}/kibana/.ci/runbld_no_junit.yml ./src/dev/ci_setup/checkout_sibling_es.sh
+                    ./src/dev/ci_setup/checkout_sibling_es.sh
                     echo "running jenkins_xpack_build_kibana.sh"
                     ./test/scripts/jenkins_xpack_build_kibana.sh
                 """
