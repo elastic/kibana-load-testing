@@ -19,14 +19,25 @@ pipeline {
                     $class: 'GitSCM',
                     branches: [[name: 'master']],
                     doGenerateSubmoduleConfigurations: false,
-                    extensions: [],
-                    submoduleCfg: [], userRemoteConfigs: [[
+                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'kibana']],
+                    submoduleCfg: [],
+                    userRemoteConfigs: [[
                         credentialsId: 'f6c7695a-671e-4f4f-a331-acdce44ff9ba',
                         url: 'git@github.com:elastic/kibana',
                     ]],
                 ])
+                sh """
+                    cd kibana
+                    echo "running setup.sh"
+                    /usr/local/bin/runbld -d '${pwd()}' --config ${env.WORKSPACE}/kibana/.ci/runbld_no_junit.yml ./src/dev/ci_setup/setup.sh
+                    echo "running checkout_sibling_es.sh"
+                    /usr/local/bin/runbld -d '${pwd()}' --config ${env.WORKSPACE}/kibana/.ci/runbld_no_junit.yml ./src/dev/ci_setup/checkout_sibling_es.sh
+                    echo "running jenkins_xpack_build_kibana.sh"
+                    ./test/scripts/jenkins_xpack_build_kibana.sh
+                """
                 withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY')  {
                     sh """
+                        ls -la
                         cd kibana-load-testing
                         export cloudDeploy=${params.STACK_VERSION}
                         mvn clean -q -Dmaven.test.failure.ignore=true compile
