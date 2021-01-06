@@ -28,6 +28,7 @@ pipeline {
                 ])
                 sh """
                     cd kibana
+                    export HOME=${env.WORKSPACE}
                     echo "running setup.sh"
                     ./src/dev/ci_setup/setup.sh
                     echo "running checkout_sibling_es.sh"
