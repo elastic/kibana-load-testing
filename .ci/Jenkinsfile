@@ -13,12 +13,16 @@ pipeline {
             }
         }
 
-        stage ('Build') {
+        stage ('Run tests') {
             steps {
                 withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY')  {
                     sh """
                         cd kibana-load-testing
-                        export cloudDeploy=${params.STACK_VERSION}
+                        if [ "${params.STACK_VERSION}" = "7.x" ]; then
+                            export cloudDeploy=7.12.0-SNAPSHOT
+                        else
+                            export cloudDeploy=${params.STACK_VERSION}
+                        fi
                         mvn clean -q -Dmaven.test.failure.ignore=true compile
                         mvn gatling:test -q -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
                     """
