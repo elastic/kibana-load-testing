@@ -3,12 +3,22 @@ library 'kibana-pipeline-library'
 
 pipeline {
     agent { label 'docker && tests-xl-highmem' }
+    parameters {
+        string(name: 'STACK_VERSION', defaultValue: '8.0.0-SNAPSHOT', description: 'Elastic stack version')
+    }
+    triggers {
+        parameterizedCron('''
+            # leave spaces where you want them around the parameters. They'll be trimmed.
+            */5 * * * * %STACK_VERSION=7.11.0-SNAPSHOT
+        ''')
+    }
     stages {
         stage ('Initialize') {
             steps {
                 sh '''
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
+                    echo "STACK_VERSION = ${params.USE_VERSION}"
                 '''
             }
         }
