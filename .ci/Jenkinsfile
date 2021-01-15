@@ -39,7 +39,7 @@ pipeline {
                         sh """
                             cd kibana
                             export HOME=${env.WORKSPACE}
-                            export DEPLOYMENT_ID=${params.STACK_VERSION}
+                            export KIBANA_BRANCH=${env.KIBANA_BRANCH}
                             echo "running setup.sh"
                             ./src/dev/ci_setup/setup.sh
                             echo "running jenkins_build_load_testing.sh"

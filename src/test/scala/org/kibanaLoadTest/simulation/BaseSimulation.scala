@@ -42,7 +42,9 @@ class BaseSimulation extends Simulation {
       "baseUrl" -> appConfig.baseUrl,
       "buildHash" -> appConfig.buildHash,
       "buildNumber" -> appConfig.buildNumber,
-      "version" -> appConfig.buildVersion
+      "version" -> appConfig.version,
+      "isSnapshotBuild" -> appConfig.isSnapshotBuild,
+      "branch" -> appConfig.branchName
     )
     Helper.writeMapToFile(meta, lastDeploymentFilePath)
 
