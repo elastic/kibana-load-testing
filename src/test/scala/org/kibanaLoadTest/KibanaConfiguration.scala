@@ -1,8 +1,14 @@
 package org.kibanaLoadTest
 
 import com.typesafe.config._
-import org.kibanaLoadTest.helpers.{Helper, Version}
+import org.kibanaLoadTest.helpers.{Helper, HttpHelper, Version}
 import org.slf4j.{Logger, LoggerFactory}
+import spray.json.DefaultJsonProtocol.{
+  IntJsonFormat,
+  StringJsonFormat,
+  BooleanJsonFormat
+}
+import spray.json.lenses.JsonLenses._
 
 class KibanaConfiguration {
 
@@ -16,6 +22,9 @@ class KibanaConfiguration {
   var loginStatusCode = 200
   var isAbove79x = true
   var deploymentId: Option[String] = None
+  var buildHash = ""
+  var buildNumber = 0
+  var isSnapshotBuild = false
 
   def this(config: Config) = {
     this()
@@ -40,7 +49,23 @@ class KibanaConfiguration {
       config.getString("app.host"),
       s"'app.host' should be a valid Kibana URL"
     )
-    this.buildVersion = config.getString("app.version")
+
+    logger.info(s"Getting Kibana status info")
+    val response = new HttpHelper(this).getStatus
+    this.buildHash =
+      response.extract[String](Symbol("version") / Symbol("build_hash"))
+    this.buildNumber =
+      response.extract[Int](Symbol("version") / Symbol("build_number"))
+    this.isSnapshotBuild = response
+      .extract[Boolean](Symbol("version") / Symbol("build_snapshot"))
+
+    this.buildVersion =
+      if (this.isSnapshotBuild) s"${this.buildNumber}-SNAPSHOT"
+      else this.buildNumber.toString
+    if (!this.buildVersion.startsWith(config.getString("app.version")))
+      throw new RuntimeException(
+        s"Kibana version mismatch: instance ${this.buildVersion} vs config ${config.getString("app.version")}"
+      )
     this.isSecurityEnabled = config.getBoolean("security.on")
     this.username = config.getString("auth.username")
     this.password = config.getString("auth.password")
@@ -66,7 +91,7 @@ class KibanaConfiguration {
     this.loginStatusCode = if (this.isAbove79x) 200 else 204
     this.deploymentId = if (config.hasPath("deploymentId")) {
       Option(config.getString("deploymentId"))
-    } else None
+    } else Option(System.getenv("DEPLOYMENT_ID"))
   }
 
   def print(): Unit = {

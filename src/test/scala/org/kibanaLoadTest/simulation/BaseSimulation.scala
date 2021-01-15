@@ -7,8 +7,6 @@ import io.gatling.http.protocol.HttpProtocolBuilder
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.{CloudHttpClient, Helper, HttpHelper, Version}
 import org.slf4j.{Logger, LoggerFactory}
-import spray.json.DefaultJsonProtocol.{IntJsonFormat, StringJsonFormat}
-import spray.json.lenses.JsonLenses._
 
 import java.io.File
 import java.nio.file.Paths
@@ -39,27 +37,18 @@ class BaseSimulation extends Simulation {
     appConfig.print()
 
     // saving deployment info to target/lastDeployment.txt"
-    if (appConfig.deploymentId.isDefined) {
-      logger.info(s"Getting Kibana status info")
-      val response = new HttpHelper(appConfig).getStatus
-      if (response.length > 1) {
-        val meta = Map(
-          "deploymentId" -> appConfig.deploymentId.get,
-          "baseUrl" -> appConfig.baseUrl,
-          "version" -> appConfig.buildVersion,
-          "buildHash" -> response
-            .extract[String](Symbol("version") / Symbol("build_hash")),
-          "buildNumber" -> response
-            .extract[Int](Symbol("version") / Symbol("build_number"))
-        )
-        Helper.writeMapToFile(meta, lastDeploymentFilePath)
-      }
-    }
+    val meta = Map(
+      "deploymentId" -> appConfig.deploymentId.get,
+      "baseUrl" -> appConfig.baseUrl,
+      "buildHash" -> appConfig.buildHash,
+      "buildNumber" -> appConfig.buildNumber,
+      "version" -> appConfig.buildVersion
+    )
+    Helper.writeMapToFile(meta, lastDeploymentFilePath)
 
     // load sample data
     logger.info(s"Loading sample data")
     new HttpHelper(appConfig).addSampleData("ecommerce")
-
   }
 
   after {
