@@ -14,6 +14,7 @@ class KibanaConfiguration {
 
   val logger: Logger = LoggerFactory.getLogger("KibanaConfiguration")
   var baseUrl = ""
+  var version = ""
   var buildVersion = ""
   var isSecurityEnabled = false
   var username = ""
@@ -49,27 +50,9 @@ class KibanaConfiguration {
       config.getString("app.host"),
       s"'app.host' should be a valid Kibana URL"
     )
-
-    logger.info(s"Getting Kibana status info")
-    val response = new HttpHelper(this).getStatus
-    this.buildHash =
-      response.extract[String](Symbol("version") / Symbol("build_hash"))
-    this.buildNumber =
-      response.extract[Int](Symbol("version") / Symbol("build_number"))
-    this.isSnapshotBuild = response
-      .extract[Boolean](Symbol("version") / Symbol("build_snapshot"))
-
-    this.buildVersion =
-      if (this.isSnapshotBuild) s"${this.buildNumber}-SNAPSHOT"
-      else this.buildNumber.toString
-    if (!this.buildVersion.startsWith(config.getString("app.version")))
-      throw new RuntimeException(
-        s"Kibana version mismatch: instance ${this.buildVersion} vs config ${config.getString("app.version")}"
-      )
     this.isSecurityEnabled = config.getBoolean("security.on")
     this.username = config.getString("auth.username")
     this.password = config.getString("auth.password")
-    this.isAbove79x = new Version(this.buildVersion).isAbove79x
 
     if (
       this.isAbove79x && (!config.hasPathOrNull("auth.providerType") || !config
@@ -81,14 +64,30 @@ class KibanaConfiguration {
       )
     }
 
-    this.loginPayload =
-      if (this.isAbove79x) s"""{"providerType":"${config.getString(
-        "auth.providerType"
-      )}","providerName":"${config.getString(
-        "auth.providerName"
-      )}","currentURL":"${this.baseUrl}/login","params":{"username":"${this.username}","password":"${this.password}"}}"""
-      else s"""{"username":"${this.username}","password":"${this.password}"}"""
-    this.loginStatusCode = if (this.isAbove79x) 200 else 204
+    this.loginPayload = s"""{"providerType":"${config.getString(
+      "auth.providerType"
+    )}","providerName":"${config.getString(
+      "auth.providerName"
+    )}","currentURL":"${this.baseUrl}/login","params":{"username":"${this.username}","password":"${this.password}"}}"""
+
+    logger.info(s"Getting Kibana status info")
+    val response = new HttpHelper(this).getStatus
+    this.buildHash =
+      response.extract[String](Symbol("version") / Symbol("build_hash"))
+    this.buildNumber =
+      response.extract[Int](Symbol("version") / Symbol("build_number"))
+    this.isSnapshotBuild = response
+      .extract[Boolean](Symbol("version") / Symbol("build_snapshot"))
+    this.version =
+      response.extract[String](Symbol("version") / Symbol("number"))
+
+    this.buildVersion =
+      if (this.isSnapshotBuild) s"${this.version}-SNAPSHOT"
+      else this.version
+    if (!this.buildVersion.startsWith(config.getString("app.version")))
+      throw new RuntimeException(
+        s"Kibana version mismatch: instance ${this.buildVersion} vs config ${config.getString("app.version")}"
+      )
     this.deploymentId = if (config.hasPath("deploymentId")) {
       Option(config.getString("deploymentId"))
     } else Option(System.getenv("DEPLOYMENT_ID"))

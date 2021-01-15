@@ -5,7 +5,7 @@ class Version(var str: String) extends Comparable[Version] {
   var value: String = str.toUpperCase
   if (!value.matches("[0-9]+(\\.[0-9]+)*(-SNAPSHOT)?"))
     throw new IllegalArgumentException(
-      "Invalid version format, supported formats: '7.11.0' or '7.11.0-SNAPSHOT'"
+      s"Invalid version format '${value}', supported formats: '7.11.0' or '7.11.0-SNAPSHOT'"
     )
 
   val postfix: String = if (value.indexOf("-SNAPSHOT") > 0) "SNAPSHOT" else ""
