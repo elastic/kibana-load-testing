@@ -38,13 +38,16 @@ class BaseSimulation extends Simulation {
 
     // saving deployment info to target/lastDeployment.txt"
     val meta = Map(
-      "deploymentId" -> appConfig.deploymentId.get,
+      "deploymentId" -> (if (appConfig.deploymentId.isDefined)
+                           appConfig.deploymentId.get
+                         else ""),
       "baseUrl" -> appConfig.baseUrl,
       "buildHash" -> appConfig.buildHash,
       "buildNumber" -> appConfig.buildNumber,
       "version" -> appConfig.version,
       "isSnapshotBuild" -> appConfig.isSnapshotBuild,
-      "branch" -> appConfig.branchName
+      "branch" -> (if (appConfig.branchName.isDefined) appConfig.branchName.get
+                   else "")
     )
     Helper.writeMapToFile(meta, lastDeploymentFilePath)
 
