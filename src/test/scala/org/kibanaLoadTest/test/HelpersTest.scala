@@ -63,4 +63,24 @@ class HelpersTest {
       Helper.validateUrl(validUrl, "Smth went wrong")
     )
   }
+
+  @Test
+  def readFileToMapTest(): Unit = {
+    val data =
+      Helper.readFileToMap(
+        getClass.getResource("/test/lastDeployment.txt").getPath
+      )
+
+    assertEquals(
+      Map(
+        "branch" -> "",
+        "deploymentId" -> "asdkjqwr9cuw4j23k",
+        "version" -> "8.0.0",
+        "baseUrl" -> "http://localhost:5620",
+        "buildNumber" -> "59211"
+      ),
+      data
+    )
+  }
+
 }

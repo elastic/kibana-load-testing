@@ -5,8 +5,6 @@ import io.gatling.core.structure.ChainBuilder
 import io.gatling.http.Predef._
 import org.kibanaLoadTest.helpers.Version
 
-import scala.concurrent.duration.DurationInt
-
 object Canvas {
   def loadWorkpad(
       baseUrl: String,
@@ -35,7 +33,7 @@ object Canvas {
             .headers(headers)
             .header("Referer", baseUrl + "/app/canvas")
             .check(status.is(200))
-        ).pause(5 seconds)
+        ).pause(5)
       }.exec(
           http("load workpad")
             .get("/api/canvas/workpad/${workpadId}")
@@ -44,7 +42,7 @@ object Canvas {
             .header("kbn-xsrf", "professionally-crafted-string-of-text")
             .check(status.is(200))
         )
-        .pause(1 seconds)
+        .pause(1)
         .exec(
           http("query canvas timelion")
             .post("/api/timelion/run")
@@ -55,7 +53,7 @@ object Canvas {
             .header("kbn-xsrf", "professionally-crafted-string-of-text")
             .check(status.is(200))
         )
-        .pause(1 seconds)
+        .pause(1)
         .exec(
           http("query canvas aggs 1")
             .post(fnsPath)
@@ -65,7 +63,7 @@ object Canvas {
             .header("Referer", baseUrl + "/app/canvas")
             .check(status.is(200))
         )
-        .pause(1 seconds)
+        .pause(1)
         .exec(
           http("query canvas aggs 2")
             .post(fnsPath)

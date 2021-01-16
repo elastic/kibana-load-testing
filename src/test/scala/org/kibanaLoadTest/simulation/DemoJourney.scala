@@ -3,7 +3,6 @@ package org.kibanaLoadTest.simulation
 import io.gatling.core.Predef._
 import io.gatling.core.structure.ScenarioBuilder
 import org.kibanaLoadTest.scenario.{Canvas, Dashboard, Discover, Login}
-import scala.concurrent.duration.DurationInt
 
 class DemoJourney extends BaseSimulation {
   val scenarioName = s"Kibana demo journey ${appConfig.buildVersion}"
@@ -25,11 +24,11 @@ class DemoJourney extends BaseSimulation {
   setUp(
     scn
       .inject(
-        constantConcurrentUsers(20) during (3 minutes), // 1
-        rampConcurrentUsers(20) to 50 during (3 minutes) // 2
+        constantConcurrentUsers(20) during (3 * 60), // 1
+        rampConcurrentUsers(20) to 50 during (3 * 60) // 2
       )
       .protocols(httpProtocol)
-  ).maxDuration(15 minutes)
+  ).maxDuration(15 * 60)
 
   // generate a closed workload injection profile
   // with levels of 10, 15, 20, 25 and 30 concurrent users
