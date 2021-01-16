@@ -4,8 +4,6 @@ import io.gatling.core.Predef._
 import io.gatling.core.structure.ChainBuilder
 import io.gatling.http.Predef._
 
-import scala.concurrent.duration.DurationInt
-
 object Dashboard {
   def load(baseUrl: String, headers: Map[String, String]): ChainBuilder =
     exec(
@@ -35,7 +33,7 @@ object Dashboard {
           .header("Referer", baseUrl + "/app/dashboards")
           .check(jsonPath("$.saved_objects[:1].id").saveAs("dashboardId"))
           .check(status.is(200))
-      ).pause(2 seconds)
+      ).pause(2)
         .exec(
           http("query panels list")
             .post("/api/saved_objects/_bulk_get")

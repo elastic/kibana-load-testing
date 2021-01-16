@@ -89,6 +89,13 @@ object Helper {
   def readFileToMap(filePath: String): Map[String, Any] = {
     val lines: Iterator[String] =
       Source.fromFile(filePath).getLines().filter(str => str.trim.nonEmpty)
-    lines.map(str => (str.split("=")(0), str.split("=")(1))).toMap
+    lines
+      .map(str =>
+        (
+          str.split("=", 2)(0),
+          if (str.split("=", 2).length > 1) str.split("=", 2)(1) else ""
+        )
+      )
+      .toMap
   }
 }
