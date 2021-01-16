@@ -7,8 +7,6 @@ import io.gatling.core.structure.ChainBuilder
 import io.gatling.http.Predef._
 import org.kibanaLoadTest.helpers.Helper
 
-import scala.concurrent.duration.DurationInt
-
 object Discover {
   private val discoverPayload =
     Helper.loadJsonString("data/discoverPayload.json")
@@ -36,7 +34,7 @@ object Discover {
         .body(StringBody(discoverPayloadQ1))
         .asJson
         .check(status.is(200))
-    ).pause(5 seconds)
+    ).pause(5)
       .exec(
         http("Discover query 2")
           .post("/internal/search/es")
@@ -46,7 +44,7 @@ object Discover {
           .asJson
           .check(status.is(200))
       )
-      .pause(5 seconds)
+      .pause(5)
       .exec(
         http("Discover query 3")
           .post("/internal/search/es")
