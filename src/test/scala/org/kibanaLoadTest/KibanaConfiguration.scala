@@ -51,9 +51,11 @@ class KibanaConfiguration {
       config.getString("app.host"),
       s"'app.host' should be a valid Kibana URL"
     )
+    this.buildVersion = config.getString("app.version")
     this.isSecurityEnabled = config.getBoolean("security.on")
     this.username = config.getString("auth.username")
     this.password = config.getString("auth.password")
+    this.isAbove79x = new Version(this.buildVersion).isAbove79x
 
     if (
       this.isAbove79x && (!config.hasPathOrNull("auth.providerType") || !config
@@ -65,12 +67,22 @@ class KibanaConfiguration {
       )
     }
 
-    this.loginPayload = s"""{"providerType":"${config.getString(
-      "auth.providerType"
-    )}","providerName":"${config.getString(
-      "auth.providerName"
-    )}","currentURL":"${this.baseUrl}/login","params":{"username":"${this.username}","password":"${this.password}"}}"""
+    this.loginPayload =
+      if (this.isAbove79x) s"""{"providerType":"${config.getString(
+        "auth.providerType"
+      )}","providerName":"${config.getString(
+        "auth.providerName"
+      )}","currentURL":"${this.baseUrl}/login","params":{"username":"${this.username}","password":"${this.password}"}}"""
+      else s"""{"username":"${this.username}","password":"${this.password}"}"""
+    this.loginStatusCode = if (this.isAbove79x) 200 else 204
+    this.deploymentId = if (config.hasPath("deploymentId")) {
+      Option(config.getString("deploymentId"))
+    } else None
 
+    this.branchName = Option(System.getenv("KIBANA_BRANCH"))
+  }
+
+  def syncWithInstance(): KibanaConfiguration = {
     logger.info(s"Getting Kibana status info")
     val response = new HttpHelper(this).getStatus
     this.buildHash =
@@ -82,17 +94,17 @@ class KibanaConfiguration {
     this.version =
       response.extract[String](Symbol("version") / Symbol("number"))
 
+    val configBuildVersion = this.buildVersion
     this.buildVersion =
       if (this.isSnapshotBuild) s"${this.version}-SNAPSHOT"
       else this.version
-    if (!this.buildVersion.startsWith(config.getString("app.version")))
+
+    if (!this.buildVersion.startsWith(configBuildVersion))
       throw new RuntimeException(
-        s"Kibana version mismatch: instance ${this.buildVersion} vs config ${config.getString("app.version")}"
+        "Kibana version mismatch: instance " + this.buildVersion + " vs config " + configBuildVersion
       )
-    this.deploymentId = if (config.hasPath("deploymentId")) {
-      Option(config.getString("deploymentId"))
-    } else None
-    this.branchName = Option(System.getenv("KIBANA_BRANCH"))
+
+    this
   }
 
   def print(): Unit = {

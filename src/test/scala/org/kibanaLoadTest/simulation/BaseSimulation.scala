@@ -23,9 +23,11 @@ class BaseSimulation extends Simulation {
   // appConfig is used to run load tests
   val appConfig: KibanaConfiguration = if (cloudDeployVersion.isDefined) {
     // create new deployment on Cloud
-    createDeployment(cloudDeployVersion.get)
+    createDeployment(cloudDeployVersion.get).syncWithInstance()
     // use existing deployment or local instance
-  } else new KibanaConfiguration(Helper.readResourceConfigFile(envConfig))
+  } else
+    new KibanaConfiguration(Helper.readResourceConfigFile(envConfig))
+      .syncWithInstance()
 
   val lastDeploymentFilePath: String = Paths
     .get("target")
