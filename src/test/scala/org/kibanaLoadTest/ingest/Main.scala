@@ -4,7 +4,7 @@ import java.io.File
 
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
 import org.kibanaLoadTest.ESConfiguration
-import org.kibanaLoadTest.helpers.{ESWrapper}
+import org.kibanaLoadTest.helpers.ESWrapper
 import org.kibanaLoadTest.helpers.Helper.{getLastReportPath, getTargetPath}
 
 object Main {
