@@ -5,6 +5,7 @@ pipeline {
     agent { label 'docker && tests-xl-highmem' }
     parameters {
         string(name: 'LATEST_7X', defaultValue: '7.12.0-SNAPSHOT', description: 'Latest 7.x snapshot')
+        string(name: 'STACK_VERSION', defaultValue: '8.0.0-SNAPSHOT', description: 'Stack version on Cloud or user/kibana:branch to build from source code')
     }
     stages {
         stage ('Initialize') {
