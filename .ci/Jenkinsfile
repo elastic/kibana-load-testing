@@ -3,12 +3,17 @@ library 'kibana-pipeline-library'
 
 pipeline {
     agent { label 'docker && tests-xl-highmem' }
+    parameters {
+        string(name: 'LATEST_7X', defaultValue: '7.12.0-SNAPSHOT', description: 'Latest 7.x snapshot')
+    }
     stages {
         stage ('Initialize') {
             steps {
                 sh '''
                     echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
+                    echo "STACK_VERSION = ${params.STACK_VERSION}"
+                    echo "LATEST_7X = ${params.LATEST_7X}"
+                    echo "INGEST_RESULTS = ${params.INGEST_RESULTS}"
                 '''
             }
         }
@@ -40,9 +45,9 @@ pipeline {
                             cd kibana
                             export HOME=${env.WORKSPACE}
                             export KIBANA_BRANCH=${env.KIBANA_BRANCH}
-                            echo "running setup.sh"
+                            echo "Prepare environment"
                             ./src/dev/ci_setup/setup.sh
-                            echo "running jenkins_build_load_testing.sh"
+                            echo "Build Kibana and run load scenario"
                             ./test/scripts/jenkins_build_load_testing.sh
                         """
                     } else {
@@ -51,7 +56,7 @@ pipeline {
                                 echo "Running tests against Kibana cloud instance"
                                 cd kibana-load-testing
                                 if [ "${params.STACK_VERSION}" = "7.x" ]; then
-                                    export cloudDeploy=7.12.0-SNAPSHOT
+                                    export cloudDeploy=${params.LATEST_7X}
                                 else
                                     export cloudDeploy=${params.STACK_VERSION}
                                 fi

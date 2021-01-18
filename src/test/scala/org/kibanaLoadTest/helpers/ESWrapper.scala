@@ -83,7 +83,7 @@ class ESWrapper(config: ESConfiguration) {
           | "buildHash": "${meta("buildHash")}",
           | "buildNumber": ${meta("buildNumber")},
           | "branch": "${meta("branch")}",
-          | "isSnapshotBuild": ${meta("isSnapshotBuild")}
+          | "isSnapshotBuild": ${meta("isSnapshotBuild")},
           | "baseUrl": "${meta("baseUrl")}",
           | "scenario": "${simulationClass}"
           |}
