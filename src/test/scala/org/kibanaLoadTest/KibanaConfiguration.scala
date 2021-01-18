@@ -52,6 +52,7 @@ class KibanaConfiguration {
       s"'app.host' should be a valid Kibana URL"
     )
     this.buildVersion = config.getString("app.version")
+    this.version = new Version(this.buildVersion).version
     this.isSecurityEnabled = config.getBoolean("security.on")
     this.username = config.getString("auth.username")
     this.password = config.getString("auth.password")
