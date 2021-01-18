@@ -9,12 +9,10 @@ pipeline {
     stages {
         stage ('Initialize') {
             steps {
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "STACK_VERSION = ${params.STACK_VERSION}"
-                    echo "LATEST_7X = ${params.LATEST_7X}"
-                    echo "INGEST_RESULTS = ${params.INGEST_RESULTS}"
-                '''
+                echo "PATH = ${PATH}"
+                echo "STACK_VERSION = ${params.STACK_VERSION}"
+                echo "LATEST_7X = ${params.LATEST_7X}"
+                echo "INGEST_RESULTS = ${params.INGEST_RESULTS}"
             }
         }
 
