@@ -124,16 +124,23 @@ class CloudHttpClient {
   }
 
   def getInstanceStatus(deploymentId: String): Map[String, String] = {
+
     val jsonString = getDeploymentStateInfo(deploymentId)
     val items = Array("kibana", "elasticsearch", "apm")
 
     items
       .map(item => {
-        val status = jsonString.extract[String](
-          Symbol("resources") / item / element(0) / Symbol("info") / Symbol(
-            "status"
+        var status = "undefined"
+        try {
+          status = jsonString.extract[String](
+            Symbol("resources") / item / element(0) / Symbol("info") / Symbol(
+              "status"
+            )
           )
-        )
+        } catch {
+          case ex: Exception =>
+            logger.error(ex.getMessage)
+        }
         item -> status
       })
       .toMap
@@ -161,12 +168,7 @@ class CloudHttpClient {
       s"waitForClusterToStart: waitTime ${timeout}ms, poolingInterval ${poolingInterval}ms"
     )
     while (!started && timeLeft > 0) {
-      var statuses = Map.empty[String, String]
-      try statuses = fn(deploymentId)
-      catch {
-        case ex: Exception =>
-          logger.error(ex.getMessage)
-      }
+      val statuses = fn(deploymentId)
       if (statuses.isEmpty || statuses.values.exists(s => s != "started")) {
         logger.info(
           s"waitForClusterToStart: Deployment is in progress... ${statuses.toString()}"
