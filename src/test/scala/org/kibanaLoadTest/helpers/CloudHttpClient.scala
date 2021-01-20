@@ -18,14 +18,17 @@ class CloudHttpClient {
   private val httpClient = HttpClientBuilder.create.build
   private val deployPayloadTemplate = "cloudPayload/createDeployment.json"
   private val baseUrl = "https://staging.found.no/api/v1/deployments"
-  private val API_KEY = Option(System.getenv("API_KEY"))
-    .orElse(
-      throw new RuntimeException(
-        "API_KEY variable is required for new deployment"
-      )
-    )
-    .get
+  private val apiKey = Option(System.getenv("API_KEY"))
+
   val logger: Logger = LoggerFactory.getLogger("httpClient")
+
+  def getApiKey: String = {
+    if (this.apiKey.isEmpty) {
+      throw new RuntimeException(
+        "apiKey variable is required for new deployment"
+      )
+    } else this.apiKey.get
+  }
 
   def preparePayload(stackVersion: String, config: Config): String = {
     logger.info(
@@ -88,7 +91,7 @@ class CloudHttpClient {
   def createDeployment(payload: String): Map[String, String] = {
     logger.info(s"createDeployment: Creating new deployment")
     val createRequest = new HttpPost(baseUrl)
-    createRequest.addHeader("Authorization", s"ApiKey $API_KEY")
+    createRequest.addHeader("Authorization", s"ApiKey $getApiKey")
     createRequest.setEntity(new StringEntity(payload))
     val response = httpClient.execute(createRequest)
     val responseString = EntityUtils.toString(response.getEntity)
@@ -115,7 +118,7 @@ class CloudHttpClient {
 
   def getDeploymentStateInfo(id: String): String = {
     val getStateRequest: HttpGet = new HttpGet(s"$baseUrl/$id")
-    getStateRequest.addHeader("Authorization", s"ApiKey $API_KEY")
+    getStateRequest.addHeader("Authorization", s"ApiKey $getApiKey")
     val response = httpClient.execute(getStateRequest)
     EntityUtils.toString(response.getEntity)
   }
@@ -145,16 +148,21 @@ class CloudHttpClient {
     )
   }
 
-  def waitForClusterToStart(deploymentId: String): Unit = {
+  def waitForClusterToStart(
+      deploymentId: String,
+      fn: String => Map[String, String] = getInstanceStatus,
+      timeout: Int = DEPLOYMENT_READY_TIMOEOUT,
+      interval: Int = DEPLOYMENT_POLLING_INTERVAL
+  ): Unit = {
     var started = false
-    var waitTime: Int = DEPLOYMENT_READY_TIMOEOUT
-    var poolingInterval = DEPLOYMENT_POLLING_INTERVAL
+    var timeLeft = timeout
+    var poolingInterval = interval
     logger.info(
-      s"waitForClusterToStart: waitTime ${waitTime}ms, poolingInterval ${poolingInterval}ms"
+      s"waitForClusterToStart: waitTime ${timeout}ms, poolingInterval ${poolingInterval}ms"
     )
-    while (!started && poolingInterval > 0) {
+    while (!started && timeLeft > 0) {
       var statuses = Map.empty[String, String]
-      try statuses = getInstanceStatus(deploymentId)
+      try statuses = fn(deploymentId)
       catch {
         case ex: Exception =>
           logger.error(ex.getMessage)
@@ -163,18 +171,18 @@ class CloudHttpClient {
         logger.info(
           s"waitForClusterToStart: Deployment is in progress... ${statuses.toString()}"
         )
-        waitTime -= poolingInterval
+        timeLeft -= poolingInterval
         sleep(poolingInterval)
       } else {
-        logger.info(s"waitForClusterToStart: Deployment is ready!")
+        logger.info("waitForClusterToStart: Deployment is ready!")
         started = true
       }
     }
 
     if (!started)
-      throw new RuntimeException {
-        s"Deployment $deploymentId was not ready after $waitTime ms"
-      }
+      throw new RuntimeException(
+        s"Deployment $deploymentId was not ready after $timeout ms"
+      )
   }
 
   def deleteDeployment(id: String): Unit = {
@@ -182,7 +190,7 @@ class CloudHttpClient {
     val deleteRequest = new HttpPost(
       "%s/%s/_shutdown?hide=true&skip_snapshot=true".format(baseUrl, id)
     )
-    deleteRequest.addHeader("Authorization", s"ApiKey $API_KEY")
+    deleteRequest.addHeader("Authorization", s"ApiKey $getApiKey")
     val response = httpClient.execute(deleteRequest)
     logger.info(
       s"deleteDeployment: Finished with status code ${response.getStatusLine.getStatusCode}"

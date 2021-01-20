@@ -2,7 +2,7 @@ package org.kibanaLoadTest.test
 
 import org.junit.jupiter.api.Test
 import org.kibanaLoadTest.helpers.{CloudHttpClient, Helper}
-import org.junit.jupiter.api.Assertions.{assertEquals, assertTrue}
+import org.junit.jupiter.api.Assertions.{assertEquals, assertThrows, assertTrue}
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 
 class CloudAPITest {
@@ -20,4 +20,37 @@ class CloudAPITest {
     assertTrue(host.startsWith("https://"), "Kibana Url is incorrect")
     cloudClient.deleteDeployment(metadata("deploymentId"))
   }
+
+  def getFakeStatus(id: String): Map[String, String] = {
+    // completely ignore id
+    Map(
+      "kibana" -> "initializing",
+      "elasticsearch" -> "started"
+    )
+  }
+
+  @Test
+  def waitForClusterToStartTest(): Unit = {
+    val deploymentId = "fakeIt"
+    val timeout = 100
+    val interval = 20
+    val exceptionThatWasThrown = assertThrows(
+      classOf[RuntimeException],
+      () => {
+        val cloudClient = new CloudHttpClient
+        cloudClient.waitForClusterToStart(
+          deploymentId,
+          getFakeStatus,
+          timeout,
+          interval
+        )
+      }
+    )
+
+    assertEquals(
+      s"Deployment $deploymentId was not ready after $timeout ms",
+      exceptionThatWasThrown.getMessage
+    )
+  }
+
 }
