@@ -124,7 +124,6 @@ class CloudHttpClient {
   }
 
   def getInstanceStatus(deploymentId: String): Map[String, String] = {
-
     val jsonString = getDeploymentStateInfo(deploymentId)
     val items = Array("kibana", "elasticsearch", "apm")
 
@@ -198,5 +197,4 @@ class CloudHttpClient {
       s"deleteDeployment: Finished with status code ${response.getStatusLine.getStatusCode}"
     )
   }
-
 }

@@ -44,5 +44,4 @@ class CloudAPITest {
 
     assertFalse(isReady)
   }
-
 }
