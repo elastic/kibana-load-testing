@@ -25,7 +25,7 @@ class CloudHttpClient {
   def getApiKey: String = {
     if (this.apiKey.isEmpty) {
       throw new RuntimeException(
-        "apiKey variable is required for new deployment"
+        "API_KEY variable is required to interact with Cloud service"
       )
     } else this.apiKey.get
   }
