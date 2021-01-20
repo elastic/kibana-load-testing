@@ -160,7 +160,7 @@ class CloudHttpClient {
       fn: String => Map[String, String] = getInstanceStatus,
       timeout: Int = DEPLOYMENT_READY_TIMOEOUT,
       interval: Int = DEPLOYMENT_POLLING_INTERVAL
-  ): Unit = {
+  ): Boolean = {
     var started = false
     var timeLeft = timeout
     var poolingInterval = interval
@@ -182,9 +182,9 @@ class CloudHttpClient {
     }
 
     if (!started)
-      throw new RuntimeException(
-        s"Deployment $deploymentId was not ready after $timeout ms"
-      )
+      logger.error(s"Deployment $deploymentId was not ready after $timeout ms")
+
+    started
   }
 
   def deleteDeployment(id: String): Unit = {

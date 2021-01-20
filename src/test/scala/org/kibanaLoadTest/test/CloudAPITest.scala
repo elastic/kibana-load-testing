@@ -2,7 +2,7 @@ package org.kibanaLoadTest.test
 
 import org.junit.jupiter.api.Test
 import org.kibanaLoadTest.helpers.{CloudHttpClient, Helper}
-import org.junit.jupiter.api.Assertions.{assertEquals, assertThrows, assertTrue}
+import org.junit.jupiter.api.Assertions.{assertEquals, assertFalse, assertTrue}
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 
 class CloudAPITest {
@@ -26,7 +26,7 @@ class CloudAPITest {
     val deploymentId = "fakeIt"
     val timeout = 100
     val interval = 20
-    def getFakeStatus(id: String): Map[String, String] = {
+    def getFailedStatus(id: String): Map[String, String] = {
       // completely ignore id
       Map(
         "kibana" -> "initializing",
@@ -34,23 +34,15 @@ class CloudAPITest {
       )
     }
 
-    val exceptionThatWasThrown = assertThrows(
-      classOf[RuntimeException],
-      () => {
-        val cloudClient = new CloudHttpClient
-        cloudClient.waitForClusterToStart(
-          deploymentId,
-          getFakeStatus,
-          timeout,
-          interval
-        )
-      }
+    val cloudClient = new CloudHttpClient
+    val isReady = cloudClient.waitForClusterToStart(
+      deploymentId,
+      getFailedStatus,
+      timeout,
+      interval
     )
 
-    assertEquals(
-      s"Deployment $deploymentId was not ready after $timeout ms",
-      exceptionThatWasThrown.getMessage
-    )
+    assertFalse(isReady)
   }
 
 }
