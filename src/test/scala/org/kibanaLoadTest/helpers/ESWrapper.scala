@@ -25,12 +25,12 @@ class ESWrapper(config: ESConfiguration) {
   def ingest(logFilePath: String, metaFilePath: String): Unit = {
     if (!Files.exists(Paths.get(logFilePath))) {
       throw new RuntimeException(
-        s"Gatling report file '${logFilePath}' is not found"
+        s"Gatling report file '$logFilePath' is not found"
       )
     }
     if (!Files.exists(Paths.get(metaFilePath))) {
       throw new RuntimeException(
-        s"Deployment meta file '${metaFilePath}' is not found"
+        s"Deployment meta file '$metaFilePath' is not found"
       )
     }
 
@@ -68,7 +68,7 @@ class ESWrapper(config: ESConfiguration) {
       val jsonString: String =
         s"""
           |{
-          | "timestamp": "${timestamp}",
+          | "timestamp": "$timestamp",
           | "name": "${request.name}",
           | "requestSendStartTime": "${Helper.convertDateToUTC(
           request.requestSendStartTime
@@ -82,15 +82,17 @@ class ESWrapper(config: ESConfiguration) {
           | "version": "${meta("version")}",
           | "buildHash": "${meta("buildHash")}",
           | "buildNumber": ${meta("buildNumber")},
+          | "branch": "${meta("branch")}",
+          | "isSnapshotBuild": ${meta("isSnapshotBuild")},
           | "baseUrl": "${meta("baseUrl")}",
-          | "scenario": "${simulationClass}"
+          | "scenario": "$simulationClass"
           |}
       """.stripMargin
 
       client.index(
         new IndexRequest(indexName).source(jsonString, XContentType.JSON),
         RequestOptions.DEFAULT
-      );
+      )
 
     })
 

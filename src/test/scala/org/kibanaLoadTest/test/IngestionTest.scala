@@ -35,6 +35,14 @@ class IngestionTest {
   }
 
   @Test
+  def getSimulationClassTest(): Unit = {
+    val className = LogParser.getSimulationClass(
+      getClass.getResource("/test/simulation.log").getPath
+    )
+    assertEquals(className, "org.kibanaLoadTest.simulation.DemoJourney")
+  }
+
+  @Test
   @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
   def ingestReportTest(): Unit = {
     val host = System.getenv("HOST_FROM_VAULT")

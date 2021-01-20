@@ -105,9 +105,8 @@ class HttpHelper(appConfig: KibanaConfiguration) {
       val statusResponse = httpClient.execute(statusRequest)
       responseBody = EntityUtils.toString(statusResponse.getEntity, "UTF-8")
     } catch {
-      case _: Throwable => {
+      case _: Throwable =>
         logger.error("Exception occurred during getting Kibana status")
-      }
     } finally {
       httpClient.close()
     }

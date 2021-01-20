@@ -3,42 +3,84 @@ library 'kibana-pipeline-library'
 
 pipeline {
     agent { label 'docker && tests-xl-highmem' }
+    parameters {
+        string(name: 'LATEST_7X', defaultValue: '7.12.0-SNAPSHOT', description: 'Latest 7.x snapshot')
+        string(name: 'STACK_VERSION', defaultValue: '8.0.0-SNAPSHOT', description: 'Stack version on Cloud or user/kibana:branch to build from source code')
+    }
     stages {
         stage ('Initialize') {
             steps {
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                '''
+                echo "PATH = ${PATH}"
+                echo "STACK_VERSION = ${params.STACK_VERSION}"
+                echo "LATEST_7X = ${params.LATEST_7X}"
+                echo "INGEST_RESULTS = ${params.INGEST_RESULTS}"
             }
         }
 
         stage ('Run tests') {
             steps {
-                withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY')  {
-                    sh """
-                        cd kibana-load-testing
-                        if [ "${params.STACK_VERSION}" = "7.x" ]; then
-                            export cloudDeploy=7.12.0-SNAPSHOT
-                        else
-                            export cloudDeploy=${params.STACK_VERSION}
-                        fi
-                        mvn clean -q -Dmaven.test.failure.ignore=true compile
-                        mvn gatling:test -q -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
-                    """
+                script {
+                    if (params.STACK_VERSION ==~ /(.*?)\/kibana:(.*)$/) {
+                        script {
+                            echo "Running tests against locally build Kibana instance"
+                            def values = "${params.STACK_VERSION}".split(':')
+                            env.KIBANA_REPO_NAME = values[0]
+                            env.KIBANA_BRANCH = values[1]
+                            echo "Using repo: git@github.com:${env.KIBANA_REPO_NAME}"
+                            echo "Using branch: ${env.KIBANA_BRANCH}"
+                        }
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: "${env.KIBANA_BRANCH}"]],
+                            doGenerateSubmoduleConfigurations: false,
+                            extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'kibana']],
+                            submoduleCfg: [],
+                            userRemoteConfigs: [[
+                                credentialsId: 'f6c7695a-671e-4f4f-a331-acdce44ff9ba',
+                                url: "git@github.com:${env.KIBANA_REPO_NAME}",
+                            ]],
+                        ])
+                        sh """
+                            cd kibana
+                            export HOME=${env.WORKSPACE}
+                            export KIBANA_BRANCH=${env.KIBANA_BRANCH}
+                            echo "Prepare environment"
+                            ./src/dev/ci_setup/setup.sh
+                            echo "Build Kibana and run load scenario"
+                            ./test/scripts/jenkins_build_load_testing.sh
+                        """
+                    } else {
+                        withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
+                            sh """
+                                echo "Running tests against Kibana cloud instance"
+                                cd kibana-load-testing
+                                if [ "${params.STACK_VERSION}" = "7.x" ]; then
+                                    export cloudDeploy=${params.LATEST_7X}
+                                else
+                                    export cloudDeploy=${params.STACK_VERSION}
+                                fi
+                                mvn clean -q -Dmaven.test.failure.ignore=true compile
+                                mvn gatling:test -q -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
+                            """
+                        }
+                    }
                 }
             }
             post {
                 success {
-                  withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'host', variable_name: 'HOST_FROM_VAULT') {
-                    withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
-                      withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
-                        sh '''
-                          cd kibana-load-testing
-                          mvn exec:java -Dexec.mainClass=org.kibanaLoadTest.ingest.Main -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false
-                        '''
+                  script {
+                      if (params.INGEST_RESULTS.toBoolean()) {
+                          withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'host', variable_name: 'HOST_FROM_VAULT') {
+                              withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
+                                  withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
+                                      sh '''
+                                        cd kibana-load-testing
+                                        mvn exec:java -Dexec.mainClass=org.kibanaLoadTest.ingest.Main -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false
+                                      '''
+                                  }
+                              }
+                          }
                       }
-                    }
                   }
                 }
             }

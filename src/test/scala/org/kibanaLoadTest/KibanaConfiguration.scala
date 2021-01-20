@@ -1,13 +1,20 @@
 package org.kibanaLoadTest
 
 import com.typesafe.config._
-import org.kibanaLoadTest.helpers.{Helper, Version}
+import org.kibanaLoadTest.helpers.{Helper, HttpHelper, Version}
 import org.slf4j.{Logger, LoggerFactory}
+import spray.json.DefaultJsonProtocol.{
+  IntJsonFormat,
+  StringJsonFormat,
+  BooleanJsonFormat
+}
+import spray.json.lenses.JsonLenses._
 
 class KibanaConfiguration {
 
   val logger: Logger = LoggerFactory.getLogger("KibanaConfiguration")
   var baseUrl = ""
+  var version = ""
   var buildVersion = ""
   var isSecurityEnabled = false
   var username = ""
@@ -16,6 +23,10 @@ class KibanaConfiguration {
   var loginStatusCode = 200
   var isAbove79x = true
   var deploymentId: Option[String] = None
+  var buildHash = ""
+  var buildNumber = 0
+  var isSnapshotBuild = false
+  var branchName: Option[String] = None
 
   def this(config: Config) = {
     this()
@@ -41,6 +52,7 @@ class KibanaConfiguration {
       s"'app.host' should be a valid Kibana URL"
     )
     this.buildVersion = config.getString("app.version")
+    this.version = new Version(this.buildVersion).version
     this.isSecurityEnabled = config.getBoolean("security.on")
     this.username = config.getString("auth.username")
     this.password = config.getString("auth.password")
@@ -67,6 +79,33 @@ class KibanaConfiguration {
     this.deploymentId = if (config.hasPath("deploymentId")) {
       Option(config.getString("deploymentId"))
     } else None
+
+    this.branchName = Option(System.getenv("KIBANA_BRANCH"))
+  }
+
+  def syncWithInstance(): KibanaConfiguration = {
+    logger.info(s"Getting Kibana status info")
+    val response = new HttpHelper(this).getStatus
+    this.buildHash =
+      response.extract[String](Symbol("version") / Symbol("build_hash"))
+    this.buildNumber =
+      response.extract[Int](Symbol("version") / Symbol("build_number"))
+    this.isSnapshotBuild = response
+      .extract[Boolean](Symbol("version") / Symbol("build_snapshot"))
+    this.version =
+      response.extract[String](Symbol("version") / Symbol("number"))
+
+    val configBuildVersion = this.buildVersion
+    this.buildVersion =
+      if (this.isSnapshotBuild) s"${this.version}-SNAPSHOT"
+      else this.version
+
+    if (!this.buildVersion.startsWith(configBuildVersion))
+      throw new RuntimeException(
+        "Kibana version mismatch: instance " + this.buildVersion + " vs config " + configBuildVersion
+      )
+
+    this
   }
 
   def print(): Unit = {

@@ -7,8 +7,6 @@ import io.gatling.http.protocol.HttpProtocolBuilder
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.{CloudHttpClient, Helper, HttpHelper, Version}
 import org.slf4j.{Logger, LoggerFactory}
-import spray.json.DefaultJsonProtocol.{IntJsonFormat, StringJsonFormat}
-import spray.json.lenses.JsonLenses._
 
 import java.io.File
 import java.nio.file.Paths
@@ -25,9 +23,11 @@ class BaseSimulation extends Simulation {
   // appConfig is used to run load tests
   val appConfig: KibanaConfiguration = if (cloudDeployVersion.isDefined) {
     // create new deployment on Cloud
-    createDeployment(cloudDeployVersion.get)
+    createDeployment(cloudDeployVersion.get).syncWithInstance()
     // use existing deployment or local instance
-  } else new KibanaConfiguration(Helper.readResourceConfigFile(envConfig))
+  } else
+    new KibanaConfiguration(Helper.readResourceConfigFile(envConfig))
+      .syncWithInstance()
 
   val lastDeploymentFilePath: String = Paths
     .get("target")
@@ -39,27 +39,23 @@ class BaseSimulation extends Simulation {
     appConfig.print()
 
     // saving deployment info to target/lastDeployment.txt"
-    if (appConfig.deploymentId.isDefined) {
-      logger.info(s"Getting Kibana status info")
-      val response = new HttpHelper(appConfig).getStatus
-      if (response.length > 1) {
-        val meta = Map(
-          "deploymentId" -> appConfig.deploymentId.get,
-          "baseUrl" -> appConfig.baseUrl,
-          "version" -> appConfig.buildVersion,
-          "buildHash" -> response
-            .extract[String](Symbol("version") / Symbol("build_hash")),
-          "buildNumber" -> response
-            .extract[Int](Symbol("version") / Symbol("build_number"))
-        )
-        Helper.writeMapToFile(meta, lastDeploymentFilePath)
-      }
-    }
+    val meta = Map(
+      "deploymentId" -> (if (appConfig.deploymentId.isDefined)
+                           appConfig.deploymentId.get
+                         else ""),
+      "baseUrl" -> appConfig.baseUrl,
+      "buildHash" -> appConfig.buildHash,
+      "buildNumber" -> appConfig.buildNumber,
+      "version" -> appConfig.version,
+      "isSnapshotBuild" -> appConfig.isSnapshotBuild,
+      "branch" -> (if (appConfig.branchName.isDefined) appConfig.branchName.get
+                   else "")
+    )
+    Helper.writeMapToFile(meta, lastDeploymentFilePath)
 
     // load sample data
     logger.info(s"Loading sample data")
     new HttpHelper(appConfig).addSampleData("ecommerce")
-
   }
 
   after {
