@@ -21,19 +21,19 @@ class CloudAPITest {
     cloudClient.deleteDeployment(metadata("deploymentId"))
   }
 
-  def getFakeStatus(id: String): Map[String, String] = {
-    // completely ignore id
-    Map(
-      "kibana" -> "initializing",
-      "elasticsearch" -> "started"
-    )
-  }
-
   @Test
   def waitForClusterToStartTest(): Unit = {
     val deploymentId = "fakeIt"
     val timeout = 100
     val interval = 20
+    def getFakeStatus(id: String): Map[String, String] = {
+      // completely ignore id
+      Map(
+        "kibana" -> "initializing",
+        "elasticsearch" -> "started"
+      )
+    }
+
     val exceptionThatWasThrown = assertThrows(
       classOf[RuntimeException],
       () => {
