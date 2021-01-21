@@ -24,7 +24,7 @@ class DemoJourney extends BaseSimulation {
   setUp(
     scn
       .inject(
-        atOnceUsers(50)
+        atOnceUsers(100)
         // rampUsers(60).during(3 * 60)
 //        constantConcurrentUsers(20) during (3 * 60), // 1
 //        rampConcurrentUsers(20) to 100 during (3 * 60) // 2
