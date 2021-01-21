@@ -81,7 +81,11 @@ class BaseSimulation extends Simulation {
     val cloudClient = new CloudHttpClient
     val payload = cloudClient.preparePayload(stackVersion, config)
     val metadata = cloudClient.createDeployment(payload)
-    cloudClient.waitForClusterToStart(metadata("deploymentId"))
+    val isReady = cloudClient.waitForClusterToStart(metadata("deploymentId"))
+    if (!isReady) {
+      cloudClient.deleteDeployment(metadata("deploymentId"))
+      throw new RuntimeException("Stop due to failed deployment...")
+    }
     val host = cloudClient.getKibanaUrl(metadata("deploymentId"))
     val cloudConfig = ConfigFactory
       .load()
