@@ -13,12 +13,15 @@ import java.nio.file.Paths
 
 class BaseSimulation extends Simulation {
   val logger: Logger = LoggerFactory.getLogger("Base Simulation")
-  val CLOUD_DEPLOY_CONFIG = "config/deploy/default.conf"
-  // "7.11.0-SNAPSHOT"
-  val cloudDeployVersion: Option[String] = Option(System.getenv("cloudDeploy"))
-  // "config/cloud-7.9.2.conf"
-  val envConfig: String =
-    Option(System.getenv("env")).getOrElse("config/local.conf")
+  // -DdeploymentConfig=path/to/config, default one deploys basic instance on GCP
+  val CLOUD_DEPLOY_CONFIG =
+    System.getProperty("deploymentConfig", "config/deploy/default.conf")
+  // -DcloudDeployVersion=8.0.0-SNAPSHOT, optional to deploy Cloud instance
+  val cloudDeployVersion: Option[String] = Option(
+    System.getProperty("cloudStackVersion")
+  )
+  // -DenvConfig=path/to/config, default is a local instance
+  val envConfig: String = System.getProperty("env", "config/local.conf")
 
   // appConfig is used to run load tests
   val appConfig: KibanaConfiguration = if (cloudDeployVersion.isDefined) {
@@ -75,6 +78,7 @@ class BaseSimulation extends Simulation {
   }
 
   def createDeployment(stackVersion: String): KibanaConfiguration = {
+    logger.info(s"Reading deployment configuration: $CLOUD_DEPLOY_CONFIG")
     val config = Helper.readResourceConfigFile(CLOUD_DEPLOY_CONFIG)
     val version = new Version(stackVersion)
     val providerName = if (version.isAbove79x) "cloud-basic" else "basic-cloud"
