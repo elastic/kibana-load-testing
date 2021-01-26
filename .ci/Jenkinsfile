@@ -50,7 +50,7 @@ pipeline {
                         """
                     } else {
                         withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
-                            sh """#!/bin/bash
+                            sh """
                                 echo "Running tests against Kibana cloud instance"
                                 cd kibana-load-testing
                                 mvn clean -q -Dmaven.test.failure.ignore=true compile
