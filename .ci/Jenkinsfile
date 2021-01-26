@@ -2,7 +2,7 @@
 library 'kibana-pipeline-library'
 
 pipeline {
-    agent { label 'docker && tests-xl-highmem' }
+    agent { label 'docker && ubuntu-tests-l' }
     parameters {
         string(name: 'STACK_VERSION', defaultValue: '8.0.0-SNAPSHOT', description: 'Stack version on Cloud or user/kibana:branch to build from source code')
         string(name: 'DEPLOY_CONFIG', defaultValue: 'config/deploy/default.conf', description: 'Path to Cloud deployment configuration')
