@@ -4,29 +4,47 @@ import io.gatling.core.Predef._
 import io.gatling.core.structure.ScenarioBuilder
 import org.kibanaLoadTest.scenario.{Canvas, Dashboard, Discover, Login}
 
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.FiniteDuration
+
 class CloudAtOnceJourney extends BaseSimulation {
   val scenarioName =
     s"Kibana cloud all at once journey ${appConfig.buildVersion}"
 
-  val scn: ScenarioBuilder = scenario(scenarioName)
-    .exec(
-      Login
-        .doLogin(
-          appConfig.isSecurityEnabled,
-          appConfig.loginPayload,
-          appConfig.loginStatusCode
-        )
-        .pause(5)
+  val simulationTimeout =
+    FiniteDuration(
+      10,
+      TimeUnit.MINUTES
     )
-    .exec(Discover.doQuery(appConfig.baseUrl, defaultHeaders).pause(10))
-    .exec(Dashboard.load(appConfig.baseUrl, defaultHeaders).pause(10))
+
+  val loginPause =
+    FiniteDuration(
+      2,
+      TimeUnit.SECONDS
+    )
+
+  val stepPause =
+    FiniteDuration(
+      5,
+      TimeUnit.SECONDS
+    )
+
+  val scnDiscover: ScenarioBuilder = scenario(scenarioName)
+    .exec(loginStep.pause(loginPause))
+    .exec(Discover.doQuery(appConfig.baseUrl, defaultHeaders).pause(stepPause))
+
+  val scnDashboard: ScenarioBuilder = scenario(scenarioName)
+    .exec(loginStep.pause(loginPause))
+    .exec(Dashboard.load(appConfig.baseUrl, defaultHeaders).pause(stepPause))
+
+  val scnCanvas: ScenarioBuilder = scenario(scenarioName)
+    .exec(loginStep.pause(loginPause))
     .exec(Canvas.loadWorkpad(appConfig.baseUrl, defaultHeaders))
 
   setUp(
-    scn
-      .inject(
-        atOnceUsers(80) // all virtual users start scenario at once
-      )
-      .protocols(httpProtocol)
-  ).maxDuration(10 * 60)
+    scnDiscover.inject(atOnceUsers(80)).protocols(httpProtocol),
+    scnDashboard.inject(atOnceUsers(80)).protocols(httpProtocol),
+    scnCanvas.inject(atOnceUsers(80)).protocols(httpProtocol)
+  ).maxDuration(simulationTimeout)
+
 }

@@ -6,6 +6,7 @@ import io.gatling.http.Predef._
 import io.gatling.http.protocol.HttpProtocolBuilder
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.{CloudHttpClient, Helper, HttpHelper, Version}
+import org.kibanaLoadTest.scenario.Login
 import org.slf4j.{Logger, LoggerFactory}
 
 import java.io.File
@@ -161,6 +162,13 @@ class BaseSimulation extends Simulation {
   )
 
   var defaultTextHeaders = Map("Content-Type" -> "text/html; charset=utf-8")
+
+  var loginStep = Login
+    .doLogin(
+      appConfig.isSecurityEnabled,
+      appConfig.loginPayload,
+      appConfig.loginStatusCode
+    )
 
   if (appConfig.isSecurityEnabled) {
     defaultHeaders += ("Cookie" -> "${Cookie}")
