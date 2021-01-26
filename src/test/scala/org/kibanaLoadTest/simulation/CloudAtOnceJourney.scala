@@ -4,8 +4,9 @@ import io.gatling.core.Predef._
 import io.gatling.core.structure.ScenarioBuilder
 import org.kibanaLoadTest.scenario.{Canvas, Dashboard, Discover, Login}
 
-class CloudQuickJourney extends BaseSimulation {
-  val scenarioName = s"Kibana cloud quick journey ${appConfig.buildVersion}"
+class CloudAtOnceJourney extends BaseSimulation {
+  val scenarioName =
+    s"Kibana cloud all at once journey ${appConfig.buildVersion}"
 
   val scn: ScenarioBuilder = scenario(scenarioName)
     .exec(

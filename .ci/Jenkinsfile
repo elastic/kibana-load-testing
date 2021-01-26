@@ -54,7 +54,7 @@ pipeline {
                                 echo "Running tests against Kibana cloud instance"
                                 cd kibana-load-testing
                                 mvn clean -q -Dmaven.test.failure.ignore=true compile
-                                mvn gatling:test -q -DcloudStackVersion=${params.STACK_VERSION} -DdeploymentConfig=${params.DEPLOY_CONFIG} -Dgatling.simulationClass=org.kibanaLoadTest.simulation.CloudQuickJourney
+                                mvn gatling:test -q -DcloudStackVersion=${params.STACK_VERSION} -DdeploymentConfig=${params.DEPLOY_CONFIG} -Dgatling.simulationClass=org.kibanaLoadTest.simulation.CloudAtOnceJourney
                             """
                         }
                     }
