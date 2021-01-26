@@ -24,7 +24,7 @@ class CloudQuickJourney extends BaseSimulation {
   setUp(
     scn
       .inject(
-        atOnceUsers(70) // 1
+        atOnceUsers(80) // all virtual users start scenario at once
       )
       .protocols(httpProtocol)
   ).maxDuration(10 * 60)
