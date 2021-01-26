@@ -78,6 +78,7 @@ class BaseSimulation extends Simulation {
   }
 
   def createDeployment(stackVersion: String): KibanaConfiguration = {
+    logger.info(s"Reading deployment configuration: $CLOUD_DEPLOY_CONFIG")
     val config = Helper.readResourceConfigFile(CLOUD_DEPLOY_CONFIG)
     val version = new Version(stackVersion)
     val providerName = if (version.isAbove79x) "cloud-basic" else "basic-cloud"
