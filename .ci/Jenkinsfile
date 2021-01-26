@@ -6,6 +6,7 @@ pipeline {
     parameters {
         string(name: 'LATEST_7X', defaultValue: '7.12.0-SNAPSHOT', description: 'Latest 7.x snapshot')
         string(name: 'STACK_VERSION', defaultValue: '8.0.0-SNAPSHOT', description: 'Stack version on Cloud or user/kibana:branch to build from source code')
+        string(name: 'DEPLOY_CONFIG', defaultValue: 'config/deploy/default.conf', description: 'Path to Cloud deployment configuration')
     }
     stages {
         stage ('Initialize') {
@@ -55,12 +56,12 @@ pipeline {
                                 echo "Running tests against Kibana cloud instance"
                                 cd kibana-load-testing
                                 if [ "${params.STACK_VERSION}" = "7.x" ]; then
-                                    export cloudDeploy=${params.LATEST_7X}
+                                    ${env.CLOUD_VERSION} = ${params.LATEST_7X}
                                 else
-                                    export cloudDeploy=${params.STACK_VERSION}
+                                    ${env.CLOUD_VERSION} = ${params.STACK_VERSION}
                                 fi
                                 mvn clean -q -Dmaven.test.failure.ignore=true compile
-                                mvn gatling:test -q -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
+                                mvn gatling:test -q -DcloudStackVersion=${env.CLOUD_BUILD} -DdeploymentConfig=${params.DEPLOY_CONFIG} -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
                             """
                         }
                     }
