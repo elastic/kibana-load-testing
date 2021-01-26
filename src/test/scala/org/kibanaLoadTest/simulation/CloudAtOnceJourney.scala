@@ -8,8 +8,9 @@ import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.FiniteDuration
 
 class CloudAtOnceJourney extends BaseSimulation {
-  val scenarioName =
-    s"Kibana cloud all at once journey ${appConfig.buildVersion}"
+  def scenarioName(module: String): String = {
+    s"Cloud  atOnce ${module} ${appConfig.buildVersion}"
+  }
 
   val simulationTimeout =
     FiniteDuration(
@@ -29,15 +30,15 @@ class CloudAtOnceJourney extends BaseSimulation {
       TimeUnit.SECONDS
     )
 
-  val scnDiscover: ScenarioBuilder = scenario(scenarioName)
+  val scnDiscover: ScenarioBuilder = scenario(scenarioName("discover"))
     .exec(loginStep.pause(loginPause))
     .exec(Discover.doQuery(appConfig.baseUrl, defaultHeaders).pause(stepPause))
 
-  val scnDashboard: ScenarioBuilder = scenario(scenarioName)
+  val scnDashboard: ScenarioBuilder = scenario(scenarioName("dashboard"))
     .exec(loginStep.pause(loginPause))
     .exec(Dashboard.load(appConfig.baseUrl, defaultHeaders).pause(stepPause))
 
-  val scnCanvas: ScenarioBuilder = scenario(scenarioName)
+  val scnCanvas: ScenarioBuilder = scenario(scenarioName("canvas"))
     .exec(loginStep.pause(loginPause))
     .exec(Canvas.loadWorkpad(appConfig.baseUrl, defaultHeaders))
 
