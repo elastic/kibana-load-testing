@@ -60,9 +60,11 @@ mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJou
 ```
 mvn install
 export API_KEY=<your_cloud_key>
-export cloudDeploy=7.11.0-SNAPSHOT
-mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
+mvn gatling:test -q -DcloudStackVersion=7.11.0-SNAPSHOT -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
 ```
+- Optionally create a custom deployment configuration and pass it in command `-DdeploymentConfig=config/deploy/custom.conf`
+
+
 
 Follow logs to track deployment status:
 
