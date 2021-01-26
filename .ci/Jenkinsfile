@@ -4,7 +4,6 @@ library 'kibana-pipeline-library'
 pipeline {
     agent { label 'docker && tests-xl-highmem' }
     parameters {
-        string(name: 'LATEST_7X', defaultValue: '7.12.0-SNAPSHOT', description: 'Latest 7.x snapshot')
         string(name: 'STACK_VERSION', defaultValue: '8.0.0-SNAPSHOT', description: 'Stack version on Cloud or user/kibana:branch to build from source code')
         string(name: 'DEPLOY_CONFIG', defaultValue: 'config/deploy/default.conf', description: 'Path to Cloud deployment configuration')
     }
@@ -13,7 +12,6 @@ pipeline {
             steps {
                 echo "PATH = ${PATH}"
                 echo "STACK_VERSION = ${params.STACK_VERSION}"
-                echo "LATEST_7X = ${params.LATEST_7X}"
                 echo "INGEST_RESULTS = ${params.INGEST_RESULTS}"
             }
         }
@@ -52,16 +50,11 @@ pipeline {
                         """
                     } else {
                         withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
-                            sh """
+                            sh """#!/bin/bash
                                 echo "Running tests against Kibana cloud instance"
                                 cd kibana-load-testing
-                                if [ "${params.STACK_VERSION}" = "7.x" ]; then
-                                    ${env.CLOUD_VERSION} = ${params.LATEST_7X}
-                                else
-                                    ${env.CLOUD_VERSION} = ${params.STACK_VERSION}
-                                fi
                                 mvn clean -q -Dmaven.test.failure.ignore=true compile
-                                mvn gatling:test -q -DcloudStackVersion=${env.CLOUD_BUILD} -DdeploymentConfig=${params.DEPLOY_CONFIG} -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
+                                mvn gatling:test -q -DcloudStackVersion=${params.STACK_VERSION} -DdeploymentConfig=${params.DEPLOY_CONFIG} -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
                             """
                         }
                     }
