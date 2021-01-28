@@ -45,11 +45,11 @@ class AllAtOnceJourney extends BaseSimulation {
 
   setUp(
     scnDiscover
-      .inject(atOnceUsers(120), nothingFor(scnPause))
+      .inject(atOnceUsers(150), nothingFor(scnPause))
       .andThen(
         scnDashboard
-          .inject(atOnceUsers(120), nothingFor(scnPause))
-          .andThen(scnCanvas.inject(atOnceUsers(120)))
+          .inject(atOnceUsers(150), nothingFor(scnPause))
+          .andThen(scnCanvas.inject(atOnceUsers(150)))
       )
   ).protocols(httpProtocol).maxDuration(simulationTimeout)
 }
