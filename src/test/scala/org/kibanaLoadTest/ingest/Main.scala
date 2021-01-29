@@ -1,11 +1,10 @@
 package org.kibanaLoadTest.ingest
 
 import java.io.File
-
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
 import org.kibanaLoadTest.ESConfiguration
 import org.kibanaLoadTest.helpers.ESWrapper
-import org.kibanaLoadTest.helpers.Helper.{getLastReportPath, getTargetPath}
+import org.kibanaLoadTest.helpers.Helper.{getReportFolderPaths, getTargetPath}
 
 object Main {
   def main(args: Array[String]): Unit = {
@@ -23,9 +22,10 @@ object Main {
     )
 
     val esClient = new ESWrapper(esConfig)
-    val logFilePath = getLastReportPath + File.separator + "simulation.log"
     val lastDeploymentFilePath =
       getTargetPath + File.separator + "lastDeployment.txt"
-    esClient.ingest(logFilePath, lastDeploymentFilePath)
+    val simulationFiles =
+      getReportFolderPaths.map(_ + File.separator + "simulation.log")
+    simulationFiles.foreach(_ => esClient.ingest(_, lastDeploymentFilePath))
   }
 }
