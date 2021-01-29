@@ -55,6 +55,14 @@ object Helper {
       .getAbsolutePath
   }
 
+  def getReportFolderPaths: List[String] = {
+    val dir: File = new File(getTargetPath + File.separator + "gatling")
+    val files: Array[File] = dir.listFiles
+    files.toList
+      .filter(file => file.isDirectory)
+      .map(file => file.getAbsolutePath)
+  }
+
   def validateUrl(
       str: String,
       errorMsg: String,
