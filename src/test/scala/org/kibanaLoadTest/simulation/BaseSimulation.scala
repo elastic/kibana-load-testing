@@ -2,6 +2,7 @@ package org.kibanaLoadTest.simulation
 
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
 import io.gatling.core.Predef._
+import io.gatling.core.structure.ChainBuilder
 import io.gatling.http.Predef._
 import io.gatling.http.protocol.HttpProtocolBuilder
 import org.kibanaLoadTest.KibanaConfiguration
@@ -15,7 +16,7 @@ import java.nio.file.Paths
 class BaseSimulation extends Simulation {
   val logger: Logger = LoggerFactory.getLogger("Base Simulation")
   // -DdeploymentConfig=path/to/config, default one deploys basic instance on GCP
-  val CLOUD_DEPLOY_CONFIG =
+  val CLOUD_DEPLOY_CONFIG: String =
     System.getProperty("deploymentConfig", "config/deploy/default.conf")
   // -DcloudDeployVersion=8.0.0-SNAPSHOT, optional to deploy Cloud instance
   val cloudDeployVersion: Option[String] = Option(
@@ -163,7 +164,7 @@ class BaseSimulation extends Simulation {
 
   var defaultTextHeaders = Map("Content-Type" -> "text/html; charset=utf-8")
 
-  var loginStep = Login
+  var loginStep: ChainBuilder = Login
     .doLogin(
       appConfig.isSecurityEnabled,
       appConfig.loginPayload,
