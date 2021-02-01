@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.Helper.getTargetPath
 import org.kibanaLoadTest.helpers.{Helper, Version}
+
 import java.io.File
 
 class HelpersTest {
@@ -88,12 +89,13 @@ class HelpersTest {
   @Test
   def getReportFolderPathsTest(): Unit = {
     val testFolders = List(
+      getTargetPath + File.separator + "gatling",
       getTargetPath + File.separator + "gatling" + File.separator + "demo1",
       getTargetPath + File.separator + "gatling" + File.separator + "demo2"
     )
-    new File(testFolders(0)).mkdir()
-    new File(testFolders(1)).mkdir()
+    testFolders.foreach(path => new File(path).mkdir())
+
     val paths = Helper.getReportFolderPaths
-    assertEquals(testFolders, paths)
+    assertEquals(2, paths.length)
   }
 }
