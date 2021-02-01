@@ -48,6 +48,9 @@ object Helper {
 
   def getLastReportPath: String = {
     val dir: File = new File(getTargetPath + File.separator + "gatling")
+    if (!dir.exists()) {
+      return null
+    }
     val files: Array[File] = dir.listFiles
     files.toList
       .filter(file => file.isDirectory)
@@ -57,6 +60,9 @@ object Helper {
 
   def getReportFolderPaths: List[String] = {
     val dir: File = new File(getTargetPath + File.separator + "gatling")
+    if (!dir.exists()) {
+      return List.empty
+    }
     val files: Array[File] = dir.listFiles
     files.toList
       .filter(file => file.isDirectory)

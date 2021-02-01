@@ -5,8 +5,11 @@ import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
 import org.kibanaLoadTest.ESConfiguration
 import org.kibanaLoadTest.helpers.ESWrapper
 import org.kibanaLoadTest.helpers.Helper.{getReportFolderPaths, getTargetPath}
+import org.slf4j.{Logger, LoggerFactory}
 
 object Main {
+  val logger: Logger = LoggerFactory.getLogger("ingest:Main")
+
   def main(args: Array[String]): Unit = {
     val hostValue = System.getenv("HOST_FROM_VAULT")
     val host =
@@ -26,6 +29,10 @@ object Main {
       getTargetPath + File.separator + "lastDeployment.txt"
     val simulationFiles =
       getReportFolderPaths.map(_ + File.separator + "simulation.log")
-    simulationFiles.foreach(_ => esClient.ingest(_, lastDeploymentFilePath))
+
+    logger.info(s"Found ${simulationFiles.length} report folders")
+    simulationFiles.foreach(file =>
+      esClient.ingest(file, lastDeploymentFilePath)
+    )
   }
 }
