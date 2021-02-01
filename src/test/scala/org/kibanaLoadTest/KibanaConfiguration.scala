@@ -4,9 +4,9 @@ import com.typesafe.config._
 import org.kibanaLoadTest.helpers.{Helper, HttpHelper, Version}
 import org.slf4j.{Logger, LoggerFactory}
 import spray.json.DefaultJsonProtocol.{
-  IntJsonFormat,
-  StringJsonFormat,
-  BooleanJsonFormat
+  BooleanJsonFormat,
+  LongJsonFormat,
+  StringJsonFormat
 }
 import spray.json.lenses.JsonLenses._
 
@@ -24,7 +24,7 @@ class KibanaConfiguration {
   var isAbove79x = true
   var deploymentId: Option[String] = None
   var buildHash = ""
-  var buildNumber = 0
+  var buildNumber: Long = 0
   var isSnapshotBuild = false
   var branchName: Option[String] = None
 
@@ -89,7 +89,7 @@ class KibanaConfiguration {
     this.buildHash =
       response.extract[String](Symbol("version") / Symbol("build_hash"))
     this.buildNumber =
-      response.extract[Int](Symbol("version") / Symbol("build_number"))
+      response.extract[Long](Symbol("version") / Symbol("build_number"))
     this.isSnapshotBuild = response
       .extract[Boolean](Symbol("version") / Symbol("build_snapshot"))
     this.version =
