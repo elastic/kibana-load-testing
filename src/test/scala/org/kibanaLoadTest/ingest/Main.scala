@@ -26,6 +26,8 @@ object Main {
       getTargetPath + File.separator + "lastDeployment.txt"
     val simulationFiles =
       getReportFolderPaths.map(_ + File.separator + "simulation.log")
-    simulationFiles.foreach(_ => esClient.ingest(_, lastDeploymentFilePath))
+    simulationFiles.foreach(file =>
+      esClient.ingest(file, lastDeploymentFilePath)
+    )
   }
 }

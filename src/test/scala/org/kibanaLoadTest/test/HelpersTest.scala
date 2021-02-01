@@ -3,7 +3,9 @@ package org.kibanaLoadTest.test
 import org.junit.jupiter.api.Assertions.{assertEquals, assertThrows}
 import org.junit.jupiter.api.Test
 import org.kibanaLoadTest.KibanaConfiguration
+import org.kibanaLoadTest.helpers.Helper.getTargetPath
 import org.kibanaLoadTest.helpers.{Helper, Version}
+import java.io.File
 
 class HelpersTest {
 
@@ -81,5 +83,17 @@ class HelpersTest {
       ),
       data
     )
+  }
+
+  @Test
+  def getReportFolderPathsTest(): Unit = {
+    val testFolders = List(
+      getTargetPath + File.separator + "gatling" + File.separator + "demo1",
+      getTargetPath + File.separator + "gatling" + File.separator + "demo2"
+    )
+    new File(testFolders(0)).mkdir()
+    new File(testFolders(1)).mkdir()
+    val paths = Helper.getReportFolderPaths
+    assertEquals(testFolders, paths)
   }
 }
