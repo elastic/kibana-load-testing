@@ -46,7 +46,7 @@ pipeline {
                             echo "Prepare environment"
                             ./src/dev/ci_setup/setup.sh
                             echo "Build Kibana and run load scenario"
-                            ./test/scripts/jenkins_build_load_testing.sh
+                            ./test/scripts/jenkins_build_load_testing.sh -s 'local.AllAtOnceJourney'
                         """
                     } else {
                         withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
