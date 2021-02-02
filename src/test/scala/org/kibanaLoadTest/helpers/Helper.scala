@@ -33,15 +33,20 @@ object Helper {
 
   def readResourceConfigFile(configName: String): Config = {
     val is = getClass.getClassLoader.getResourceAsStream(configName)
+    if (is == null) {
+      throw new RuntimeException(s"Config file is not found: $configName")
+    }
     val source = scala.io.Source.fromInputStream(is).mkString
     ConfigFactory.parseString(source)
   }
 
-  def loadJsonString(filePath: String): String =
-    Source
-      .fromURL(getClass.getClassLoader.getResource(filePath))
-      .getLines()
-      .mkString
+  def loadJsonString(filePath: String): String = {
+    val url = getClass.getClassLoader.getResource(filePath)
+    if (url == null) {
+      throw new RuntimeException(s"File is not found: $filePath")
+    }
+    Source.fromURL(url).getLines().mkString
+  }
 
   def getTargetPath: String =
     Paths.get("target").toAbsolutePath.normalize.toString

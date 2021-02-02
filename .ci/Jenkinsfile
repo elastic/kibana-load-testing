@@ -46,7 +46,7 @@ pipeline {
                             echo "Prepare environment"
                             ./src/dev/ci_setup/setup.sh
                             echo "Build Kibana and run load scenario"
-                            ./test/scripts/jenkins_build_load_testing.sh -s 'local.AllAtOnceJourney'
+                            ./test/scripts/jenkins_build_load_testing.sh -s 'local.AtOnceJourney'
                         """
                     } else {
                         withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
@@ -54,7 +54,7 @@ pipeline {
                                 echo "Running tests against Kibana cloud instance"
                                 cd kibana-load-testing
                                 mvn clean -q -Dmaven.test.failure.ignore=true compile
-                                mvn gatling:test -q -DcloudStackVersion=${params.STACK_VERSION} -DdeploymentConfig=${params.DEPLOY_CONFIG} -Dgatling.simulationClass=org.kibanaLoadTest.simulation.CloudAtOnceJourney
+                                mvn gatling:test -q -DcloudStackVersion=${params.STACK_VERSION} -DdeploymentConfig=${params.DEPLOY_CONFIG} -Dgatling.simulationClass=org.kibanaLoadTest.simulation.cloud.AtOnceJourney
                             """
                         }
                     }

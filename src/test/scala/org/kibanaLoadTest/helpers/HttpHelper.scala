@@ -1,5 +1,8 @@
 package org.kibanaLoadTest.helpers
 
+import io.gatling.core.Predef._
+import io.gatling.http.Predef._
+import io.gatling.http.protocol.HttpProtocolBuilder
 import org.apache.http.client.methods.{HttpDelete, HttpGet, HttpPost}
 import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.{CloseableHttpClient, HttpClientBuilder}
@@ -38,6 +41,7 @@ class HttpHelper(appConfig: KibanaConfiguration) {
   }
 
   def removeSampleData(data: String): Unit = {
+    logger.info("Removing sample data")
     var statusCode = 500
     var responseBody = ""
     val httpClient = HttpClientBuilder.create.build
@@ -66,6 +70,7 @@ class HttpHelper(appConfig: KibanaConfiguration) {
   }
 
   def addSampleData(data: String): Unit = {
+    logger.info("Loading sample data")
     var statusCode = 500
     var responseBody = ""
     val httpClient = HttpClientBuilder.create.build
@@ -112,5 +117,51 @@ class HttpHelper(appConfig: KibanaConfiguration) {
     }
 
     responseBody
+  }
+
+  def getDefaultHeaders: Map[String, String] = {
+    Map(
+      "Connection" -> "keep-alive",
+      "kbn-version" -> appConfig.buildVersion,
+      "Content-Type" -> "application/json",
+      "Accept" -> "*/*",
+      "Origin" -> appConfig.baseUrl,
+      "Sec-Fetch-Site" -> "same-origin",
+      "Sec-Fetch-Mode" -> "cors",
+      "Sec-Fetch-Dest" -> "empty"
+    )
+  }
+
+  def defaultTextHeaders: Map[String, String] = {
+    Map("Content-Type" -> "text/html; charset=utf-8")
+  }
+
+  def getProtocol: HttpProtocolBuilder = {
+    http
+      .baseUrl(appConfig.baseUrl)
+      .inferHtmlResources(
+        BlackList(
+          """.*\.js""",
+          """.*\.css""",
+          """.*\.gif""",
+          """.*\.jpeg""",
+          """.*\.jpg""",
+          """.*\.ico""",
+          """.*\.woff""",
+          """.*\.woff2""",
+          """.*\.(t|o)tf""",
+          """.*\.png""",
+          """.*detectportal\.firefox\.com.*"""
+        ),
+        WhiteList()
+      )
+      .acceptHeader(
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+      )
+      .acceptEncodingHeader("gzip, deflate")
+      .acceptLanguageHeader("en-GB,en-US;q=0.9,en;q=0.8")
+      .userAgentHeader(
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+      )
   }
 }
