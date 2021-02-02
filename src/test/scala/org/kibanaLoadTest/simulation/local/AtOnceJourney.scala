@@ -1,13 +1,14 @@
-package org.kibanaLoadTest.simulation
+package org.kibanaLoadTest.simulation.local
 
+import org.kibanaLoadTest.simulation.BaseSimulation
 import io.gatling.core.Predef._
 import io.gatling.core.structure.ScenarioBuilder
-import org.kibanaLoadTest.scenario.{Canvas, Dashboard, Discover, Login}
+import org.kibanaLoadTest.scenario.{Canvas, Dashboard, Discover}
 
 import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.FiniteDuration
 
-class CloudAtOnceJourney extends BaseSimulation {
+class AtOnceJourney extends BaseSimulation {
   def scenarioName(module: String): String = {
     s"Cloud  atOnce ${module} ${appConfig.buildVersion}"
   }
@@ -44,12 +45,11 @@ class CloudAtOnceJourney extends BaseSimulation {
 
   setUp(
     scnDiscover
-      .inject(atOnceUsers(80), nothingFor(scnPause))
+      .inject(atOnceUsers(400), nothingFor(scnPause))
       .andThen(
         scnDashboard
-          .inject(atOnceUsers(80), nothingFor(scnPause))
-          .andThen(scnCanvas.inject(atOnceUsers(80)))
+          .inject(atOnceUsers(400), nothingFor(scnPause))
+          .andThen(scnCanvas.inject(atOnceUsers(400)))
       )
   ).protocols(httpProtocol).maxDuration(simulationTimeout)
-
 }

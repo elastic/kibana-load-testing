@@ -12,8 +12,30 @@ import org.slf4j.{Logger, LoggerFactory}
 
 import java.io.File
 import java.nio.file.Paths
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.FiniteDuration
 
 class BaseSimulation extends Simulation {
+
+  object props {
+    var maxUsers = 50
+    val simulationTimeout =
+      FiniteDuration(
+        10,
+        TimeUnit.MINUTES
+      )
+    val loginPause =
+      FiniteDuration(
+        2,
+        TimeUnit.SECONDS
+      )
+    val scnPause =
+      FiniteDuration(
+        20,
+        TimeUnit.SECONDS
+      )
+  }
+
   val logger: Logger = LoggerFactory.getLogger("Base Simulation")
   // -DdeploymentConfig=path/to/config, default one deploys basic instance on GCP
   val CLOUD_DEPLOY_CONFIG: String =
@@ -56,6 +78,7 @@ class BaseSimulation extends Simulation {
       "branch" -> (if (appConfig.branchName.isDefined) appConfig.branchName.get
                    else "")
     )
+    logger.info(s"Running sim with user count=${props.maxUsers}")
     Helper.writeMapToFile(meta, lastDeploymentFilePath)
 
     // load sample data
