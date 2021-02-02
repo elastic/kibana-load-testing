@@ -37,7 +37,9 @@ class BaseSimulation extends Simulation {
       )
   }
 
-  logger.info(s"Running ${getClass.getSimpleName} simulation")
+  logger.info(
+    s"Running ${getClass.getSimpleName} simulation with ${props.maxUsers} users"
+  )
 
   // -DdeploymentConfig=path/to/config, default one deploys basic instance on GCP
   val CLOUD_DEPLOY_CONFIG: String =
@@ -48,7 +50,6 @@ class BaseSimulation extends Simulation {
   )
   // -DenvConfig=path/to/config, default is a local instance
   val envConfig: String = System.getProperty("env", "config/local.conf")
-
   // appConfig is used to run load tests
   val appConfig: KibanaConfiguration = if (cloudDeployVersion.isDefined) {
     // create new deployment on Cloud
@@ -83,11 +84,8 @@ class BaseSimulation extends Simulation {
 
   before {
     appConfig.print()
-
     // saving deployment info to target/lastDeployment.txt"
     SimulationHelper.saveDeploymentMeta(appConfig, props.maxUsers)
-    logger.info(s"Running sim with user count=${props.maxUsers}")
-
     // load sample data
     httpHelper.addSampleData("ecommerce")
   }
