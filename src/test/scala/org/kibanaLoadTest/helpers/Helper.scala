@@ -120,7 +120,7 @@ object Helper {
   def getCIMeta: Map[String, String] = {
     Map(
       "buildId" -> Option(System.getenv("BUILD_ID")).getOrElse(""),
-      "runUrl" -> Option(System.getenv("CI_RUN_URL")).getOrElse("")
+      "buildUrl" -> Option(System.getenv("BUILD_URL")).getOrElse("")
     )
   }
 }

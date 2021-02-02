@@ -94,7 +94,7 @@ class ESWrapper(config: ESConfiguration) {
           | "deploymentId": "${meta("deploymentId")}",
           | "isCloudDeployment": ${meta("isCloudDeployment")},
           | "CI_BUILD_ID": "${extras("buildId")}",
-          | "CI_RUN_URL": "${extras("runUrl")}"
+          | "CI_BUILD_URL": "${extras("buildUrl")}"
           |}
       """.stripMargin
 
