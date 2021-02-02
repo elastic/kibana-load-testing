@@ -85,7 +85,8 @@ class ESWrapper(config: ESConfiguration) {
           | "branch": "${meta("branch")}",
           | "isSnapshotBuild": ${meta("isSnapshotBuild")},
           | "baseUrl": "${meta("baseUrl")}",
-          | "scenario": "$simulationClass"
+          | "scenario": "$simulationClass",
+          | "maxUsers": ${meta("maxUsers")}
           |}
       """.stripMargin
 

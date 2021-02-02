@@ -25,10 +25,10 @@ class DemoJourney extends BaseSimulation {
     scn
       .inject(
         constantConcurrentUsers(20) during (3 * 60), // 1
-        rampConcurrentUsers(20) to 50 during (3 * 60) // 2
+        rampConcurrentUsers(20) to props.maxUsers during (3 * 60) // 2
       )
       .protocols(httpProtocol)
-  ).maxDuration(15 * 60)
+  ).maxDuration(props.simulationTimeout * 2)
 
   // generate a closed workload injection profile
   // with levels of 10, 15, 20, 25 and 30 concurrent users
