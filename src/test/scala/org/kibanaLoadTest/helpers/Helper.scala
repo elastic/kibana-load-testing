@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter
 import java.util.{Calendar, Date, TimeZone}
 import com.typesafe.config.{Config, ConfigFactory}
 import org.slf4j.{Logger, LoggerFactory}
-
 import scala.io.Source
 
 object Helper {
@@ -116,5 +115,12 @@ object Helper {
         )
       )
       .toMap
+  }
+
+  def getCIMeta: Map[String, String] = {
+    Map(
+      "buildId" -> Option(System.getenv("BUILD_ID")).getOrElse(""),
+      "buildUrl" -> Option(System.getenv("BUILD_URL")).getOrElse("")
+    )
   }
 }

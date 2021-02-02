@@ -59,7 +59,8 @@ class IngestionTest {
     val logFilePath = getLastReportPath + File.separator + "simulation.log"
     val lastDeploymentFilePath =
       getTargetPath + File.separator + "lastDeployment.txt"
-    esClient.ingest(logFilePath, lastDeploymentFilePath)
+    val ciMeta = Helper.getCIMeta
+    esClient.ingest(logFilePath, lastDeploymentFilePath, ciMeta)
   }
 
   @Test
