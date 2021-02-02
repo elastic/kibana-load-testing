@@ -3,7 +3,7 @@ package org.kibanaLoadTest.ingest
 import java.io.File
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
 import org.kibanaLoadTest.ESConfiguration
-import org.kibanaLoadTest.helpers.ESWrapper
+import org.kibanaLoadTest.helpers.{ESWrapper, Helper}
 import org.kibanaLoadTest.helpers.Helper.{getReportFolderPaths, getTargetPath}
 import org.slf4j.{Logger, LoggerFactory}
 
@@ -29,10 +29,11 @@ object Main {
       getTargetPath + File.separator + "lastDeployment.txt"
     val simulationFiles =
       getReportFolderPaths.map(_ + File.separator + "simulation.log")
+    val ciMeta = Helper.getCIMeta
 
     logger.info(s"Found ${simulationFiles.length} report folders")
     simulationFiles.foreach(file =>
-      esClient.ingest(file, lastDeploymentFilePath)
+      esClient.ingest(file, lastDeploymentFilePath, ciMeta)
     )
   }
 }

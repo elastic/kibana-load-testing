@@ -22,7 +22,11 @@ class ESWrapper(config: ESConfiguration) {
   val logger: Logger = LoggerFactory.getLogger("ES_Client")
   val indexName = "gatling-data"
 
-  def ingest(logFilePath: String, metaFilePath: String): Unit = {
+  def ingest(
+      logFilePath: String,
+      metaFilePath: String,
+      extras: Map[String, Any]
+  ): Unit = {
     if (!Files.exists(Paths.get(logFilePath))) {
       throw new RuntimeException(
         s"Gatling report file '$logFilePath' is not found"
@@ -86,7 +90,11 @@ class ESWrapper(config: ESConfiguration) {
           | "isSnapshotBuild": ${meta("isSnapshotBuild")},
           | "baseUrl": "${meta("baseUrl")}",
           | "scenario": "$simulationClass",
-          | "maxUsers": ${meta("maxUsers")}
+          | "maxUsers": ${meta("maxUsers")},
+          | "deploymentId": ${meta("deploymentId")},
+          | "isCloudDeployment": ${meta("isCloudDeployment")},
+          | "CI_BUILD_ID": "${extras("buildId")}",
+          | "CI_RUN_URL": "${extras("runUrl")}"
           |}
       """.stripMargin
 
