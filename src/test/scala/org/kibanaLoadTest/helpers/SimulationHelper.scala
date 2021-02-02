@@ -68,8 +68,7 @@ object SimulationHelper {
       "deploymentId" -> (if (config.deploymentId.isDefined)
                            config.deploymentId.get
                          else ""),
-      "isCloudDeployment" -> (if (config.deploymentId.isDefined) true
-                              else false),
+      "isCloudDeployment" -> config.deploymentId.isDefined,
       "baseUrl" -> config.baseUrl,
       "buildHash" -> config.buildHash,
       "buildNumber" -> config.buildNumber,

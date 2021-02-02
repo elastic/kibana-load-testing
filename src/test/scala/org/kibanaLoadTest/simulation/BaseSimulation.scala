@@ -82,6 +82,9 @@ class BaseSimulation extends Simulation {
     logger.info(
       s"Running ${getClass.getSimpleName} simulation with ${props.maxUsers} users"
     )
+    val ci = Helper.getCIMeta
+    println("buildId=" + ci("buildId"))
+    println("runUrl=" + ci("runUrl"))
     appConfig.print()
     // saving deployment info to target/lastDeployment.txt"
     SimulationHelper.saveDeploymentMeta(appConfig, props.maxUsers)

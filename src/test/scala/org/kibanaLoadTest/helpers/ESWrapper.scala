@@ -91,7 +91,7 @@ class ESWrapper(config: ESConfiguration) {
           | "baseUrl": "${meta("baseUrl")}",
           | "scenario": "$simulationClass",
           | "maxUsers": ${meta("maxUsers")},
-          | "deploymentId": ${meta("deploymentId")},
+          | "deploymentId": "${meta("deploymentId")}",
           | "isCloudDeployment": ${meta("isCloudDeployment")},
           | "CI_BUILD_ID": "${extras("buildId")}",
           | "CI_RUN_URL": "${extras("runUrl")}"
