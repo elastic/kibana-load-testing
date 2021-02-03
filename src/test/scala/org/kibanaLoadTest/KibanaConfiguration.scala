@@ -26,7 +26,6 @@ class KibanaConfiguration {
   var buildHash = ""
   var buildNumber: Long = 0
   var isSnapshotBuild = false
-  var branchName: Option[String] = None
 
   def this(config: Config) = {
     this()
@@ -79,8 +78,6 @@ class KibanaConfiguration {
     this.deploymentId = if (config.hasPath("deploymentId")) {
       Option(config.getString("deploymentId"))
     } else None
-
-    this.branchName = Option(System.getenv("KIBANA_BRANCH"))
   }
 
   def syncWithInstance(): KibanaConfiguration = {

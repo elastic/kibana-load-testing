@@ -74,8 +74,6 @@ object SimulationHelper {
       "buildNumber" -> config.buildNumber,
       "version" -> config.version,
       "isSnapshotBuild" -> config.isSnapshotBuild,
-      "branch" -> (if (config.branchName.isDefined) config.branchName.get
-                   else ""),
       "maxUsers" -> users
     )
     Helper.writeMapToFile(meta, lastDeploymentFilePath)
