@@ -86,7 +86,6 @@ class ESWrapper(config: ESConfiguration) {
           | "version": "${meta("version")}",
           | "buildHash": "${meta("buildHash")}",
           | "buildNumber": ${meta("buildNumber")},
-          | "branch": "${meta("branch")}",
           | "isSnapshotBuild": ${meta("isSnapshotBuild")},
           | "baseUrl": "${meta("baseUrl")}",
           | "scenario": "$simulationClass",
@@ -94,7 +93,9 @@ class ESWrapper(config: ESConfiguration) {
           | "deploymentId": "${meta("deploymentId")}",
           | "isCloudDeployment": ${meta("isCloudDeployment")},
           | "CI_BUILD_ID": "${extras("buildId")}",
-          | "CI_BUILD_URL": "${extras("buildUrl")}"
+          | "CI_BUILD_URL": "${extras("buildUrl")}",
+          | "kibanaBranch": "${extras("kibanaBranchName")}",
+          | "branch": "${extras("branchName")}"
           |}
       """.stripMargin
 

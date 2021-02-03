@@ -120,7 +120,10 @@ object Helper {
   def getCIMeta: Map[String, String] = {
     Map(
       "buildId" -> Option(System.getenv("BUILD_ID")).getOrElse(""),
-      "buildUrl" -> Option(System.getenv("BUILD_URL")).getOrElse("")
+      "buildUrl" -> Option(System.getenv("BUILD_URL")).getOrElse(""),
+      "kibanaBranchName" -> Option(System.getenv("KIBANA_BRANCH"))
+        .getOrElse(""),
+      "branchName" -> Option(System.getenv("branch_specifier")).getOrElse("")
     )
   }
 }
