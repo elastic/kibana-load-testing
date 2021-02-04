@@ -1,0 +1,45 @@
+#!/usr/bin/env groovy
+library 'kibana-pipeline-library'
+
+pipeline {
+    agent { label 'docker && ubuntu-tests-l' }
+    stages {
+        stage ('Initialize') {
+            steps {
+                echo "PATH = ${PATH}"
+                echo "STACK_VERSION = ${params.STACK_VERSION}"
+                echo "INGEST_RESULTS = ${params.INGEST_RESULTS}"
+            }
+        }
+        stage ('Run tests on cloud') {
+            steps {
+                withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
+                    sh """
+                        echo "Running tests against Kibana cloud instance"
+                        cd kibana-load-testing
+                        mvn clean -q -Dmaven.test.failure.ignore=true compile
+                        mvn gatling:test -q -DcloudStackVersion=${params.STACK_VERSION} -DdeploymentConfig=${params.DEPLOY_CONFIG} -Dgatling.simulationClass=org.kibanaLoadTest.simulation.cloud.AtOnceJourney
+                    """
+                }
+            }
+            post {
+                success {
+                  script {
+                      if (params.INGEST_RESULTS.toBoolean()) {
+                          withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'host', variable_name: 'HOST_FROM_VAULT') {
+                              withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
+                                  withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
+                                      sh '''
+                                        cd kibana-load-testing
+                                        mvn exec:java -Dexec.mainClass=org.kibanaLoadTest.ingest.Main -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false
+                                      '''
+                                  }
+                              }
+                          }
+                      }
+                  }
+                }
+            }
+        }
+    }
+}

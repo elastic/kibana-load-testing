@@ -3,62 +3,44 @@ library 'kibana-pipeline-library'
 
 pipeline {
     agent { label 'docker && ubuntu-tests-l' }
-    parameters {
-        string(name: 'STACK_VERSION', defaultValue: '8.0.0-SNAPSHOT', description: 'Stack version on Cloud or user/kibana:branch to build from source code')
-        string(name: 'DEPLOY_CONFIG', defaultValue: 'config/deploy/default.conf', description: 'Path to Cloud deployment configuration')
-    }
     stages {
         stage ('Initialize') {
             steps {
                 echo "PATH = ${PATH}"
-                echo "STACK_VERSION = ${params.STACK_VERSION}"
+                echo "GITHUB_KIBANA_REPO_OWNER = ${params.GITHUB_KIBANA_REPO_OWNER}"
+                echo "GITHUB_KIBANA_REPO = ${params.GITHUB_KIBANA_REPO}"
+                echo "GITHUB_KIBANA_BRANCH = ${params.GITHUB_KIBANA_BRANCH}"
                 echo "INGEST_RESULTS = ${params.INGEST_RESULTS}"
             }
         }
-
-        stage ('Run tests') {
+        stage ('Running tests against locally build Kibana instance') {
             steps {
                 script {
-                    if (params.STACK_VERSION ==~ /(.*?)\/kibana:(.*)$/) {
-                        script {
-                            echo "Running tests against locally build Kibana instance"
-                            def values = "${params.STACK_VERSION}".split(':')
-                            env.KIBANA_REPO_NAME = values[0]
-                            env.KIBANA_BRANCH = values[1]
-                            echo "Using repo: git@github.com:${env.KIBANA_REPO_NAME}"
-                            echo "Using branch: ${env.KIBANA_BRANCH}"
-                        }
-                        checkout([
-                            $class: 'GitSCM',
-                            branches: [[name: "${env.KIBANA_BRANCH}"]],
-                            doGenerateSubmoduleConfigurations: false,
-                            extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'kibana']],
-                            submoduleCfg: [],
-                            userRemoteConfigs: [[
-                                credentialsId: 'f6c7695a-671e-4f4f-a331-acdce44ff9ba',
-                                url: "git@github.com:${env.KIBANA_REPO_NAME}",
-                            ]],
-                        ])
-                        sh """
-                            cd kibana
-                            export HOME=${env.WORKSPACE}
-                            export KIBANA_BRANCH=${env.KIBANA_BRANCH}
-                            echo "Prepare environment"
-                            ./src/dev/ci_setup/setup.sh
-                            echo "Build Kibana and run load scenario"
-                            ./test/scripts/jenkins_build_load_testing.sh -s 'local.AtOnceJourney'
-                        """
-                    } else {
-                        withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
-                            sh """
-                                echo "Running tests against Kibana cloud instance"
-                                cd kibana-load-testing
-                                mvn clean -q -Dmaven.test.failure.ignore=true compile
-                                mvn gatling:test -q -DcloudStackVersion=${params.STACK_VERSION} -DdeploymentConfig=${params.DEPLOY_CONFIG} -Dgatling.simulationClass=org.kibanaLoadTest.simulation.cloud.AtOnceJourney
-                            """
-                        }
-                    }
+                    env.KIBANA_REPO_NAME = "${params.GITHUB_KIBANA_REPO_OWNER}/${params.GITHUB_KIBANA_REPO}"
+                    env.KIBANA_BRANCH = "${params.GITHUB_KIBANA_BRANCH}"
+                    echo "Using repo: git@github.com:${env.KIBANA_REPO_NAME}"
+                    echo "Using branch: ${env.KIBANA_BRANCH}"
                 }
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: "${env.KIBANA_BRANCH}"]],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'kibana']],
+                    submoduleCfg: [],
+                    userRemoteConfigs: [[
+                        credentialsId: 'f6c7695a-671e-4f4f-a331-acdce44ff9ba',
+                        url: "git@github.com:${env.KIBANA_REPO_NAME}",
+                    ]],
+                ])
+                sh """
+                    cd kibana
+                    export HOME=${env.WORKSPACE}
+                    export KIBANA_BRANCH=${env.KIBANA_BRANCH}
+                    echo "Prepare environment"
+                    ./src/dev/ci_setup/setup.sh
+                    echo "Build Kibana and run load scenario"
+                    ./test/scripts/jenkins_build_load_testing.sh -s 'local.AtOnceJourney'
+                """
             }
             post {
                 success {
