@@ -5,7 +5,7 @@ import io.gatling.core.structure.ScenarioBuilder
 import org.kibanaLoadTest.scenario.{Canvas, Dashboard, Discover, Login}
 
 class DemoJourney extends BaseSimulation {
-  val scenarioName = s"Kibana demo journey ${appConfig.buildVersion}"
+  val scenarioName = s"Demo journey ${appConfig.buildVersion}"
 
   val scn: ScenarioBuilder = scenario(scenarioName)
     .exec(
