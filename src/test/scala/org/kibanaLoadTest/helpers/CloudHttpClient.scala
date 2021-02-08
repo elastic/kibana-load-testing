@@ -145,13 +145,20 @@ class CloudHttpClient {
       .toMap
   }
 
-  def getKibanaUrl(deploymentId: String): String = {
+  def getServiceUrl(
+      deploymentId: String,
+      resources: Array[String]
+  ): Map[String, String] = {
     val jsonString = getDeploymentStateInfo(deploymentId)
-    jsonString.extract[String](
-      Symbol("resources") / Symbol("kibana") / element(0) / Symbol(
-        "info"
-      ) / Symbol("metadata") / Symbol("service_url")
-    )
+    resources
+      .map(resource => {
+        resource -> jsonString.extract[String](
+          Symbol("resources") / Symbol(resource) / element(0) / Symbol(
+            "info"
+          ) / Symbol("metadata") / Symbol("service_url")
+        )
+      })
+      .toMap
   }
 
   def waitForClusterToStart(

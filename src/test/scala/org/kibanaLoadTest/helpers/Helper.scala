@@ -1,6 +1,6 @@
 package org.kibanaLoadTest.helpers
 
-import java.io.{File, PrintWriter}
+import java.io.{File, FileWriter, PrintWriter}
 import java.net.{MalformedURLException, URL}
 import java.nio.file.Paths
 import java.text.SimpleDateFormat
@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter
 import java.util.{Calendar, Date, TimeZone}
 import com.typesafe.config.{Config, ConfigFactory}
 import org.slf4j.{Logger, LoggerFactory}
+
 import scala.io.Source
 
 object Helper {
@@ -125,5 +126,13 @@ object Helper {
         .getOrElse(""),
       "branchName" -> Option(System.getenv("branch_specifier")).getOrElse("")
     )
+  }
+
+  def writeFile(fileName: String, lines: Array[String]): Unit = {
+    val fw = new FileWriter(fileName)
+    for (i <- 0 to lines.length - 1) {
+      fw.write(lines(i))
+    }
+    fw.close()
   }
 }

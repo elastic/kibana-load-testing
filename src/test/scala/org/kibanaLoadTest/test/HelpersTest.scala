@@ -98,4 +98,11 @@ class HelpersTest {
     val paths = Helper.getReportFolderPaths
     assertEquals(2, paths.length)
   }
+
+  @Test
+  def writeFileTest(): Unit = {
+    Helper.writeFile("test.sh", Array("line1\n", "line2\n"))
+    val f = new File("test.sh")
+    assertEquals(true, f.exists())
+  }
 }

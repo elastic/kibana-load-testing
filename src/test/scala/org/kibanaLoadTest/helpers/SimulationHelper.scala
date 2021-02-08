@@ -33,14 +33,33 @@ object SimulationHelper {
       cloudClient.deleteDeployment(metadata("deploymentId"))
       throw new RuntimeException("Stop due to failed deployment...")
     }
-    val host = cloudClient.getKibanaUrl(metadata("deploymentId"))
+    val hosts = cloudClient.getServiceUrl(
+      metadata("deploymentId"),
+      Array("apm", "kibana", "elasticsearch")
+    )
+
+    val lines = Array(
+      "#!/usr/bin/env bash\n\n",
+      s"export  KIBANA_URL=${hosts("kibana")}\n",
+      s"export  ES_URL=${hosts("elasticsearch")}\n",
+      s"export  USERNAME=${metadata("username")}\n",
+      s"export  PASSWORD=${metadata("password")}\n"
+    )
+
+    // ./target/hosts.sh will be used to configure monitoring of loud instance
+    Helper.writeFile("hosts.sh", lines)
+
     val cloudConfig = ConfigFactory
       .load()
       .withValue(
         "deploymentId",
         ConfigValueFactory.fromAnyRef(metadata("deploymentId"))
       )
-      .withValue("app.host", ConfigValueFactory.fromAnyRef(host))
+      .withValue("app.host", ConfigValueFactory.fromAnyRef(hosts("kibana")))
+      .withValue(
+        "es.host",
+        ConfigValueFactory.fromAnyRef(hosts("elasticsearch"))
+      )
       .withValue(
         "app.version",
         ConfigValueFactory.fromAnyRef(version.get)

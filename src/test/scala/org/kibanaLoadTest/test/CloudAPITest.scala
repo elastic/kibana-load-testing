@@ -16,7 +16,10 @@ class CloudAPITest {
     val metadata = cloudClient.createDeployment(payload)
     assertEquals(metadata.size, 3, "metadata size is incorrect")
     cloudClient.waitForClusterToStart(metadata("deploymentId"))
-    val host = cloudClient.getKibanaUrl(metadata("deploymentId"))
+    val host =
+      cloudClient.getServiceUrl(metadata("deploymentId"), Array("kibana"))(
+        "kibana"
+      )
     assertTrue(host.startsWith("https://"), "Kibana Url is incorrect")
     cloudClient.deleteDeployment(metadata("deploymentId"))
   }
