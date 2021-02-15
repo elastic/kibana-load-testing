@@ -10,8 +10,6 @@ import org.apache.http.impl.client.HttpClientBuilder
 import org.apache.http.util.EntityUtils
 import spray.json.lenses.JsonLenses._
 import spray.json.DefaultJsonProtocol._
-import spray.json.JsonParser
-import spray.json.JsonParser.ParsingException
 
 class CloudHttpClient {
   private val DEPLOYMENT_READY_TIMOEOUT = 5 * 60 * 1000 // 5 min
@@ -96,15 +94,15 @@ class CloudHttpClient {
     createRequest.setEntity(new StringEntity(payload))
     val response = httpClient.execute(createRequest)
     val statusCode = response.getStatusLine.getStatusCode
+    val reason = response.getStatusLine.getReasonPhrase
     logger.info(
-      s"createDeployment: request finished with status code: $statusCode"
+      s"createDeployment: Request completed with $statusCode : $reason"
     )
     val responseString = EntityUtils.toString(response.getEntity)
-    try {
-      JsonParser(responseString)
-    } catch {
-      case _: ParsingException =>
-        logger.error("Failed to parse response")
+    if (!Helper.isValidJson(responseString)) {
+      throw new RuntimeException(
+        "Failed to create new deployment, response is not a JSON"
+      )
     }
 
     val meta = Map(

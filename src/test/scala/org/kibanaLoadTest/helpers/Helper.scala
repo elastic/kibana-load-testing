@@ -9,6 +9,9 @@ import java.time.format.DateTimeFormatter
 import java.util.{Calendar, Date, TimeZone}
 import com.typesafe.config.{Config, ConfigFactory}
 import org.slf4j.{Logger, LoggerFactory}
+import spray.json.JsonParser
+import spray.json.JsonParser.ParsingException
+
 import scala.io.Source
 
 object Helper {
@@ -125,5 +128,16 @@ object Helper {
         .getOrElse(""),
       "branchName" -> Option(System.getenv("branch_specifier")).getOrElse("")
     )
+  }
+
+  def isValidJson(str: String): Boolean = {
+    try {
+      JsonParser(str)
+      true
+    } catch {
+      case e: ParsingException =>
+        logger.error(s"isValidJson: Failed to parse string ${e.getMessage}")
+        false
+    }
   }
 }
