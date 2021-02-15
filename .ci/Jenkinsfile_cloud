@@ -17,7 +17,7 @@ pipeline {
                     sh """
                         echo "Running tests against Kibana cloud instance"
                         cd kibana-load-testing
-                        mvn clean -q -Dmaven.test.failure.ignore=true compile
+                        mvn -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.test.failure.ignore=true -q clean compile
                         mvn gatling:test -q -DcloudStackVersion=${params.STACK_VERSION} -DdeploymentConfig=${params.DEPLOY_CONFIG} -Dgatling.simulationClass=org.kibanaLoadTest.simulation.cloud.AtOnceJourney
                     """
                 }
