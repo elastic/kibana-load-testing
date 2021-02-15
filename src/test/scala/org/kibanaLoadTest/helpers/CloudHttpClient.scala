@@ -1,7 +1,6 @@
 package org.kibanaLoadTest.helpers
 
 import java.time.Instant
-
 import com.typesafe.config.Config
 import org.slf4j.{Logger, LoggerFactory}
 import jodd.util.ThreadUtil.sleep
@@ -11,6 +10,8 @@ import org.apache.http.impl.client.HttpClientBuilder
 import org.apache.http.util.EntityUtils
 import spray.json.lenses.JsonLenses._
 import spray.json.DefaultJsonProtocol._
+import spray.json.JsonParser
+import spray.json.JsonParser.ParsingException
 
 class CloudHttpClient {
   private val DEPLOYMENT_READY_TIMOEOUT = 5 * 60 * 1000 // 5 min
@@ -90,11 +91,22 @@ class CloudHttpClient {
 
   def createDeployment(payload: String): Map[String, String] = {
     logger.info(s"createDeployment: Creating new deployment")
-    val createRequest = new HttpPost(baseUrl)
+    val createRequest = new HttpPost(baseUrl + "?validate_only=false")
     createRequest.addHeader("Authorization", s"ApiKey $getApiKey")
     createRequest.setEntity(new StringEntity(payload))
     val response = httpClient.execute(createRequest)
+    val statusCode = response.getStatusLine.getStatusCode
+    logger.info(
+      s"createDeployment: request finished with status code: $statusCode"
+    )
     val responseString = EntityUtils.toString(response.getEntity)
+    try {
+      JsonParser(responseString)
+    } catch {
+      case _: ParsingException =>
+        logger.error("Failed to parse response")
+    }
+
     val meta = Map(
       "deploymentId" -> responseString.extract[String](Symbol("id")),
       "username" -> responseString.extract[String](
