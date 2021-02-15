@@ -96,7 +96,7 @@ class CloudHttpClient {
     val statusCode = response.getStatusLine.getStatusCode
     val reason = response.getStatusLine.getReasonPhrase
     logger.info(
-      s"createDeployment: Request completed with $statusCode : $reason"
+      s"createDeployment: Request completed with `$reason $statusCode`"
     )
     val responseString = EntityUtils.toString(response.getEntity)
     if (!Helper.isValidJson(responseString)) {
