@@ -55,9 +55,9 @@ class CloudHttpClient {
         .update(
           Symbol("resources") / Symbol("elasticsearch") / element(0) / Symbol(
             "plan"
-          ) / Symbol("cluster_topology") / element(0) / Symbol("size") / Symbol(
-            "value"
-          ) ! set[String](config.getString("elasticsearch.deployment_template"))
+          ) / Symbol("deployment_template") / Symbol("id") ! set[String](
+            config.getString("elasticsearch.deployment_template")
+          )
         )
         .update(
           Symbol("resources") / Symbol("elasticsearch") / element(0) / Symbol(
