@@ -1,7 +1,6 @@
 package org.kibanaLoadTest.helpers
 
 import java.time.Instant
-
 import com.typesafe.config.Config
 import org.slf4j.{Logger, LoggerFactory}
 import jodd.util.ThreadUtil.sleep
@@ -56,9 +55,9 @@ class CloudHttpClient {
         .update(
           Symbol("resources") / Symbol("elasticsearch") / element(0) / Symbol(
             "plan"
-          ) / Symbol("cluster_topology") / element(0) / Symbol("size") / Symbol(
-            "value"
-          ) ! set[String](config.getString("elasticsearch.deployment_template"))
+          ) / Symbol("deployment_template") / Symbol("id") ! set[String](
+            config.getString("elasticsearch.deployment_template")
+          )
         )
         .update(
           Symbol("resources") / Symbol("elasticsearch") / element(0) / Symbol(
@@ -90,11 +89,22 @@ class CloudHttpClient {
 
   def createDeployment(payload: String): Map[String, String] = {
     logger.info(s"createDeployment: Creating new deployment")
-    val createRequest = new HttpPost(baseUrl)
+    val createRequest = new HttpPost(baseUrl + "?validate_only=false")
     createRequest.addHeader("Authorization", s"ApiKey $getApiKey")
     createRequest.setEntity(new StringEntity(payload))
     val response = httpClient.execute(createRequest)
+    val statusCode = response.getStatusLine.getStatusCode
+    val reason = response.getStatusLine.getReasonPhrase
+    logger.info(
+      s"createDeployment: Request completed with `$reason $statusCode`"
+    )
     val responseString = EntityUtils.toString(response.getEntity)
+    if (!Helper.isValidJson(responseString)) {
+      throw new RuntimeException(
+        "Failed to create new deployment, response is not a JSON"
+      )
+    }
+
     val meta = Map(
       "deploymentId" -> responseString.extract[String](Symbol("id")),
       "username" -> responseString.extract[String](
