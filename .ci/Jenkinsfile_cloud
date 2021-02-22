@@ -16,7 +16,7 @@ pipeline {
         stage ('Run tests on cloud') {
             steps {
                 withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
-                    sh "./kibana-load-testing/scripts/deployAndTest.sh -v ${params.STACK_VERSION} -c ${params.DEPLOY_CONFIG} -s ${params.SIMULATION}"
+                    sh """./kibana-load-testing/scripts/deployAndTest.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'"""
                 }
             }
             post {
