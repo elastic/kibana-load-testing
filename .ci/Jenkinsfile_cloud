@@ -3,6 +3,9 @@ library 'kibana-pipeline-library'
 
 pipeline {
     agent { label 'docker && ubuntu-tests-l' }
+    parameters {
+        string(name: 'SIMULATION', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+    }
     stages {
         stage ('Initialize') {
             steps {
@@ -16,7 +19,7 @@ pipeline {
         stage ('Run tests on cloud') {
             steps {
                 withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
-                    sh """./kibana-load-testing/scripts/deployAndTest.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'"""
+                    sh """./kibana-load-testing/scripts/deploy_on_cloud_and_run_test.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'"""
                 }
             }
             post {

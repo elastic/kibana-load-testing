@@ -3,6 +3,9 @@ library 'kibana-pipeline-library'
 
 pipeline {
     agent { label 'docker && ubuntu-tests-l' }
+    parameters {
+        string(name: 'SIMULATION', defaultValue: 'local.AtOnceJourney,local.DiscoverAtOnce,DemoJourney', description: 'Comma-separated simulation list')
+    }
     stages {
         stage ('Initialize') {
             steps {
@@ -10,6 +13,7 @@ pipeline {
                 echo "GITHUB_KIBANA_REPO_OWNER = ${params.GITHUB_KIBANA_REPO_OWNER}"
                 echo "GITHUB_KIBANA_REPO = ${params.GITHUB_KIBANA_REPO}"
                 echo "GITHUB_KIBANA_BRANCH = ${params.GITHUB_KIBANA_BRANCH}"
+                echo "SIMULATION = ${params.SIMULATION}"
                 echo "INGEST_RESULTS = ${params.INGEST_RESULTS}"
             }
         }
@@ -39,7 +43,7 @@ pipeline {
                     echo "Prepare environment"
                     ./src/dev/ci_setup/setup.sh
                     echo "Build Kibana and run load scenario"
-                    ./test/scripts/jenkins_build_load_testing.sh -s 'local.AtOnceJourney'
+                    ./test/scripts/jenkins_build_load_testing.sh -s '${params.SIMULATION}'
                 """
             }
             post {
