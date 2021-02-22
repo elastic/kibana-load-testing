@@ -9,17 +9,14 @@ pipeline {
                 echo "PATH = ${PATH}"
                 echo "STACK_VERSION = ${params.STACK_VERSION}"
                 echo "INGEST_RESULTS = ${params.INGEST_RESULTS}"
+                echo "DEPLOY_CONFIG = ${params.DEPLOY_CONFIG}"
+                echo "SIMULATION = ${params.SIMULATION}"
             }
         }
         stage ('Run tests on cloud') {
             steps {
                 withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
-                    sh """
-                        echo "Running tests against Kibana cloud instance"
-                        cd kibana-load-testing
-                        mvn -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.test.failure.ignore=true -q clean compile
-                        mvn gatling:test -q -DcloudStackVersion=${params.STACK_VERSION} -DdeploymentConfig=${params.DEPLOY_CONFIG} -Dgatling.simulationClass=org.kibanaLoadTest.simulation.cloud.AtOnceJourney
-                    """
+                    sh "/bin/bash /scripts/deployAndTest.sh ${params.STACK_VERSION} ${params.DEPLOY_CONFIG} ${params.SIMULATION}"
                 }
             }
             post {
