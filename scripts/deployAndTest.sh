@@ -20,5 +20,5 @@ IFS=',' read -ra sim_array <<< "${simulation}"
 for i in "${sim_array[@]}"
 do
   echo "Running simulation $i ..."
-  mvn gatling:test -q -DcloudStackVersion=stackVersion -DdeploymentConfig=config -Dgatling.simulationClass=org.kibanaLoadTest.simulation.$i
+  mvn gatling:test -q -DcloudStackVersion=${stackVersion} -DdeploymentConfig=${deployConfig} -Dgatling.simulationClass=org.kibanaLoadTest.simulation.$i
 done
