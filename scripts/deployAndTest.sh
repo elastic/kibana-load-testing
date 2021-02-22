@@ -4,12 +4,16 @@ while getopts v:c:s: flag
 do
     case "${flag}" in
         v) stackVersion=${OPTARG};;
-        c) config=${OPTARG};;
+        c) deployConfig=${OPTARG};;
         s) simulation=${OPTARG};;
     esac
 done
 
 echo "Running tests against Kibana cloud instance"
+echo "stackVersion=${stackVersion}"
+echo "deployConfig=${deployConfig}"
+echo "simulation=${simulation}"
+
 cd kibana-load-testing
 mvn -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.test.failure.ignore=true -q clean compile
 IFS=',' read -ra sim_array <<< "${simulation}"
