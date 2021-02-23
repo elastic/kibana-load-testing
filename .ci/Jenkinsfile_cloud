@@ -3,9 +3,6 @@ library 'kibana-pipeline-library'
 
 pipeline {
     agent { label 'docker && ubuntu-tests-l' }
-    parameters {
-        string(name: 'SIMULATION', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-    }
     stages {
         stage ('Initialize') {
             steps {
