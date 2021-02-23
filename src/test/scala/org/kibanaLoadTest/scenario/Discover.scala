@@ -21,11 +21,29 @@ object Discover {
         Helper.getDate(Calendar.DAY_OF_MONTH, endShift)
       )
   }
-  private val discoverPayloadQ1 = createPayload(-1, 0)
-  private val discoverPayloadQ2 = createPayload(-14, -5)
-  private val discoverPayloadQ3 = createPayload(-20, 20)
+  val discoverPayloadQ1 = createPayload(-1, 0)
+  val discoverPayloadQ2 = createPayload(-14, -5)
+  val discoverPayloadQ3 = createPayload(-20, 20)
 
-  def doQuery(baseUrl: String, headers: Map[String, String]): ChainBuilder =
+  def doQuery(
+      baseUrl: String,
+      headers: Map[String, String],
+      payload: String
+  ): ChainBuilder =
+    exec(
+      http("Discover query")
+        .post("/internal/search/es")
+        .headers(headers)
+        .header("Referer", baseUrl + "/app/discover")
+        .body(StringBody(payload))
+        .asJson
+        .check(status.is(200))
+    )
+
+  def doQueries(
+      baseUrl: String,
+      headers: Map[String, String]
+  ): ChainBuilder =
     exec(
       http("discover")
         .post("/internal/search/es")

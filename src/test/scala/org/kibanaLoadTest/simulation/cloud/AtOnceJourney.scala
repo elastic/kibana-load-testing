@@ -14,7 +14,7 @@ class AtOnceJourney extends BaseSimulation {
 
   val scnDiscover: ScenarioBuilder = scenario(scenarioName("discover"))
     .exec(loginStep.pause(props.loginPause))
-    .exec(Discover.doQuery(appConfig.baseUrl, defaultHeaders))
+    .exec(Discover.doQueries(appConfig.baseUrl, defaultHeaders))
 
   val scnDashboard: ScenarioBuilder = scenario(scenarioName("dashboard"))
     .exec(loginStep.pause(props.loginPause))

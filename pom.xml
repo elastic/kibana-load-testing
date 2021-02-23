@@ -15,7 +15,7 @@
         <encoding>UTF-8</encoding>
 
         <gatling.version>3.5.1</gatling.version>
-        <gatling-maven-plugin.version>3.1.1</gatling-maven-plugin.version>
+        <gatling-maven-plugin.version>3.1.2</gatling-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -47,18 +47,18 @@
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-high-level-client</artifactId>
-            <version>7.10.2</version>
+            <version>7.11.1</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.0</version>
+            <version>5.7.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.7.0</version>
+            <version>5.7.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
