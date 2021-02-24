@@ -1,0 +1,10 @@
+# Module: kibana
+# Docs: https://www.elastic.co/guide/en/beats/metricbeat/master/metricbeat-module-kibana.html
+
+- module: kibana
+  xpack.enabled: true
+  period: 3s
+  hosts: ["localhost:5620"]
+  #basepath: ""
+  username: "elastic"
+  password: "changeme"
