@@ -39,7 +39,7 @@ pipeline {
                 withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'host', variable_name: 'HOST_FROM_VAULT') {
                     withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
                         withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
-                            sh """./kibana-load-testing/scripts/build_andd_test.sh -w '${env.WORKSPACE}' -b '${env.KIBANA_BRANCH}' -s '${params.SIMULATION}'"""
+                            sh """./kibana-load-testing/scripts/build_and_test.sh -w '${env.WORKSPACE}' -b '${env.KIBANA_BRANCH}' -s '${params.SIMULATION}'"""
                         }
                     }
                 }
