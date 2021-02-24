@@ -1,0 +1,97 @@
+{
+  "batch": [
+    {
+      "request": {
+        "params": {
+          "index": "kibana_sample_data_ecommerce",
+          "body": {
+            "size": 500,
+            "sort": [
+              {
+                "order_date": {
+                  "order": "desc",
+                  "unmapped_type": "boolean"
+                }
+              }
+            ],
+            "version": true,
+            "fields": [
+              {
+                "field": "*",
+                "include_unmapped": "true"
+              },
+              {
+                "field": "customer_birth_date",
+                "format": "strict_date_optional_time"
+              },
+              {
+                "field": "order_date",
+                "format": "strict_date_optional_time"
+              },
+              {
+                "field": "products.created_on",
+                "format": "strict_date_optional_time"
+              }
+            ],
+            "aggs": {
+              "2": {
+                "date_histogram": {
+                  "field": "order_date",
+                  "fixed_interval": "30s",
+                  "time_zone": "America/Phoenix",
+                  "min_doc_count": 1
+                }
+              }
+            },
+            "script_fields": {},
+            "stored_fields": [
+              "*"
+            ],
+            "runtime_mappings": {},
+            "_source": false,
+            "query": {
+              "bool": {
+                "must": [],
+                "filter": [
+                  {
+                    "match_all": {}
+                  },
+                  {
+                    "range": {
+                      "order_date": {
+                        "gte": "2021-02-23T21:39:31.074Z",
+                        "lte": "2021-02-23T21:54:31.074Z",
+                        "format": "strict_date_optional_time"
+                      }
+                    }
+                  }
+                ],
+                "should": [],
+                "must_not": []
+              }
+            },
+            "highlight": {
+              "pre_tags": [
+                "@kibana-highlighted-field@"
+              ],
+              "post_tags": [
+                "@/kibana-highlighted-field@"
+              ],
+              "fields": {
+                "*": {}
+              },
+              "fragment_size": 2147483647
+            }
+          },
+          "preference": 1614117261700
+        }
+      },
+      "options": {
+        "strategy": "ese",
+        "sessionId": "b55a138e-fab2-4470-8b1a-6b50abf0ddde",
+        "isRestore": false,
+        "isStored": false
+      }
+    }
+  ]
+}

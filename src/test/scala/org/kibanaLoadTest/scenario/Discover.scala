@@ -9,7 +9,7 @@ import org.kibanaLoadTest.helpers.Helper
 
 object Discover {
   private val discoverPayload =
-    Helper.loadJsonString("data/discoverPayload.json")
+    Helper.loadJsonString("data/bsearchPayload.json")
   private def createPayload(startShift: Int, endShift: Int): String = {
     discoverPayload
       .replaceAll(
@@ -72,4 +72,65 @@ object Discover {
           .asJson
           .check(status.is(200))
       )
+
+  def load(
+      baseUrl: String,
+      headers: Map[String, String]
+  ): ChainBuilder =
+    exec(
+      http("Load index patterns")
+        .get("/api/saved_objects/_find")
+        .queryParam("fields", "title")
+        .queryParam("per_page", "10000")
+        .queryParam("type", "index-pattern")
+        .headers(headers)
+        .header("Referer", baseUrl + "/app/discover")
+        .asJson
+        .check(status.is(200))
+    )
+    .pause(5)
+    .exec(
+      http("Load index pattern fields")
+        .get("/api/index_patterns/_fields_for_wildcard")
+        .queryParam("pattern", "kibana_sample_data_ecommerce")
+        .queryParam("meta_fields", "_source")
+        .queryParam("meta_fields", "_id")
+        .queryParam("meta_fields", "_type")
+        .queryParam("meta_fields", "_index")
+        .queryParam("meta_fields", "_score")
+        .headers(headers)
+        .header("Referer", baseUrl + "/app/discover")
+        .asJson
+        .check(status.is(200))
+    )
+    .pause(5)
+    .exec(
+      http("Discover query 1")
+        .post("/internal/bsearch")
+        .headers(headers)
+        .header("Referer", baseUrl + "/app/discover")
+        .body(StringBody(discoverPayloadQ1))
+        .asJson
+        .check(status.is(200))
+    )
+    .pause(5)
+    .exec(
+      http("Discover query 2")
+        .post("/internal/bsearch")
+        .headers(headers)
+        .header("Referer", baseUrl + "/app/discover")
+        .body(StringBody(discoverPayloadQ2))
+        .asJson
+        .check(status.is(200))
+    )
+    .pause(5)
+    .exec(
+      http("Discover query 3")
+        .post("/internal/bsearch")
+        .headers(headers)
+        .header("Referer", baseUrl + "/app/discover")
+        .body(StringBody(discoverPayloadQ3))
+        .asJson
+        .check(status.is(200))
+    )
 }
