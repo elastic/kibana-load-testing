@@ -40,14 +40,10 @@ pipeline {
                     withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
                         withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
                             sh """
-                                cd kibana
                                 export HOME=${env.WORKSPACE}
                                 export KIBANA_BRANCH=${env.KIBANA_BRANCH}
-                                echo "Prepare environment"
-                                ./src/dev/ci_setup/setup.sh
-                                echo "Build Kibana and run load scenario"
-                                ./test/scripts/jenkins_build_load_testing.sh -s '${params.SIMULATION}'
-                            """
+                                ./kibana-load-testing/scripts/build_and_test.sh -s '${params.SIMULATION}'
+                        """
                         }
                     }
                 }
@@ -59,10 +55,7 @@ pipeline {
                           withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'host', variable_name: 'HOST_FROM_VAULT') {
                               withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
                                   withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
-                                      sh '''
-                                        cd kibana-load-testing
-                                        mvn exec:java -Dexec.mainClass=org.kibanaLoadTest.ingest.Main -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false
-                                      '''
+                                      sh '''./kibana-load-testing/scripts/ingest_results.sh'''
                                   }
                               }
                           }
