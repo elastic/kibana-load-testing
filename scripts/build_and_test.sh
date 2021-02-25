@@ -1,10 +1,8 @@
 #!/bin/bash
 
-while getopts w:b:s: flag
+while getopts s: flag
 do
     case "${flag}" in
-        w) workspace=${OPTARG};;
-        b) kibanaBranch=${OPTARG};;
         s) simulation=${OPTARG};;
         *) echo "incorrect argument, supported flags are: w, b, s"
     esac
