@@ -13,3 +13,8 @@ echo "Prepare environment"
 ./src/dev/ci_setup/setup.sh
 echo "Build Kibana and run load scenario"
 ./test/scripts/jenkins_build_load_testing.sh -s "${simulation}"
+
+# zip test report
+cd ..
+tar -czf report.tar.gz kibana-load-testing/target/gatling/**/*
+cp  kibana-load-testing/target/lastDeployment.txt .
