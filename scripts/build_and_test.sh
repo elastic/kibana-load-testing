@@ -11,8 +11,6 @@ do
 done
 
 cd kibana || exit
-export HOME=workspace
-export KIBANA_BRANCH=kibanaBranch
 echo "Prepare environment"
 ./src/dev/ci_setup/setup.sh
 echo "Build Kibana and run load scenario"
