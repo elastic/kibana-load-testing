@@ -1,6 +1,16 @@
 #!/usr/bin/env groovy
 library 'kibana-pipeline-library'
 
+def uploadGcsArtifact(uploadPrefix, pattern) {
+    googleStorageUpload(
+            credentialsId: 'kibana-ci-gcs-plugin',
+            bucket: "gs://${uploadPrefix}",
+            pattern: pattern,
+            sharedPublicly: true,
+            showInline: true,
+    )
+}
+
 pipeline {
     agent { label 'docker && ubuntu-tests-l' }
     stages {
@@ -16,7 +26,11 @@ pipeline {
         stage ('Run tests on cloud') {
             steps {
                 withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
-                    sh """./kibana-load-testing/scripts/deploy_on_cloud_and_run_test.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'"""
+                    sh """
+                        ./kibana-load-testing/scripts/deploy_on_cloud_and_run_test.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'
+                        tar -czf report.tar.gz target/gatling/**/* 
+                    """
+                    uploadGcsArtifact("kibana-ci-artifacts/jobs/${env.JOB_NAME}/${BUILD_NUMBER}/gatling", 'report.tar.gz')
                 }
             }
             post {
