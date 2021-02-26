@@ -1,5 +1,6 @@
 #!/usr/bin/env groovy
 library 'kibana-pipeline-library'
+def loadPipeline
 
 pipeline {
     agent { label 'docker && ubuntu-tests-l' }
@@ -11,12 +12,20 @@ pipeline {
                 echo "INGEST_RESULTS = ${params.INGEST_RESULTS}"
                 echo "DEPLOY_CONFIG = ${params.DEPLOY_CONFIG}"
                 echo "SIMULATION = ${params.SIMULATION}"
+                script {
+                    loadPipeline = load "${env.WORKSPACE}/kibana-load-testing/.ci/loadPipeline.groovy"
+                }
             }
         }
         stage ('Run tests on cloud') {
             steps {
-                withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
-                    sh """./kibana-load-testing/scripts/deploy_and_test.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'"""
+                script {
+                    withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
+                        sh """
+                        ./kibana-load-testing/scripts/deploy_and_test.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'
+                        """
+                        loadPipeline.uploadGatlingReport()
+                    }
                 }
             }
             post {

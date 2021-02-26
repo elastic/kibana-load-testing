@@ -25,3 +25,8 @@ do
     -DdeploymentConfig="${deployConfig}" \
     -Dgatling.simulationClass=org.kibanaLoadTest.simulation.$i
 done
+
+# zip test report
+cd ..
+tar -czf report.tar.gz kibana-load-testing/target/gatling/**/*
+cp  kibana-load-testing/target/lastDeployment.txt .
