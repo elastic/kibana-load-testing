@@ -11,7 +11,6 @@ import org.kibanaLoadTest.helpers.{
 }
 import org.kibanaLoadTest.scenario.Login
 import org.slf4j.{Logger, LoggerFactory}
-
 import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.FiniteDuration
 
@@ -37,6 +36,10 @@ class BaseSimulation extends Simulation {
       )
   }
 
+  // -DdeploymentId=67d0195ac345578bcab6e561ff5, optional to use existing deployment
+  val deploymentId: Option[String] = Option(
+    System.getProperty("deploymentId")
+  )
   // -DdeploymentConfig=path/to/config, default one deploys basic instance on GCP
   val CLOUD_DEPLOY_CONFIG: String =
     System.getProperty("deploymentConfig", "config/deploy/default.conf")
@@ -47,7 +50,13 @@ class BaseSimulation extends Simulation {
   // -DenvConfig=path/to/config, default is a local instance
   val envConfig: String = System.getProperty("env", "config/local.conf")
   // appConfig is used to run load tests
-  val appConfig: KibanaConfiguration = if (cloudDeployVersion.isDefined) {
+
+  val appConfig: KibanaConfiguration = if (deploymentId.isDefined) {
+    logger.info(s"Using existing deployment: ${deploymentId.get}")
+    SimulationHelper
+      .useExistingDeployment(deploymentId.get)
+      .syncWithInstance()
+  } else if (cloudDeployVersion.isDefined) {
     // create new deployment on Cloud
     logger.info(s"Reading deployment configuration: $CLOUD_DEPLOY_CONFIG")
     SimulationHelper

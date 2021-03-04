@@ -1,9 +1,6 @@
 package org.kibanaLoadTest.helpers
 
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
-import io.gatling.core.Predef.{BlackList, WhiteList, configuration}
-import io.gatling.http.Predef.http
-import io.gatling.http.protocol.HttpProtocolBuilder
 import org.kibanaLoadTest.KibanaConfiguration
 
 import java.io.File
@@ -60,6 +57,40 @@ object SimulationHelper {
         ConfigValueFactory.fromAnyRef(metadata("password"))
       )
 
+    new KibanaConfiguration(cloudConfig)
+  }
+
+  def useExistingDeployment(id: String): KibanaConfiguration = {
+    val cloudClient = new CloudHttpClient
+    val credentials = cloudClient.resetPassword(id)
+    val host = cloudClient.getKibanaUrl(id)
+    val version = cloudClient.getStackVersion(id)
+    val providerName = if (version.isAbove79x) "cloud-basic" else "basic-cloud"
+    val cloudConfig = ConfigFactory
+      .load()
+      .withValue(
+        "deploymentId",
+        ConfigValueFactory.fromAnyRef(id)
+      )
+      .withValue("app.host", ConfigValueFactory.fromAnyRef(host))
+      .withValue(
+        "app.version",
+        ConfigValueFactory.fromAnyRef(version.get)
+      )
+      .withValue("security.on", ConfigValueFactory.fromAnyRef(true))
+      .withValue("auth.providerType", ConfigValueFactory.fromAnyRef("basic"))
+      .withValue(
+        "auth.providerName",
+        ConfigValueFactory.fromAnyRef(providerName)
+      )
+      .withValue(
+        "auth.username",
+        ConfigValueFactory.fromAnyRef(credentials("username"))
+      )
+      .withValue(
+        "auth.password",
+        ConfigValueFactory.fromAnyRef(credentials("password"))
+      )
     new KibanaConfiguration(cloudConfig)
   }
 

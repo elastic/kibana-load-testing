@@ -17,13 +17,20 @@ echo "simulation=${simulation}"
 
 cd kibana-load-testing || exit
 mvn -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.test.failure.ignore=true -q clean compile
+mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B \
+  exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.Main \
+  -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false \
+  -DcloudStackVersion="${stackVersion}" \
+  -DdeploymentConfig="${deployConfig}"
+source target/cloudDeployment.txt
+echo "deploymentId=${deploymentId}"
+
 IFS=',' read -ra sim_array <<< "${simulation}"
 for i in "${sim_array[@]}"
 do
   echo "Running simulation $i ..."
-  mvn gatling:test -q -DcloudStackVersion="${stackVersion}" \
-    -DdeploymentConfig="${deployConfig}" \
-    -Dgatling.simulationClass=org.kibanaLoadTest.simulation.$i
+  mvn gatling:test -q -DdeploymentId="${deploymentId}" -Dgatling.simulationClass=org.kibanaLoadTest.simulation.$i
+  sleep 1m
 done
 
 # zip test report
