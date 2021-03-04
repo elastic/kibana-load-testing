@@ -16,6 +16,9 @@ echo "deployConfig=${deployConfig}"
 echo "simulation=${simulation}"
 
 cd kibana-load-testing || exit
+mvn -v
+java -version
+
 mvn -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.test.failure.ignore=true -q clean test-compile
 mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B \
   exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.Main \
