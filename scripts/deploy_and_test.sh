@@ -16,12 +16,12 @@ echo "deployConfig=${deployConfig}"
 echo "simulation=${simulation}"
 
 cd kibana-load-testing || exit
-mvn -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.test.failure.ignore=true -q clean compile
+mvn -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.test.failure.ignore=true -q clean test-compile
 mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B \
   exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.Main \
   -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false \
   -DcloudStackVersion="${stackVersion}" \
-  -DdeploymentConfig="${deployConfig}"
+  -DdeploymentConfig="${deployConfig}" || exit
 source target/cloudDeployment.txt
 echo "deploymentId=${deploymentId}"
 
@@ -32,6 +32,8 @@ do
   mvn gatling:test -q -DdeploymentId="${deploymentId}" -Dgatling.simulationClass=org.kibanaLoadTest.simulation.$i
   sleep 1m
 done
+
+#deleteDeployment
 
 # zip test report
 cd ..
