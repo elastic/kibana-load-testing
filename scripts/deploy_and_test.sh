@@ -17,10 +17,10 @@ echo "simulation=${simulation}"
 
 cd kibana-load-testing || exit
 
-# install dependencies and compile source code
+echo "install dependencies and compile source code"
 mvn -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.test.failure.ignore=true -q clean install -DskipTests
 
-# create deployment
+echo "create deployment"
 mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B \
   exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.Create \
   -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false \
@@ -38,7 +38,7 @@ do
   sleep 1m
 done
 
-# delete deployment
+echo "delete deployment"
 mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B \
   exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.Delete \
   -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false \
