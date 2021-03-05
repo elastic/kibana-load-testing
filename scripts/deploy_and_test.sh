@@ -21,9 +21,8 @@ echo "install dependencies and compile source code"
 mvn -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.test.failure.ignore=true -q clean install -DskipTests
 
 echo "create deployment"
-mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B \
-  exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.Create \
-  -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false \
+# -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B \
+mvn scala:run -Dexec.mainClass=org.kibanaLoadTest.deploy.Create \
   -DcloudStackVersion="${stackVersion}" \
   -DdeploymentConfig="${deployConfig}" || exit
 source target/cloudDeployment.txt
