@@ -16,12 +16,13 @@ echo "deployConfig=${deployConfig}"
 echo "simulation=${simulation}"
 
 cd kibana-load-testing || exit
-mvn -v
-java -version
 
-mvn -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.test.failure.ignore=true -q clean test-compile
+# install dependencies and compile source code
+mvn -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.test.failure.ignore=true -q clean install -DskipTests
+
+# create deployment
 mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B \
-  exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.Main \
+  exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.Create \
   -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false \
   -DcloudStackVersion="${stackVersion}" \
   -DdeploymentConfig="${deployConfig}" || exit
@@ -33,10 +34,15 @@ for i in "${sim_array[@]}"
 do
   echo "Running simulation $i ..."
   mvn gatling:test -q -DdeploymentId="${deploymentId}" -Dgatling.simulationClass=org.kibanaLoadTest.simulation.$i
+  # wait a minute between scenarios
   sleep 1m
 done
 
-#deleteDeployment
+# delete deployment
+mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B \
+  exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.Delete \
+  -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false \
+  -DdeploymentId="${deploymentId}" || exit
 
 # zip test report
 cd ..

@@ -4,8 +4,7 @@ import org.kibanaLoadTest.helpers.{CloudHttpClient, Helper, Version}
 import java.io.File
 import java.nio.file.Paths
 
-object Main {
-
+object Create {
   private val cloudDeploymentFilePath: String = Paths
     .get("target")
     .toAbsolutePath
