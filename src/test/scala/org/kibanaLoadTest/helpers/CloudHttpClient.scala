@@ -15,7 +15,7 @@ import spray.json.DefaultJsonProtocol._
 import com.typesafe.config.ConfigValueType
 
 class CloudHttpClient {
-  private val DEPLOYMENT_READY_TIMOEOUT = 10 * 60 * 1000 // 5 min
+  private val DEPLOYMENT_READY_TIMOEOUT = 5 * 60 * 1000 // 5 min
   private val DEPLOYMENT_POLLING_INTERVAL = 20 * 1000 // 20 sec
   private val httpClient = HttpClientBuilder.create.build
   private val deployPayloadTemplate = "cloudPayload/createDeployment.json"
