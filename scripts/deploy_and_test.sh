@@ -22,6 +22,7 @@ mvn -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.test.failure.ignore=true -q 
 
 echo "create deployment"
 # -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B \
+mvn scala:testCompile
 mvn scala:run -Dexec.mainClass=org.kibanaLoadTest.deploy.Create \
   -DcloudStackVersion="${stackVersion}" \
   -DdeploymentConfig="${deployConfig}" || exit
