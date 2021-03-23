@@ -16,7 +16,7 @@ echo "deployConfig=${deployConfig}"
 echo "simulation=${simulation}"
 
 cd kibana-load-testing || exit
-mvn -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.test.failure.ignore=true -q clean compile
+#mvn -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.test.failure.ignore=true -q clean compile
 IFS=',' read -ra sim_array <<< "${simulation}"
 for i in "${sim_array[@]}"
 do
