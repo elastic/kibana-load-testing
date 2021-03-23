@@ -1,6 +1,6 @@
-import java.nio.file.{Path, Paths}
+import io.gatling.commons.util.PathHelper.RichPath
 
-import io.gatling.commons.shared.unstable.util.PathHelper._
+import java.nio.file.{Path, Paths}
 
 object IDEPathHelper {
 

@@ -16,7 +16,6 @@ import org.elasticsearch.client.{
 import org.elasticsearch.common.xcontent.XContentType
 import org.kibanaLoadTest.ESConfiguration
 import org.slf4j.{Logger, LoggerFactory}
-import scala.collection.parallel.CollectionConverters._
 
 class ESWrapper(config: ESConfiguration) {
   val logger: Logger = LoggerFactory.getLogger("ES_Client")

@@ -9,7 +9,6 @@ import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.HttpClientBuilder
 import org.apache.http.util.EntityUtils
 import spray.json._
-import scala.jdk.CollectionConverters.{SetHasAsJava, SetHasAsScala}
 import spray.json.lenses.JsonLenses._
 import spray.json.DefaultJsonProtocol._
 import com.typesafe.config.ConfigValueType
@@ -90,9 +89,10 @@ class CloudHttpClient {
     def getNestedMap(basePath: String): Map[String, JsValue] = {
       val nestedObj = config.getObject(basePath).entrySet()
       var result = Map[String, JsValue]()
-      for (configPair <- SetHasAsScala(nestedObj).asScala) {
+      nestedObj.forEach(configPair => {
         val configName = configPair.getKey()
         val configValue = configPair.getValue()
+
         val fullPath = s"${basePath}.${configName}"
 
         if (configValue.valueType() == ConfigValueType.BOOLEAN) {
@@ -104,18 +104,24 @@ class CloudHttpClient {
         } else if (configValue.valueType() == ConfigValueType.OBJECT) {
           result += (configName -> JsObject(getNestedMap(fullPath)))
         } else {
-          throw new IllegalArgumentException(s"Unsupported config type at apm.${configName}")
+          throw new IllegalArgumentException(
+            s"Unsupported config type at apm.${configName}"
+          )
         }
-      }
+      })
 
-      return result
+      result
     }
 
     if (config.hasPath("kibana.user-settings-overrides-json")) {
       val overrides = getNestedMap("kibana.user-settings-overrides-json")
 
       payload = payload.update(
-        Symbol("resources") / Symbol("kibana") / element(0) / Symbol("plan") / Symbol("kibana") / Symbol("user_settings_override_json") ! set(overrides)
+        Symbol("resources") / Symbol("kibana") / element(0) / Symbol(
+          "plan"
+        ) / Symbol("kibana") / Symbol("user_settings_override_json") ! set(
+          overrides
+        )
       )
     }
 
