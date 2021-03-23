@@ -28,7 +28,9 @@ pipeline {
                             withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
                                 script {
                                     docker.image('maven:3.6.3-openjdk-8-slim').inside {
-                                        sh """cd kibana-load-testing && mvn scala:testCompile"""
+                                        sh """
+                                ./kibana-load-testing/scripts/deploy_and_test.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'
+                                """
                                     }
                                 }
                             }
