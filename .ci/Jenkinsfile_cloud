@@ -1,6 +1,8 @@
 #!/usr/bin/env groovy
 library 'kibana-pipeline-library'
 def loadPipeline
+def mavenImage =  'maven:3.6.3-openjdk-8-slim'
+def threads = [:]
 
 pipeline {
     agent { label 'docker && ubuntu-tests-l' }
@@ -15,12 +17,10 @@ pipeline {
                 echo "INGEST_RESULTS = ${params.INGEST_RESULTS}"
                 echo "DEPLOY_CONFIG = ${params.DEPLOY_CONFIG}"
                 echo "SIMULATION = ${params.SIMULATION}"
+                echo "NUMBER_TEST_RUNS = ${params.NUMBER_TEST_RUNS}"
                 script {
                     loadPipeline = load "${env.WORKSPACE}/kibana-load-testing/.ci/loadPipeline.groovy"
-                    env.NUMBER_TEST_RUNS = params.NUMBER_TEST_RUNS.toInteger()
-                    if (env.NUMBER_TEST_RUNS > 30) {
-                        env.NUMBER_TEST_RUNS = 30
-                    }
+                    env.NUMBER_TEST_RUNS = Integer.valueOf(params.NUMBER_TEST_RUNS) > 20 ? '20' : params.NUMBER_TEST_RUNS
                 }
                 echo "NUMBER_TEST_RUNS = ${env.NUMBER_TEST_RUNS}"
             }
@@ -29,12 +29,22 @@ pipeline {
             steps {
                 withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
                     script {
-                        for (def i = 1; i <= env.NUMBER_TEST_RUNS; i++) {
-                            docker.image('maven:3.6.3-openjdk-8-slim').withRun('-v ${HOME}/.m2:/root/.m2') {
-                                sh """./kibana-load-testing/scripts/deploy_and_test.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'"""
-                                loadPipeline.uploadGatlingReport()
+//                        for (def i = 1; i <= Integer.valueOf(env.NUMBER_TEST_RUNS); i++) {
+//                            docker.image(mavenImage).withRun('-v ${HOME}/.m2:/root/.m2') {
+//                                sh """./kibana-load-testing/scripts/deploy_and_test.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'"""
+//                                loadPipeline.uploadGatlingReport()
+//                            }
+//                        }
+                        for (def i = 1; i <= Integer.valueOf(env.NUMBER_TEST_RUNS); i++) {
+                            threads[i] = {
+                                docker.image(mavenImage).withRun('-v ${HOME}/.m2:/root/.m2') {
+                                    sh """./kibana-load-testing/scripts/deploy_and_test.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'"""
+                                    loadPipeline.uploadGatlingReport()
+                                }
                             }
                         }
+                        // Still within the 'Script' block, run the parallel array object
+                        parallel threads
                     }
                 }
             }
