@@ -81,7 +81,10 @@ object SimulationHelper {
   }
 
   def randomWait: Unit = {
-    val secToWait = Helper.getRandomNumber(10, 90) // between 10 and 90 sec
+    val secToWait = Helper.getRandomNumber(5, 60) + Helper.getRandomNumber(
+      5,
+      60
+    ) // between 10 and 120 sec
     logger.info(s"Delay on start: ${secToWait} seconds")
     Thread.sleep(secToWait * 1000)
   }
