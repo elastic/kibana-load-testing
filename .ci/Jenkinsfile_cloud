@@ -39,6 +39,7 @@ pipeline {
                                     for (def attempt = 1; attempt <= 3; attempt++) {
                                         try {
                                             withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
+                                                sh """mvn -v"""
                                                 sh """./kibana-load-testing/scripts/deploy_and_test.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'"""
                                             }
                                             loadPipeline.uploadGatlingReport(i * j)
