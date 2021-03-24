@@ -29,6 +29,7 @@ pipeline {
             steps {
                 echo "NUMBER_TEST_RUNS = ${env.NUMBER_TEST_RUNS}"
                 script {
+                    sh """mvn -v"""
                     docker.image(mavenImage).withRun('-v ${HOME}/.m2:/root/.m2') {
                         withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
                             sh """mvn -v"""
