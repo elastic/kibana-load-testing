@@ -8,13 +8,15 @@ import org.apache.http.client.methods.{HttpGet, HttpPost}
 import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.HttpClientBuilder
 import org.apache.http.util.EntityUtils
+import scala.jdk.CollectionConverters.SetHasAsScala
 import spray.json.lenses.JsonLenses._
 import spray.json._
-import DefaultJsonProtocol._
+import spray.json.DefaultJsonProtocol._
+import com.typesafe.config.ConfigValueType
 
 class CloudHttpClient {
-  private val DEPLOYMENT_READY_TIMOEOUT = 5 * 60 * 1000 // 5 min
-  private val DEPLOYMENT_POLLING_INTERVAL = 20 * 1000 // 20 sec
+  private val DEPLOYMENT_READY_TIMOEOUT = 7 * 60 * 1000 // 7 min
+  private val DEPLOYMENT_POLLING_INTERVAL = 30 * 1000 // 20 sec
   private val httpClient = HttpClientBuilder.create.build
   private val deployPayloadTemplate = "cloudPayload/createDeployment.json"
   private val baseUrl = "https://staging.found.no/api/v1/deployments"
@@ -39,7 +41,7 @@ class CloudHttpClient {
       s"preparePayload: Stack version $stackVersion with ${config.toString} configuration"
     )
 
-    val payload =
+    var payload =
       template
         .update(
           Symbol("name") ! set[String](
@@ -84,6 +86,48 @@ class CloudHttpClient {
             "plan"
           ) / Symbol("apm") / Symbol("version") ! set[String](stackVersion)
         )
+
+    def getNestedMap(basePath: String): Map[String, JsValue] = {
+      val nestedObj = config.getObject(basePath).entrySet()
+      var result = Map[String, JsValue]()
+      for (configPair <- SetHasAsScala(nestedObj).asScala) {
+        val configName = configPair.getKey()
+        val configValue = configPair.getValue()
+        val fullPath = s"${basePath}.${configName}"
+
+        if (configValue.valueType() == ConfigValueType.BOOLEAN) {
+          result += (configName -> JsBoolean(config.getBoolean(fullPath)))
+        } else if (configValue.valueType() == ConfigValueType.STRING) {
+          result += (configName -> JsString(config.getString(fullPath)))
+        } else if (configValue.valueType() == ConfigValueType.NUMBER) {
+          result += (configName -> JsNumber(config.getDouble(fullPath)))
+        } else if (configValue.valueType() == ConfigValueType.OBJECT) {
+          result += (configName -> JsObject(getNestedMap(fullPath)))
+        } else {
+          throw new IllegalArgumentException(
+            s"Unsupported config type at apm.${configName}"
+          )
+        }
+      }
+
+      return result
+    }
+
+    if (config.hasPath("kibana.user-settings-overrides-json")) {
+      val overrides = getNestedMap("kibana.user-settings-overrides-json")
+
+      payload = payload.update(
+        Symbol("resources") / Symbol("kibana") / element(0) / Symbol(
+          "plan"
+        ) / Symbol("kibana") / Symbol("user_settings_override_json") ! set(
+          overrides
+        )
+      )
+    }
+
+    logger.info(
+      s"preparePayload: ${payload.toString()}"
+    )
 
     payload.toString
   }

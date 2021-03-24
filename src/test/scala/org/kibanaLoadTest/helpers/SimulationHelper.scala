@@ -2,11 +2,15 @@ package org.kibanaLoadTest.helpers
 
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
 import org.kibanaLoadTest.KibanaConfiguration
+import org.slf4j.{Logger, LoggerFactory}
 
 import java.io.File
 import java.nio.file.Paths
 
 object SimulationHelper {
+
+  val logger: Logger = LoggerFactory.getLogger("SimulationHelper")
+
   private val lastDeploymentFilePath: String = Paths
     .get("target")
     .toAbsolutePath
@@ -108,5 +112,14 @@ object SimulationHelper {
       "maxUsers" -> users
     )
     Helper.writeMapToFile(meta, lastDeploymentFilePath)
+  }
+
+  def randomWait: Unit = {
+    val secToWait = Helper.getRandomNumber(5, 60) + Helper.getRandomNumber(
+      5,
+      60
+    ) // between 10 and 120 sec
+    logger.info(s"Delay on start: ${secToWait} seconds")
+    Thread.sleep(secToWait * 1000)
   }
 }

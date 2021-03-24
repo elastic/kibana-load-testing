@@ -2,6 +2,7 @@ package org.kibanaLoadTest.simulation
 
 import io.gatling.core.Predef._
 import io.gatling.core.structure.ChainBuilder
+import io.gatling.http.protocol.HttpProtocolBuilder
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.{
   CloudHttpClient,
@@ -11,6 +12,7 @@ import org.kibanaLoadTest.helpers.{
 }
 import org.kibanaLoadTest.scenario.Login
 import org.slf4j.{Logger, LoggerFactory}
+
 import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.FiniteDuration
 
@@ -71,9 +73,9 @@ class BaseSimulation extends Simulation {
       .syncWithInstance()
 
   val httpHelper = new HttpHelper(appConfig)
-  var httpProtocol = httpHelper.getProtocol
-  var defaultHeaders = httpHelper.getDefaultHeaders
-  var defaultTextHeaders = httpHelper.defaultTextHeaders
+  var httpProtocol: HttpProtocolBuilder = httpHelper.getProtocol
+  var defaultHeaders: Map[String, String] = httpHelper.getDefaultHeaders
+  var defaultTextHeaders: Map[String, String] = httpHelper.defaultTextHeaders
 
   if (appConfig.isSecurityEnabled) {
     defaultHeaders += ("Cookie" -> "${Cookie}")

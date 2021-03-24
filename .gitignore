@@ -25,6 +25,7 @@ test-output
 
 # misc
 .DS_Store
+/.vscode/
 
 # project files to ignore
 !/results/.gitkeep
@@ -34,3 +35,7 @@ src/test/resources/config/**
 
 #
 java_pid*.hprof
+
+# metals
+/.bloop/
+/.metals/

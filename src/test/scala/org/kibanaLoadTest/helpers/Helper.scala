@@ -140,4 +140,7 @@ object Helper {
         false
     }
   }
+
+  def getRandomNumber(min: Int, max: Int): Int =
+    ((Math.random * (max - min)) + min).toInt
 }

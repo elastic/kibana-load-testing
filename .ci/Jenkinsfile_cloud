@@ -1,9 +1,15 @@
 #!/usr/bin/env groovy
 library 'kibana-pipeline-library'
 def loadPipeline
+def mavenImage =  'maven:3.6.3-openjdk-8-slim'
+def threads = [:]
+def testsInParallel = 3
 
 pipeline {
     agent { label 'docker && ubuntu-tests-l' }
+    parameters {
+        string(name: 'NUMBER_TEST_RUNS', defaultValue: '1', description: 'Number of parallel executions')
+    }
     stages {
         stage ('Initialize') {
             steps {
@@ -12,35 +18,52 @@ pipeline {
                 echo "INGEST_RESULTS = ${params.INGEST_RESULTS}"
                 echo "DEPLOY_CONFIG = ${params.DEPLOY_CONFIG}"
                 echo "SIMULATION = ${params.SIMULATION}"
+                echo "NUMBER_TEST_RUNS = ${params.NUMBER_TEST_RUNS}"
                 script {
                     loadPipeline = load "${env.WORKSPACE}/kibana-load-testing/.ci/loadPipeline.groovy"
+                    env.NUMBER_TEST_RUNS = Integer.valueOf(params.NUMBER_TEST_RUNS) > 20 ? '20' : params.NUMBER_TEST_RUNS
                 }
             }
         }
         stage ('Run tests on cloud') {
             steps {
+                echo "NUMBER_TEST_RUNS = ${env.NUMBER_TEST_RUNS}"
                 script {
-                    withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
-                        sh """
-                        ./kibana-load-testing/scripts/deploy_and_test.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'
-                        """
-                        loadPipeline.uploadGatlingReport()
+                    def testRuns = Integer.valueOf(env.NUMBER_TEST_RUNS)
+                    def loopCount = (testRuns/testsInParallel) > 1 ? testRuns/testsInParallel : 1
+                    def concurrentThreads = testRuns > testsInParallel ? testsInParallel : testRuns
+                    for (def j = 1; j <= loopCount; j++) {
+                        for (def i = 1; i <= concurrentThreads; i++) {
+                            threads[i] = {
+                                docker.image(mavenImage).withRun('-v ${HOME}/.m2:/root/.m2') {
+                                    for (def attempt = 1; attempt <= 3; attempt++) {
+                                        try {
+                                            withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
+                                                sh """./kibana-load-testing/scripts/deploy_and_test.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'"""
+                                            }
+                                            loadPipeline.uploadGatlingReport(i * j)
+                                            if (params.INGEST_RESULTS.toBoolean()) {
+                                                withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'host', variable_name: 'HOST_FROM_VAULT') {
+                                                    withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
+                                                        withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
+                                                            sh '''./kibana-load-testing/scripts/ingest_results.sh'''
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            break
+                                        } catch (Exception e) {
+                                            if (attempt == 3) {
+                                                throw new Exception("Could not succeed after ${attempt} attempts")
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        // Still within the 'Script' block, run the parallel array object
+                        parallel threads
                     }
-                }
-            }
-            post {
-                success {
-                  script {
-                      if (params.INGEST_RESULTS.toBoolean()) {
-                          withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'host', variable_name: 'HOST_FROM_VAULT') {
-                              withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
-                                  withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
-                                      sh '''./kibana-load-testing/scripts/ingest_results.sh'''
-                                  }
-                              }
-                          }
-                      }
-                  }
                 }
             }
         }
