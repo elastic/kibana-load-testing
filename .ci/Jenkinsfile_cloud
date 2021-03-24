@@ -22,24 +22,18 @@ pipeline {
                     loadPipeline = load "${env.WORKSPACE}/kibana-load-testing/.ci/loadPipeline.groovy"
                     env.NUMBER_TEST_RUNS = Integer.valueOf(params.NUMBER_TEST_RUNS) > 20 ? '20' : params.NUMBER_TEST_RUNS
                 }
-                echo "NUMBER_TEST_RUNS = ${env.NUMBER_TEST_RUNS}"
             }
         }
         stage ('Run tests on cloud') {
             steps {
                 withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
+                    echo "NUMBER_TEST_RUNS = ${env.NUMBER_TEST_RUNS}"
                     script {
-//                        for (def i = 1; i <= Integer.valueOf(env.NUMBER_TEST_RUNS); i++) {
-//                            docker.image(mavenImage).withRun('-v ${HOME}/.m2:/root/.m2') {
-//                                sh """./kibana-load-testing/scripts/deploy_and_test.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'"""
-//                                loadPipeline.uploadGatlingReport()
-//                            }
-//                        }
                         for (def i = 1; i <= Integer.valueOf(env.NUMBER_TEST_RUNS); i++) {
                             threads[i] = {
                                 docker.image(mavenImage).withRun('-v ${HOME}/.m2:/root/.m2') {
                                     sh """./kibana-load-testing/scripts/deploy_and_test.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'"""
-                                    loadPipeline.uploadGatlingReport()
+                                    loadPipeline.uploadGatlingReport(i)
                                 }
                             }
                         }
