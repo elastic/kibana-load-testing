@@ -15,8 +15,8 @@ import spray.json.DefaultJsonProtocol._
 import com.typesafe.config.ConfigValueType
 
 class CloudHttpClient {
-  private val DEPLOYMENT_READY_TIMOEOUT = 5 * 60 * 1000 // 5 min
-  private val DEPLOYMENT_POLLING_INTERVAL = 20 * 1000 // 20 sec
+  private val DEPLOYMENT_READY_TIMOEOUT = 7 * 60 * 1000 // 7 min
+  private val DEPLOYMENT_POLLING_INTERVAL = 30 * 1000 // 20 sec
   private val httpClient = HttpClientBuilder.create.build
   private val deployPayloadTemplate = "cloudPayload/createDeployment.json"
   private val baseUrl = "https://staging.found.no/api/v1/deployments"
@@ -104,7 +104,9 @@ class CloudHttpClient {
         } else if (configValue.valueType() == ConfigValueType.OBJECT) {
           result += (configName -> JsObject(getNestedMap(fullPath)))
         } else {
-          throw new IllegalArgumentException(s"Unsupported config type at apm.${configName}")
+          throw new IllegalArgumentException(
+            s"Unsupported config type at apm.${configName}"
+          )
         }
       }
 
@@ -115,7 +117,11 @@ class CloudHttpClient {
       val overrides = getNestedMap("kibana.user-settings-overrides-json")
 
       payload = payload.update(
-        Symbol("resources") / Symbol("kibana") / element(0) / Symbol("plan") / Symbol("kibana") / Symbol("user_settings_override_json") ! set(overrides)
+        Symbol("resources") / Symbol("kibana") / element(0) / Symbol(
+          "plan"
+        ) / Symbol("kibana") / Symbol("user_settings_override_json") ! set(
+          overrides
+        )
       )
     }
 

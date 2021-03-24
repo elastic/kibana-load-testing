@@ -8,9 +8,9 @@ def uploadGcsArtifact(uploadPrefix, pattern) {
     )
 }
 
-def uploadGatlingReport() {
-    uploadGcsArtifact("kibana-ci-artifacts/jobs/${env.JOB_NAME}/${env.BUILD_NUMBER}", 'report.tar.gz')
-    uploadGcsArtifact("kibana-ci-artifacts/jobs/${env.JOB_NAME}/${env.BUILD_NUMBER}", 'lastDeployment.txt')
+def uploadGatlingReport(index = 1) {
+    uploadGcsArtifact("kibana-ci-artifacts/jobs/${env.JOB_NAME}/${env.BUILD_NUMBER}/${index}", 'report.tar.gz')
+    uploadGcsArtifact("kibana-ci-artifacts/jobs/${env.JOB_NAME}/${env.BUILD_NUMBER}/${index}", 'lastDeployment.txt')
 }
 
 return this

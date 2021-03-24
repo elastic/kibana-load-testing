@@ -37,6 +37,7 @@ class BaseSimulation extends Simulation {
       )
   }
 
+  SimulationHelper.randomWait
   // -DdeploymentConfig=path/to/config, default one deploys basic instance on GCP
   val CLOUD_DEPLOY_CONFIG: String =
     System.getProperty("deploymentConfig", "config/deploy/default.conf")
