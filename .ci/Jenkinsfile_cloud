@@ -2,68 +2,54 @@
 library 'kibana-pipeline-library'
 def loadPipeline
 
-timeout(time: 300, units: 'MINUTES') {
-    def workers = [:]
-
-    def numWorkers = params.NUMBER_WORKERS || 3
-    def numTestRuns = params.NUMBER_TEST_RUNS || 30
-    def modTestRuns = numTestRuns % numWorkers
-    def numJobsPerWorker = numTestRuns.intdiv(numWorkers)
-
-    for (def i = 1; i <= 3; i++) {
-        workers["worker-${i}"] = {
-            for (def j = 1; j <= numJobsPerWorker; j++) {
-                runPipeline(i, j)
-            }
-
-            // Account for modulo
-            if (i <= modTestRuns) {
-                runPipeline(i, numJobsPerWorker + 1)
-            }
-        }
+pipeline {
+    agent { label 'docker && ubuntu-tests-l' }
+    parameters {
+        string(name: 'NUMBER_TEST_RUNS', defaultValue: '1', description: 'Number of parallel executions')
     }
-
-    parallel(workers)
-}
-
-def runPipeline(Integer workerNumber, Integer runNumber) {
-    node('docker && ubuntu-tests-l') {
-        stage ("Initialize [worker ${workerNumber}, run ${runNumber}]") {
-            checkout scm
-            sh """
+    stages {
+        stage ('Initialize') {
+            steps {
                 echo "PATH = ${PATH}"
                 echo "STACK_VERSION = ${params.STACK_VERSION}"
                 echo "INGEST_RESULTS = ${params.INGEST_RESULTS}"
                 echo "DEPLOY_CONFIG = ${params.DEPLOY_CONFIG}"
                 echo "SIMULATION = ${params.SIMULATION}"
-            """
-            loadPipeline = load "${env.WORKSPACE}/kibana-load-testing/.ci/loadPipeline.groovy"
-        }
-
-        stage("Run tests on cloud [worker ${workerNumber}, run ${runNumber}]") {
-            for (def attempt = 1; attempt <= 3; attempt++) {
-                try {
-                    withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-admin-api-key', secret_field: 'value', variable_name: 'API_KEY') {
-                        docker.image('maven:3.6.3-openjdk-8-slim').withRun('-v ${HOME}/.m2:/root/.m2') {
-                            sh """
-                        ./kibana-load-testing/scripts/deploy_and_test.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'
-                        """
-                            loadPipeline.uploadGatlingReport()
-                        }
+                script {
+                    loadPipeline = load "${env.WORKSPACE}/kibana-load-testing/.ci/loadPipeline.groovy"
+                    env.NUMBER_TEST_RUNS = params.NUMBER_TEST_RUNS.toInteger()
+                    if (env.NUMBER_TEST_RUNS > 30) {
+                        env.NUMBER_TEST_RUNS = 30
                     }
-                    if (params.INGEST_RESULTS.toBoolean()) {
-                        withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'host', variable_name: 'HOST_FROM_VAULT') {
-                            withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
-                                withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
-                                    sh '''./kibana-load-testing/scripts/ingest_results.sh'''
-                                }
+                }
+                echo "NUMBER_TEST_RUNS = ${env.NUMBER_TEST_RUNS}"
+            }
+        }
+        stage ('Run tests on cloud') {
+            steps {
+                withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
+                    script {
+                        for (def i = 1; i <= env.NUMBER_TEST_RUNS; i++) {
+                            docker.image('maven:3.6.3-openjdk-8-slim').withRun('-v ${HOME}/.m2:/root/.m2') {
+                                sh """./kibana-load-testing/scripts/deploy_and_test.sh -v '${params.STACK_VERSION}' -c '${params.DEPLOY_CONFIG}' -s '${params.SIMULATION}'"""
+                                loadPipeline.uploadGatlingReport()
                             }
                         }
                     }
-                    break
-                } catch (Exception e) {
-                    if (attempt == 3) {
-                        throw new Exception("Could not succeed after ${attempt} attempts")
+                }
+            }
+            post {
+                success {
+                    script {
+                        if (params.INGEST_RESULTS.toBoolean()) {
+                            withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'host', variable_name: 'HOST_FROM_VAULT') {
+                                withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
+                                    withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
+                                        sh '''./kibana-load-testing/scripts/ingest_results.sh'''
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
