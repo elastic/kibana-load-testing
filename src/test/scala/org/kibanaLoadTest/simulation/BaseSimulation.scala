@@ -82,6 +82,7 @@ class BaseSimulation extends Simulation {
     logger.info(
       s"Running ${getClass.getSimpleName} simulation with ${props.maxUsers} users"
     )
+    SimulationHelper.randomWait
     appConfig.print()
     // saving deployment info to target/lastDeployment.txt"
     SimulationHelper.saveDeploymentMeta(appConfig, props.maxUsers)
