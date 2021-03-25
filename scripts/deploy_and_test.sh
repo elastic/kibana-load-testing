@@ -1,12 +1,12 @@
 #!/bin/bash
 
-while getopts v:c:s: flag
+while getopts v:c:s:n: flag
 do
     case "${flag}" in
         v) stackVersion=${OPTARG};;
         c) deployConfig=${OPTARG};;
         s) simulation=${OPTARG};;
-        n) test_runs_count=${OPTARG};;
+        n) test_runs_number=${OPTARG};;
         *) echo "incorrect argument, supported flags are: v, c, s"
     esac
 done
@@ -15,7 +15,7 @@ echo "Running tests against Kibana cloud instance"
 echo "stackVersion=${stackVersion}"
 echo "deployConfig=${deployConfig}"
 echo "simulation=${simulation}"
-echo "test_runs_count=${test_runs_count}"
+echo "test_runs_number=${test_runs_number}"
 
 cd kibana-load-testing || exit
 
@@ -24,7 +24,7 @@ mvn --no-transfer-progress -Dmaven.wagon.http.retryHandler.count=3 -q install -D
 echo "compile source code"
 mvn --no-transfer-progress scala:testCompile
 echo "create deployment"
-mvn exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.Create \
+mvn --no-transfer-progress exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.Create \
   -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false \
   -DcloudStackVersion="${stackVersion}" \
   -DdeploymentConfig="${deployConfig}" || exit
@@ -32,7 +32,7 @@ source target/cloudDeployment.txt
 echo "deploymentId=${deploymentId}"
 
 IFS=',' read -ra sim_array <<< "${simulation}"
-for i in $(seq "$test_runs_count"); do
+for i in $(seq "$test_runs_number"); do
   for j in "${sim_array[@]}"; do
     echo "Running simulation $i ..."
     mvn gatling:test -q -DdeploymentId="${deploymentId}" -Dgatling.simulationClass=org.kibanaLoadTest.simulation.$j
@@ -42,7 +42,7 @@ for i in $(seq "$test_runs_count"); do
 done
 
 echo "delete deployment"
-mvn exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.Delete \
+mvn --no-transfer-progress exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.Delete \
   -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false \
   -DdeploymentId="${deploymentId}" || exit
 
