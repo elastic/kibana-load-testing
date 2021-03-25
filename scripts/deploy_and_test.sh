@@ -11,26 +11,23 @@ do
     esac
 done
 
-echo "Running tests against Kibana cloud instance"
-echo "stackVersion=${stackVersion}"
-echo "deployConfig=${deployConfig}"
-echo "simulation=${simulation}"
-echo "test_runs_number=${test_runs_number}"
+echo "##### Running with arguments: #####"
+echo "stackVersion=${stackVersion} deployConfig=${deployConfig} simulation=${simulation} test_runs_number=${test_runs_number}"
 
 cd kibana-load-testing || exit
 
-echo "install dependencies"
+echo "##### Install dependencies #####"
 mvn --no-transfer-progress -Dmaven.wagon.http.retryHandler.count=3 -q install -DskipTests
-echo "compile source code"
+echo "##### Compile source code #####"
 mvn --no-transfer-progress scala:testCompile
-echo "create deployment"
+echo "##### Create a new Elastic Stack deployment #####"
 mvn --no-transfer-progress exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.Create \
   -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false \
   -DcloudStackVersion="${stackVersion}" \
   -DdeploymentConfig="${deployConfig}" || exit
 source target/cloudDeployment.txt
-echo "deploymentId=${deploymentId}"
 
+echo "##### Running tests against Kibana cloud instance ${deploymentId} #####"
 IFS=',' read -ra sim_array <<< "${simulation}"
 for i in $(seq "$test_runs_number"); do
   for j in "${sim_array[@]}"; do
@@ -41,12 +38,12 @@ for i in $(seq "$test_runs_number"); do
   done
 done
 
-echo "delete deployment"
+echo "##### Delete deployment ${deploymentId} #####"
 mvn --no-transfer-progress exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.Delete \
   -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false \
   -DdeploymentId="${deploymentId}" || exit
 
-# zip test report
+echo "##### Zip test report #####"
 cd ..
 tar -czf report.tar.gz kibana-load-testing/target/gatling/**/*
 cp  kibana-load-testing/target/lastDeployment.txt .
