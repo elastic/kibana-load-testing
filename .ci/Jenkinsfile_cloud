@@ -57,9 +57,9 @@ pipeline {
                             }
                         }
                     }
+                    // Still within the 'Script' block, run the parallel array object
+                    parallel threads
                 }
-                // Still within the 'Script' block, run the parallel array object
-                parallel threads
             }
         }
     }
