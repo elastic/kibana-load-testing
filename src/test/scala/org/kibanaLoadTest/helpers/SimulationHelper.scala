@@ -65,8 +65,13 @@ object SimulationHelper {
   }
 
   def useExistingDeployment(id: String): KibanaConfiguration = {
+    val cloudDeploymentFilePath: String = Paths
+      .get("target")
+      .toAbsolutePath
+      .normalize
+      .toString + File.separator + "cloudDeployment.txt"
+    val meta = Helper.readFileToMap(cloudDeploymentFilePath)
     val cloudClient = new CloudHttpClient
-    val credentials = cloudClient.resetPassword(id)
     val host = cloudClient.getKibanaUrl(id)
     val version = cloudClient.getStackVersion(id)
     val providerName = if (version.isAbove79x) "cloud-basic" else "basic-cloud"
@@ -89,11 +94,11 @@ object SimulationHelper {
       )
       .withValue(
         "auth.username",
-        ConfigValueFactory.fromAnyRef(credentials("username"))
+        ConfigValueFactory.fromAnyRef(meta("username"))
       )
       .withValue(
         "auth.password",
-        ConfigValueFactory.fromAnyRef(credentials("password"))
+        ConfigValueFactory.fromAnyRef(meta("password"))
       )
     new KibanaConfiguration(cloudConfig)
   }

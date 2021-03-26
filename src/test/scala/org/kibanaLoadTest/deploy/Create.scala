@@ -31,9 +31,6 @@ object Create {
       throw new RuntimeException("Stop due to failed deployment...")
     }
 
-    Helper.writeMapToFile(
-      Map("deploymentId" -> metadata("deploymentId")),
-      cloudDeploymentFilePath
-    )
+    Helper.writeMapToFile(metadata, cloudDeploymentFilePath)
   }
 }
