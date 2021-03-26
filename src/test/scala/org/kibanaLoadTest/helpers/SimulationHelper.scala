@@ -79,6 +79,10 @@ object SimulationHelper {
         "deploymentId",
         ConfigValueFactory.fromAnyRef(id)
       )
+      .withValue(
+        "deleteDeploymentOnFinish",
+        ConfigValueFactory.fromAnyRef(meta("deleteDeploymentOnFinish"))
+      )
       .withValue("app.host", ConfigValueFactory.fromAnyRef(meta("host")))
       .withValue(
         "app.version",
