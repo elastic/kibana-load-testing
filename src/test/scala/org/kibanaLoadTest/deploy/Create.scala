@@ -23,13 +23,19 @@ object Create {
       version.get,
       Helper.readResourceConfigFile(deployConfig)
     )
-    val metadata = cloudClient.createDeployment(payload)
+    var metadata = cloudClient.createDeployment(payload)
     val isReady = cloudClient.waitForClusterToStart(metadata("deploymentId"))
     // delete deployment if it was not finished successfully
     if (!isReady) {
       cloudClient.deleteDeployment(metadata("deploymentId"))
       throw new RuntimeException("Stop due to failed deployment...")
     }
+
+    val host = cloudClient.getKibanaUrl(metadata("deploymentId"))
+    metadata += "version" -> version.get
+    metadata += "host" -> host
+
+    println(metadata.toString())
 
     Helper.writeMapToFile(metadata, cloudDeploymentFilePath)
   }

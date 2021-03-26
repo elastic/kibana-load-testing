@@ -71,9 +71,7 @@ object SimulationHelper {
       .normalize
       .toString + File.separator + "cloudDeployment.txt"
     val meta = Helper.readFileToMap(cloudDeploymentFilePath)
-    val cloudClient = new CloudHttpClient
-    val host = cloudClient.getKibanaUrl(id)
-    val version = cloudClient.getStackVersion(id)
+    val version = new Version(meta("version").toString)
     val providerName = if (version.isAbove79x) "cloud-basic" else "basic-cloud"
     val cloudConfig = ConfigFactory
       .load()
@@ -81,7 +79,7 @@ object SimulationHelper {
         "deploymentId",
         ConfigValueFactory.fromAnyRef(id)
       )
-      .withValue("app.host", ConfigValueFactory.fromAnyRef(host))
+      .withValue("app.host", ConfigValueFactory.fromAnyRef(meta("host")))
       .withValue(
         "app.version",
         ConfigValueFactory.fromAnyRef(version.get)
