@@ -14,7 +14,7 @@ done
 echo "##### Running with arguments: #####"
 echo "stackVersion=${stackVersion} deployConfig=${deployConfig} simulation=${simulation} test_runs_number=${test_runs_number}"
 
-cd kibana-load-testing || exit
+cd kibana-load-testing
 
 echo "##### Install dependencies #####"
 mvn --no-transfer-progress -Dmaven.wagon.http.retryHandler.count=3 -q install -DskipTests
@@ -24,7 +24,7 @@ echo "##### Create a new Elastic Stack deployment #####"
 mvn --no-transfer-progress exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.Create \
   -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false \
   -DcloudStackVersion="${stackVersion}" \
-  -DdeploymentConfig="${deployConfig}" || exit
+  -DdeploymentConfig="${deployConfig}"
 source target/cloudDeployment.txt
 
 echo "##### Running tests against Kibana cloud instance ${deploymentId} #####"
