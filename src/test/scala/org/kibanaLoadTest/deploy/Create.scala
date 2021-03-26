@@ -35,7 +35,7 @@ object Create {
     metadata += "version" -> version.get
     metadata += "host" -> host
     // do not delete deployment after simulation run
-    metadata += "deleteDeploymentOnFinish" -> false
+    metadata += "deleteDeploymentOnFinish" -> "false"
 
     Helper.writeMapToFile(metadata, cloudDeploymentFilePath)
   }
