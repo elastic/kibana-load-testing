@@ -2,7 +2,7 @@
 library 'kibana-pipeline-library'
 def loadPipeline
 def MAVEN_IMAGE =  'maven:3.6.3-openjdk-8-slim'
-def MAX_TEST_RUNS = 5
+def MAX_TEST_RUNS = 10
 def MAX_DEPLOYMENTS = 3
 def threads = [:]
 
@@ -31,7 +31,7 @@ pipeline {
         }
         stage ('Run tests on cloud') {
             steps {
-                echo "All scenarios will executed ${env.NUMBER_TEST_RUNS} times on ${env.NUMBER_DEPLOYMENTS} deployments"
+                echo "All scenarios will be executed ${env.NUMBER_TEST_RUNS} times on ${env.NUMBER_DEPLOYMENTS} deployments"
                 script {
                     for (def i = 1; i <= Integer.valueOf(env.NUMBER_DEPLOYMENTS); i++) {
                         threads[i] = {
