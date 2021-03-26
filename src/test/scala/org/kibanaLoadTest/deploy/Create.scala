@@ -34,8 +34,8 @@ object Create {
     val host = cloudClient.getKibanaUrl(metadata("deploymentId"))
     metadata += "version" -> version.get
     metadata += "host" -> host
-
-    println(metadata.toString())
+    // do not delete deployment after simulation run
+    metadata += "deleteDeploymentOnFinish" -> false
 
     Helper.writeMapToFile(metadata, cloudDeploymentFilePath)
   }

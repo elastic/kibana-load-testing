@@ -101,7 +101,9 @@ class BaseSimulation extends Simulation {
   }
 
   after {
-    if (appConfig.deploymentId.isDefined) {
+    if (
+      appConfig.deploymentId.isDefined && appConfig.deleteDeploymentOnFinish
+    ) {
       // delete deployment
       new CloudHttpClient().deleteDeployment(appConfig.deploymentId.get)
     } else {
