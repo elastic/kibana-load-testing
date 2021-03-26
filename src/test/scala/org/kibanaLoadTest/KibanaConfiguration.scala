@@ -26,6 +26,7 @@ class KibanaConfiguration {
   var buildHash = ""
   var buildNumber: Long = 0
   var isSnapshotBuild = false
+  var deleteDeploymentOnFinish = true
 
   def this(config: Config) = {
     this()
@@ -78,6 +79,10 @@ class KibanaConfiguration {
     this.deploymentId = if (config.hasPath("deploymentId")) {
       Option(config.getString("deploymentId"))
     } else None
+    this.deleteDeploymentOnFinish =
+      if (config.hasPath("deleteDeploymentOnFinish"))
+        config.getBoolean("deleteDeploymentOnFinish")
+      else true
   }
 
   def syncWithInstance(): KibanaConfiguration = {

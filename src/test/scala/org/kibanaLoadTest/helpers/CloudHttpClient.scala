@@ -8,9 +8,9 @@ import org.apache.http.client.methods.{HttpGet, HttpPost}
 import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.HttpClientBuilder
 import org.apache.http.util.EntityUtils
-import spray.json._
-import scala.jdk.CollectionConverters.{SetHasAsJava, SetHasAsScala}
+import scala.jdk.CollectionConverters.SetHasAsScala
 import spray.json.lenses.JsonLenses._
+import spray.json._
 import spray.json.DefaultJsonProtocol._
 import com.typesafe.config.ConfigValueType
 
@@ -172,10 +172,30 @@ class CloudHttpClient {
   }
 
   def getDeploymentStateInfo(id: String): String = {
-    val getStateRequest: HttpGet = new HttpGet(s"$baseUrl/$id")
+    val getStateRequest: HttpGet = new HttpGet(
+      s"$baseUrl/$id?enrich_with_template=false&show_metadata=false&show_plans=false"
+    )
     getStateRequest.addHeader("Authorization", s"ApiKey $getApiKey")
     val response = httpClient.execute(getStateRequest)
     EntityUtils.toString(response.getEntity)
+  }
+
+  def getStackVersion(id: String): Version = {
+    val getStateRequest: HttpGet = new HttpGet(
+      s"$baseUrl/$id?enrich_with_template=false&show_metadata=false&show_plans=false"
+    )
+    getStateRequest.addHeader("Authorization", s"ApiKey $getApiKey")
+    val response = httpClient.execute(getStateRequest)
+    val jsonString = EntityUtils.toString(response.getEntity)
+    val stackVersion =
+      jsonString.extract[String](
+        Symbol("resources") / Symbol("elasticsearch") / element(0) / Symbol(
+          "info"
+        ) / Symbol("topology") / Symbol("instances") / element(0) / Symbol(
+          "service_version"
+        )
+      )
+    new Version(stackVersion)
   }
 
   def getInstanceStatus(deploymentId: String): Map[String, String] = {
@@ -251,5 +271,17 @@ class CloudHttpClient {
     logger.info(
       s"deleteDeployment: Finished with status code ${response.getStatusLine.getStatusCode}"
     )
+  }
+
+  def resetPassword(id: String): Map[String, String] = {
+    logger.info(s"Reset password: deployment $id")
+    val resetRequest = new HttpPost(
+      "%s/%s/elasticsearch/main-elasticsearch/_reset-password"
+        .format(baseUrl, id)
+    )
+    resetRequest.addHeader("Authorization", s"ApiKey $getApiKey")
+    val response = httpClient.execute(resetRequest)
+    val responseString = EntityUtils.toString(response.getEntity)
+    responseString.parseJson.convertTo[Map[String, String]]
   }
 }

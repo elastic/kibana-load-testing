@@ -64,6 +64,47 @@ object SimulationHelper {
     new KibanaConfiguration(cloudConfig)
   }
 
+  def useExistingDeployment(id: String): KibanaConfiguration = {
+    val cloudDeploymentFilePath: String = Paths
+      .get("target")
+      .toAbsolutePath
+      .normalize
+      .toString + File.separator + "cloudDeployment.txt"
+    val meta = Helper.readFileToMap(cloudDeploymentFilePath)
+    val version = new Version(meta("version").toString)
+    val providerName = if (version.isAbove79x) "cloud-basic" else "basic-cloud"
+    val cloudConfig = ConfigFactory
+      .load()
+      .withValue(
+        "deploymentId",
+        ConfigValueFactory.fromAnyRef(id)
+      )
+      .withValue(
+        "deleteDeploymentOnFinish",
+        ConfigValueFactory.fromAnyRef(meta("deleteDeploymentOnFinish"))
+      )
+      .withValue("app.host", ConfigValueFactory.fromAnyRef(meta("host")))
+      .withValue(
+        "app.version",
+        ConfigValueFactory.fromAnyRef(version.get)
+      )
+      .withValue("security.on", ConfigValueFactory.fromAnyRef(true))
+      .withValue("auth.providerType", ConfigValueFactory.fromAnyRef("basic"))
+      .withValue(
+        "auth.providerName",
+        ConfigValueFactory.fromAnyRef(providerName)
+      )
+      .withValue(
+        "auth.username",
+        ConfigValueFactory.fromAnyRef(meta("username"))
+      )
+      .withValue(
+        "auth.password",
+        ConfigValueFactory.fromAnyRef(meta("password"))
+      )
+    new KibanaConfiguration(cloudConfig)
+  }
+
   def saveDeploymentMeta(config: KibanaConfiguration, users: Integer): Unit = {
     val meta = Map(
       "deploymentId" -> (if (config.deploymentId.isDefined)
