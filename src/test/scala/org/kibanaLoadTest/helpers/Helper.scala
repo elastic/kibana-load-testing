@@ -15,6 +15,7 @@ import spray.json.JsonParser
 import spray.json.JsonParser.ParsingException
 
 import scala.io.Source
+import scala.util.Using
 import scala.util.parsing.json.JSONObject
 
 object Helper {
@@ -50,7 +51,7 @@ object Helper {
     if (url == null) {
       throw new RuntimeException(s"File is not found: $filePath")
     }
-    Source.fromURL(url).getLines().mkString
+    Using(Source.fromURL(url)) { source => source.getLines().mkString }.get
   }
 
   def getTargetPath: String =
@@ -63,9 +64,7 @@ object Helper {
     }
     val files: Array[File] = dir.listFiles
     files.toList
-      .filter(file =>
-        file.isDirectory && !file.getName.contains("_test_folder")
-      )
+      .filter(file => file.isDirectory)
       .maxBy(file => file.lastModified())
       .getAbsolutePath
   }
@@ -113,8 +112,11 @@ object Helper {
   }
 
   def readFileToMap(filePath: String): Map[String, Any] = {
-    val lines: Iterator[String] =
-      Source.fromFile(filePath).getLines().filter(str => str.trim.nonEmpty)
+    val lines: Iterator[String] = {
+      Using(Source.fromFile(filePath)) { source =>
+        source.getLines().filter(str => str.trim.nonEmpty)
+      }.get
+    }
     lines
       .map(str =>
         (
