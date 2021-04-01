@@ -25,6 +25,11 @@ mvn --no-transfer-progress exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.
   -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false \
   -DcloudStackVersion="${stackVersion}" \
   -DdeploymentConfig="${deployConfig}"
+
+if [ ! -f /target/cloudDeployment.txt ]; then
+    echo "File 'cloudDeployment.txt' not found! Most likely deployment failed"
+    exit 1
+fi
 source target/cloudDeployment.txt
 
 echo "##### Running tests against Kibana cloud instance ${deploymentId} #####"
