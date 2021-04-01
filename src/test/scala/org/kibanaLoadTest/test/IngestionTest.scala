@@ -2,12 +2,14 @@ package org.kibanaLoadTest.test
 
 import java.io.File
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
+import io.circe.Json
+import io.circe.parser.parse
 import org.junit.jupiter.api.Assertions.{assertEquals, assertTrue}
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import org.kibanaLoadTest.ESConfiguration
-import org.kibanaLoadTest.helpers.Helper.{getLastReportPath, getTargetPath}
-import org.kibanaLoadTest.helpers.{ESWrapper, Helper, LogParser}
+import org.kibanaLoadTest.helpers.{ESClient, Helper, LogParser}
+import scala.collection.parallel.CollectionConverters.ImmutableIterableIsParallelizable
 
 class IngestionTest {
 
@@ -45,6 +47,7 @@ class IngestionTest {
   @Test
   @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
   def ingestReportTest(): Unit = {
+    val DATA_INDEX = "gatling-data"
     val host = System.getenv("HOST_FROM_VAULT")
     val username = System.getenv("USER_FROM_VAULT")
     val password = System.getenv("PASS_FROM_VAULT")
@@ -55,12 +58,20 @@ class IngestionTest {
         .withValue("password", ConfigValueFactory.fromAnyRef(password))
     )
 
-    val esClient = new ESWrapper(esConfig)
-    val logFilePath = getLastReportPath + File.separator + "simulation.log"
-    val lastDeploymentFilePath =
-      getTargetPath + File.separator + "lastDeployment.txt"
-    val ciMeta = Helper.getCIMeta
-    esClient.ingest(logFilePath, lastDeploymentFilePath, ciMeta)
+    val esClient = new ESClient(esConfig)
+    val simLogFilePath = getClass.getResource("test/simulation.log").getPath
+    val lastRunFilePath = getClass.getResource("test/lastRun.txt").getPath
+    val metaJson = Helper.getMetaJson(lastRunFilePath, simLogFilePath)
+    val requests = LogParser.getRequests(simLogFilePath)
+
+    val requestJsonList = requests.par
+      .map(request => {
+        val requestJson = parse(request.toJsonString).getOrElse(Json.Null)
+        val combinedRequestJson = requestJson.deepMerge(metaJson)
+        combinedRequestJson
+      })
+      .toList
+    esClient.ingest(DATA_INDEX, requestJsonList)
   }
 
   @Test
@@ -72,7 +83,7 @@ class IngestionTest {
     )
 
     val filepath =
-      Helper.getTargetPath + File.separator + "lastDeployment.txt"
+      Helper.getTargetPath + File.separator + "lastRun.txt"
     Helper.writeMapToFile(
       meta,
       filepath

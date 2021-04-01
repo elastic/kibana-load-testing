@@ -81,6 +81,16 @@
             <artifactId>scala-parallel-collections_2.13</artifactId>
             <version>1.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>io.circe</groupId>
+            <artifactId>circe-parser_2.13</artifactId>
+            <version>0.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.circe</groupId>
+            <artifactId>circe-literal_2.13</artifactId>
+            <version>0.13.0</version>
+        </dependency>
     </dependencies>
 
     <build>

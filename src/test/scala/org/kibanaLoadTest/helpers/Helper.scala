@@ -4,15 +4,18 @@ import java.io.{File, PrintWriter}
 import java.net.{MalformedURLException, URL}
 import java.nio.file.Paths
 import java.text.SimpleDateFormat
-import java.time.ZoneId
+import java.time.{Instant, ZoneId}
 import java.time.format.DateTimeFormatter
 import java.util.{Calendar, Date, TimeZone}
 import com.typesafe.config.{Config, ConfigFactory}
+import io.circe.Json
+import io.circe.parser.parse
 import org.slf4j.{Logger, LoggerFactory}
 import spray.json.JsonParser
 import spray.json.JsonParser.ParsingException
 
 import scala.io.Source
+import scala.util.parsing.json.JSONObject
 
 object Helper {
   val dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
@@ -60,7 +63,9 @@ object Helper {
     }
     val files: Array[File] = dir.listFiles
     files.toList
-      .filter(file => file.isDirectory)
+      .filter(file =>
+        file.isDirectory && !file.getName.contains("_test_folder")
+      )
       .maxBy(file => file.lastModified())
       .getAbsolutePath
   }
@@ -120,13 +125,13 @@ object Helper {
       .toMap
   }
 
-  def getCIMeta: Map[String, String] = {
+  def getCIMeta: Map[String, Any] = {
     Map(
-      "buildId" -> Option(System.getenv("BUILD_ID")).getOrElse(""),
-      "buildUrl" -> Option(System.getenv("BUILD_URL")).getOrElse(""),
-      "kibanaBranchName" -> Option(System.getenv("KIBANA_BRANCH"))
+      "CI_BUILD_ID" -> Option(System.getenv("BUILD_ID")).getOrElse(""),
+      "CI_BUILD_URL" -> Option(System.getenv("BUILD_URL")).getOrElse(""),
+      "kibanaBranch" -> Option(System.getenv("KIBANA_BRANCH"))
         .getOrElse(""),
-      "branchName" -> Option(System.getenv("branch_specifier")).getOrElse("")
+      "branch" -> Option(System.getenv("branch_specifier")).getOrElse("")
     )
   }
 
@@ -143,4 +148,12 @@ object Helper {
 
   def getRandomNumber(min: Int, max: Int): Int =
     ((Math.random * (max - min)) + min).toInt
+
+  def getMetaJson(testRunFilePath: String, simLogFilePath: String): Json = {
+    val meta = readFileToMap(testRunFilePath) + ("scenario" -> LogParser
+      .getSimulationClass(simLogFilePath), "timestamp" -> convertDateToUTC(
+      Instant.now.toEpochMilli
+    ))
+    parse(JSONObject(meta).toString()).getOrElse(Json.Null)
+  }
 }
