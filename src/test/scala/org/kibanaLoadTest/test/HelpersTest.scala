@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.Helper.getTargetPath
 import org.kibanaLoadTest.helpers.{Helper, Version}
-
 import java.io.File
+import scala.reflect.io.Directory
 
 class HelpersTest {
 
@@ -71,7 +71,7 @@ class HelpersTest {
   def readFileToMapTest(): Unit = {
     val data =
       Helper.readFileToMap(
-        getClass.getResource("/test/lastDeployment.txt").getPath
+        getClass.getResource("/test/lastRun.txt").getPath
       )
 
     assertEquals(
@@ -90,12 +90,16 @@ class HelpersTest {
   def getReportFolderPathsTest(): Unit = {
     val testFolders = List(
       getTargetPath + File.separator + "gatling",
-      getTargetPath + File.separator + "gatling" + File.separator + "demo1",
-      getTargetPath + File.separator + "gatling" + File.separator + "demo2"
+      getTargetPath + File.separator + "gatling" + File.separator + "_test_folder1",
+      getTargetPath + File.separator + "gatling" + File.separator + "_test_folder2"
     )
     testFolders.foreach(path => new File(path).mkdir())
 
     val paths = Helper.getReportFolderPaths
+    val directory = new Directory(
+      new File(getTargetPath + File.separator + "gatling")
+    )
+    directory.deleteRecursively()
     assertEquals(2, paths.length)
   }
 }

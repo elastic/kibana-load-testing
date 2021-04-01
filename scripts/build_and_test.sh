@@ -17,4 +17,3 @@ echo "Build Kibana and run load scenario"
 # zip test report
 cd ..
 tar -czf report.tar.gz kibana-load-testing/target/gatling/**/*
-cp  kibana-load-testing/target/lastDeployment.txt .
