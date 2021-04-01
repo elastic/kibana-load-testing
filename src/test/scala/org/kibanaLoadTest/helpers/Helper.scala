@@ -15,7 +15,6 @@ import spray.json.JsonParser
 import spray.json.JsonParser.ParsingException
 
 import scala.io.Source
-import scala.util.Using
 import scala.util.parsing.json.JSONObject
 
 object Helper {
@@ -51,7 +50,9 @@ object Helper {
     if (url == null) {
       throw new RuntimeException(s"File is not found: $filePath")
     }
-    Using(Source.fromURL(url)) { source => source.getLines().mkString }.get
+    val source = Source.fromURL(url)
+    try source.getLines().mkString
+    finally source.close()
   }
 
   def getTargetPath: String =
@@ -112,12 +113,10 @@ object Helper {
   }
 
   def readFileToMap(filePath: String): Map[String, Any] = {
-    val lines: Iterator[String] = {
-      Using(Source.fromFile(filePath)) { source =>
-        source.getLines().filter(str => str.trim.nonEmpty)
-      }.get
-    }
-    lines
+    val source = Source.fromFile(filePath)
+    try source
+      .getLines()
+      .filter(str => str.trim.nonEmpty)
       .map(str =>
         (
           str.split("=", 2)(0),
@@ -125,6 +124,7 @@ object Helper {
         )
       )
       .toMap
+    finally source.close()
   }
 
   def getCIMeta: Map[String, Any] = {
@@ -152,10 +152,11 @@ object Helper {
     ((Math.random * (max - min)) + min).toInt
 
   def getMetaJson(testRunFilePath: String, simLogFilePath: String): Json = {
-    val meta = readFileToMap(testRunFilePath) + ("scenario" -> LogParser
-      .getSimulationClass(simLogFilePath), "timestamp" -> convertDateToUTC(
-      Instant.now.toEpochMilli
-    ))
+    val meta = readFileToMap(testRunFilePath) ++ Map(
+      "scenario" -> LogParser
+        .getSimulationClass(simLogFilePath),
+      "timestamp" -> convertDateToUTC(Instant.now.toEpochMilli)
+    )
     parse(JSONObject(meta).toString()).getOrElse(Json.Null)
   }
 }
