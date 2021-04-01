@@ -46,4 +46,3 @@ mvn --no-transfer-progress exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.
 echo "##### Zip test report #####"
 cd ..
 tar -czf report.tar.gz kibana-load-testing/target/gatling/**/*
-cp  kibana-load-testing/target/lastDeployment.txt .
