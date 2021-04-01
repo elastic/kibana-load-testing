@@ -23,9 +23,9 @@ object GatlingStats {
   )
 
   def parse(gatlingStatsJson: String): Stats = {
-    implicit val metaFormat: JsonFormat[Request] = jsonFormat3(Request)
-    implicit val userFormat: JsonFormat[Group] = jsonFormat3(Group)
-    implicit val responseFormat: JsonFormat[Stats] = jsonFormat14(Stats)
+    implicit val requestFormat: JsonFormat[Request] = jsonFormat3(Request)
+    implicit val groupFormat: JsonFormat[Group] = jsonFormat3(Group)
+    implicit val statsFormat: JsonFormat[Stats] = jsonFormat14(Stats)
     gatlingStatsJson.parseJson.convertTo[Stats]
   }
 
