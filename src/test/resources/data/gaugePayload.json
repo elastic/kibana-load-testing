@@ -1,8 +1,8 @@
 {
   "timerange":{
     "timezone":"Europe/Berlin",
-    "min":"2020-07-22T12:17:09.614Z",
-    "max":"2020-07-29T12:17:09.614Z"
+    "min":"2021-03-25T22:16:14.300Z",
+    "max":"2021-04-01T21:16:14.300Z"
   },
   "query":[
     {
@@ -73,5 +73,9 @@
   "state":{
 
   },
-  "savedObjectId":"unsaved"
+  "searchSession":{
+    "sessionId":"a942c482-3458-4b5a-81c6-65ced978e9b1",
+    "isRestore":false,
+    "isStored":false
+  }
 }
