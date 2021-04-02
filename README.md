@@ -1,11 +1,14 @@
 # kibana-load-testing
 
 ## Running simulation against a local instance
-- Start ES and Kibana instances
+- Start ES and Kibana instances.
+
+<b>Important</b>: Run Kibana without base path or add a static one to your kibana.yml like `server.basePath: "/xfh"` before start
 - Update Kibana configuration in /resources/config/local.conf file
 ```
 app {
   host = "http://localhost:5620" //base url
+  // host = "http://localhost:5620 /xhf" if you start Kibana with static base path
   version = "8.0.0" //version
 }
 
