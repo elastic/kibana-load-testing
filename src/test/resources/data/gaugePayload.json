@@ -1,8 +1,8 @@
 {
   "timerange":{
     "timezone":"Europe/Berlin",
-    "min":"2021-03-25T22:16:14.300Z",
-    "max":"2021-04-01T21:16:14.300Z"
+    "min":"2021-03-30T10:32:22.012Z",
+    "max":"2021-04-06T10:32:22.012Z"
   },
   "query":[
     {
@@ -41,7 +41,6 @@
         }
       ],
       "time_field":"order_date",
-      "index_pattern":"kibana_sample_data_ecommerce",
       "interval":"1d",
       "axis_position":"left",
       "axis_formatter":"number",
@@ -67,6 +66,11 @@
       "gauge_style":"half",
       "filter":"",
       "gauge_max":"300",
+      "use_kibana_indexes":true,
+      "hide_last_value_indicator":true,
+      "index_pattern":{
+        "id":"${indexPatternId}"
+      },
       "tooltip_mode":"show_all"
     }
   ],
@@ -74,7 +78,7 @@
 
   },
   "searchSession":{
-    "sessionId":"a942c482-3458-4b5a-81c6-65ced978e9b1",
+    "sessionId":"e0ee9fb0-6a93-455d-b1e1-4e05dc48929a",
     "isRestore":false,
     "isStored":false
   }
