@@ -30,7 +30,7 @@ object Dashboard {
 
   def load(baseUrl: String, headers: Map[String, String]): ChainBuilder = {
     exec(
-      http("query dashboard list")
+      http("query dashboards list")
         .get("/api/saved_objects/_find")
         .queryParam("default_search_operator", "AND")
         .queryParam("has_reference", "[]")
@@ -62,7 +62,7 @@ object Dashboard {
             .saveAs("searchAndMapVector")
         )
     ).exec(
-      http("query indexPatterns list")
+      http("query index pattern")
         .get("/api/saved_objects/_find")
         .queryParam("fields", "title")
         .queryParam("per_page", "10000")
@@ -73,7 +73,7 @@ object Dashboard {
         .check(jsonPath("$.saved_objects[?(@.type=='index-pattern')].id").saveAs("indexPatternId"))
     ).exitBlockOnFail {
       exec(
-        http("query panels list")
+        http("query dashboard panels")
           .post("/api/saved_objects/_bulk_get")
           .body(StringBody("[{\"id\":\"${dashboardId}\",\"type\":\"dashboard\"}]"))
           .headers(headers)
@@ -112,7 +112,7 @@ object Dashboard {
             .header("Referer", baseUrl + "/app/dashboards")
             .check(status.is(200))
         )
-        .exec(http("query eCommerce fields for wildcard")
+        .exec(http("query index pattern meta fields")
           .get("/api/index_patterns/_fields_for_wildcard")
           .queryParam("pattern", "kibana_sample_data_ecommerce")
           .queryParam("meta_fields", "_source")
@@ -124,7 +124,7 @@ object Dashboard {
           .header("Referer", baseUrl + "/app/dashboards")
           .check(status.is(200))
         )
-        .exec(http("query eCommerce index pattern")
+        .exec(http("query index pattern search fields")
           .get("/api/saved_objects/_find")
           .queryParam("fields", "title")
           .queryParam("per_page", "10")
