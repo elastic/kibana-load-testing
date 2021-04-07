@@ -2,20 +2,20 @@ package org.kibanaLoadTest.helpers
 
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
 import org.kibanaLoadTest.KibanaConfiguration
+import org.kibanaLoadTest.helpers.Helper.{getCIMeta, getTargetPath}
 import org.slf4j.{Logger, LoggerFactory}
-
 import java.io.File
-import java.nio.file.Paths
+import java.nio.file.{Files, Paths, StandardCopyOption}
 
 object SimulationHelper {
 
   val logger: Logger = LoggerFactory.getLogger("SimulationHelper")
 
-  private val lastDeploymentFilePath: String = Paths
+  private val lastRunFilePath: String = Paths
     .get("target")
     .toAbsolutePath
     .normalize
-    .toString + File.separator + "lastDeployment.txt"
+    .toString + File.separator + "lastRun.txt"
 
   def createDeployment(
       stackVersion: String,
@@ -105,8 +105,11 @@ object SimulationHelper {
     new KibanaConfiguration(cloudConfig)
   }
 
-  def saveDeploymentMeta(config: KibanaConfiguration, users: Integer): Unit = {
-    val meta = Map(
+  def saveRunConfiguration(
+      config: KibanaConfiguration,
+      users: Integer
+  ): Unit = {
+    val deployMeta = Map(
       "deploymentId" -> (if (config.deploymentId.isDefined)
                            config.deploymentId.get
                          else ""),
@@ -118,15 +121,27 @@ object SimulationHelper {
       "isSnapshotBuild" -> config.isSnapshotBuild,
       "maxUsers" -> users
     )
-    Helper.writeMapToFile(meta, lastDeploymentFilePath)
+    val meta = deployMeta.++(getCIMeta)
+    Helper.writeMapToFile(meta, lastRunFilePath)
   }
 
-  def randomWait: Unit = {
+  def randomWait(): Unit = {
     val secToWait = Helper.getRandomNumber(5, 60) + Helper.getRandomNumber(
       5,
       60
     ) // between 10 and 120 sec
-    logger.info(s"Delay on start: ${secToWait} seconds")
+    logger.info(s"Delay on start: $secToWait seconds")
     Thread.sleep(secToWait * 1000)
+  }
+
+  def copyRunConfigurationToReportPath(): Unit = {
+    val currentPath =
+      getTargetPath + File.separator + "lastRun.txt"
+    val copyPath = Helper.getLastReportPath + File.separator + "testRun.txt"
+    Files.copy(
+      Paths.get(currentPath),
+      Paths.get(copyPath),
+      StandardCopyOption.REPLACE_EXISTING
+    )
   }
 }

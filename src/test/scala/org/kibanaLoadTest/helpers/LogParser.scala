@@ -35,7 +35,7 @@ object LogParser {
   def getSimulationClass(filePath: String): String = {
     val fsStream = new FileInputStream(filePath)
     val br = new BufferedReader(new InputStreamReader(fsStream))
-    var strLine = br.readLine
+    val strLine = br.readLine
     fsStream.close()
     // [RUN	org.kibanaLoadTest.simulation.DemoJourney	demojourney	1605016152595	 	3.3.1]
     val values = strLine.split("\t")

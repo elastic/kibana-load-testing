@@ -24,6 +24,23 @@ class Request {
     this.message = message.trim
   }
 
+  def toJsonString: String = {
+    s"""
+        |{
+        |"name": "${this.name}",
+        |"requestSendStartTime": "${Helper.convertDateToUTC(
+      this.requestSendStartTime
+    )}",
+        |"responseReceiveEndTime": "${Helper.convertDateToUTC(
+      this.responseReceiveEndTime
+    )}",
+        |"status": "${this.status}",
+        |"requestTime": ${this.requestTime},
+        |"message": "${this.message}"
+        |}
+        |""".stripMargin
+  }
+
   override def toString: String = {
     val baseStr: String =
       s"$name - $requestSendStartTime - $responseReceiveEndTime - $requestTime - $status"

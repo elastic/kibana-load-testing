@@ -94,13 +94,14 @@ class BaseSimulation extends Simulation {
       s"Running ${getClass.getSimpleName} simulation with ${props.maxUsers} users"
     )
     appConfig.print()
-    // saving deployment info to target/lastDeployment.txt"
-    SimulationHelper.saveDeploymentMeta(appConfig, props.maxUsers)
+    // saving deployment info to target/lastRun.txt"
+    SimulationHelper.saveRunConfiguration(appConfig, props.maxUsers)
     // load sample data
     httpHelper.addSampleData("ecommerce")
   }
 
   after {
+    SimulationHelper.copyRunConfigurationToReportPath()
     if (
       appConfig.deploymentId.isDefined && appConfig.deleteDeploymentOnFinish
     ) {

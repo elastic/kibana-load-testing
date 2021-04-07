@@ -19,21 +19,30 @@ class HttpHelper(appConfig: KibanaConfiguration) {
 
   def loginIfNeeded(httpClient: CloseableHttpClient): HttpHelper = {
     if (appConfig.isSecurityEnabled) {
-      val loginRequest = new HttpPost(
-        appConfig.baseUrl + "/internal/security/login"
-      )
+      var statusCode = 0
+      var response = ""
+      val url = appConfig.baseUrl + "/internal/security/login"
+      val loginRequest = new HttpPost(url)
       loginHeaders foreach {
         case (key, value) => loginRequest.addHeader(key, value)
       }
-      loginRequest.setEntity(new StringEntity(appConfig.loginPayload))
-      val loginResponse = httpClient.execute(loginRequest)
+      try {
+        loginRequest.setEntity(new StringEntity(appConfig.loginPayload))
+        val loginResponse = httpClient.execute(loginRequest)
+        statusCode = loginResponse.getStatusLine.getStatusCode
+        response = EntityUtils.toString(loginResponse.getEntity, "UTF-8")
+      } catch {
+        case e: Throwable =>
+          logger.error(
+            s"Login to Kibana failed:\nPOST $url\nHeaders: ${loginHeaders
+              .toString()}\nBody: ${appConfig.loginPayload}\n${e.getStackTrace}"
+          )
+          throw e
+      }
 
-      if (
-        loginResponse.getStatusLine.getStatusCode != appConfig.loginStatusCode
-      ) {
+      if (statusCode != appConfig.loginStatusCode) {
         throw new RuntimeException(
-          s"Login to Kibana failed with code ${loginResponse.getStatusLine.getStatusCode}: ${EntityUtils
-            .toString(loginResponse.getEntity, "UTF-8")}"
+          s"Login to Kibana failed with code ${statusCode}: $response"
         )
       }
     }
