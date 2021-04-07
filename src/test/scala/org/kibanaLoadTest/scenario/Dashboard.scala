@@ -9,7 +9,7 @@ import java.util.Calendar
 
 object Dashboard {
   private val timeseriesDefaultPayload: String =
-    Helper.loadJsonString("data/timeseriesPayload.json")
+    Helper.loadJsonString("data/timeSeriesPayload.json")
   private val gaugeDefaultPayload: String =
     Helper.loadJsonString("data/gaugePayload.json")
   def updatePayloadTimeRange(payload: String, start: Int, end: Int) =
