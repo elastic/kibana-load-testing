@@ -1,12 +1,13 @@
 package org.kibanaLoadTest.test
 
-import org.junit.jupiter.api.Assertions.{assertEquals, assertThrows}
+import org.junit.jupiter.api.Assertions.{assertEquals, assertThrows, assertTrue}
 import org.junit.jupiter.api.Test
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.Helper.getTargetPath
 import org.kibanaLoadTest.helpers.{Helper, Version}
 
 import java.io.File
+import java.util.Calendar
 
 class HelpersTest {
 
@@ -97,5 +98,28 @@ class HelpersTest {
 
     val paths = Helper.getReportFolderPaths
     assertEquals(2, paths.length)
+  }
+
+  @Test
+  def updateTimeValuesTest(): Unit = {
+    val testStr =
+      """
+        |{
+        |   "range":{
+        |      "order_date":{
+        |         "gte":"2019-03-20T17:49:18.848Z",
+        |         "lte":"2019-04-22T17:49:18.851Z",
+        |         "format":"strict_date_optional_time"
+        |      }
+        |   },
+        |   "track_total_hits":false
+        |}
+        |""".stripMargin
+    val start = Helper.getDate(Calendar.DAY_OF_MONTH, -7)
+    val end = Helper.getDate(Calendar.DAY_OF_MONTH, 0)
+    val result =
+      Helper.updateTimeValues(testStr, Map("gte" -> start, "lte" -> end))
+    assertEquals(testStr.replaceAll("\\s+", "").length, result.length)
+    assertTrue(result.contains(start) && result.contains(end))
   }
 }

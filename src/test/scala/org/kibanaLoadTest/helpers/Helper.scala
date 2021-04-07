@@ -8,6 +8,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.{Calendar, Date, TimeZone}
 import com.typesafe.config.{Config, ConfigFactory}
+import org.kibanaLoadTest.scenario.Dashboard.startTime
 import org.slf4j.{Logger, LoggerFactory}
 import spray.json.JsonParser
 import spray.json.JsonParser.ParsingException
@@ -143,4 +144,15 @@ object Helper {
 
   def getRandomNumber(min: Int, max: Int): Int =
     ((Math.random * (max - min)) + min).toInt
+
+  def updateTimeValues(str: String, kv: Map[String, String]): String = {
+    var result = str.replaceAll("\\s+", "")
+    for ((key, value) <- kv) {
+      result = result.replaceAll(
+        "(?<=\"" + key + "\":\")(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z)(?=\")",
+        value
+      )
+    }
+    result
+  }
 }
