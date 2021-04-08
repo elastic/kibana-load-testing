@@ -1,4 +1,7 @@
 # kibana-load-testing
+## Environment
+- Maven 3.3.9+
+- Java (JDK) 8+ 
 
 ## Running simulation against a local instance
 - Start ES and Kibana instances.
@@ -8,7 +11,7 @@
 ```
 app {
   host = "http://localhost:5620" //base url
-  // host = "http://localhost:5620 /xhf" if you start Kibana with static base path
+  // host = "http://localhost:5620/xhf" if you start Kibana with static base path
   version = "8.0.0" //version
 }
 
@@ -25,8 +28,8 @@ auth {
 ```
 - start test scenario
 ```
-mvn install
-mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
+mvn clean test-compile // if you made any changes to the config or  simulations
+mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney // could be any other existing simulation class
 ```
 
 ## Running simulation against existing cloud deployment
@@ -49,21 +52,20 @@ auth {
   password = "pwd"
 }
 ```
-- start test scenario
+- start test scenario with specified env argument
 ```
-mvn install
-export env=config/cloud-7.9.2.conf
-mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
+mvn clean test-compile
+mvn gatling:test -Denv=config/cloud-7.10.0.conf -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
 ```
 
 ## Running simulation against newly created cloud deployment
 - Generate API_KEY for your cloud user account
-- (Optional) Change deployment template at `resources/config/deploy/default.conf`
+- Check deployment template at `resources/config/deploy/default.conf`
 - start test scenario, new deployment will be created before simulation and deleted after it is finished
 ```
-mvn install
+mvn clean test-compile
 export API_KEY=<your_cloud_key>
-mvn gatling:test -q -DcloudStackVersion=7.11.0-SNAPSHOT -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
+mvn gatling:test -DcloudStackVersion=7.11.0-SNAPSHOT -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
 ```
 - Optionally create a custom deployment configuration and pass it in command `-DdeploymentConfig=config/deploy/custom.conf`
 
