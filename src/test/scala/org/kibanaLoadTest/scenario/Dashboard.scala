@@ -8,21 +8,17 @@ import org.kibanaLoadTest.helpers.Helper
 import java.util.Calendar
 
 object Dashboard {
-  private val startTime = Helper.getDate(Calendar.DAY_OF_MONTH, -7)
-  private val endTime = Helper.getDate(Calendar.DAY_OF_MONTH, 0)
-  private val timeSeriesPayload: String = Helper.updateTimeValues(
-    Helper.loadJsonString("data/timeSeriesPayload.json"),
-    Map("min"-> startTime, "max" -> endTime)
-  )
-  private val gaugePayload: String = Helper.updateTimeValues(
-    Helper.loadJsonString("data/gaugePayload.json"),
-    Map("min"-> startTime, "max" -> endTime)
-  )
   // bsearch1.json ... bsearch9.json
   private val bSearchPayloadSeq = Seq(1, 2, 3, 4, 5, 6, 7, 8, 9)
 
   def load(baseUrl: String, headers: Map[String, String]): ChainBuilder = {
-    exec(
+    exec(// unique search sessionId for each virtual user
+      session => session.set("searchSessionId", Helper.generateUUID)
+    ).exec(// unique date picker start time for each virtual user
+      session => session.set("startTime", Helper.getDate(Calendar.DAY_OF_MONTH, -Helper.getRandomNumber(3, 15)))
+    ).exec(// unique date picker end time for each virtual user
+      session => session.set("endTime", Helper.getDate(Calendar.DAY_OF_MONTH, 0))
+    ).exec(
       http("query dashboards list")
         .get("/api/saved_objects/_find")
         .queryParam("default_search_operator", "AND")
@@ -138,7 +134,7 @@ object Dashboard {
         ).exec(
           http("query timeseries data")
             .post("/api/metrics/vis/data")
-            .body(StringBody(timeSeriesPayload))
+            .body(ElFileBody("data/timeSeriesPayload.json"))
             .asJson
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")
@@ -146,7 +142,7 @@ object Dashboard {
         ).exec(
           http("query gauge data")
             .post("/api/metrics/vis/data")
-            .body(StringBody(gaugePayload))
+            .body(ElFileBody("data/gaugePayload.json"))
             .asJson
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")
@@ -155,10 +151,7 @@ object Dashboard {
           exec(session => {
             session.set(
               "payloadString",
-              Helper.updateTimeValues(
-                Helper.loadJsonString(s"data/bsearch${session("index").as[Int]}.json"),
-                Map("gte" -> startTime, "lte" -> endTime)
-              )
+              Helper.loadJsonString(s"data/bsearch${session("index").as[Int]}.json")
             )
           }).exec(
             http("query bsearch ${index}")

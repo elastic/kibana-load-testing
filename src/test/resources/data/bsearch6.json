@@ -59,8 +59,8 @@
                   {
                     "range":{
                       "order_date":{
-                        "gte":"2021-03-30T17:42:53.295Z",
-                        "lte":"2021-04-06T17:42:53.295Z",
+                        "gte":"${startTime}",
+                        "lte":"${endTime}",
                         "format":"strict_date_optional_time"
                       }
                     }
@@ -80,7 +80,7 @@
         }
       },
       "options":{
-        "sessionId":"3e0ee321-2b66-4da9-a956-23a9fbf07289",
+        "sessionId":"${searchSessionId}",
         "isRestore":false,
         "legacyHitsTotal":false,
         "strategy":"ese",
@@ -146,8 +146,8 @@
                   {
                     "range":{
                       "order_date":{
-                        "gte":"2021-03-30T17:42:53.295Z",
-                        "lte":"2021-04-06T17:42:53.295Z",
+                        "gte":"${startTime}",
+                        "lte":"${endTime}",
                         "format":"strict_date_optional_time"
                       }
                     }
@@ -167,7 +167,7 @@
         }
       },
       "options":{
-        "sessionId":"3e0ee321-2b66-4da9-a956-23a9fbf07289",
+        "sessionId":"${searchSessionId}",
         "isRestore":false,
         "legacyHitsTotal":false,
         "strategy":"ese",

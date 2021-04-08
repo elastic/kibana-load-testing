@@ -160,14 +160,35 @@ object Helper {
     parse(JSONObject(meta).toString()).getOrElse(Json.Null)
   }
 
-  def updateTimeValues(str: String, kv: Map[String, String]): String = {
+  def updateValues(str: String, kv: Map[String, String]): String = {
+    val timestampRegExp = "[0-9T:.-]+Z"
+    val alphaNumericRegExp = "[a-zA-Z0-9-]+"
+    def expressionStr(key: String, exp: String) =
+      "(?<=\"" + key + "\":\")(" + exp + ")"
+
+    def findExpression(value: String): Option[String] = {
+      if (value.matches(timestampRegExp)) Option.apply(timestampRegExp)
+      else if (value.matches(alphaNumericRegExp))
+        Option.apply(alphaNumericRegExp)
+      else None
+    }
+
     var result = str.replaceAll("\\s+", "")
     for ((key, value) <- kv) {
-      result = result.replaceAll(
-        "(?<=\"" + key + "\":\")(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z)(?=\")",
-        value
-      )
+      val expr = findExpression(value)
+      if (expr.isEmpty) logger.error(s"'$value' does not match any pattern")
+      else
+        result = result.replaceAll(
+          expressionStr(key, expr.get),
+          value
+        )
     }
     result
+  }
+
+  import java.util.UUID
+
+  def generateUUID: String = {
+    UUID.randomUUID.toString
   }
 }

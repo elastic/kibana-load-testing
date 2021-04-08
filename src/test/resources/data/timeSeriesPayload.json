@@ -1,8 +1,8 @@
 {
   "timerange":{
     "timezone":"Europe/Berlin",
-    "min":"2021-03-30T10:32:22.012Z",
-    "max":"2021-04-06T10:32:22.012Z"
+    "min":"${startTime}",
+    "max":"${endTime}"
   },
   "query":[
     {
@@ -42,7 +42,7 @@
             "language":"lucene"
           },
           "label":"Revenue Trousers",
-          "value_template":"{{value}}",
+          "value_template":"$${{value}}",
           "split_color_mode":"gradient"
         },
         {
@@ -69,7 +69,7 @@
             "language":"lucene"
           },
           "label":"Revenue Watches",
-          "value_template":"{{value}}",
+          "value_template":"$${{value}}",
           "split_color_mode":"gradient"
         },
         {
@@ -96,7 +96,7 @@
             "language":"lucene"
           },
           "label":"Revenue Bags",
-          "value_template":"{{value}}",
+          "value_template":"$${{value}}",
           "split_color_mode":"gradient"
         },
         {
@@ -123,7 +123,7 @@
             "language":"lucene"
           },
           "label":"Revenue Cocktail Dresses",
-          "value_template":"{{value}}",
+          "value_template":"$${{value}}",
           "split_color_mode":"gradient"
         }
       ],
@@ -139,7 +139,7 @@
       "annotations":[
         {
           "fields":"taxful_total_price",
-          "template":"Ring the bell\u0021 {{taxful_total_price}}",
+          "template":"Ring the bell\u0021 $${{taxful_total_price}}",
           "query_string":{
             "query":"taxful_total_price:>250",
             "language":"lucene"
@@ -165,7 +165,7 @@
 
   },
   "searchSession":{
-    "sessionId":"e0ee9fb0-6a93-455d-b1e1-4e05dc48929a",
+    "sessionId":"${searchSessionId}",
     "isRestore":false,
     "isStored":false
   }
