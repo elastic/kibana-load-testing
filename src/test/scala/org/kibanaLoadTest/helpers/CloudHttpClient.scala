@@ -4,11 +4,12 @@ import java.time.Instant
 import com.typesafe.config.Config
 import org.slf4j.{Logger, LoggerFactory}
 import jodd.util.ThreadUtil.sleep
-import org.apache.http.client.methods.{HttpGet, HttpPost, CloseableHttpResponse}
+import org.apache.http.client.methods.{CloseableHttpResponse, HttpGet, HttpPost}
 import org.apache.http.client.config.RequestConfig
 import org.apache.http.impl.client.{CloseableHttpClient, HttpClientBuilder}
 import org.apache.http.entity.StringEntity
 import org.apache.http.util.EntityUtils
+
 import scala.jdk.CollectionConverters.SetHasAsScala
 import spray.json.lenses.JsonLenses._
 import spray.json._
@@ -18,7 +19,11 @@ import com.typesafe.config.ConfigValueType
 class CloudHttpClient {
   private val DEPLOYMENT_READY_TIMOEOUT = 7 * 60 * 1000 // 7 min
   private val DEPLOYMENT_POLLING_INTERVAL = 30 * 1000 // 20 sec
+  private val CONNECT_TIMEOUT = 30000
+  private val CONNECTION_REQUEST_TIMEOUT = 60000
   private val SOCKET_TIMEOUT = 60000
+  private val MSG_NO_RESPONSE =
+    "Failed to create new deployment, response is not a JSON"
   private val deployPayloadTemplate = "cloudPayload/createDeployment.json"
   private val baseUrl = "https://staging.found.no/api/v1/deployments"
   private val apiKey = Option(System.getenv("API_KEY"))
@@ -27,61 +32,54 @@ class CloudHttpClient {
 
   case class CloudResponse(statusCode: Int, reason: String, jsonString: String)
 
-  def httpGet(path: String): CloudResponse = {
+  def httpBase(
+      fx: CloseableHttpClient => CloseableHttpResponse
+  ): Option[CloudResponse] = {
     var httpClient: CloseableHttpClient = null
     var response: CloseableHttpResponse = null
     try {
       val config = RequestConfig.custom
-        .setConnectTimeout(1000)
-        .setConnectionRequestTimeout(1000)
+        .setConnectTimeout(CONNECT_TIMEOUT)
+        .setConnectionRequestTimeout(CONNECTION_REQUEST_TIMEOUT)
         .setSocketTimeout(SOCKET_TIMEOUT)
         .build
       httpClient =
         HttpClientBuilder.create.setDefaultRequestConfig(config).build
-      val httpGet: HttpGet = new HttpGet(baseUrl + path)
-      httpGet.addHeader("Authorization", s"ApiKey $getApiKey")
-      response = httpClient.execute(httpGet)
-      CloudResponse(
-        response.getStatusLine.getStatusCode,
-        response.getStatusLine.getReasonPhrase,
-        EntityUtils.toString(response.getEntity)
+      response = fx(httpClient)
+      Option(
+        CloudResponse(
+          response.getStatusLine.getStatusCode,
+          response.getStatusLine.getReasonPhrase,
+          EntityUtils.toString(response.getEntity)
+        )
       )
     } catch {
-      case e: Exception => e.printStackTrace()
+      case e: Exception =>
+        e.printStackTrace()
+        Option.empty
     } finally {
       if (response != null) response.close()
       if (httpClient != null) httpClient.close()
     }
-    null
   }
 
-  def httpPost(path: String, body: String = null): CloudResponse = {
-    var httpClient: CloseableHttpClient = null
-    var response: CloseableHttpResponse = null
-    try {
-      val config = RequestConfig.custom
-        .setConnectTimeout(1000)
-        .setConnectionRequestTimeout(1000)
-        .setSocketTimeout(SOCKET_TIMEOUT)
-        .build
-      httpClient =
-        HttpClientBuilder.create.setDefaultRequestConfig(config).build
+  def httpGet(path: String): Option[CloudResponse] = {
+    def getCall(httpClient: CloseableHttpClient): CloseableHttpResponse = {
+      val httpGet: HttpGet = new HttpGet(baseUrl + path)
+      httpGet.addHeader("Authorization", s"ApiKey $getApiKey")
+      httpClient.execute(httpGet)
+    }
+    httpBase(getCall)
+  }
+
+  def httpPost(path: String, body: String = null): Option[CloudResponse] = {
+    def postCall(httpClient: CloseableHttpClient): CloseableHttpResponse = {
       val httpPost: HttpPost = new HttpPost(baseUrl + path)
       httpPost.addHeader("Authorization", s"ApiKey $getApiKey")
       if (body != null) httpPost.setEntity(new StringEntity(body))
-      response = httpClient.execute(httpPost)
-      CloudResponse(
-        response.getStatusLine.getStatusCode,
-        response.getStatusLine.getReasonPhrase,
-        EntityUtils.toString(response.getEntity)
-      )
-    } catch {
-      case e: Exception => e.printStackTrace()
-    } finally {
-      if (response != null) response.close()
-      if (httpClient != null) httpClient.close()
+      httpClient.execute(httpPost)
     }
-    null
+    httpBase(postCall)
   }
 
   def getApiKey: String = {
@@ -194,24 +192,27 @@ class CloudHttpClient {
 
   def createDeployment(payload: String): Map[String, String] = {
     logger.info(s"createDeployment: Creating new deployment")
-    val response = httpPost("?validate_only=false")
-    logger.info(
-      s"createDeployment: Request completed with `${response.reason} ${response.statusCode}`"
-    )
-    if (!Helper.isValidJson(response.jsonString)) {
+    val response = httpPost("?validate_only=false", payload)
+    if (response.isDefined)
+      logger.info(
+        s"createDeployment: Request completed with `${response.get.reason} ${response.get.statusCode}`"
+      )
+    else throw new RuntimeException(MSG_NO_RESPONSE)
+    val res = response.get
+    if (!Helper.isValidJson(response.get.jsonString)) {
       throw new RuntimeException(
         "Failed to create new deployment, response is not a JSON"
       )
     }
 
     val meta = Map(
-      "deploymentId" -> response.jsonString.extract[String](Symbol("id")),
-      "username" -> response.jsonString.extract[String](
+      "deploymentId" -> res.jsonString.extract[String](Symbol("id")),
+      "username" -> res.jsonString.extract[String](
         Symbol("resources") / element(0) / Symbol("credentials") / Symbol(
           "username"
         )
       ),
-      "password" -> response.jsonString.extract[String](
+      "password" -> res.jsonString.extract[String](
         Symbol("resources") / element(0) / Symbol("credentials") / Symbol(
           "password"
         )
@@ -229,8 +230,8 @@ class CloudHttpClient {
     val response = httpGet(
       s"/$id?enrich_with_template=false&show_metadata=false&show_plans=false"
     )
-    if (response == null) logger.error("'getDeploymentStateInfo' failed")
-    response.jsonString
+    if (response.isEmpty) throw new RuntimeException(MSG_NO_RESPONSE)
+    response.get.jsonString
   }
 
   def getStackVersion(id: String): Version = {
@@ -312,8 +313,9 @@ class CloudHttpClient {
   def deleteDeployment(id: String): Unit = {
     logger.info(s"deleteDeployment: Deployment $id")
     val response = httpPost(s"/$id/_shutdown?hide=true&skip_snapshot=true")
+    if (response.isEmpty) throw new RuntimeException(MSG_NO_RESPONSE)
     logger.info(
-      s"deleteDeployment: Finished with status code ${response.statusCode}"
+      s"deleteDeployment: Finished with status code ${response.get.statusCode}"
     )
   }
 
@@ -322,6 +324,7 @@ class CloudHttpClient {
     val response = httpPost(
       s"/$id/elasticsearch/main-elasticsearch/_reset-password"
     )
-    response.jsonString.parseJson.convertTo[Map[String, String]]
+    if (response.isEmpty) throw new RuntimeException(MSG_NO_RESPONSE)
+    response.get.jsonString.parseJson.convertTo[Map[String, String]]
   }
 }
