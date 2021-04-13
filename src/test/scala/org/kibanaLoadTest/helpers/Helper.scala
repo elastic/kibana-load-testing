@@ -30,6 +30,19 @@ object Helper {
     dtf.format(c.getTime.toInstant)
   }
 
+  def getMonthStartDate(monthShift: Int = 0): String = {
+    val c: Calendar = Calendar.getInstance
+    c.add(Calendar.DAY_OF_MONTH, 0)
+    while (c.get(Calendar.DATE) > 1) {
+      c.add(Calendar.DATE, -1); // Substract 1 day until first day of month.
+    }
+    c.add(Calendar.MONTH, monthShift)
+    val dtf = DateTimeFormatter
+      .ofPattern(dateFormat)
+      .withZone(ZoneId.systemDefault())
+    dtf.format(c.getTime.toInstant)
+  }
+
   def convertDateToUTC(timestamp: Long): String = {
     val sdf = new SimpleDateFormat(dateFormat)
     sdf.setTimeZone(TimeZone.getTimeZone("UTC"))
