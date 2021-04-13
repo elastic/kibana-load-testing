@@ -98,6 +98,8 @@ class BaseSimulation extends Simulation {
     SimulationHelper.saveRunConfiguration(appConfig, props.maxUsers)
     // load sample data
     httpHelper.addSampleData("ecommerce")
+    // wait 30s for data ingestion to be completed
+    Thread.sleep(30 * 1000)
   }
 
   after {
