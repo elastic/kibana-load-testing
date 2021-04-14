@@ -12,7 +12,6 @@ pipeline {
         timeout(time: 90, unit: 'MINUTES')
     }
     parameters {
-        string(name: 'NUMBER_TEST_RUNS', defaultValue: '1', description: 'Running the same scenario up to 10 times')
         string(name: 'NUMBER_DEPLOYMENTS', defaultValue: '1', description: 'Running on parallel deployments, up to 3')
     }
     stages {
