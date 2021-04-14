@@ -1,4 +1,4 @@
-package org.kibanaLoadTest.simulation.local
+package org.kibanaLoadTest.simulation.cloud
 
 import io.gatling.core.Predef.{
   atOnceUsers,
@@ -12,10 +12,10 @@ import org.kibanaLoadTest.simulation.BaseSimulation
 
 class DiscoverAtOnce extends BaseSimulation {
   def scenarioName(module: String): String = {
-    s"Local discover atOnce $module ${appConfig.buildVersion}"
+    s"Cloud discover atOnce $module ${appConfig.buildVersion}"
   }
 
-  props.maxUsers = 400
+  props.maxUsers = 80
 
   val scnDiscover1: ScenarioBuilder = scenario(scenarioName("discover query 1"))
     .exec(loginStep.pause(props.loginPause))
@@ -47,4 +47,5 @@ class DiscoverAtOnce extends BaseSimulation {
           .andThen(scnDiscover3.inject(atOnceUsers(props.maxUsers)))
       )
   ).protocols(httpProtocol).maxDuration(props.simulationTimeout)
+
 }
