@@ -37,7 +37,7 @@
               "2":{
                 "date_histogram":{
                   "field":"order_date",
-                  "fixed_interval":"30s",
+                  "fixed_interval":"${interval}",
                   "time_zone":"Europe/Berlin",
                   "min_doc_count":1
                 }
@@ -101,7 +101,7 @@
         }
       },
       "options":{
-        "sessionId":"${searchSessionId}",
+        "sessionId":"${sessionId}",
         "isRestore":false,
         "strategy":"ese",
         "isStored":false

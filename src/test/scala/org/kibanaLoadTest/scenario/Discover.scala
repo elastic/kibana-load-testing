@@ -13,19 +13,29 @@ object Discover {
       baseUrl: String,
       headers: Map[String, String],
       startTime: String,
-      endTime: String
-  ): ChainBuilder =
+      endTime: String,
+      interval: String
+  ): ChainBuilder = {
+    var payload = Helper.loadJsonString("data/discover/bsearch.json")
+    var extraPayload =
+      Helper.loadJsonString("data/discover/bsearchRequestId.json")
+    if (interval == "1d") {
+      payload = payload.replaceAll("fixed_interval", "calendar_interval")
+      extraPayload =
+        extraPayload.replaceAll("fixed_interval", "calendar_interval")
+    }
     exec(session =>
       session
-        .set("searchSessionId", Helper.generateUUID)
+        .set("sessionId", Helper.generateUUID)
         .set("startTime", startTime)
         .set("endTime", endTime)
+        .set("interval", interval)
     ).exec(
         http(s"Discover query $name")
           .post("/internal/bsearch")
           .headers(headers)
           .header("Referer", baseUrl + "/app/discover")
-          .body(ElFileBody("data/discover/bsearch.json"))
+          .body(StringBody(payload))
           .asJson
           .check(status.is(200).saveAs("status"))
           .check(jsonPath("$.result.id").find.saveAs("requestId"))
@@ -37,19 +47,20 @@ object Discover {
       //.doWhile("${isPartial}") {
       .doWhile(session =>
         session("status").as[Int] == 200
-          && session("isPartial").as[Boolean] == true
+          && session("isPartial").as[Boolean]
       ) {
         exec(
           http(s"Discover query (fetch by id) $name")
             .post("/internal/bsearch")
             .headers(headers)
             .header("Referer", baseUrl + "/app/discover")
-            .body(ElFileBody("data/discover/bsearchRequestId.json"))
+            .body(StringBody(extraPayload))
             .asJson
             .check(status.is(200).saveAs("status"))
             .check(jsonPath("$.result.isPartial").saveAs("isPartial"))
         )
       }
+  }
 
   def load(
       baseUrl: String,
@@ -81,7 +92,7 @@ object Discover {
           .header("Referer", baseUrl + "/app/discover")
           .asJson
           .check(status.is(200))
-      ).exec(doQuery("default", baseUrl, headers, startTime, endTime))
+      ).exec(doQuery("default", baseUrl, headers, startTime, endTime, "30s"))
     }
   }
 
@@ -95,7 +106,8 @@ object Discover {
         baseUrl,
         headers,
         Helper.getDate(Calendar.DAY_OF_MONTH, -5),
-        Helper.getDate(Calendar.DAY_OF_MONTH, 0)
+        Helper.getDate(Calendar.DAY_OF_MONTH, 0),
+        "3h"
       )
     ).pause(10)
       .exec(
@@ -104,7 +116,8 @@ object Discover {
           baseUrl,
           headers,
           Helper.getDate(Calendar.DAY_OF_MONTH, -30),
-          Helper.getDate(Calendar.DAY_OF_MONTH, 0)
+          Helper.getDate(Calendar.DAY_OF_MONTH, 0),
+          "1d"
         )
       )
 }

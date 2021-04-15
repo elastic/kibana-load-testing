@@ -35,7 +35,8 @@ class DiscoverAtOnce extends BaseSimulation {
           appConfig.baseUrl,
           defaultHeaders,
           Helper.getDate(Calendar.DAY_OF_MONTH, -15),
-          Helper.getDate(Calendar.DAY_OF_MONTH, 0)
+          Helper.getDate(Calendar.DAY_OF_MONTH, 0),
+          "3h"
         )
     )
 
@@ -47,7 +48,8 @@ class DiscoverAtOnce extends BaseSimulation {
         appConfig.baseUrl,
         defaultHeaders,
         Helper.getDate(Calendar.DAY_OF_MONTH, -30),
-        Helper.getDate(Calendar.DAY_OF_MONTH, 0)
+        Helper.getDate(Calendar.DAY_OF_MONTH, 0),
+        "1d"
       )
     )
 
