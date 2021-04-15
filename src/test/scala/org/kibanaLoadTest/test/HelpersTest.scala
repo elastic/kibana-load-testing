@@ -1,12 +1,14 @@
 package org.kibanaLoadTest.test
 
-import org.junit.jupiter.api.Assertions.{assertEquals, assertThrows}
+import org.junit.jupiter.api.Assertions.{assertEquals, assertThrows, assertTrue}
 import org.junit.jupiter.api.Test
 import org.kibanaLoadTest.KibanaConfiguration
-import org.kibanaLoadTest.helpers.Helper.getTargetPath
+import org.kibanaLoadTest.helpers.Helper.{generateUUID, getTargetPath}
 import org.kibanaLoadTest.helpers.{Helper, Version}
 
 import java.io.File
+import java.util.Calendar
+import scala.reflect.io.Directory
 
 class HelpersTest {
 
@@ -71,7 +73,7 @@ class HelpersTest {
   def readFileToMapTest(): Unit = {
     val data =
       Helper.readFileToMap(
-        getClass.getResource("/test/lastDeployment.txt").getPath
+        getClass.getResource("/test/lastRun.txt").getPath
       )
 
     assertEquals(
@@ -90,12 +92,52 @@ class HelpersTest {
   def getReportFolderPathsTest(): Unit = {
     val testFolders = List(
       getTargetPath + File.separator + "gatling",
-      getTargetPath + File.separator + "gatling" + File.separator + "demo1",
-      getTargetPath + File.separator + "gatling" + File.separator + "demo2"
+      getTargetPath + File.separator + "gatling" + File.separator + "_test_folder1",
+      getTargetPath + File.separator + "gatling" + File.separator + "_test_folder2"
     )
     testFolders.foreach(path => new File(path).mkdir())
 
     val paths = Helper.getReportFolderPaths
+    val directory = new Directory(
+      new File(getTargetPath + File.separator + "gatling")
+    )
+    directory.deleteRecursively()
     assertEquals(2, paths.length)
+  }
+
+  @Test
+  def updateTimeValuesTest(): Unit = {
+    val testStr =
+      """
+        |{
+        |   "range":{
+        |      "order_date":{
+        |         "gte":"2019-03-20T17:49:18.848Z",
+        |         "lte":"2019-04-22T17:49:18.851Z",
+        |         "format":"strict_date_optional_time"
+        |      }
+        |   },
+        |   "sessionId":"3e0ee321-2b66-4da9-a956-23a9fbf07289",
+        |   "track_total_hits":false
+        |}
+        |""".stripMargin
+    val start = Helper.getDate(Calendar.DAY_OF_MONTH, -7)
+    val end = Helper.getDate(Calendar.DAY_OF_MONTH, 0)
+    val id = "4v0ee521-2v66-45a9-a956-56a9fbf072d9"
+    val result =
+      Helper.updateValues(
+        testStr,
+        Map("gte" -> start, "lte" -> end, "sessionId" -> id)
+      )
+    assertEquals(testStr.replaceAll("\\s+", "").length, result.length)
+    assertTrue(
+      result.contains(start) && result.contains(end) && result.contains(id)
+    )
+  }
+
+  @Test
+  def generateUUIDTest(): Unit = {
+    val uuid = generateUUID
+    assertTrue(uuid.matches("[a-zA-Z0-9-]+"))
   }
 }

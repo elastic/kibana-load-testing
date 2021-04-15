@@ -1,10 +1,11 @@
 #!/usr/bin/env groovy
 library 'kibana-pipeline-library'
+def loadPipeline
 
 pipeline {
     agent { label 'docker && ubuntu-tests-l' }
-    parameters {
-        string(name: 'SIMULATION', defaultValue: 'local.AtOnceJourney,local.DiscoverAtOnce,DemoJourney', description: 'Comma-separated simulation list')
+    options {
+        timeout(time: 90, unit: 'MINUTES')
     }
     stages {
         stage ('Initialize') {
@@ -15,6 +16,9 @@ pipeline {
                 echo "GITHUB_KIBANA_BRANCH = ${params.GITHUB_KIBANA_BRANCH}"
                 echo "SIMULATION = ${params.SIMULATION}"
                 echo "INGEST_RESULTS = ${params.INGEST_RESULTS}"
+                script {
+                    loadPipeline = load "${env.WORKSPACE}/kibana-load-testing/.ci/loadPipeline.groovy"
+                }
             }
         }
         stage ('Running tests against locally build Kibana instance') {
@@ -36,15 +40,20 @@ pipeline {
                         url: "git@github.com:${env.KIBANA_REPO_NAME}",
                     ]],
                 ])
-                sh """
-                    cd kibana
-                    export HOME=${env.WORKSPACE}
-                    export KIBANA_BRANCH=${env.KIBANA_BRANCH}
-                    echo "Prepare environment"
-                    ./src/dev/ci_setup/setup.sh
-                    echo "Build Kibana and run load scenario"
-                    ./test/scripts/jenkins_build_load_testing.sh -s '${params.SIMULATION}'
-                """
+                script {
+                    withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'host', variable_name: 'HOST_FROM_VAULT') {
+                        withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
+                            withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
+                                sh """
+                                export HOME=${env.WORKSPACE}
+                                export KIBANA_BRANCH=${env.KIBANA_BRANCH}
+                                ./kibana-load-testing/scripts/build_and_test.sh -s '${params.SIMULATION}'
+                                """
+                                loadPipeline.uploadGatlingReport()
+                            }
+                        }
+                    }
+                }
             }
             post {
                 success {
@@ -53,10 +62,7 @@ pipeline {
                           withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'host', variable_name: 'HOST_FROM_VAULT') {
                               withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
                                   withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
-                                      sh '''
-                                        cd kibana-load-testing
-                                        mvn exec:java -Dexec.mainClass=org.kibanaLoadTest.ingest.Main -Dexec.classpathScope=test -Dexec.cleanupDaemonThreads=false
-                                      '''
+                                      sh '''./kibana-load-testing/scripts/ingest_results.sh'''
                                   }
                               }
                           }

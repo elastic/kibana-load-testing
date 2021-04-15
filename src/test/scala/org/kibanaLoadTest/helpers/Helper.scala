@@ -4,15 +4,18 @@ import java.io.{File, PrintWriter}
 import java.net.{MalformedURLException, URL}
 import java.nio.file.Paths
 import java.text.SimpleDateFormat
-import java.time.ZoneId
+import java.time.{Instant, ZoneId}
 import java.time.format.DateTimeFormatter
 import java.util.{Calendar, Date, TimeZone}
 import com.typesafe.config.{Config, ConfigFactory}
+import io.circe.Json
+import io.circe.parser.parse
 import org.slf4j.{Logger, LoggerFactory}
 import spray.json.JsonParser
 import spray.json.JsonParser.ParsingException
 
 import scala.io.Source
+import scala.util.parsing.json.JSONObject
 
 object Helper {
   val dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
@@ -21,6 +24,19 @@ object Helper {
   def getDate(fieldNumber: Int, daysShift: Int): String = {
     val c: Calendar = Calendar.getInstance
     c.add(fieldNumber, daysShift)
+    val dtf = DateTimeFormatter
+      .ofPattern(dateFormat)
+      .withZone(ZoneId.systemDefault())
+    dtf.format(c.getTime.toInstant)
+  }
+
+  def getMonthStartDate(monthShift: Int = 0): String = {
+    val c: Calendar = Calendar.getInstance
+    c.add(Calendar.DAY_OF_MONTH, 0)
+    while (c.get(Calendar.DATE) > 1) {
+      c.add(Calendar.DATE, -1); // Substract 1 day until first day of month.
+    }
+    c.add(Calendar.MONTH, monthShift)
     val dtf = DateTimeFormatter
       .ofPattern(dateFormat)
       .withZone(ZoneId.systemDefault())
@@ -47,7 +63,9 @@ object Helper {
     if (url == null) {
       throw new RuntimeException(s"File is not found: $filePath")
     }
-    Source.fromURL(url).getLines().mkString
+    val source = Source.fromURL(url)
+    try source.getLines().mkString
+    finally source.close()
   }
 
   def getTargetPath: String =
@@ -108,9 +126,10 @@ object Helper {
   }
 
   def readFileToMap(filePath: String): Map[String, Any] = {
-    val lines: Iterator[String] =
-      Source.fromFile(filePath).getLines().filter(str => str.trim.nonEmpty)
-    lines
+    val source = Source.fromFile(filePath)
+    try source
+      .getLines()
+      .filter(str => str.trim.nonEmpty)
       .map(str =>
         (
           str.split("=", 2)(0),
@@ -118,15 +137,16 @@ object Helper {
         )
       )
       .toMap
+    finally source.close()
   }
 
-  def getCIMeta: Map[String, String] = {
+  def getCIMeta: Map[String, Any] = {
     Map(
-      "buildId" -> Option(System.getenv("BUILD_ID")).getOrElse(""),
-      "buildUrl" -> Option(System.getenv("BUILD_URL")).getOrElse(""),
-      "kibanaBranchName" -> Option(System.getenv("KIBANA_BRANCH"))
+      "CI_BUILD_ID" -> Option(System.getenv("BUILD_ID")).getOrElse(""),
+      "CI_BUILD_URL" -> Option(System.getenv("BUILD_URL")).getOrElse(""),
+      "kibanaBranch" -> Option(System.getenv("KIBANA_BRANCH"))
         .getOrElse(""),
-      "branchName" -> Option(System.getenv("branch_specifier")).getOrElse("")
+      "branch" -> Option(System.getenv("branch_specifier")).getOrElse("")
     )
   }
 
@@ -139,5 +159,49 @@ object Helper {
         logger.error(s"isValidJson: Failed to parse string ${e.getMessage}")
         false
     }
+  }
+
+  def getRandomNumber(min: Int, max: Int): Int =
+    ((Math.random * (max - min)) + min).toInt
+
+  def getMetaJson(testRunFilePath: String, simLogFilePath: String): Json = {
+    val meta = readFileToMap(testRunFilePath) ++ Map(
+      "scenario" -> LogParser
+        .getSimulationClass(simLogFilePath),
+      "timestamp" -> convertDateToUTC(Instant.now.toEpochMilli)
+    )
+    parse(JSONObject(meta).toString()).getOrElse(Json.Null)
+  }
+
+  def updateValues(str: String, kv: Map[String, String]): String = {
+    val timestampRegExp = "[0-9T:.-]+Z"
+    val alphaNumericRegExp = "[a-zA-Z0-9-]+"
+    def expressionStr(key: String, exp: String) =
+      "(?<=\"" + key + "\":\")(" + exp + ")"
+
+    def findExpression(value: String): Option[String] = {
+      if (value.matches(timestampRegExp)) Option.apply(timestampRegExp)
+      else if (value.matches(alphaNumericRegExp))
+        Option.apply(alphaNumericRegExp)
+      else None
+    }
+
+    var result = str.replaceAll("\\s+", "")
+    for ((key, value) <- kv) {
+      val expr = findExpression(value)
+      if (expr.isEmpty) logger.error(s"'$value' does not match any pattern")
+      else
+        result = result.replaceAll(
+          expressionStr(key, expr.get),
+          value
+        )
+    }
+    result
+  }
+
+  import java.util.UUID
+
+  def generateUUID: String = {
+    UUID.randomUUID.toString
   }
 }

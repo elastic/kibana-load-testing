@@ -11,7 +11,7 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <scala.version>2.13.4</scala.version>
+        <scala.version>2.13.5</scala.version>
         <encoding>UTF-8</encoding>
 
         <gatling.version>3.5.1</gatling.version>
@@ -47,7 +47,7 @@
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-high-level-client</artifactId>
-            <version>7.11.1</version>
+            <version>7.12.0</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -74,12 +74,22 @@
         <dependency>
             <groupId>com.typesafe.scala-logging</groupId>
             <artifactId>scala-logging_2.13</artifactId>
-            <version>3.9.2</version>
+            <version>3.9.3</version>
         </dependency>
         <dependency>
             <groupId>org.scala-lang.modules</groupId>
             <artifactId>scala-parallel-collections_2.13</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.circe</groupId>
+            <artifactId>circe-parser_2.13</artifactId>
+            <version>0.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.circe</groupId>
+            <artifactId>circe-literal_2.13</artifactId>
+            <version>0.13.0</version>
         </dependency>
     </dependencies>
 
@@ -102,7 +112,7 @@
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <version>4.4.0</version>
+                <version>4.4.1</version>
                 <executions>
                     <execution>
                         <goals>
@@ -130,7 +140,7 @@
             <plugin>
                 <groupId>io.gatling.frontline</groupId>
                 <artifactId>frontline-maven-plugin</artifactId>
-                <version>1.2.0</version>
+                <version>1.2.1</version>
                 <executions>
                     <execution>
                         <goals>
