@@ -18,14 +18,15 @@ class DemoJourney extends BaseSimulation {
         .pause(5)
     )
     .exec(Discover.load(appConfig.baseUrl, defaultHeaders).pause(10))
+    .exec(Discover.do2ExtraQueries(appConfig.baseUrl, defaultHeaders).pause(10))
     .exec(Dashboard.load(appConfig.baseUrl, defaultHeaders).pause(10))
     .exec(Canvas.loadWorkpad(appConfig.baseUrl, defaultHeaders))
 
   setUp(
     scn
       .inject(
-        constantConcurrentUsers(20) during (3 * 60), // 1
-        rampConcurrentUsers(20) to props.maxUsers during (3 * 60) // 2
+        constantConcurrentUsers(10) during (2 * 60), // 1
+        rampConcurrentUsers(10) to props.maxUsers during (3 * 60) // 2
       )
       .protocols(httpProtocol)
   ).maxDuration(props.simulationTimeout * 2)

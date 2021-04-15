@@ -8,75 +8,55 @@ import io.gatling.http.Predef._
 import org.kibanaLoadTest.helpers.Helper
 
 object Discover {
-  private val discoverPayload =
-    Helper.loadJsonString("data/bsearchPayload.json")
-  private def createPayload(startShift: Int, endShift: Int): String = {
-    discoverPayload
-      .replaceAll(
-        "(?<=\"gte\":\")(.*)(?=\",)",
-        Helper.getDate(Calendar.DAY_OF_MONTH, startShift)
-      )
-      .replaceAll(
-        "(?<=\"lte\":\")(.*)(?=\",)",
-        Helper.getDate(Calendar.DAY_OF_MONTH, endShift)
-      )
-  }
-  val discoverPayloadQ1 = createPayload(-1, 0)
-  val discoverPayloadQ2 = createPayload(-14, -5)
-  val discoverPayloadQ3 = createPayload(-20, 20)
-
   def doQuery(
+      name: String,
       baseUrl: String,
       headers: Map[String, String],
-      payload: String
+      startTime: String,
+      endTime: String
   ): ChainBuilder =
-    exec(
-      http("Discover query")
-        .post("/internal/search/es")
-        .headers(headers)
-        .header("Referer", baseUrl + "/app/discover")
-        .body(StringBody(payload))
-        .asJson
-        .check(status.is(200))
-    )
-
-  def doQueries(
-      baseUrl: String,
-      headers: Map[String, String]
-  ): ChainBuilder =
-    exec(
-      http("discover")
-        .post("/internal/search/es")
-        .headers(headers)
-        .header("Referer", baseUrl + "/app/discover")
-        .body(StringBody(discoverPayloadQ1))
-        .asJson
-        .check(status.is(200))
-    ).pause(5)
-      .exec(
-        http("Discover query 2")
-          .post("/internal/search/es")
+    exec(session =>
+      session
+        .set("searchSessionId", Helper.generateUUID)
+        .set("startTime", startTime)
+        .set("endTime", endTime)
+    ).exec(
+        http(s"Discover query $name")
+          .post("/internal/bsearch")
           .headers(headers)
           .header("Referer", baseUrl + "/app/discover")
-          .body(StringBody(discoverPayloadQ2))
+          .body(ElFileBody("data/discover/bsearch.json"))
           .asJson
-          .check(status.is(200))
+          .check(status.is(200).saveAs("status"))
+          .check(jsonPath("$.result.id").find.saveAs("requestId"))
+          .check(jsonPath("$.result.isPartial").find.saveAs("isPartial"))
       )
-      .pause(5)
-      .exec(
-        http("Discover query 3")
-          .post("/internal/search/es")
-          .headers(headers)
-          .header("Referer", baseUrl + "/app/discover")
-          .body(StringBody(discoverPayloadQ3))
-          .asJson
-          .check(status.is(200))
-      )
+      .exitHereIfFailed
+      // First response might be “partial”. Then we continue to fetch for the results
+      // using the request id returned from the first response
+      //.doWhile("${isPartial}") {
+      .doWhile(session =>
+        session("status").as[Int] == 200
+          && session("isPartial").as[Boolean] == true
+      ) {
+        exec(
+          http(s"Discover query (fetch by id) $name")
+            .post("/internal/bsearch")
+            .headers(headers)
+            .header("Referer", baseUrl + "/app/discover")
+            .body(ElFileBody("data/discover/bsearchRequestId.json"))
+            .asJson
+            .check(status.is(200).saveAs("status"))
+            .check(jsonPath("$.result.isPartial").saveAs("isPartial"))
+        )
+      }
 
   def load(
       baseUrl: String,
       headers: Map[String, String]
-  ): ChainBuilder =
+  ): ChainBuilder = {
+    val startTime = Helper.getDate(Calendar.MINUTE, -15)
+    val endTime = Helper.getDate(Calendar.DAY_OF_MONTH, 0)
     exec(
       http("Load index patterns")
         .get("/api/saved_objects/_find")
@@ -87,50 +67,44 @@ object Discover {
         .header("Referer", baseUrl + "/app/discover")
         .asJson
         .check(status.is(200))
-    )
-    .pause(5)
-    .exec(
-      http("Load index pattern fields")
-        .get("/api/index_patterns/_fields_for_wildcard")
-        .queryParam("pattern", "kibana_sample_data_ecommerce")
-        .queryParam("meta_fields", "_source")
-        .queryParam("meta_fields", "_id")
-        .queryParam("meta_fields", "_type")
-        .queryParam("meta_fields", "_index")
-        .queryParam("meta_fields", "_score")
-        .headers(headers)
-        .header("Referer", baseUrl + "/app/discover")
-        .asJson
-        .check(status.is(200))
-    )
-    .pause(5)
-    .exec(
-      http("Discover query 1")
-        .post("/internal/bsearch")
-        .headers(headers)
-        .header("Referer", baseUrl + "/app/discover")
-        .body(StringBody(discoverPayloadQ1))
-        .asJson
-        .check(status.is(200))
-    )
-    .pause(5)
-    .exec(
-      http("Discover query 2")
-        .post("/internal/bsearch")
-        .headers(headers)
-        .header("Referer", baseUrl + "/app/discover")
-        .body(StringBody(discoverPayloadQ2))
-        .asJson
-        .check(status.is(200))
-    )
-    .pause(5)
-    .exec(
-      http("Discover query 3")
-        .post("/internal/bsearch")
-        .headers(headers)
-        .header("Referer", baseUrl + "/app/discover")
-        .body(StringBody(discoverPayloadQ3))
-        .asJson
-        .check(status.is(200))
-    )
+    ).exitBlockOnFail {
+      exec(
+        http("Load index pattern fields")
+          .get("/api/index_patterns/_fields_for_wildcard")
+          .queryParam("pattern", "kibana_sample_data_ecommerce")
+          .queryParam("meta_fields", "_source")
+          .queryParam("meta_fields", "_id")
+          .queryParam("meta_fields", "_type")
+          .queryParam("meta_fields", "_index")
+          .queryParam("meta_fields", "_score")
+          .headers(headers)
+          .header("Referer", baseUrl + "/app/discover")
+          .asJson
+          .check(status.is(200))
+      ).exec(doQuery("default", baseUrl, headers, startTime, endTime))
+    }
+  }
+
+  def do2ExtraQueries(
+      baseUrl: String,
+      headers: Map[String, String]
+  ): ChainBuilder =
+    exec(
+      doQuery(
+        "2",
+        baseUrl,
+        headers,
+        Helper.getDate(Calendar.DAY_OF_MONTH, -5),
+        Helper.getDate(Calendar.DAY_OF_MONTH, 0)
+      )
+    ).pause(10)
+      .exec(
+        doQuery(
+          "3",
+          baseUrl,
+          headers,
+          Helper.getDate(Calendar.DAY_OF_MONTH, -30),
+          Helper.getDate(Calendar.DAY_OF_MONTH, 0)
+        )
+      )
 }
