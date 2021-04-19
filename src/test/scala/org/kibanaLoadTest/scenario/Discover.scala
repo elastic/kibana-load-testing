@@ -37,9 +37,9 @@ object Discover {
       .exitHereIfFailed
       // First response might be “partial”. Then we continue to fetch for the results
       // using the request id returned from the first response
-      .doWhile(session =>
+      .asLongAs(session =>
         session("status").as[Int] == 200
-          && session("isPartial").as[Boolean]
+          && session("isPartial").as[Boolean] == true
       ) {
         exec(
           http(s"Discover query (fetch by id) $name")
