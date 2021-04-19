@@ -38,7 +38,7 @@
               "2":{
                 "date_histogram":{
                   "field":"order_date",
-                  "fixed_interval":"${interval}",
+                  "${intervalName}":"${intervalValue}",
                   "time_zone":"Europe/Berlin",
                   "min_doc_count":1
                 }
@@ -98,7 +98,7 @@
               "fragment_size":2147483647
             }
           },
-          "preference":1618482148836
+          "preference":"${preference}"
         }
       },
       "options":{
