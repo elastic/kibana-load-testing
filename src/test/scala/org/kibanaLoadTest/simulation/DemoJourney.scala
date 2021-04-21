@@ -17,7 +17,8 @@ class DemoJourney extends BaseSimulation {
         )
         .pause(5)
     )
-    .exec(Discover.doQueries(appConfig.baseUrl, defaultHeaders).pause(10))
+    .exec(Discover.load(appConfig.baseUrl, defaultHeaders).pause(10))
+    .exec(Discover.do2ExtraQueries(appConfig.baseUrl, defaultHeaders).pause(10))
     .exec(Dashboard.load(appConfig.baseUrl, defaultHeaders).pause(10))
     .exec(Canvas.loadWorkpad(appConfig.baseUrl, defaultHeaders))
 

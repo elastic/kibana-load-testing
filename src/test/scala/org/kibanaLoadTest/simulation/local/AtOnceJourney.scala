@@ -7,14 +7,14 @@ import org.kibanaLoadTest.scenario.{Canvas, Dashboard, Discover}
 
 class AtOnceJourney extends BaseSimulation {
   def scenarioName(module: String): String = {
-    s"Local  atOnce ${module} ${appConfig.buildVersion}"
+    s"Local  atOnce $module ${appConfig.buildVersion}"
   }
 
   props.maxUsers = 400
 
   val scnDiscover: ScenarioBuilder = scenario(scenarioName("discover"))
     .exec(loginStep.pause(props.loginPause))
-    .exec(Discover.doQueries(appConfig.baseUrl, defaultHeaders))
+    .exec(Discover.load(appConfig.baseUrl, defaultHeaders))
 
   val scnDashboard: ScenarioBuilder = scenario(scenarioName("dashboard"))
     .exec(loginStep.pause(props.loginPause))

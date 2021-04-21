@@ -7,8 +7,11 @@ import io.gatling.core.Predef.{
   scenario
 }
 import io.gatling.core.structure.ScenarioBuilder
+import org.kibanaLoadTest.helpers.Helper
 import org.kibanaLoadTest.scenario.Discover
 import org.kibanaLoadTest.simulation.BaseSimulation
+
+import java.util.Calendar
 
 class DiscoverAtOnce extends BaseSimulation {
   def scenarioName(module: String): String = {
@@ -20,22 +23,34 @@ class DiscoverAtOnce extends BaseSimulation {
   val scnDiscover1: ScenarioBuilder = scenario(scenarioName("discover query 1"))
     .exec(loginStep.pause(props.loginPause))
     .exec(
-      Discover
-        .doQuery(appConfig.baseUrl, defaultHeaders, Discover.discoverPayloadQ1)
+      Discover.load(appConfig.baseUrl, defaultHeaders)
     )
 
   val scnDiscover2: ScenarioBuilder = scenario(scenarioName("discover query 2"))
     .exec(loginStep.pause(props.loginPause))
     .exec(
       Discover
-        .doQuery(appConfig.baseUrl, defaultHeaders, Discover.discoverPayloadQ2)
+        .doQuery(
+          "1",
+          appConfig.baseUrl,
+          defaultHeaders,
+          Helper.getDate(Calendar.DAY_OF_MONTH, -15),
+          Helper.getDate(Calendar.DAY_OF_MONTH, 0),
+          "3h"
+        )
     )
 
   val scnDiscover3: ScenarioBuilder = scenario(scenarioName("discover query 3"))
     .exec(loginStep.pause(props.loginPause))
     .exec(
-      Discover
-        .doQuery(appConfig.baseUrl, defaultHeaders, Discover.discoverPayloadQ3)
+      Discover.doQuery(
+        "2",
+        appConfig.baseUrl,
+        defaultHeaders,
+        Helper.getDate(Calendar.DAY_OF_MONTH, -30),
+        Helper.getDate(Calendar.DAY_OF_MONTH, 0),
+        "1d"
+      )
     )
 
   setUp(
@@ -47,5 +62,4 @@ class DiscoverAtOnce extends BaseSimulation {
           .andThen(scnDiscover3.inject(atOnceUsers(props.maxUsers)))
       )
   ).protocols(httpProtocol).maxDuration(props.simulationTimeout)
-
 }
