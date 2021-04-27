@@ -16,7 +16,7 @@ import spray.json._
 import spray.json.DefaultJsonProtocol._
 import com.typesafe.config.ConfigValueType
 
-class CloudHttpClient(var env: String = "staging") {
+class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
   private val DEPLOYMENT_READY_TIMEOUT = 7 * 60 * 1000 // 7 min
   private val DEPLOYMENT_POLLING_INTERVAL = 30 * 1000 // 20 sec
   private val CONNECT_TIMEOUT = 30000
@@ -29,7 +29,7 @@ class CloudHttpClient(var env: String = "staging") {
   private val deployPayloadTemplate = "cloudPayload/createDeployment.json"
   private val searchDeploymentsTemplate = "cloudPayload/searchDeployments.json"
   private val apiKey = Option(System.getenv("API_KEY"))
-  private val baseUrl = if (env == "prod") PROD_URL else STAGING_URL
+  private val baseUrl = if (env == CloudEnv.PROD) PROD_URL else STAGING_URL
 
   val logger: Logger = LoggerFactory.getLogger("httpClient")
 

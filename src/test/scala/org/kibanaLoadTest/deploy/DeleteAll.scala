@@ -1,9 +1,7 @@
 package org.kibanaLoadTest.deploy
 
-import org.kibanaLoadTest.helpers.CloudHttpClient
+import org.kibanaLoadTest.helpers.{CloudEnv, CloudHttpClient}
 import org.slf4j.{Logger, LoggerFactory}
-
-import scala.collection.immutable.{AbstractMap, SeqMap, SortedMap}
 
 object DeleteAll {
   object Scope extends Enumeration {
@@ -14,11 +12,17 @@ object DeleteAll {
 
   def main(args: Array[String]): Unit = {
     val scope = Scope.withName(System.getProperty("scope", "test"))
-    var cleanItems = collection.mutable.Map[String, String]()
+    val env = CloudEnv.withName(System.getProperty("env", "staging"))
+    val cleanItems = collection.mutable.Map[String, String]()
 
-    val cloudClient = new CloudHttpClient
+    val cloudClient = new CloudHttpClient(env)
     val deployments = cloudClient.getDeployments
-    logger.info(s"Found ${deployments.size} running deployments")
+    logger.info(
+      s"Found ${deployments.size} running deployments on $env environment"
+    )
+    if (deployments.isEmpty) {
+      return
+    }
     if (scope == Scope.ALL) {
       logger.info(s"Deleting all deployments")
       cleanItems.addAll(deployments)
@@ -34,9 +38,9 @@ object DeleteAll {
     }
 
     logger.info(s"Got ${cleanItems.size} deployments to delete")
-    if (!cleanItems.isEmpty) {
+    if (cleanItems.nonEmpty) {
       cleanItems.foreach {
-        case (name, id) =>
+        case (_, id) =>
           cloudClient.deleteDeployment(id)
           Thread.sleep(2 * 1000)
       }
