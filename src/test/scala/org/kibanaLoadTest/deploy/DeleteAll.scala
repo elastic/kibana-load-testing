@@ -9,6 +9,7 @@ object DeleteAll {
     val TEST = Value("test")
   }
   val logger: Logger = LoggerFactory.getLogger("deploy:DeleteAll")
+  val timeout: Long = Integer.getInteger("timeout", 2 * 1000).longValue()
 
   def main(args: Array[String]): Unit = {
     val scope = Scope.withName(System.getProperty("scope", "test"))
@@ -21,19 +22,24 @@ object DeleteAll {
       s"Found ${deployments.size} running deployments on $env environment"
     )
     if (deployments.isEmpty) {
+      logger.info("Nothing to clean")
       return
+    } else {
+      deployments.foreach {
+        case (name, id) => logger.info(s"name: $name, id: $id")
+      }
     }
+
     if (scope == Scope.ALL) {
-      logger.info(s"Deleting all deployments")
+      logger.info(s"Deleting all running deployments")
       cleanItems.addAll(deployments)
     } else {
       logger.info(s"Deleting only 'load-testing' deployments")
       deployments.foreach {
-        case (name, id) => {
+        case (name, id) =>
           if (name.startsWith("load-testing")) {
             cleanItems += name -> id
           }
-        }
       }
     }
 
@@ -42,11 +48,11 @@ object DeleteAll {
       cleanItems.foreach {
         case (_, id) =>
           cloudClient.deleteDeployment(id)
-          Thread.sleep(2 * 1000)
+          Thread.sleep(timeout)
       }
       // wait a bit for deployments to be deleted
       logger.info(s"Waiting...")
-      Thread.sleep(20 * 1000)
+      Thread.sleep(10 * timeout)
       // checking running deployments again
       val deploymentsAfter = cloudClient.getDeployments
       logger.info(s"Found ${deploymentsAfter.size} deployments after cleanup")
