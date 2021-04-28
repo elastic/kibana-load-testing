@@ -35,6 +35,8 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
 
   case class CloudResponse(statusCode: Int, reason: String, jsonString: String)
 
+  def getEnv: CloudEnv.Value = env
+
   def httpBase(
       fx: CloseableHttpClient => CloseableHttpResponse
   ): Option[CloudResponse] = {
