@@ -44,4 +44,12 @@ class CloudAPITest {
 
     assertFalse(isReady)
   }
+
+  @Test
+  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
+  def getDeploymentsTest(): Unit = {
+    val cloudClient = new CloudHttpClient
+    val items = cloudClient.getDeployments
+    assertTrue(!items.isEmpty)
+  }
 }

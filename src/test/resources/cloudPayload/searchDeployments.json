@@ -1,0 +1,25 @@
+{
+  "size":150,
+  "query":{
+    "bool":{
+      "must":[
+        {
+          "nested":{
+            "path":"resources.elasticsearch",
+            "query":{
+              "exists":{
+                "field":"resources.elasticsearch.id"
+              }
+            }
+          }
+        }
+      ],
+      "must_not":[
+
+      ],
+      "filter":[
+
+      ]
+    }
+  }
+}

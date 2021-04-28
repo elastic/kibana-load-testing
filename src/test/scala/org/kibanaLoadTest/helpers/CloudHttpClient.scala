@@ -16,21 +16,26 @@ import spray.json._
 import spray.json.DefaultJsonProtocol._
 import com.typesafe.config.ConfigValueType
 
-class CloudHttpClient {
-  private val DEPLOYMENT_READY_TIMOEOUT = 7 * 60 * 1000 // 7 min
+class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
+  private val DEPLOYMENT_READY_TIMEOUT = 7 * 60 * 1000 // 7 min
   private val DEPLOYMENT_POLLING_INTERVAL = 30 * 1000 // 20 sec
   private val CONNECT_TIMEOUT = 30000
   private val CONNECTION_REQUEST_TIMEOUT = 60000
   private val SOCKET_TIMEOUT = 60000
   private val MSG_NO_RESPONSE =
     "Failed to create new deployment, response is not a JSON"
+  private val STAGING_URL = "https://staging.found.no/api/v1"
+  private val PROD_URL = "https://cloud.elastic.co/api/v1"
   private val deployPayloadTemplate = "cloudPayload/createDeployment.json"
-  private val baseUrl = "https://staging.found.no/api/v1/deployments"
+  private val searchDeploymentsTemplate = "cloudPayload/searchDeployments.json"
   private val apiKey = Option(System.getenv("API_KEY"))
+  private val baseUrl = if (env == CloudEnv.PROD) PROD_URL else STAGING_URL
 
   val logger: Logger = LoggerFactory.getLogger("httpClient")
 
   case class CloudResponse(statusCode: Int, reason: String, jsonString: String)
+
+  def getEnv: CloudEnv.Value = env
 
   def httpBase(
       fx: CloseableHttpClient => CloseableHttpResponse
@@ -192,7 +197,7 @@ class CloudHttpClient {
 
   def createDeployment(payload: String): Map[String, String] = {
     logger.info(s"createDeployment: Creating new deployment")
-    val response = httpPost("?validate_only=false", payload)
+    val response = httpPost("/deployments?validate_only=false", payload)
     if (response.isDefined)
       logger.info(
         s"createDeployment: Request completed with `${response.get.reason} ${response.get.statusCode}`"
@@ -228,7 +233,7 @@ class CloudHttpClient {
 
   def getDeploymentStateInfo(id: String): String = {
     val response = httpGet(
-      s"/$id?enrich_with_template=false&show_metadata=false&show_plans=false"
+      s"/deployments/$id?enrich_with_template=false&show_metadata=false&show_plans=false"
     )
     if (response.isEmpty) throw new RuntimeException(MSG_NO_RESPONSE)
     response.get.jsonString
@@ -281,7 +286,7 @@ class CloudHttpClient {
   def waitForClusterToStart(
       deploymentId: String,
       fn: String => Map[String, String] = getInstanceStatus,
-      timeout: Int = DEPLOYMENT_READY_TIMOEOUT,
+      timeout: Int = DEPLOYMENT_READY_TIMEOUT,
       interval: Int = DEPLOYMENT_POLLING_INTERVAL
   ): Boolean = {
     var started = false
@@ -312,7 +317,9 @@ class CloudHttpClient {
 
   def deleteDeployment(id: String): Unit = {
     logger.info(s"deleteDeployment: Deployment $id")
-    val response = httpPost(s"/$id/_shutdown?hide=true&skip_snapshot=true")
+    val response = httpPost(
+      s"/deployments/$id/_shutdown?hide=true&skip_snapshot=true"
+    )
     if (response.isEmpty) throw new RuntimeException(MSG_NO_RESPONSE)
     logger.info(
       s"deleteDeployment: Finished with status code ${response.get.statusCode}"
@@ -322,9 +329,30 @@ class CloudHttpClient {
   def resetPassword(id: String): Map[String, String] = {
     logger.info(s"Reset password: deployment $id")
     val response = httpPost(
-      s"/$id/elasticsearch/main-elasticsearch/_reset-password"
+      s"/deployments/$id/elasticsearch/main-elasticsearch/_reset-password"
     )
     if (response.isEmpty) throw new RuntimeException(MSG_NO_RESPONSE)
     response.get.jsonString.parseJson.convertTo[Map[String, String]]
+  }
+
+  def getDeployments: Map[String, String] = {
+    logger.info(s"Search for running deployments")
+    val response =
+      httpPost(
+        "/deployments/_search",
+        Helper.loadJsonString(searchDeploymentsTemplate)
+      )
+    val jsonString = response.get.jsonString
+    val names = jsonString
+      .extract[String](
+        Symbol("deployments") / elements / Symbol("name")
+      )
+      .toArray
+    val ids = jsonString
+      .extract[String](
+        Symbol("deployments") / elements / Symbol("id")
+      )
+      .toArray
+    Map() ++ (names zip ids)
   }
 }
