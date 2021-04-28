@@ -27,6 +27,8 @@ pipeline {
         stage ('Running tests against locally build Kibana instance') {
             steps {
                 script {
+                    //restore default behaviour
+                    env.CI = ""
                     env.KIBANA_REPO_NAME = "${params.GITHUB_KIBANA_REPO_OWNER}/${params.GITHUB_KIBANA_REPO}"
                     env.KIBANA_BRANCH = "${params.GITHUB_KIBANA_BRANCH}"
                     echo "Using repo: git@github.com:${env.KIBANA_REPO_NAME}"
