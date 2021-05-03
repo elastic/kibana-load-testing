@@ -372,4 +372,15 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
       )
     if (seq.isEmpty) null else seq.apply(0)
   }
+
+  def getLatestAvailableVersion(prefix: String): Version = {
+    // get the latest available version on Cloud
+    val versions = this
+      .getVersions()
+      .filter(s => s.startsWith(prefix))
+      .map(s => new Version(s))
+      .sorted
+    // get the last version in sorted array
+    versions(versions.length - 1)
+  }
 }

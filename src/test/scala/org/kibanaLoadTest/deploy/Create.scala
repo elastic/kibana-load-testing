@@ -15,10 +15,12 @@ object Create {
     val deployConfig: String =
       System.getProperty("deploymentConfig", "config/deploy/default.conf")
     val versionString: String = System.getProperty("cloudStackVersion")
-    // validate version
-    val version = new Version(versionString)
 
     val cloudClient = new CloudHttpClient
+    val version = if (versionString == "7.x") {
+      cloudClient.getLatestAvailableVersion(versionString)
+    } else new Version(versionString)
+
     val payload = cloudClient.preparePayload(
       version.get,
       Helper.readResourceConfigFile(deployConfig)
