@@ -370,7 +370,7 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
           "region_id".is[String](_ == "gcp-us-central1")
         ) / Symbol("versions")
       )
-    if (seq.isEmpty) null else seq.apply(0)
+    if (seq.isEmpty) null else seq.head
   }
 
   def getLatestAvailableVersion(prefix: String): Version = {
@@ -381,6 +381,6 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
       .map(s => new Version(s))
       .sorted
     // get the last version in sorted array
-    versions(versions.length - 1)
+    if (versions.isEmpty) null else versions.last
   }
 }

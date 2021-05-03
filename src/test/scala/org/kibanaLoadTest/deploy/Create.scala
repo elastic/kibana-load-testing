@@ -10,6 +10,7 @@ object Create {
     .toAbsolutePath
     .normalize
     .toString + File.separator + "cloudDeployment.txt"
+  private val LATEST_AVAILABLE = ".x"
 
   def main(args: Array[String]): Unit = {
     val deployConfig: String =
@@ -17,8 +18,10 @@ object Create {
     val versionString: String = System.getProperty("cloudStackVersion")
 
     val cloudClient = new CloudHttpClient
-    val version = if (versionString == "7.x") {
-      cloudClient.getLatestAvailableVersion(versionString)
+    val version = if (versionString.endsWith(LATEST_AVAILABLE)) {
+      cloudClient.getLatestAvailableVersion(
+        versionString.replace(LATEST_AVAILABLE, "")
+      )
     } else new Version(versionString)
 
     val payload = cloudClient.preparePayload(

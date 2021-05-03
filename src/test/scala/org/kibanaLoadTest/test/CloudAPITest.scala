@@ -52,4 +52,12 @@ class CloudAPITest {
     val items = cloudClient.getDeployments
     assertTrue(!items.isEmpty)
   }
+
+  @Test
+  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
+  def getLatestAvailableVersionTest(): Unit = {
+    val cloudClient = new CloudHttpClient
+    val version = cloudClient.getLatestAvailableVersion("7.")
+    assertTrue(version.get.startsWith("7."))
+  }
 }
