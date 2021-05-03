@@ -23,9 +23,18 @@ object SimulationHelper {
   ): KibanaConfiguration = {
     val config =
       Helper.readResourceConfigFile(deployFile)
-    val version = new Version(stackVersion)
-    val providerName = if (version.isAbove79x) "cloud-basic" else "basic-cloud"
     val cloudClient = new CloudHttpClient
+    val version = if (stackVersion == "7.x") {
+      // get the latest available version on Cloud
+      val versions = cloudClient
+        .getVersions()
+        .filter(s => s.startsWith("7.x"))
+        .map(s => new Version(s))
+        .sorted
+      // get the last version in sorted array
+      versions(versions.length - 1)
+    } else new Version(stackVersion)
+    val providerName = if (version.isAbove79x) "cloud-basic" else "basic-cloud"
     val payload = cloudClient.preparePayload(stackVersion, config)
     val metadata = cloudClient.createDeployment(payload)
     val isReady = cloudClient.waitForClusterToStart(metadata("deploymentId"))

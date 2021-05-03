@@ -355,4 +355,21 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
       .toArray
     Map() ++ (names zip ids)
   }
+
+  def getVersions(): Array[String] = {
+    logger.info(s"Get available version")
+    val response = httpGet(
+      "/platform/configuration/templates/deployments/global"
+    )
+    val jsonString = response.get.jsonString
+    val seq = jsonString
+      .extract[Array[String]](
+        filter(
+          "template_category_id".is[String](_ == "compute-optimized")
+        ) / Symbol("regions") / filter(
+          "region_id".is[String](_ == "gcp-us-central1")
+        ) / Symbol("versions")
+      )
+    if (seq.isEmpty) null else seq.apply(0)
+  }
 }
