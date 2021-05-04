@@ -14,6 +14,7 @@ pipeline {
     parameters {
         string(name: 'NUMBER_TEST_RUNS', defaultValue: '1', description: 'Running the same scenario up to 10 times')
         string(name: 'NUMBER_DEPLOYMENTS', defaultValue: '1', description: 'Running on parallel deployments, up to 3')
+        string(name: 'DEPLOY_SECRET', defaultValue: 'cloud-staging-api-key', description: 'Set Vault key for deployment')
     }
     stages {
         stage ('Initialize') {
@@ -39,7 +40,7 @@ pipeline {
                     for (def i = 1; i <= Integer.valueOf(env.NUMBER_DEPLOYMENTS); i++) {
                         threads[i] = {
                             docker.image(MAVEN_IMAGE).inside('-u root') {
-                                withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
+                                withVaultSecret(secret: "secret/kibana-issues/dev/${params.DEPLOY_SECRET}", secret_field: 'value', variable_name: 'API_KEY') {
                                     sh """./kibana-load-testing/scripts/deploy_and_test.sh \
                                         -v '${params.STACK_VERSION}' \
                                         -c '${params.DEPLOY_CONFIG}' \
