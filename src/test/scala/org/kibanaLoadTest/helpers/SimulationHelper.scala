@@ -10,6 +10,7 @@ import java.nio.file.{Files, Paths, StandardCopyOption}
 object SimulationHelper {
 
   val logger: Logger = LoggerFactory.getLogger("SimulationHelper")
+  val LATEST_AVAILABLE = ".x"
 
   private val lastRunFilePath: String = Paths
     .get("target")
@@ -23,9 +24,13 @@ object SimulationHelper {
   ): KibanaConfiguration = {
     val config =
       Helper.readResourceConfigFile(deployFile)
-    val version = new Version(stackVersion)
-    val providerName = if (version.isAbove79x) "cloud-basic" else "basic-cloud"
     val cloudClient = new CloudHttpClient
+    val version = if (stackVersion.endsWith(LATEST_AVAILABLE)) {
+      cloudClient.getLatestAvailableVersion(
+        stackVersion.replace(LATEST_AVAILABLE, "")
+      )
+    } else new Version(stackVersion)
+    val providerName = if (version.isAbove79x) "cloud-basic" else "basic-cloud"
     val payload = cloudClient.preparePayload(stackVersion, config)
     val metadata = cloudClient.createDeployment(payload)
     val isReady = cloudClient.waitForClusterToStart(metadata("deploymentId"))

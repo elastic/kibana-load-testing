@@ -3,13 +3,16 @@ package org.kibanaLoadTest.helpers
 class Version(var str: String) extends Comparable[Version] {
   if (str == null) throw new IllegalArgumentException("Version can not be null")
   var value: String = str.toUpperCase
-  if (!value.matches("[0-9]+(\\.[0-9]+)*(-SNAPSHOT)?"))
+  if (!value.matches("[0-9]+(\\.[0-9]+){1,}(-SNAPSHOT(?:.+)?)?"))
     throw new IllegalArgumentException(
-      s"Invalid version format '$value', supported formats: '7.11.0' or '7.11.0-SNAPSHOT'"
+      s"Invalid version format '$value', supported formats: '7.11.0' or '7.11.0-SNAPSHOT-*'"
     )
 
-  val postfix: String = if (value.indexOf("-SNAPSHOT") > 0) "SNAPSHOT" else ""
-  val version: String = value.replace("-SNAPSHOT", "")
+  val postfix: String =
+    if (value.indexOf("-SNAPSHOT") > 0)
+      value.slice(value.indexOf("-SNAPSHOT"), value.length)
+    else ""
+  val version: String = value.replaceAll("-SNAPSHOT(?:.+)?", "")
 
   def isAbove79x: Boolean = {
     this.compareTo(new Version("7.10")) != -1
@@ -32,6 +35,8 @@ class Version(var str: String) extends Comparable[Version] {
     }
     0
   }
+
+  override def toString: String = this.value
 
   final def get: String = this.value
 }
