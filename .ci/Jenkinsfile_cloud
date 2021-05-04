@@ -3,17 +3,15 @@ library 'kibana-pipeline-library'
 def loadPipeline
 def MAVEN_IMAGE =  'maven:3.6.3-openjdk-8-slim'
 def MAX_TEST_RUNS = 10
-def MAX_DEPLOYMENTS = 3
-def threads = [:]
 
 pipeline {
     agent { label 'docker && ubuntu-tests-l' }
     options {
-        timeout(time: 90, unit: 'MINUTES')
+        timeout(time: 120, unit: 'MINUTES')
     }
     parameters {
         string(name: 'NUMBER_TEST_RUNS', defaultValue: '1', description: 'Running the same scenario up to 10 times')
-        string(name: 'NUMBER_DEPLOYMENTS', defaultValue: '1', description: 'Running on parallel deployments, up to 3')
+        string(name: 'DEPLOY_SECRET', defaultValue: 'cloud-staging-api-key', description: 'Set Vault key for Cloud deployment')
     }
     stages {
         stage ('Initialize') {
@@ -24,7 +22,6 @@ pipeline {
                 echo "DEPLOY_CONFIG = ${params.DEPLOY_CONFIG}"
                 echo "SIMULATION = ${params.SIMULATION}"
                 echo "NUMBER_TEST_RUNS = ${params.NUMBER_TEST_RUNS}"
-                echo "NUMBER_DEPLOYMENTS = ${params.NUMBER_DEPLOYMENTS}"
                 script {
                     loadPipeline = load "${env.WORKSPACE}/kibana-load-testing/.ci/loadPipeline.groovy"
                     env.NUMBER_TEST_RUNS = Integer.valueOf(params.NUMBER_TEST_RUNS) > MAX_TEST_RUNS ?  MAX_TEST_RUNS.toString() : params.NUMBER_TEST_RUNS
@@ -33,10 +30,10 @@ pipeline {
         }
         stage ('Run tests on cloud') {
             steps {
-                echo "All scenarios will be executed ${env.NUMBER_TEST_RUNS} times on ${env.NUMBER_DEPLOYMENTS} deployments"
+                echo "All load scenarios will be executed ${env.NUMBER_TEST_RUNS} times"
                 script {
                     docker.image(MAVEN_IMAGE).inside('-u root') {
-                        withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
+                        withVaultSecret(secret: "secret/kibana-issues/dev/${params.DEPLOY_SECRET}", secret_field: 'value', variable_name: 'API_KEY') {
                             sh """./kibana-load-testing/scripts/deploy_and_test.sh \
                                 -v '${params.STACK_VERSION}' \
                                 -c '${params.DEPLOY_CONFIG}' \
