@@ -28,7 +28,6 @@ pipeline {
                 script {
                     loadPipeline = load "${env.WORKSPACE}/kibana-load-testing/.ci/loadPipeline.groovy"
                     env.NUMBER_TEST_RUNS = Integer.valueOf(params.NUMBER_TEST_RUNS) > MAX_TEST_RUNS ?  MAX_TEST_RUNS.toString() : params.NUMBER_TEST_RUNS
-                    env.NUMBER_DEPLOYMENTS = Integer.valueOf(params.NUMBER_DEPLOYMENTS) > MAX_DEPLOYMENTS ? MAX_DEPLOYMENTS.toString() : params.NUMBER_DEPLOYMENTS
                 }
             }
         }
@@ -36,32 +35,26 @@ pipeline {
             steps {
                 echo "All scenarios will be executed ${env.NUMBER_TEST_RUNS} times on ${env.NUMBER_DEPLOYMENTS} deployments"
                 script {
-                    for (def i = 1; i <= Integer.valueOf(env.NUMBER_DEPLOYMENTS); i++) {
-                        threads[i] = {
-                            docker.image(MAVEN_IMAGE).inside('-u root') {
-                                withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
-                                    sh """./kibana-load-testing/scripts/deploy_and_test.sh \
-                                        -v '${params.STACK_VERSION}' \
-                                        -c '${params.DEPLOY_CONFIG}' \
-                                        -s '${params.SIMULATION}' \
-                                        -n '${env.NUMBER_TEST_RUNS}'
-                                    """
-                                }
-                                loadPipeline.uploadGatlingReport()
-                                if (params.INGEST_RESULTS.toBoolean()) {
-                                    withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'host', variable_name: 'HOST_FROM_VAULT') {
-                                        withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
-                                            withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
-                                                sh '''./kibana-load-testing/scripts/ingest_results.sh'''
-                                            }
-                                        }
+                    docker.image(MAVEN_IMAGE).inside('-u root') {
+                        withVaultSecret(secret: 'secret/kibana-issues/dev/cloud-staging-api-key', secret_field: 'value', variable_name: 'API_KEY') {
+                            sh """./kibana-load-testing/scripts/deploy_and_test.sh \
+                                -v '${params.STACK_VERSION}' \
+                                -c '${params.DEPLOY_CONFIG}' \
+                                -s '${params.SIMULATION}' \
+                                -n '${env.NUMBER_TEST_RUNS}'
+                               """
+                        }
+                        loadPipeline.uploadGatlingReport()
+                        if (params.INGEST_RESULTS.toBoolean()) {
+                            withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'host', variable_name: 'HOST_FROM_VAULT') {
+                                withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
+                                    withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
+                                        sh '''./kibana-load-testing/scripts/ingest_results.sh'''
                                     }
                                 }
                             }
                         }
                     }
-                    // Still within the 'Script' block, run the parallel array object
-                    parallel threads
                 }
             }
         }
