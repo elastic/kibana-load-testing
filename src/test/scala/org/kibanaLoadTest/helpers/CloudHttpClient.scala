@@ -1,7 +1,7 @@
 package org.kibanaLoadTest.helpers
 
 import java.time.Instant
-import com.typesafe.config.Config
+import com.typesafe.config.{Config, ConfigValue, ConfigValueType}
 import org.slf4j.{Logger, LoggerFactory}
 import jodd.util.ThreadUtil.sleep
 import org.apache.http.client.methods.{CloseableHttpResponse, HttpGet, HttpPost}
@@ -14,7 +14,6 @@ import scala.jdk.CollectionConverters.SetHasAsScala
 import spray.json.lenses.JsonLenses._
 import spray.json._
 import spray.json.DefaultJsonProtocol._
-import com.typesafe.config.ConfigValueType
 
 class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
   private val DEPLOYMENT_READY_TIMEOUT = 7 * 60 * 1000 // 7 min
@@ -95,6 +94,18 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
     } else this.apiKey.get
   }
 
+  def setValue(
+      config: Config,
+      key: String,
+      value: ConfigValue
+  ): spray.json.lenses.Operation = {
+    if (value.valueType() == ConfigValueType.STRING) {
+      set[String](config.getString(key))
+    } else if (value.valueType() == ConfigValueType.NUMBER) {
+      set[Int](config.getInt(key))
+    } else set[Boolean](config.getBoolean(key))
+  }
+
   def preparePayload(stackVersion: String, config: Config): String = {
     logger.info(
       s"preparePayload: Using $deployPayloadTemplate payload template"
@@ -104,71 +115,90 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
       s"preparePayload: Stack version $stackVersion with ${config.toString} configuration"
     )
 
-    var payload =
-      template
-        .update(
-          Symbol("name") ! set[String](
-            s"load-testing-${Instant.now.toEpochMilli}"
-          )
+    val resources = Array("apm", "elasticsearch", "kibana")
+    val esNodesId =
+      Array("coordinating", "hot_content", "warm", "cold", "frozen", "master")
+
+    var payload = template.update(
+      Symbol("name") ! set[String](s"load-testing-${Instant.now.toEpochMilli}")
+    )
+    // Always update stack version
+    resources.foreach(resource => {
+      val basePath =
+        Symbol("resources") / Symbol(resource) / element(0) / Symbol("plan")
+      payload = payload.update(
+        basePath / Symbol(resource) / Symbol("version") ! set[String](
+          stackVersion
         )
-        .update(
-          Symbol("resources") / Symbol("elasticsearch") / element(0) / Symbol(
-            "plan"
-          ) / Symbol("elasticsearch") / Symbol("version") ! set[String](
-            stackVersion
-          )
-        )
-        .update(
-          Symbol("resources") / Symbol("elasticsearch") / element(0) / Symbol(
-            "plan"
-          ) / Symbol("deployment_template") / Symbol("id") ! set[String](
+      )
+
+      if (
+        resource == "elasticsearch" && config
+          .hasPath("elasticsearch.deployment_template")
+      ) {
+        payload = payload.update(
+          basePath / Symbol("deployment_template") / Symbol("id") ! set[String](
             config.getString("elasticsearch.deployment_template")
           )
         )
-        .update(
-          Symbol("resources") / Symbol("elasticsearch") / element(0) / Symbol(
-            "plan"
-          ) / Symbol("cluster_topology") / filter(
-            "id".is[String](_ == "hot_content")
-          ) / Symbol("instance_configuration_id") ! set[String](
-            config.getString(
-              "elasticsearch.hot_content.instance_configuration_id"
-            )
+      }
+      if (
+        resource == "elasticsearch" && config
+          .hasPath("elasticsearch.autoscaling_enabled")
+      ) {
+        payload = payload.update(
+          basePath / Symbol("autoscaling_enabled") ! set[Boolean](
+            config.getBoolean("elasticsearch.autoscaling_enabled")
           )
         )
-        .update(
-          Symbol("resources") / Symbol("elasticsearch") / element(0) / Symbol(
-            "plan"
-          ) / Symbol("cluster_topology") / filter(
-            "id".is[String](_ == "hot_content")
-          ) / Symbol("size") / Symbol(
-            "value"
-          ) ! set[Int](config.getInt("elasticsearch.hot_content.memory"))
-        )
-        .update(
-          Symbol("resources") / Symbol("kibana") / element(0) / Symbol(
-            "plan"
-          ) / Symbol("kibana") / Symbol("version") ! set[String](stackVersion)
-        )
-        .update(
-          Symbol("resources") / Symbol("kibana") / element(0) / Symbol(
-            "plan"
-          ) / Symbol("cluster_topology") / element(0) / Symbol("size") / Symbol(
-            "value"
-          ) ! set[Int](config.getInt("kibana.memory"))
-        )
-        .update(
-          Symbol("resources") / Symbol("apm") / element(0) / Symbol(
-            "plan"
-          ) / Symbol("apm") / Symbol("version") ! set[String](stackVersion)
-        )
-        .update(
-          Symbol("resources") / Symbol("apm") / element(0) / Symbol(
-            "plan"
-          ) / Symbol("cluster_topology") / element(0) / Symbol("size") / Symbol(
-            "value"
-          ) ! set[Int](config.getInt("apm.memory"))
-        )
+      }
+    })
+
+    // Nodes setup
+    Array("apm", "elasticsearch", "kibana").foreach(res => {
+      val basePath =
+        Symbol("resources") / Symbol(res) / element(0) / Symbol(
+          "plan"
+        ) / Symbol("cluster_topology")
+      if (res == "elasticsearch") {
+        esNodesId.foreach(id => {
+          if (config.hasPath(s"elasticsearch.$id")) {
+            val path = basePath / filter("id".is[String](_ == id))
+            config
+              .getObject(s"elasticsearch.$id")
+              .entrySet()
+              .forEach(entry => {
+                payload = payload.update(
+                  path / (if (entry.getKey == "memory")
+                            Symbol("size") / Symbol("value")
+                          else Symbol(entry.getKey)) ! setValue(
+                    config,
+                    s"elasticsearch.$id.${entry.getKey}",
+                    entry.getValue
+                  )
+                )
+              })
+          }
+        })
+      } else {
+        if (config.hasPath(res)) {
+          config
+            .getObject(res)
+            .entrySet()
+            .forEach(entry => {
+              payload = payload.update(
+                basePath / element(0) / (if (entry.getKey == "memory")
+                                           Symbol("size") / Symbol("value")
+                                         else Symbol(entry.getKey)) ! setValue(
+                  config,
+                  s"$res.${entry.getKey}",
+                  entry.getValue
+                )
+              )
+            })
+        }
+      }
+    })
 
     def getNestedMap(basePath: String): Map[String, JsValue] = {
       val nestedObj = config.getObject(basePath).entrySet()
