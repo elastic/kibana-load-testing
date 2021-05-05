@@ -128,9 +128,22 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
         .update(
           Symbol("resources") / Symbol("elasticsearch") / element(0) / Symbol(
             "plan"
-          ) / Symbol("cluster_topology") / element(0) / Symbol("size") / Symbol(
+          ) / Symbol("cluster_topology") / filter(
+            "id".is[String](_ == "hot_content")
+          ) / Symbol("instance_configuration_id") ! set[String](
+            config.getString(
+              "elasticsearch.hot_content.instance_configuration_id"
+            )
+          )
+        )
+        .update(
+          Symbol("resources") / Symbol("elasticsearch") / element(0) / Symbol(
+            "plan"
+          ) / Symbol("cluster_topology") / filter(
+            "id".is[String](_ == "hot_content")
+          ) / Symbol("size") / Symbol(
             "value"
-          ) ! set[Int](config.getInt("elasticsearch.memory"))
+          ) ! set[Int](config.getInt("elasticsearch.hot_content.memory"))
         )
         .update(
           Symbol("resources") / Symbol("kibana") / element(0) / Symbol(
@@ -148,6 +161,13 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
           Symbol("resources") / Symbol("apm") / element(0) / Symbol(
             "plan"
           ) / Symbol("apm") / Symbol("version") ! set[String](stackVersion)
+        )
+        .update(
+          Symbol("resources") / Symbol("apm") / element(0) / Symbol(
+            "plan"
+          ) / Symbol("cluster_topology") / element(0) / Symbol("size") / Symbol(
+            "value"
+          ) ! set[Int](config.getInt("apm.memory"))
         )
 
     def getNestedMap(basePath: String): Map[String, JsValue] = {
