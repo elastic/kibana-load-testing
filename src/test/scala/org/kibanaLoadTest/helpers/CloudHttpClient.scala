@@ -353,7 +353,7 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
         Symbol("deployments") / elements / Symbol("id")
       )
       .toArray
-    Map() ++ (names zip ids)
+    Map() ++ (ids zip names)
   }
 
   def getVersions(): Array[String] = {
