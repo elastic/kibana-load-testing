@@ -1,5 +1,4 @@
 {
-  "name":"title",
   "resources":{
     "elasticsearch":[
       {
@@ -38,7 +37,7 @@
 
                 ]
               },
-              "instance_configuration_id":"gcp.data.highmem.1",
+              "instance_configuration_id":"gcp.data.highio.1",
               "node_roles":[
                 "master",
                 "ingest",
@@ -50,7 +49,7 @@
               "id":"hot_content",
               "size":{
                 "resource":"memory",
-                "value":0
+                "value":8192
               }
             },
             {
@@ -153,10 +152,10 @@
             }
           ],
           "elasticsearch":{
-            "version":"X"
+            "version":"7.13.0"
           },
           "deployment_template":{
-            "id":"gcp-memory-optimized"
+            "id":"gcp-io-optimized"
           }
         },
         "ref_id":"main-elasticsearch"
@@ -176,12 +175,12 @@
               "zone_count":1,
               "size":{
                 "resource":"memory",
-                "value":0
+                "value":1024
               }
             }
           ],
           "kibana":{
-            "version":"X"
+            "version":"7.13.0"
           }
         },
         "ref_id":"main-kibana"
@@ -198,18 +197,19 @@
               "zone_count":1,
               "size":{
                 "resource":"memory",
-                "value":0
+                "value":512
               }
             }
           ],
           "apm":{
-            "version":"X"
+            "version":"7.13.0"
           }
         },
         "ref_id":"main-apm"
       }
     ]
   },
+  "name":"i-o-optimized-deployment",
   "metadata":{
     "system_owned":false
   }
