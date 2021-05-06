@@ -102,10 +102,11 @@ class KibanaConfiguration {
       if (this.isSnapshotBuild) s"${this.version}-SNAPSHOT"
       else this.version
 
-    if (!this.buildVersion.startsWith(configBuildVersion))
-      throw new RuntimeException(
+    if (!this.buildVersion.startsWith(configBuildVersion)) {
+      logger.error(
         "Kibana version mismatch: instance " + this.buildVersion + " vs config " + configBuildVersion
       )
+    }
 
     this
   }
