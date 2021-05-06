@@ -11,7 +11,7 @@ In order to improve results accuracy it is better to run tests in the same data 
 Create a new CPU-optimized VM with any Container Optimized OS in the same region where
 Elastic Stack will be deployed:
 
-![New VM](New_VM.png)
+![New VM](img/New_VM.png)
 
 ## Upload project to VM
 

@@ -1,12 +1,17 @@
 # kibana-load-testing
-## Environment
+## Environment requirements
 - Maven 3.3.9+
-- Java (JDK) 8+ 
+- Java (JDK) 8+
 
+# Running performance testing on CI
+Kibana CI has [dedicated jobs](docs/KIBANA_CI.md) to run performance testing for your Kibana branch or Cloud snapshot.
+
+
+# Running performance testing on your machine
 ## Running simulation against a local instance
 - Start ES and Kibana instances.
 
-<b>Important</b>: Run Kibana without base path or add a static one to your kibana.yml like `server.basePath: "/xfh"` before start
+<b>Important</b>: Run Kibana without base path or add a static one to your kibana.yml like `server.basePath: "/xfh"` before start.
 - Update Kibana configuration in /resources/config/local.conf file
 ```
 app {
@@ -28,7 +33,7 @@ auth {
 ```
 - start test scenario
 ```
-mvn clean test-compile // if you made any changes to the config or  simulations
+mvn clean test-compile // if you made any changes to the config or simulations
 mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney // could be any other existing simulation class
 ```
 
@@ -128,7 +133,23 @@ In order to run your simulation, use the following command:
 mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.MySimulation
 ```
 
-## Running tests from VM
+## Test results
+Gatling generates html report for each simulation run, available in `<project_root>/target/gatling/<simulation>`path
 
-Follow [guide](VM_SETUP.md) to setup VM and run tests on it
+Open `index.html` in browser to preview the report.
+
+Open `testRun.txt` to find more about Kibana instance you tested.
+
+## Running performance testing from VM
+
+Follow [guide](docs/VM_SETUP.md) to setup VM and run tests on it.
+
+# Delete your deployments on Elastic cloud
+Run the following command to delete all existing deployments
+```
+export API_KEY=<your_key>
+mvn exec:java -Dexec.mainClass=org.kibanaLoadTest.deploy.DeleteAll -Dexec.classpathScope=test -Dscope=all
+```
+
+If you don't provide `-Dscope=all` it will delete only the ones with `load-testing` name prefix
 
