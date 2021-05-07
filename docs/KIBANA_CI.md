@@ -10,9 +10,10 @@ Start a new run:
 - click 'Build with Parameters'
 - enter your github username & branch name, simulation classes, uncheck 'INGEST RESULTS' if you don't need it in Kibana stats  
 - click 'Build'
+
 ![branch testing job](img/Jenkins_branch_testing.png)
 
-Process:
+Job will do this for you:
 - build Kibana from branch source code
 - start Kibana and ES using FTR
 - start Metricbeat monitoring
@@ -27,12 +28,13 @@ Start a new run:
 - click 'Build with Parameters'
 - enter your stack version, simulation classes, uncheck 'INGEST RESULTS' if you don't need it in Kibana stats
 - click 'Build'
-  ![branch testing job](img/Jenkins_cloud.png)
+
+![branch testing job](img/Jenkins_cloud.png)
    
 You can use existing deployment config files to define your desired stack setup or create add a new one to 
 `kibana-load-testing/config/deployment/` path and specify it in 'DEPLOY_CONFIG' input field
 
-Process:
+Job will do this for you:
 - create a new deployment
 - run performance simulations
 - delete deployment  
