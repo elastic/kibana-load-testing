@@ -134,7 +134,7 @@ object Dashboard {
         ).exec(
           http("query timeseries data")
             .post("/api/metrics/vis/data")
-            .body(ElFileBody("data/timeSeriesPayload.json"))
+            .body(ElFileBody( "payload/dashboard/timeSeriesPayload.json" ))
             .asJson
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")
@@ -142,7 +142,7 @@ object Dashboard {
         ).exec(
           http("query gauge data")
             .post("/api/metrics/vis/data")
-            .body(ElFileBody("data/gaugePayload.json"))
+            .body(ElFileBody( "payload/dashboard/gaugePayload.json" ))
             .asJson
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")

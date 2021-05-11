@@ -55,7 +55,7 @@ object Canvas {
       .exec(
         http("canvas: run query 1")
           .post("/api/timelion/run")
-          .body(ElFileBody("data/canvasTimelionPayload.json"))
+          .body(ElFileBody("payload/canvas/canvasTimelionPayload.json"))
           .asJson
           .headers(headersWithXsrf)
           .check(status.is(200))
@@ -63,7 +63,7 @@ object Canvas {
       .exec(
         http("canvas: fns es docs 1")
           .post("/api/canvas/fns")
-          .body(ElFileBody("data/fns_esdocs.json"))
+          .body(ElFileBody("payload/canvas/fns_esdocs.json"))
           .asJson
           .headers(defaultHeaders)
           .check(status.is(200))
@@ -71,7 +71,7 @@ object Canvas {
       .exec(
         http("canvas: fns point series 1")
           .post("/api/canvas/fns")
-          .body(ElFileBody("data/fns_pointseries.json"))
+          .body(ElFileBody("payload/canvas/fns_pointseries.json"))
           .asJson
           .headers(defaultHeaders)
           .check(status.is(200))
@@ -85,7 +85,7 @@ object Canvas {
       .exec(
         http("canvas: run query 2")
           .post("/api/timelion/run")
-          .body(ElFileBody("data/canvasTimelionPayload.json"))
+          .body(ElFileBody("payload/canvas/canvasTimelionPayload.json"))
           .asJson
           .headers(headersWithXsrf)
           .check(status.is(200))
@@ -93,7 +93,7 @@ object Canvas {
       .exec(
         http("canvas: fns es docs 2")
           .post("/api/canvas/fns")
-          .body(ElFileBody("data/fns_esdocs2.json"))
+          .body(ElFileBody("payload/canvas/fns_esdocs2.json"))
           .asJson
           .headers(defaultHeaders)
           .check(status.is(200))
@@ -101,7 +101,7 @@ object Canvas {
       .exec(
         http("canvas: fns point series 2")
           .post("/api/canvas/fns")
-          .body(ElFileBody("data/fns_pointseries2.json"))
+          .body(ElFileBody("payload/canvas/fns_pointseries2.json"))
           .asJson
           .headers(defaultHeaders)
           .check(status.is(200))
@@ -109,7 +109,7 @@ object Canvas {
       .exec(
         http("canvas: run query 3")
           .post("/api/timelion/run")
-          .body(ElFileBody("data/canvasTimelionPayload.json"))
+          .body(ElFileBody("payload/canvas/canvasTimelionPayload.json"))
           .asJson
           .headers(headersWithXsrf)
           .check(status.is(200))
@@ -117,7 +117,7 @@ object Canvas {
       .exec(
         http("canvas: fns point series 3")
           .post("/api/canvas/fns")
-          .body(ElFileBody("data/fns_pointseries3.json"))
+          .body(ElFileBody("payload/canvas/fns_pointseries3.json"))
           .asJson
           .headers(defaultHeaders)
           .check(status.is(200))

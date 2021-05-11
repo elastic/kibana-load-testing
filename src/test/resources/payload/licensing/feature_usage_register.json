@@ -1,0 +1,18 @@
+[
+  {
+    "featureName":"URL drilldown",
+    "licenseType":"gold"
+  },
+  {
+    "featureName":"geo_line aggregation",
+    "licenseType":"gold"
+  },
+  {
+    "featureName":"geo_tile aggregation on geo_shape field-type",
+    "licenseType":"gold"
+  },
+  {
+    "featureName":"layer from local Elastic Maps Server",
+    "licenseType":"enterprise"
+  }
+]

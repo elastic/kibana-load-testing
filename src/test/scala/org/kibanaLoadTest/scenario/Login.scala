@@ -26,4 +26,44 @@ object Login {
           .check(status.is(loginStatusCode))
       )
     }.exitHereIfFailed
+
+  def openKibana(): ChainBuilder =
+    exec(
+      http("start: spaces/_active_space")
+        .get("/internal/spaces/_active_space")
+        .check(status.is(401))
+    ).exec(
+        http("start: security/me")
+          .get("/internal/security/me")
+          .header("kbn-system-request", "true")
+          .check(status.is(401))
+      )
+      .exec(
+        http("start: core/capabilities")
+          .post("/api/core/capabilities")
+          .queryParam("useDefaultCapabilities", "true")
+          .body(ElFileBody("payload/core/capabilities.json"))
+          .asJson
+          .check(status.is(200))
+      )
+      .exec(
+        http("start: banners/info")
+          .get("/api/banners/info")
+          .check(status.is(401))
+      )
+      .exec(
+        http("start: licensing/info")
+          .get("/api/licensing/info")
+          .check(status.is(401))
+      )
+      .exec(
+        http("start: fleet/epm/packages")
+          .get("/api/fleet/epm/packages?experimental=true")
+          .check(status.is(401))
+      )
+      .exec(
+        http("start: security/login_state")
+          .get("/internal/security/login_state")
+          .check(status.is(200))
+      )
 }

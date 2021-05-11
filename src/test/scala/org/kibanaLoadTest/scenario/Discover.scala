@@ -28,7 +28,7 @@ object Discover {
           .post("/internal/bsearch")
           .headers(headers)
           .header("Referer", baseUrl + "/app/discover")
-          .body(ElFileBody("data/discover/bsearch.json"))
+          .body(ElFileBody("payload/discover/bsearch.json"))
           .asJson
           .check(status.is(200).saveAs("status"))
           .check(jsonPath("$.result.id").find.saveAs("requestId"))
@@ -46,7 +46,7 @@ object Discover {
             .post("/internal/bsearch")
             .headers(headers)
             .header("Referer", baseUrl + "/app/discover")
-            .body(ElFileBody("data/discover/bsearchRequestId.json"))
+            .body(ElFileBody("payload/discover/bsearchRequestId.json"))
             .asJson
             .check(status.is(200).saveAs("status"))
             .check(jsonPath("$.result.isPartial").saveAs("isPartial"))
