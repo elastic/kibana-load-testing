@@ -51,7 +51,7 @@ sudo docker run -it -v "$(pwd)":/local/git --name java-maven --rm jamesdbloom/do
 export API_KEY=<Your API Key>
 export cloudDeploy=7.11.0-SNAPSHOT
 mvn clean -Dmaven.test.failure.ignore=true compile
-mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
+mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.cloud.DemoJourney
 ```
 
 - Stop container on tests finish, results should be available in `/home/<user>/test/target/gatling/`

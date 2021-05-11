@@ -49,7 +49,7 @@ class BaseSimulation extends Simulation {
   val cloudDeployVersion: Option[String] = Option(
     System.getProperty("cloudStackVersion")
   )
-  // -DenvConfig=path/to/config, default is a local instance
+  // -DenvConfig=path/to/config, default is a branch instance
   val envConfig: String = System.getProperty("env", "config/local.conf")
   // appConfig is used to run load tests
 
@@ -67,7 +67,7 @@ class BaseSimulation extends Simulation {
         deployFile = CLOUD_DEPLOY_CONFIG
       )
       .syncWithInstance()
-    // use existing deployment or local instance
+    // use existing deployment or branch instance
   } else
     new KibanaConfiguration(Helper.readResourceConfigFile(envConfig))
       .syncWithInstance()

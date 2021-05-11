@@ -1,8 +1,9 @@
-package org.kibanaLoadTest.simulation
+package org.kibanaLoadTest.simulation.cloud
 
 import io.gatling.core.Predef._
 import io.gatling.core.structure.ScenarioBuilder
 import org.kibanaLoadTest.scenario.{Canvas, Dashboard, Discover, Login}
+import org.kibanaLoadTest.simulation.BaseSimulation
 
 class DemoJourney extends BaseSimulation {
   val scenarioName = s"Demo journey ${appConfig.buildVersion}"

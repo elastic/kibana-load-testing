@@ -41,11 +41,11 @@ class IngestionTest {
     val className = LogParser.getSimulationClass(
       getClass.getResource("/test/simulation.log").getPath
     )
-    assertEquals(className, "org.kibanaLoadTest.simulation.DemoJourney")
+    assertEquals(className, "org.kibanaLoadTest.simulation.local.DemoJourney")
   }
 
   @Test
-  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
+  @EnabledIfEnvironmentVariable(named = "ENV", matches = "branch")
   def ingestReportTest(): Unit = {
     val DATA_INDEX = "gatling-data"
     val host = System.getenv("HOST_FROM_VAULT")

@@ -37,7 +37,7 @@ object LogParser {
     val br = new BufferedReader(new InputStreamReader(fsStream))
     val strLine = br.readLine
     fsStream.close()
-    // [RUN	org.kibanaLoadTest.simulation.DemoJourney	demojourney	1605016152595	 	3.3.1]
+    // [RUN	org.kibanaLoadTest.simulation.local.DemoJourney	demojourney	1605016152595	 	3.3.1]
     val values = strLine.split("\t")
     values(1)
   }

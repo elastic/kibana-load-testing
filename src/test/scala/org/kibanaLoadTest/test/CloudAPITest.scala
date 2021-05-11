@@ -7,7 +7,7 @@ import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 
 class CloudAPITest {
   @Test
-  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
+  @EnabledIfEnvironmentVariable(named = "ENV", matches = "branch")
   def deploymentTest(): Unit = {
     val stackVersion = "7.10.0"
     val cloudClient = new CloudHttpClient
@@ -46,7 +46,7 @@ class CloudAPITest {
   }
 
   @Test
-  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
+  @EnabledIfEnvironmentVariable(named = "ENV", matches = "branch")
   def getDeploymentsTest(): Unit = {
     val cloudClient = new CloudHttpClient
     val items = cloudClient.getDeployments
@@ -54,7 +54,7 @@ class CloudAPITest {
   }
 
   @Test
-  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
+  @EnabledIfEnvironmentVariable(named = "ENV", matches = "branch")
   def getLatestAvailableVersionTest(): Unit = {
     val cloudClient = new CloudHttpClient
     val version = cloudClient.getLatestAvailableVersion("7.")

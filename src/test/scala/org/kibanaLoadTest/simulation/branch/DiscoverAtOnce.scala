@@ -1,4 +1,4 @@
-package org.kibanaLoadTest.simulation.local
+package org.kibanaLoadTest.simulation.branch
 
 import io.gatling.core.Predef.{
   atOnceUsers,
