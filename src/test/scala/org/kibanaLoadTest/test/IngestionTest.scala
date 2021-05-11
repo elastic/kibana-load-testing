@@ -41,7 +41,7 @@ class IngestionTest {
     val className = LogParser.getSimulationClass(
       getClass.getResource("/test/simulation.log").getPath
     )
-    assertEquals(className, "org.kibanaLoadTest.simulation.local.DemoJourney")
+    assertEquals(className, "org.kibanaLoadTest.simulation.DemoJourney")
   }
 
   @Test
