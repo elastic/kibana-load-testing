@@ -34,7 +34,7 @@ auth {
 - start test scenario
 ```
 mvn clean test-compile // if you made any changes to the config or simulations
-mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney // could be any other existing simulation class
+mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.branch.DemoJourney // could be any other existing simulation class
 ```
 
 ## Running simulation against existing cloud deployment
@@ -60,7 +60,7 @@ auth {
 - start test scenario with specified env argument
 ```
 mvn clean test-compile
-mvn gatling:test -Denv=config/cloud-7.10.0.conf -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
+mvn gatling:test -Denv=config/cloud-7.10.0.conf -Dgatling.simulationClass=org.kibanaLoadTest.simulation.cloud.DemoJourney
 ```
 
 ## Running simulation against newly created cloud deployment
@@ -70,7 +70,7 @@ mvn gatling:test -Denv=config/cloud-7.10.0.conf -Dgatling.simulationClass=org.ki
 ```
 mvn clean test-compile
 export API_KEY=<your_cloud_key>
-mvn gatling:test -DcloudStackVersion=7.11.0-SNAPSHOT -Dgatling.simulationClass=org.kibanaLoadTest.simulation.DemoJourney
+mvn gatling:test -DcloudStackVersion=7.11.0-SNAPSHOT -Dgatling.simulationClass=org.kibanaLoadTest.simulation.cloud.DemoJourney
 ```
 - Optionally create a custom deployment configuration and pass it in command `-DdeploymentConfig=config/deploy/custom.conf`
 
@@ -90,7 +90,7 @@ Follow logs to track deployment status:
 ...
 ...
 10:01:08.146 [INFO ] i.g.c.c.Controller - StatsEngineStopped
-simulation org.kibanaLoadTest.simulation.DemoJourney completed in 429 seconds
+simulation org.kibanaLoadTest.simulation.cloud.DemoJourney completed in 429 seconds
 10:01:08.148 [INFO ] httpClient - deleteDeployment: Deployment b76dd4a9255a417ca133fe8edd8157a2
 10:01:09.440 [INFO ] httpClient - deleteDeployment: Finished with status code 200
 ```

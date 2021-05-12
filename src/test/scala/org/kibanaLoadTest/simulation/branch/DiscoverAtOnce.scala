@@ -1,4 +1,4 @@
-package org.kibanaLoadTest.simulation.local
+package org.kibanaLoadTest.simulation.branch
 
 import io.gatling.core.Predef.{
   atOnceUsers,
@@ -36,7 +36,7 @@ class DiscoverAtOnce extends BaseSimulation {
           defaultHeaders,
           Helper.getDate(Calendar.DAY_OF_MONTH, -15),
           Helper.getDate(Calendar.DAY_OF_MONTH, 0),
-          "3h"
+          "fixed_interval:3h"
         )
     )
 
@@ -49,7 +49,7 @@ class DiscoverAtOnce extends BaseSimulation {
         defaultHeaders,
         Helper.getDate(Calendar.DAY_OF_MONTH, -30),
         Helper.getDate(Calendar.DAY_OF_MONTH, 0),
-        "1d"
+        "calendar_interval:1d"
       )
     )
 

@@ -20,7 +20,7 @@ class IngestionTest {
   def parseLogsTest(): Unit = {
     val logFilePath: String = new File(
       Helper.getTargetPath + File.separator + "test-classes"
-        + File.separator + "log" + File.separator
+        + File.separator + "test" + File.separator
         + "simulation.log"
     ).getAbsolutePath
     val requests = LogParser.getRequests(logFilePath)
@@ -41,7 +41,7 @@ class IngestionTest {
     val className = LogParser.getSimulationClass(
       getClass.getResource("/test/simulation.log").getPath
     )
-    assertEquals(className, "org.kibanaLoadTest.simulation.DemoJourney")
+    assertEquals(className, "org.kibanaLoadTest.simulation.branch.DemoJourney")
   }
 
   @Test

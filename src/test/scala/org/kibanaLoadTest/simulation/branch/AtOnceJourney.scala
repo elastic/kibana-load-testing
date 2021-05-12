@@ -1,4 +1,4 @@
-package org.kibanaLoadTest.simulation.local
+package org.kibanaLoadTest.simulation.branch
 
 import org.kibanaLoadTest.simulation.BaseSimulation
 import io.gatling.core.Predef._

@@ -1,4 +1,4 @@
-RUN	org.kibanaLoadTest.simulation.DemoJourney	demojourney	1606920741968	 	3.4.2
+RUN	org.kibanaLoadTest.simulation.branch.DemoJourney	demojourney	1606920741968	 	3.4.2
 USER	Kibana demo journey 7.9.3	START	1606920743217
 USER	Kibana demo journey 7.9.3	START	1606920743271
 USER	Kibana demo journey 7.9.3	START	1606920743318

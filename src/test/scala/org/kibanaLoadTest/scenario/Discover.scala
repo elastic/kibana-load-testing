@@ -15,6 +15,11 @@ object Discover {
       endTime: String,
       interval: String
   ): ChainBuilder = {
+    if (!interval.contains(":")) {
+      throw new RuntimeException(
+        "doQuery 'interval' argument should be in 'name:value' format"
+      )
+    }
     val Array(intervalName, intervalValue) = interval.split(":")
     exec(session =>
       session
