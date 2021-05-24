@@ -14,7 +14,7 @@
         <scala.version>2.13.5</scala.version>
         <encoding>UTF-8</encoding>
 
-        <gatling.version>3.5.1</gatling.version>
+        <gatling.version>3.6.0</gatling.version>
         <gatling-maven-plugin.version>3.1.2</gatling-maven-plugin.version>
     </properties>
 
