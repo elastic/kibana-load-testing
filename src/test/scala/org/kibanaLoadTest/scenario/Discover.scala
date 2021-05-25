@@ -28,7 +28,10 @@ object Discover {
         .set("endTime", endTime)
         .set("intervalName", intervalName)
         .set("intervalValue", intervalValue)
-    ).exec(
+    ).doIf("${preference.isUndefined()}") {
+        exec(session => session.set("preference", System.currentTimeMillis()))
+      }
+      .exec(
         http(s"Discover query $name")
           .post("/internal/bsearch")
           .headers(headers)
@@ -54,8 +57,9 @@ object Discover {
             .body(ElFileBody("data/discover/bsearchRequestId.json"))
             .asJson
             .check(status.is(200).saveAs("status"))
+            .check(jsonPath("$.result.isPartial"))
             .check(jsonPath("$.result.isPartial").saveAs("isPartial"))
-        )
+        ).exitHereIfFailed
       }
   }
 
