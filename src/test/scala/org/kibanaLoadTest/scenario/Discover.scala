@@ -55,7 +55,6 @@ object Discover {
             .body(ElFileBody("data/discover/bsearchRequestId.json"))
             .asJson
             .check(status.is(200).saveAs("status"))
-            .check(jsonPath("$.result.isPartial"))
             .check(jsonPath("$.result.isPartial").saveAs("isPartial"))
         ).exitHereIfFailed
           .pause(1)
