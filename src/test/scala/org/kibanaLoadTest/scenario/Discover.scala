@@ -1,7 +1,7 @@
 package org.kibanaLoadTest.scenario
 
 import java.util.Calendar
-import io.gatling.core.Predef._
+import io.gatling.core.Predef.{exec, _}
 import io.gatling.core.structure.ChainBuilder
 import io.gatling.http.Predef._
 import org.kibanaLoadTest.helpers.Helper
@@ -28,6 +28,7 @@ object Discover {
         .set("endTime", endTime)
         .set("intervalName", intervalName)
         .set("intervalValue", intervalValue)
+        .set("preference", System.currentTimeMillis())
     ).exec(
         http(s"Discover query $name")
           .post("/internal/bsearch")
@@ -44,7 +45,7 @@ object Discover {
       // using the request id returned from the first response
       .asLongAs(session =>
         session("status").as[Int] == 200
-          && session("isPartial").as[Boolean] == true
+          && session("isPartial").as[Boolean]
       ) {
         exec(
           http(s"Discover query (fetch by id) $name")
@@ -55,7 +56,8 @@ object Discover {
             .asJson
             .check(status.is(200).saveAs("status"))
             .check(jsonPath("$.result.isPartial").saveAs("isPartial"))
-        )
+        ).exitHereIfFailed
+          .pause(1)
       }
   }
 
