@@ -58,6 +58,7 @@ object Discover {
             .check(jsonPath("$.result.isPartial"))
             .check(jsonPath("$.result.isPartial").saveAs("isPartial"))
         ).exitHereIfFailed
+          .pause(1)
       }
   }
 
