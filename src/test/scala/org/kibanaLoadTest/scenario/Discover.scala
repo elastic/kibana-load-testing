@@ -1,7 +1,7 @@
 package org.kibanaLoadTest.scenario
 
 import java.util.Calendar
-import io.gatling.core.Predef._
+import io.gatling.core.Predef.{exec, _}
 import io.gatling.core.structure.ChainBuilder
 import io.gatling.http.Predef._
 import org.kibanaLoadTest.helpers.Helper
@@ -28,10 +28,8 @@ object Discover {
         .set("endTime", endTime)
         .set("intervalName", intervalName)
         .set("intervalValue", intervalValue)
-    ).doIf("${preference.isUndefined()}") {
-        exec(session => session.set("preference", System.currentTimeMillis()))
-      }
-      .exec(
+        .set("preference", System.currentTimeMillis())
+    ).exec(
         http(s"Discover query $name")
           .post("/internal/bsearch")
           .headers(headers)
