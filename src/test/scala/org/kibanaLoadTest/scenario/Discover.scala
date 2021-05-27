@@ -45,7 +45,7 @@ object Discover {
       // using the request id returned from the first response
       .asLongAs(session =>
         session("status").as[Int] == 200
-          && session("isPartial").as[Boolean] == true
+          && session("isPartial").as[Boolean]
       ) {
         exec(
           http(s"Discover query (fetch by id) $name")
