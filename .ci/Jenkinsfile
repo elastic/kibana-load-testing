@@ -5,7 +5,7 @@ def loadPipeline
 pipeline {
     agent { label 'docker && ubuntu-tests-l' }
     parameters {
-        string(name: 'SIMULATION', defaultValue: 'branch.AtOnceJourney,branch.DiscoverAtOnce,branch.DemoJourney', description: 'Comma-separated simulation list')
+        string(name: 'SIMULATION', defaultValue: 'branch.DemoJourney,branch.AtOnceJourney,branch.DiscoverAtOnce', description: 'Comma-separated simulation list')
     }
     options {
         timeout(time: 90, unit: 'MINUTES')
