@@ -4,7 +4,6 @@ import io.gatling.core.Predef._
 import io.gatling.core.structure.ChainBuilder
 import io.gatling.http.Predef._
 import org.kibanaLoadTest.helpers.Helper
-
 import java.util.Calendar
 
 object Dashboard {
@@ -50,7 +49,7 @@ object Dashboard {
             ) //remove name attribute
             .saveAs("searchAndMapVector")
         )
-    ).exec(
+    ).pause(1).exec(
         http("query index pattern")
           .get("/api/saved_objects/_find")
           .queryParam("fields", "title")
@@ -125,7 +124,7 @@ object Dashboard {
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")
             .check(status.is(200))
-        ).exec(
+        ).pause(1).exec(
           http("query timeseries data")
             .post("/api/metrics/vis/data")
             .body(ElFileBody("data/timeSeriesPayload.json"))
@@ -133,7 +132,7 @@ object Dashboard {
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")
             .check(status.is(200))
-        ).exec(
+        ).pause(1).exec(
           http("query gauge data")
             .post("/api/metrics/vis/data")
             .body(ElFileBody("data/gaugePayload.json"))
@@ -147,7 +146,7 @@ object Dashboard {
               "payloadString",
               Helper.loadJsonString(s"data/dashboard/bsearch${session("index").as[Int]}.json")
             )
-          }).exec(
+          }).pause(2).exec(
             http("query bsearch ${index}")
               .post("/internal/bsearch")
               .body(StringBody("${payloadString}"))
