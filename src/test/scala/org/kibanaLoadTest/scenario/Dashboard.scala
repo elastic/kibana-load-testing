@@ -4,18 +4,17 @@ import io.gatling.core.Predef._
 import io.gatling.core.structure.ChainBuilder
 import io.gatling.http.Predef._
 import org.kibanaLoadTest.helpers.Helper
-
 import java.util.Calendar
 
 object Dashboard {
-  // bsearch1.json ... bsearch9.json
-  private val bSearchPayloadSeq = Seq(1, 2, 3, 4, 5, 6, 7, 8, 9)
+  // bsearch1.json ... bsearch4.json
+  private val bSearchPayloadSeq = Seq(1, 2, 3, 4)
 
   def load(baseUrl: String, headers: Map[String, String]): ChainBuilder = {
     exec(// unique search sessionId for each virtual user
       session => session.set("searchSessionId", Helper.generateUUID)
     ).exec(// unique date picker start time for each virtual user
-      session => session.set("startTime", Helper.getDate(Calendar.DAY_OF_MONTH, -Helper.getRandomNumber(3, 15)))
+      session => session.set("startTime", Helper.getDate(Calendar.DAY_OF_MONTH, -7))
     ).exec(// unique date picker end time for each virtual user
       session => session.set("endTime", Helper.getDate(Calendar.DAY_OF_MONTH, 0))
     ).exec(
@@ -50,7 +49,7 @@ object Dashboard {
             ) //remove name attribute
             .saveAs("searchAndMapVector")
         )
-    ).exec(
+    ).pause(1).exec(
         http("query index pattern")
           .get("/api/saved_objects/_find")
           .queryParam("fields", "title")
@@ -125,13 +124,7 @@ object Dashboard {
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")
             .check(status.is(200))
-        ).exec(
-          http("query input control settings")
-            .get("/api/input_control_vis/settings")
-            .headers(headers)
-            .header("Referer", baseUrl + "/app/dashboards")
-            .check(status.is(200))
-        ).exec(
+        ).pause(1).exec(
           http("query timeseries data")
             .post("/api/metrics/vis/data")
             .body(ElFileBody("data/timeSeriesPayload.json"))
@@ -139,7 +132,7 @@ object Dashboard {
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")
             .check(status.is(200))
-        ).exec(
+        ).pause(1).exec(
           http("query gauge data")
             .post("/api/metrics/vis/data")
             .body(ElFileBody("data/gaugePayload.json"))
@@ -151,9 +144,9 @@ object Dashboard {
           exec(session => {
             session.set(
               "payloadString",
-              Helper.loadJsonString(s"data/bsearch${session("index").as[Int]}.json")
+              Helper.loadJsonString(s"data/dashboard/bsearch${session("index").as[Int]}.json")
             )
-          }).exec(
+          }).pause(2).exec(
             http("query bsearch ${index}")
               .post("/internal/bsearch")
               .body(StringBody("${payloadString}"))
