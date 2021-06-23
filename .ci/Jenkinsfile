@@ -3,7 +3,7 @@ library 'kibana-pipeline-library'
 def loadPipeline
 
 pipeline {
-    agent { label 'docker && ubuntu-tests-l' }
+    agent { label 'docker && tests-xxl' }
     parameters {
         string(name: 'SIMULATION', defaultValue: 'branch.DemoJourney,branch.AtOnceJourney,branch.DiscoverAtOnce', description: 'Comma-separated simulation list')
     }
