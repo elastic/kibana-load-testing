@@ -21,6 +21,7 @@ export function getRequestsSequence(dataSet: Map<string, Request>, baseUrl: stri
 }
 
 export function getDuplicates(dataSet: Map<string, Request>, baseUrl: string) {
+    console.log(`Checking for duplicates:`)
     const loaderPathMapper: Map<string, string> = new Map();
     const output: Map<string, Map<string, Request>> = new Map();
     dataSet.forEach((request, requestId) => {
@@ -49,7 +50,7 @@ export function getDuplicates(dataSet: Map<string, Request>, baseUrl: string) {
         })
     });
 
-    console.log(`Finished`)
+    console.log(`----------------Finished---------------`)
 }
 
 function toObjCompare(request: Request) {

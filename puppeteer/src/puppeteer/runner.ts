@@ -16,7 +16,7 @@ export async function runner(scenarioFiles: string[], options: Config) {
         client.on('Network.requestWillBeSent', (event: RequestWillBeSentEvent) => {
             const url = event.request['url'] as string
             if (url.startsWith(options.baseUrl) && isNotResource(url)) {
-                console.log(`${event.requestId} ${url}`)
+                //console.log(`${event.requestId} ${url}`)
                 const request: Request = {
                     frameId: event.frameId,
                     loaderId: event.loaderId,

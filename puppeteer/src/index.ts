@@ -6,14 +6,7 @@ import { isWebUri } from 'valid-url'
 import chalk from 'chalk'
 import fs from 'fs'
 import { resolve } from 'path';
-
-interface Config {
-    baseUrl: string;
-    username: string;
-    password: string;
-    version: string;
-}
-
+import { Config } from './types/config'
 
 process.on('unhandledRejection', error => {
     console.log(error);
@@ -36,9 +29,10 @@ process.on('unhandledRejection', error => {
             .option("username", { alias: "username", describe: "Kibana username", type: "string", demandOption: true })
             .option("password", { alias: "password", describe: "Kibana password", type: "string", demandOption: true })
             .option("version", { alias: "version", describe: "Kibana version", type: "string", demandOption: true })
+            .option("scenarioCheck", { alias: "scenarioCheck", describe: "Check scenario up-to-date", type: "boolean", demandOption: false })
             .argv;
-        const { baseUrl, username, password, version } = argv
-        config = { baseUrl, username, password, version }
+        const { baseUrl, username, password, version, scenarioCheck } = argv
+        config = { baseUrl, username, password, version, scenarioCheck }
     }
 
     if (!isWebUri(config.baseUrl)) {
@@ -48,5 +42,7 @@ process.on('unhandledRejection', error => {
         throw new Error(chalk.red(`Invalid 'version'=${config.version}, valid example: '7.12.1'`));
     }
 
-    await scenarioRunner(config)
+    const scenarios = ['demoJourney']
+
+    await scenarioRunner(config, scenarios)
 })()

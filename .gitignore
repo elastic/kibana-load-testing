@@ -39,3 +39,6 @@ java_pid*.hprof
 # metals
 /.bloop/
 /.metals/
+
+puppeteer/node_modules
+puppeteer/output

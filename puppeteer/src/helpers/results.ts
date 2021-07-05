@@ -48,6 +48,8 @@ export function saveResults(scenario: string, requests: Map<string, Request>, ba
     });
 
     //compare sequence with baseline
-    const verifiedSequence = compareWithBaseline(scenario, actualSequence);
+    const { isNewRequestFound, verifiedSequence } = compareWithBaseline(scenario, actualSequence);
     writeToFile(resolve(resultRootDir, 'requests_verified.json'), mapToJSON(verifiedSequence));
+
+    return isNewRequestFound;
 }
