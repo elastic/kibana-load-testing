@@ -7,7 +7,7 @@ import { resolve } from 'path';
 
 export async function runner(scenarioFiles: string[], options: Config) {
     const scenarioResponses: Map<string, Map<string, Request>> = new Map();
-    const browser = await puppeteer.launch({ headless: false });// args: ['--no-sandbox']
+    const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });// args: ['--no-sandbox']  { headless: false }
     for (let i = 0; i < scenarioFiles.length; i++) {
         const frameRequests = new Map<string, Request>();
         const page = await browser.newPage();
