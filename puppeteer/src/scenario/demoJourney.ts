@@ -12,6 +12,7 @@ export async function run(options: Config, page: puppeteer.Page) {
     if (await page.$(cloudLoginLocator) !== null) {
         await page.click(cloudLoginLocator);
     }
+
     await page.type(dataTestSubj('loginUsername'), options.username);
     await page.type(dataTestSubj('loginPassword'), options.password);
     await page.click(dataTestSubj('loginSubmit'));
@@ -25,11 +26,11 @@ export async function run(options: Config, page: puppeteer.Page) {
     await page.waitForSelector(dataTestSubj('loadingSpinner'), { hidden: true });
     const currentUrl = page.url()
 
-    console.log('2nd query')
+    // console.log('2nd query')
     await selectDatePicker({ num: '5', unit: 'd' }, page)
     await waitForChartToLoad(page);
 
-    console.log('3rd query')
+    // console.log('3rd query')
     await selectDatePicker({ num: '30', unit: 'd' }, page)
     await waitForChartToLoad(page);
 

@@ -25,7 +25,7 @@ export async function scenarioRunner(options: Config, scenarios: string[]) {
         }
     })
 
-    scenarioCheckList.forEach(scn => console.log(`Scenario ${scn.name} requires update: ${scn.updateRequired}`))
+    scenarioCheckList.forEach(scn => console.log(`Scenario ${scn.name} ${scn.updateRequired ? 'requires update' : 'is up-to-date'}`))
 
     if (options.scenarioCheck && scenarioCheckList.filter(scn => scn.updateRequired).length > 0) {
         throw new Error('Some scenarios require update!!!')

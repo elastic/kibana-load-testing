@@ -6,6 +6,7 @@ import { Request } from '../types/request'
 import { resolve } from 'path';
 
 export async function runner(scenarioFiles: string[], options: Config) {
+    let runFailed = false;
     const scenarioResponses: Map<string, Map<string, Request>> = new Map();
     const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });// args: ['--no-sandbox']  { headless: false }
     for (let i = 0; i < scenarioFiles.length; i++) {
@@ -51,9 +52,13 @@ export async function runner(scenarioFiles: string[], options: Config) {
             await run(options, page);
         } catch (err) {
             console.log(err)
+            runFailed = true;
         } finally {
             await page.close();
             scenarioResponses.set(scenarioFiles[i], frameRequests);
+            if (runFailed) {
+                throw Error();
+            }
         }
     }
 
