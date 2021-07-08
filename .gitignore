@@ -40,5 +40,7 @@ java_pid*.hprof
 /.bloop/
 /.metals/
 
+# puppeteer project
 puppeteer/node_modules
 puppeteer/output
+puppeteer/.vscode
