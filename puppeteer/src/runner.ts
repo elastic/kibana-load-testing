@@ -11,7 +11,9 @@ export interface Scenario {
 }
 
 export async function scenarioRunner(options: Config, scenarios: string[]) {
+    console.log(`----------------Loading sample data---------------`)
     await loadSampleData(options);
+    console.log(`----------------Running scenarios-----------------`)
     let scenarioResponses: Map<string, Map<string, Request>> = new Map();
     scenarioResponses = await runner(scenarios, options);
     let scenarioCheckList = new Array<Scenario>();

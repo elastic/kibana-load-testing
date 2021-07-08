@@ -46,7 +46,7 @@ process.on('unhandledRejection', error => {
         const scenarios = ['demoJourney']
         await scenarioRunner(config, scenarios)
     } catch (err) {
-        console.log('Puppeteer script failed');
+        console.log(err);
         process.exit(1);
     }
 

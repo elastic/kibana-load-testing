@@ -48,6 +48,7 @@ export async function runner(scenarioFiles: string[], options: Config) {
 
         await client.send('Network.enable');
         try {
+            console.log(`----------------Running ${scenarioFiles[i]}---------------`)
             const { run } = await import(resolve(__dirname, '..', 'scenario', scenarioFiles[i]));
             await run(options, page);
         } catch (err) {
@@ -56,6 +57,7 @@ export async function runner(scenarioFiles: string[], options: Config) {
         } finally {
             await page.close();
             scenarioResponses.set(scenarioFiles[i], frameRequests);
+            console.log(`----------------Finished---------------`)
             if (runFailed) {
                 throw Error();
             }
