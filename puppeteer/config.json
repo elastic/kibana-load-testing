@@ -1,0 +1,7 @@
+{
+    "baseUrl": "http://localhost:5620",
+    "username": "elastic",
+    "password": "changeme",
+    "version": "8.0.0-SNAPSHOT",
+    "scenarioCheck": true
+}

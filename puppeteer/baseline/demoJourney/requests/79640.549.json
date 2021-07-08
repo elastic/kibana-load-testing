@@ -1,0 +1,33 @@
+{
+    "loaderId": "34B4B79AEBED98DA6B3D65C46F4EB474",
+    "frameId": "AEC8F058ED985DAE7E19AEBCE9518E17",
+    "method": "POST",
+    "requestUrl": "http://localhost:5620/api/core/capabilities",
+    "requestHeader": {
+        "sec-ch-ua": "\"Chromium\";v=\"91\", \" Not;A Brand\";v=\"99\"",
+        "Referer": "http://localhost:5620/app/discover",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0",
+        "Content-Type": "application/json"
+    },
+    "postData": "{\"applications\":[\"error\",\"status\",\"short_url_redirect\",\"kibana\",\"dev_tools\",\"timelion\",\"home\",\"graph\",\"management\",\"kibanaOverview\",\"discover\",\"dashboards\",\"visualize\",\"space_selector\",\"security_access_agreement\",\"security_capture_url\",\"security_login\",\"security_logout\",\"security_logged_out\",\"security_overwritten_session\",\"security_account\",\"lens\",\"canvas\",\"maps\",\"dashboard_mode\",\"integrations\",\"fleet\",\"ingestManager\",\"enterpriseSearch\",\"appSearch\",\"workplaceSearch\",\"osquery\",\"ml\",\"securitySolution\",\"siem\",\"observability-overview\",\"uptime\",\"logs\",\"metrics\",\"infra\",\"monitoring\",\"apm\",\"ux\"]}",
+    "responseUrl": "http://localhost:5620/api/core/capabilities",
+    "responseHeaders": {
+        "kbn-license-sig": "6fd75992bd13e54904c3a12569a0f5a18fd037453f20584d881cdcc830340c7b",
+        "Date": "Thu, 01 Jul 2021 13:59:34 GMT",
+        "content-encoding": "gzip",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "vary": "accept-encoding",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "Transfer-Encoding": "chunked",
+        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=120",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1625147974049.047
+}
