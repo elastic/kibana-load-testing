@@ -8,11 +8,7 @@ import { getRequestsSequence } from './requestParser';
 
 function writeToFile(filePath: string, data: object | string) {
     const str = typeof data == 'object' ? JSON.stringify(data, null, 4) : data
-    fs.writeFile(filePath, str, function (err) {
-        if (err) {
-            console.log(err);
-        }
-    });
+    fs.writeFileSync(filePath, str);
 }
 
 export function saveResults(scenario: string, requests: Map<string, Request>, baseUrl: string) {

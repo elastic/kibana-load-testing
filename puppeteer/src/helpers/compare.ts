@@ -1,5 +1,4 @@
 import fs from 'fs'
-import { url } from 'inspector';
 import { resolve } from 'path';
 
 export function compareWithBaseline(scenario: string, actualSequence: Map<string, string[]>) {
