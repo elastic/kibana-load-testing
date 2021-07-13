@@ -1,5 +1,4 @@
 import fs from 'fs'
-import { url } from 'inspector';
 import { resolve } from 'path';
 
 export function compareWithBaseline(scenario: string, actualSequence: Map<string, string[]>) {
@@ -26,7 +25,7 @@ export function compareWithBaseline(scenario: string, actualSequence: Map<string
                     expectedUrls.shift();
                 } else if (expectedUrls.indexOf(actualUrls[0]) > 0) {
                     arr.push(`${actualUrls[0]} - changed order`)
-                    expectedUrls = expectedUrls.slice(expectedUrls.indexOf(actualUrls[0]), 1);
+                    expectedUrls.splice(expectedUrls.indexOf(actualUrls[0]), 1);
                     actualUrls.shift();
                 } else if (actualUrls[0].includes('bsearch')) {
                     arr.push(`${actualUrls[0]} - extra call`)
