@@ -13,6 +13,7 @@ export function compareWithBaseline(scenario: string, actualSequence: Map<string
     const oldOnes = new Map<string, string[]>();
 
     actualSequence.forEach((actualUrls, path) => {
+        const actualConst = actualUrls;
         let arr = Array<string>();
         let newReqs = Array<string>();
         let notFoundReqs = Array<string>();
@@ -23,28 +24,46 @@ export function compareWithBaseline(scenario: string, actualSequence: Map<string
                     arr.push(`${actualUrls[0]} - ok`)
                     actualUrls.shift();
                     expectedUrls.shift();
-                } else if (expectedUrls.indexOf(actualUrls[0]) > 0) {
-                    arr.push(`${actualUrls[0]} - changed order`)
-                    expectedUrls.splice(expectedUrls.indexOf(actualUrls[0]), 1);
-                    actualUrls.shift();
-                } else if (actualUrls[0].includes('bsearch')) {
-                    arr.push(`${actualUrls[0]} - extra call`)
-                    actualUrls.shift();
-                } else if (expectedUrls[0].includes('bsearch')) {
-                    arr.push(`${actualUrls[0]} - redundant call`)
-                    expectedUrls.shift();
                 } else {
-                    arr.push(`${actualUrls[0]} - new request`)
-                    newReqs.push(actualUrls[0])
-                    isNewRequestFound = true;
-                    actualUrls.shift();
+                    // new request
+                    if (expectedUrls.indexOf(actualUrls[0]) == -1) {
+                        arr.push(`${actualUrls[0]} - new request`);
+                        newReqs.push(actualUrls[0]);
+                        isNewRequestFound = true;
+                        actualUrls.shift();
+                    // request not found
+                    } else if (actualUrls.indexOf(expectedUrls[0]) == -1) {
+                        arr.push(`${expectedUrls[0]} - not found`);
+                        notFoundReqs.push(expectedUrls[0]);
+                        expectedUrls.shift();
+                    // change order
+                    } else if (expectedUrls.indexOf(actualUrls[0]) > -1) {
+                        arr.push(`${actualUrls[0]} - changed order`);
+                        expectedUrls.splice(expectedUrls.indexOf(actualUrls[0]), 1);
+                        actualUrls.shift();
+                    } else {
+                        console.log("smth went wrong")
+                    }
                 }
             }
             if (expectedUrls.length > 0) {
-                console.log(`Some calls are no longer executed`)
                 expectedUrls.map(el => {
-                    actualUrls.push(`${el} - not found`)
-                    notFoundReqs.push(el)
+                    if (el.includes('bsearch') && actualConst.indexOf('/internal/bsearch')) {
+                        console.log(`extra '${path} /internal/bsearch' is not found, but was in baseline`)
+                    } else {
+                        actualUrls.push(`${el} - not found`)
+                        notFoundReqs.push(el)
+                    }
+                })
+            }
+            if (actualUrls.length > 0) {
+                actualUrls.map(el => {
+                    if (el.includes('bsearch') && actualConst.indexOf('/internal/bsearch')) {
+                        console.log(`extra '${path} /internal/bsearch' is found, but was not baseline`)
+                    } else {
+                        actualUrls.push(`${el} - new request`)
+                        notFoundReqs.push(el)
+                    }
                 })
             }
             oldOnes.set(path, notFoundReqs);
