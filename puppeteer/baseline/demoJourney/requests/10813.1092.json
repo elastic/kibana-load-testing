@@ -1,0 +1,31 @@
+{
+    "loaderId": "4789822C1D8C920E45FBAB358B723D7E",
+    "frameId": "FA32F4F677A101A75F3C5D5E5BA4FD68",
+    "method": "POST",
+    "requestUrl": "http://localhost:5620/api/canvas/fns",
+    "requestHeader": {
+        "sec-ch-ua": "",
+        "Referer": "http://localhost:5620/app/canvas",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
+        "X-Chunk-Encoding": "deflate",
+        "Content-Type": "application/json"
+    },
+    "postData": "{\"batch\":[{\"functionName\":\"pointseries\",\"args\":{\"x\":\"@timestamp\",\"y\":\"value\"},\"context\":{\"type\":\"datatable\",\"meta\":{\"source\":\"timelion\"},\"columns\":[{\"id\":\"@timestamp\",\"name\":\"@timestamp\",\"meta\":{\"type\":\"date\"}},{\"id\":\"value\",\"name\":\"value\",\"meta\":{\"type\":\"number\"}},{\"id\":\"label\",\"name\":\"label\",\"meta\":{\"type\":\"string\"}}],\"rows\":[[1625097600000,10578.53125,\"q:* > sum(taxless_total_price)\"],[1625184000000,10448,\"q:* > sum(taxless_total_price)\"],[1625270400000,10283.484375,\"q:* > sum(taxless_total_price)\"],[1625356800000,10145.5234375,\"q:* > sum(taxless_total_price)\"],[1625443200000,12012.609375,\"q:* > sum(taxless_total_price)\"],[1625529600000,11009.45703125,\"q:* > sum(taxless_total_price)\"],[1625616000000,10720.59375,\"q:* > sum(taxless_total_price)\"],[1625702400000,11185.3671875,\"q:* > sum(taxless_total_price)\"],[1625788800000,13560.140625,\"q:* > sum(taxless_total_price)\"],[1625875200000,9884.78125,\"q:* > sum(taxless_total_price)\"],[1625961600000,11075.65625,\"q:* > sum(taxless_total_price)\"],[1626048000000,10323.8515625,\"q:* > sum(taxless_total_price)\"],[1626134400000,10369.546875,\"q:* > sum(taxless_total_price)\"],[1626220800000,11711.890625,\"q:* > sum(taxless_total_price)\"],[1626307200000,12612.6640625,\"q:* > sum(taxless_total_price)\"],[1626393600000,10176.87890625,\"q:* > sum(taxless_total_price)\"],[1626480000000,11480.33203125,\"q:* > sum(taxless_total_price)\"],[1626566400000,11533.265625,\"q:* > sum(taxless_total_price)\"],[1626652800000,10499.8125,\"q:* > sum(taxless_total_price)\"],[1626739200000,12111.6875,\"q:* > sum(taxless_total_price)\"],[1626825600000,10530.765625,\"q:* > sum(taxless_total_price)\"],[1626912000000,11872.5625,\"q:* > sum(taxless_total_price)\"],[1626998400000,12109.453125,\"q:* > sum(taxless_total_price)\"],[1627084800000,11057.40625,\"q:* > sum(taxless_total_price)\"],[1627171200000,13095.609375,\"q:* > sum(taxless_total_price)\"],[1627257600000,12574.015625,\"q:* > sum(taxless_total_price)\"],[1627344000000,11188.1875,\"q:* > sum(taxless_total_price)\"],[1627430400000,12117.65625,\"q:* > sum(taxless_total_price)\"],[1627516800000,11558.25,\"q:* > sum(taxless_total_price)\"],[1627603200000,11921.1171875,\"q:* > sum(taxless_total_price)\"],[1627689600000,11135.03125,\"q:* > sum(taxless_total_price)\"]]}}]}",
+    "responseUrl": "http://localhost:5620/api/canvas/fns",
+    "responseHeaders": {
+        "kbn-license-sig": "52dbc92221e5c21fac952ac5930b31ad974578e74e8af01ba7753ddc7c1b7206",
+        "Date": "Wed, 14 Jul 2021 14:44:11 GMT",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "transfer-encoding": "chunked",
+        "content-type": "application/x-ndjson",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "kbn-name": "kibana-ci-immutable-ubuntu-16-tests-xxl-1626272245808226725",
+        "connection": "keep-alive",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1626273851369.135
+}

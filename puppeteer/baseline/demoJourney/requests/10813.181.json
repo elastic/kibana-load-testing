@@ -1,0 +1,32 @@
+{
+    "loaderId": "32ED2D8348E2F431DF6BDE01CE5E59EF",
+    "frameId": "FA32F4F677A101A75F3C5D5E5BA4FD68",
+    "method": "POST",
+    "requestUrl": "http://localhost:5620/internal/security/login",
+    "requestHeader": {
+        "sec-ch-ua": "",
+        "Referer": "http://localhost:5620/login?next=%2F",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
+        "Content-Type": "application/json"
+    },
+    "postData": "{\"providerType\":\"basic\",\"providerName\":\"basic\",\"currentURL\":\"http://localhost:5620/login?next=%2F\",\"params\":{\"username\":\"elastic\",\"password\":\"changeme\"}}",
+    "responseUrl": "http://localhost:5620/internal/security/login",
+    "responseHeaders": {
+        "kbn-license-sig": "52dbc92221e5c21fac952ac5930b31ad974578e74e8af01ba7753ddc7c1b7206",
+        "Date": "Wed, 14 Jul 2021 14:43:29 GMT",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**e065e61a303046a6033e88a46c41c1ff5d213f257a024d88ef327f6112c02d15*F-Aip99RyjrtEeYougAWUA*tFS-BF25NJqSHXqG8y0WLCuUPihYqzXPJehBB68rLL2QmcNIDJO7MdybZniAMAe7LEWvKAH3cJJF-R83p3qYdohaBWjJzbbG0yNQk7P026Yeo_BeAyzk6fpKrrLh3CYSD0gSRAx-1NVIix8kpS-ifSPMpVlY_kf2p39jM2FUfBNzHkfRCc8iBCu05f8lg1zgToweAD68GO4EATLQbNktAsFsYc1d5hX0DEuZSL4Qtfs**542a59f731b343a59f9f87fd321c8fa1a05e93e43dd5c352fc4fbf3bb25e12df*BB0z9J0wXhpK5q1y2yXVPAyEWuWeNdr2F3A5Pqqy6xQ; HttpOnly; Path=/",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "kbn-name": "kibana-ci-immutable-ubuntu-16-tests-xxl-1626272245808226725",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=120",
+        "content-length": "16",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1626273809853.231
+}
