@@ -1,0 +1,32 @@
+{
+    "loaderId": "32ED2D8348E2F431DF6BDE01CE5E59EF",
+    "frameId": "FA32F4F677A101A75F3C5D5E5BA4FD68",
+    "method": "GET",
+    "requestUrl": "http://localhost:5620/api/banners/info",
+    "requestHeader": {
+        "sec-ch-ua": "",
+        "Referer": "http://localhost:5620/login?next=%2F",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
+        "Content-Type": "application/json"
+    },
+    "postData": "",
+    "responseUrl": "http://localhost:5620/api/banners/info",
+    "responseHeaders": {
+        "kbn-license-sig": "52dbc92221e5c21fac952ac5930b31ad974578e74e8af01ba7753ddc7c1b7206",
+        "Date": "Wed, 14 Jul 2021 14:43:28 GMT",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "kbn-name": "kibana-ci-immutable-ubuntu-16-tests-xxl-1626272245808226725",
+        "Connection": "keep-alive",
+        "accept-ranges": "bytes",
+        "Keep-Alive": "timeout=120",
+        "content-length": "145",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1626273808456.887
+}
