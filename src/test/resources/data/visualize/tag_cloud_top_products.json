@@ -1,0 +1,81 @@
+{
+  "batch":[
+    {
+      "request":{
+        "params":{
+          "index":"kibana_sample_data_ecommerce",
+          "body":{
+            "aggs":{
+              "2":{
+                "terms":{
+                  "field":"products.product_name.keyword",
+                  "order":{
+                    "_count":"desc"
+                  },
+                  "size":7
+                }
+              }
+            },
+            "size":0,
+            "fields":[
+              {
+                "field":"customer_birth_date",
+                "format":"date_time"
+              },
+              {
+                "field":"order_date",
+                "format":"date_time"
+              },
+              {
+                "field":"products.created_on",
+                "format":"date_time"
+              }
+            ],
+            "script_fields":{
+
+            },
+            "stored_fields":[
+              "*"
+            ],
+            "runtime_mappings":{
+
+            },
+            "_source":{
+              "excludes":[
+
+              ]
+            },
+            "query":{
+              "bool":{
+                "must":[
+
+                ],
+                "filter":[
+                  {
+                    "range":{
+                      "order_date":{
+                        "gte":"{startTime}",
+                        "lte":"{endTime}",
+                        "format":"strict_date_optional_time"
+                      }
+                    }
+                  }
+                ],
+                "should":[
+
+                ],
+                "must_not":[
+
+                ]
+              }
+            }
+          },
+          "preference":1626440440314
+        }
+      },
+      "options":{
+        "strategy":"ese"
+      }
+    }
+  ]
+}
