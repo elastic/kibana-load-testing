@@ -36,8 +36,8 @@ for version in "${version_array[@]}"; do
 	  continue
   fi
   source target/cloudDeployment.txt
-  echo "##### Validating scenario #####"
-  yarn build && node build/index.js
+#  echo "##### Validating scenario #####"
+#  yarn build && node build/index.js
   echo "##### Running tests against Kibana cloud instance ${deploymentId} #####"
   for i in $(seq "$test_runs_number"); do
     for j in "${sim_array[@]}"; do
