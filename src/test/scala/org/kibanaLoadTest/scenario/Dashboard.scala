@@ -31,18 +31,18 @@ object Dashboard {
         .header("Referer", baseUrl + "/app/dashboards")
         .check(status.is(200))
         .check(
-          jsonPath("$.saved_objects[0].id").find.saveAs("dashboardId")
+          jsonPath("$.saved_objects[?(@.attributes.title=='[eCommerce] Revenue Dashboard')].id").find.saveAs("dashboardId")
         )
         .check(
           jsonPath(
-            "$.saved_objects[0].references[?(@.type=='visualization')]"
+            "$.saved_objects[?(@.attributes.title=='[eCommerce] Revenue Dashboard')].references[?(@.type=='visualization')]"
           ).findAll
             .transform(_.map(_.replaceAll("\"name(.+?),", "")))
             .saveAs("vizVector")
         )
         .check(
           jsonPath(
-            "$.saved_objects[0].references[?(@.type=='map' || @.type=='search')]"
+            "$.saved_objects[?(@.attributes.title=='[eCommerce] Revenue Dashboard')].references[?(@.type=='map' || @.type=='search')]"
           ).findAll
             .transform(
               _.map(_.replaceAll("\"name(.+?),", ""))
@@ -59,7 +59,7 @@ object Dashboard {
           .header("Referer", baseUrl + "/app/dashboards")
           .check(status.is(200))
           .check(
-            jsonPath("$.saved_objects[?(@.type=='index-pattern')].id")
+            jsonPath("$.saved_objects[?(@.attributes.title=='kibana_sample_data_ecommerce')].id")
               .saveAs("indexPatternId")
           )
       )
@@ -96,7 +96,7 @@ object Dashboard {
         ).exec(
           http("query search & map")
             .post("/api/saved_objects/_bulk_get")
-            .body(StringBody("""[ ${searchAndMapString} ]""".stripMargin))
+            .body(StringBody("[${searchAndMapString}, {\"id\":\"${indexPatternId}\", \"type\":\"index-pattern\"}]"))
             .asJson
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")
