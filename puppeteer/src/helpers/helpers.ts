@@ -9,3 +9,17 @@ export function mapToJSON(map: Map<string, any>) {
     });
     return <JSON>jsonObject
 }
+
+export function isJSONString(str: string) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+
+export function strToJSON(str: string | undefined) {
+    if (!str) return {}
+    return isJSONString(str) ? JSON.parse(str) : {}
+}

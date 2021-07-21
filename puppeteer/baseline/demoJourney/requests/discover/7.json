@@ -1,0 +1,134 @@
+{
+    "loaderId": "7A5DF537E7D3FF1C75E6362B5DB8B74C",
+    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "method": "GET",
+    "requestUrl": "http://localhost:5620/api/licensing/info",
+    "requestHeader": {
+        "sec-ch-ua": "",
+        "Referer": "http://localhost:5620/app/discover",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0",
+        "kbn-system-request": "true",
+        "Content-Type": "application/json"
+    },
+    "postData": {},
+    "responseUrl": "http://localhost:5620/api/licensing/info",
+    "responseHeaders": {
+        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
+        "Date": "Wed, 21 Jul 2021 09:59:15 GMT",
+        "content-encoding": "gzip",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "vary": "accept-encoding",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "Transfer-Encoding": "chunked",
+        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=120",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1626861555943.666,
+    "responseBody": {
+        "license": {
+            "uid": "d6f3325b-0812-4c6c-a441-c8b3d79acc98",
+            "type": "trial",
+            "mode": "trial",
+            "expiryDateInMillis": 1629373504227,
+            "status": "active"
+        },
+        "features": {
+            "aggregate_metric": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "analytics": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "ccr": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "data_streams": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "data_tiers": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "enrich": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "eql": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "frozen_indices": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "graph": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "ilm": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "logstash": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "ml": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "monitoring": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "rollup": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "searchable_snapshots": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "security": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "slm": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "spatial": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "sql": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "transform": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "voting_only": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "watcher": {
+                "isAvailable": true,
+                "isEnabled": true
+            }
+        },
+        "signature": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00"
+    }
+}

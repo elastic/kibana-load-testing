@@ -1,0 +1,233 @@
+{
+    "loaderId": "F0BA51E804DB20020CF81549AFAC7E9B",
+    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "method": "POST",
+    "requestUrl": "http://localhost:5620/api/canvas/fns",
+    "requestHeader": {
+        "sec-ch-ua": "",
+        "Referer": "http://localhost:5620/app/canvas",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0",
+        "X-Chunk-Encoding": "deflate",
+        "Content-Type": "application/json"
+    },
+    "postData": {
+        "batch": [
+            {
+                "functionName": "pointseries",
+                "args": {
+                    "x": "@timestamp",
+                    "y": "value"
+                },
+                "context": {
+                    "type": "datatable",
+                    "meta": {
+                        "source": "timelion"
+                    },
+                    "columns": [
+                        {
+                            "id": "@timestamp",
+                            "name": "@timestamp",
+                            "meta": {
+                                "type": "date"
+                            }
+                        },
+                        {
+                            "id": "value",
+                            "name": "value",
+                            "meta": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "id": "label",
+                            "name": "label",
+                            "meta": {
+                                "type": "string"
+                            }
+                        }
+                    ],
+                    "rows": [
+                        [
+                            1625695200000,
+                            10578.53125,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1625781600000,
+                            10448,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1625868000000,
+                            10283.484375,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1625954400000,
+                            10145.5234375,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1626040800000,
+                            12012.609375,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1626127200000,
+                            11009.45703125,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1626213600000,
+                            10720.59375,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1626300000000,
+                            11185.3671875,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1626386400000,
+                            13560.140625,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1626472800000,
+                            9884.78125,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1626559200000,
+                            11075.65625,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1626645600000,
+                            10323.8515625,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1626732000000,
+                            10369.546875,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1626818400000,
+                            11711.890625,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1626904800000,
+                            12612.6640625,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1626991200000,
+                            10176.87890625,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1627077600000,
+                            11480.33203125,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1627164000000,
+                            11533.265625,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1627250400000,
+                            10499.8125,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1627336800000,
+                            12111.6875,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1627423200000,
+                            10530.765625,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1627509600000,
+                            11872.5625,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1627596000000,
+                            12109.453125,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1627682400000,
+                            11057.40625,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1627768800000,
+                            13095.609375,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1627855200000,
+                            12574.015625,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1627941600000,
+                            11188.1875,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1628028000000,
+                            12117.65625,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1628114400000,
+                            11558.25,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1628200800000,
+                            11921.1171875,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1628287200000,
+                            11135.03125,
+                            "q:* > sum(taxless_total_price)"
+                        ],
+                        [
+                            1628373600000,
+                            11135.03125,
+                            "q:* > sum(taxless_total_price)"
+                        ]
+                    ]
+                }
+            }
+        ]
+    },
+    "responseUrl": "http://localhost:5620/api/canvas/fns",
+    "responseHeaders": {
+        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
+        "Date": "Wed, 21 Jul 2021 09:59:47 GMT",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "transfer-encoding": "chunked",
+        "content-type": "application/x-ndjson",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "connection": "keep-alive",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1626861587488,
+    "responseBody": {}
+}

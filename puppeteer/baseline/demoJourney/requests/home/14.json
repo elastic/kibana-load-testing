@@ -1,0 +1,57 @@
+{
+    "loaderId": "EE7A2593777385D4CB9308A68790E349",
+    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "method": "GET",
+    "requestUrl": "http://localhost:5620/api/saved_objects/_find?fields=title&per_page=1&search=*&search_fields=title&type=index-pattern",
+    "requestHeader": {
+        "sec-ch-ua": "",
+        "Referer": "http://localhost:5620/app/home",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0",
+        "Content-Type": "application/json"
+    },
+    "postData": {},
+    "responseUrl": "http://localhost:5620/api/saved_objects/_find?fields=title&per_page=1&search=*&search_fields=title&type=index-pattern",
+    "responseHeaders": {
+        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
+        "Date": "Wed, 21 Jul 2021 09:59:13 GMT",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "Connection": "keep-alive",
+        "accept-ranges": "bytes",
+        "Keep-Alive": "timeout=120",
+        "content-length": "367",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1626861553784.556,
+    "responseBody": {
+        "page": 1,
+        "per_page": 1,
+        "total": 1,
+        "saved_objects": [
+            {
+                "type": "index-pattern",
+                "id": "ff959d40-b880-11e8-a6d9-e546fe2bba5f",
+                "attributes": {
+                    "title": "kibana_sample_data_ecommerce"
+                },
+                "references": [],
+                "migrationVersion": {
+                    "index-pattern": "7.11.0"
+                },
+                "coreMigrationVersion": "8.0.0",
+                "updated_at": "2021-07-21T09:59:06.880Z",
+                "version": "Wzk5NCwxXQ==",
+                "namespaces": [
+                    "default"
+                ],
+                "score": 1
+            }
+        ]
+    }
+}
