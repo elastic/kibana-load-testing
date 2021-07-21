@@ -1,0 +1,135 @@
+{
+    "loaderId": "9E217527DE22B767B1357C56DBA66665",
+    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "method": "POST",
+    "requestUrl": "http://localhost:5620/api/saved_objects/_bulk_get",
+    "requestHeader": {
+        "sec-ch-ua": "",
+        "Referer": "http://localhost:5620/app/dashboards",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0",
+        "Content-Type": "application/json"
+    },
+    "postData": [
+        {
+            "id": "722b74f0-b882-11e8-a6d9-e546fe2bba5f",
+            "type": "dashboard"
+        }
+    ],
+    "responseUrl": "http://localhost:5620/api/saved_objects/_bulk_get",
+    "responseHeaders": {
+        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
+        "Date": "Wed, 21 Jul 2021 09:59:31 GMT",
+        "content-encoding": "gzip",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "vary": "accept-encoding",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "Transfer-Encoding": "chunked",
+        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=120",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1626861571322.036,
+    "responseBody": {
+        "saved_objects": [
+            {
+                "id": "722b74f0-b882-11e8-a6d9-e546fe2bba5f",
+                "type": "dashboard",
+                "namespaces": [
+                    "default"
+                ],
+                "updated_at": "2021-07-21T09:59:06.880Z",
+                "version": "Wzk5NSwxXQ==",
+                "attributes": {
+                    "title": "[eCommerce] Revenue Dashboard",
+                    "hits": 0,
+                    "description": "Analyze mock eCommerce orders and revenue",
+                    "panelsJSON": "[{\"version\":\"7.0.0-alpha1\",\"gridData\":{\"x\":12,\"y\":18,\"w\":36,\"h\":10,\"i\":\"1\"},\"panelIndex\":\"1\",\"embeddableConfig\":{\"vis\":{\"colors\":{\"Men's Accessories\":\"#82B5D8\",\"Men's Clothing\":\"#F9BA8F\",\"Men's Shoes\":\"#F29191\",\"Women's Accessories\":\"#F4D598\",\"Women's Clothing\":\"#70DBED\",\"Women's Shoes\":\"#B7DBAB\"}},\"enhancements\":{}},\"panelRefName\":\"panel_0\"},{\"version\":\"7.0.0-alpha1\",\"gridData\":{\"x\":12,\"y\":7,\"w\":12,\"h\":11,\"i\":\"2\"},\"panelIndex\":\"2\",\"embeddableConfig\":{\"vis\":{\"colors\":{\"FEMALE\":\"#6ED0E0\",\"MALE\":\"#447EBC\"},\"legendOpen\":false},\"enhancements\":{}},\"panelRefName\":\"panel_1\"},{\"version\":\"7.0.0-alpha1\",\"gridData\":{\"x\":0,\"y\":0,\"w\":18,\"h\":7,\"i\":\"3\"},\"panelIndex\":\"3\",\"embeddableConfig\":{\"enhancements\":{}},\"panelRefName\":\"panel_2\"},{\"version\":\"7.0.0-alpha1\",\"gridData\":{\"x\":18,\"y\":0,\"w\":30,\"h\":7,\"i\":\"4\"},\"panelIndex\":\"4\",\"embeddableConfig\":{\"enhancements\":{}},\"panelRefName\":\"panel_3\"},{\"version\":\"7.0.0-alpha1\",\"gridData\":{\"x\":0,\"y\":28,\"w\":48,\"h\":11,\"i\":\"5\"},\"panelIndex\":\"5\",\"embeddableConfig\":{\"enhancements\":{}},\"panelRefName\":\"panel_4\"},{\"version\":\"7.0.0-alpha1\",\"gridData\":{\"x\":0,\"y\":18,\"w\":12,\"h\":10,\"i\":\"6\"},\"panelIndex\":\"6\",\"embeddableConfig\":{\"enhancements\":{}},\"panelRefName\":\"panel_5\"},{\"version\":\"7.0.0-alpha1\",\"gridData\":{\"x\":0,\"y\":7,\"w\":12,\"h\":11,\"i\":\"7\"},\"panelIndex\":\"7\",\"embeddableConfig\":{\"enhancements\":{}},\"panelRefName\":\"panel_6\"},{\"version\":\"7.0.0-alpha1\",\"gridData\":{\"x\":24,\"y\":7,\"w\":12,\"h\":11,\"i\":\"8\"},\"panelIndex\":\"8\",\"embeddableConfig\":{\"vis\":{\"colors\":{\"0 - 50\":\"#E24D42\",\"50 - 75\":\"#EAB839\",\"75 - 100\":\"#7EB26D\"},\"defaultColors\":{\"0 - 50\":\"rgb(165,0,38)\",\"50 - 75\":\"rgb(255,255,190)\",\"75 - 100\":\"rgb(0,104,55)\"},\"legendOpen\":false},\"enhancements\":{}},\"panelRefName\":\"panel_7\"},{\"version\":\"7.0.0-alpha1\",\"gridData\":{\"x\":36,\"y\":7,\"w\":12,\"h\":11,\"i\":\"9\"},\"panelIndex\":\"9\",\"embeddableConfig\":{\"vis\":{\"colors\":{\"0 - 2\":\"#E24D42\",\"2 - 3\":\"#F2C96D\",\"3 - 4\":\"#9AC48A\"},\"defaultColors\":{\"0 - 2\":\"rgb(165,0,38)\",\"2 - 3\":\"rgb(255,255,190)\",\"3 - 4\":\"rgb(0,104,55)\"},\"legendOpen\":false},\"enhancements\":{}},\"panelRefName\":\"panel_8\"},{\"version\":\"7.0.0-alpha1\",\"gridData\":{\"x\":0,\"y\":54,\"w\":48,\"h\":18,\"i\":\"10\"},\"panelIndex\":\"10\",\"embeddableConfig\":{\"enhancements\":{}},\"panelRefName\":\"panel_9\"},{\"version\":\"7.0.0-alpha1\",\"gridData\":{\"x\":0,\"y\":39,\"w\":24,\"h\":15,\"i\":\"11\"},\"panelIndex\":\"11\",\"embeddableConfig\":{\"isLayerTOCOpen\":false,\"enhancements\":{}},\"panelRefName\":\"panel_10\"},{\"version\":\"7.0.0-alpha1\",\"gridData\":{\"x\":24,\"y\":39,\"w\":24,\"h\":15,\"i\":\"12\"},\"panelIndex\":\"12\",\"embeddableConfig\":{\"enhancements\":{}},\"panelRefName\":\"panel_11\"}]",
+                    "optionsJSON": "{\"hidePanelTitles\":false,\"useMargins\":true}",
+                    "version": 1,
+                    "timeRestore": true,
+                    "timeTo": "now",
+                    "timeFrom": "now-7d",
+                    "refreshInterval": {
+                        "pause": false,
+                        "value": 900000
+                    },
+                    "kibanaSavedObjectMeta": {
+                        "searchSourceJSON": "{\"query\":{\"language\":\"kuery\",\"query\":\"\"},\"filter\":[]}"
+                    }
+                },
+                "references": [
+                    {
+                        "name": "panel_0",
+                        "type": "visualization",
+                        "id": "37cc8650-b882-11e8-a6d9-e546fe2bba5f"
+                    },
+                    {
+                        "name": "panel_1",
+                        "type": "visualization",
+                        "id": "ed8436b0-b88b-11e8-a6d9-e546fe2bba5f"
+                    },
+                    {
+                        "name": "panel_2",
+                        "type": "visualization",
+                        "id": "09ffee60-b88c-11e8-a6d9-e546fe2bba5f"
+                    },
+                    {
+                        "name": "panel_3",
+                        "type": "visualization",
+                        "id": "1c389590-b88d-11e8-a6d9-e546fe2bba5f"
+                    },
+                    {
+                        "name": "panel_4",
+                        "type": "visualization",
+                        "id": "45e07720-b890-11e8-a6d9-e546fe2bba5f"
+                    },
+                    {
+                        "name": "panel_5",
+                        "type": "visualization",
+                        "id": "10f1a240-b891-11e8-a6d9-e546fe2bba5f"
+                    },
+                    {
+                        "name": "panel_6",
+                        "type": "visualization",
+                        "id": "b80e6540-b891-11e8-a6d9-e546fe2bba5f"
+                    },
+                    {
+                        "name": "panel_7",
+                        "type": "visualization",
+                        "id": "4b3ec120-b892-11e8-a6d9-e546fe2bba5f"
+                    },
+                    {
+                        "name": "panel_8",
+                        "type": "visualization",
+                        "id": "9ca7aa90-b892-11e8-a6d9-e546fe2bba5f"
+                    },
+                    {
+                        "name": "panel_9",
+                        "type": "search",
+                        "id": "3ba638e0-b894-11e8-a6d9-e546fe2bba5f"
+                    },
+                    {
+                        "name": "panel_10",
+                        "type": "map",
+                        "id": "2c9c1f60-1909-11e9-919b-ffe5949a18d2"
+                    },
+                    {
+                        "name": "panel_11",
+                        "type": "visualization",
+                        "id": "b72dd430-bb4d-11e8-9c84-77068524bcab"
+                    }
+                ],
+                "migrationVersion": {
+                    "dashboard": "7.14.0"
+                },
+                "coreMigrationVersion": "8.0.0"
+            }
+        ]
+    }
+}

@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer';
 import { Config } from '../types/config'
-import { isNotResource } from '../helpers/helpers'
+import { isNotResource, isJSONString } from '../helpers/helpers'
 import { ResponseReceivedEvent, RequestWillBeSentEvent } from '../types/event'
 import { Request } from '../types/request'
 import { resolve } from 'path';
@@ -8,11 +8,26 @@ import { resolve } from 'path';
 export async function runner(scenarioFiles: string[], options: Config) {
     let runFailed = false;
     const scenarioResponses: Map<string, Map<string, Request>> = new Map();
-    const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });// args: ['--no-sandbox']  { headless: false }
+    const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox']});// args: ['--no-sandbox']  { headless: false }
     for (let i = 0; i < scenarioFiles.length; i++) {
         const frameRequests = new Map<string, Request>();
         const page = await browser.newPage();
         const client = await page.target().createCDPSession();
+
+        page.on('response', async(response) => {
+            const requestEvent = response.request();
+            const url = requestEvent.url();
+            if (url.startsWith(options.baseUrl) && isNotResource(url) && frameRequests.has(requestEvent._requestId)) {
+                let request = frameRequests.get(requestEvent._requestId);
+                const contentType = requestEvent?.headers()['content-type'];
+                if (request && contentType && contentType.indexOf('json') > -1) {
+                    const text = await response.text();
+                    if (isJSONString(text)) {
+                        request.responseBody = text;
+                    }
+                }
+            }
+        })
 
         client.on('Network.requestWillBeSent', (event: RequestWillBeSentEvent) => {
             const url = event.request['url'] as string
@@ -23,7 +38,7 @@ export async function runner(scenarioFiles: string[], options: Config) {
                     loaderId: event.loaderId,
                     method: event.request['method'] as string,
                     requestUrl: event.request['url'] as string,
-                    requestHeaders: event.request['headers'] as Record<string, any>
+                    requestHeaders: event.request['headers'] as Record<string, any>,
                 }
                 if (event.request['hasPostData'] == true) {
                     request.postData = event.request['postData'] as string

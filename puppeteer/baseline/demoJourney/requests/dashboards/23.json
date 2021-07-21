@@ -1,0 +1,163 @@
+{
+    "loaderId": "9E217527DE22B767B1357C56DBA66665",
+    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "method": "POST",
+    "requestUrl": "http://localhost:5620/api/metrics/vis/data",
+    "requestHeader": {
+        "sec-ch-ua": "",
+        "Referer": "http://localhost:5620/app/dashboards",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0",
+        "Content-Type": "application/json"
+    },
+    "postData": {
+        "timerange": {
+            "timezone": "Europe/Berlin",
+            "min": "2021-07-14T09:59:31.358Z",
+            "max": "2021-07-21T09:59:31.358Z"
+        },
+        "query": [
+            {
+                "language": "kuery",
+                "query": ""
+            }
+        ],
+        "filters": [],
+        "panels": [
+            {
+                "id": "61ca57f0-469d-11e7-af02-69e470af7417",
+                "type": "gauge",
+                "series": [
+                    {
+                        "id": "61ca57f1-469d-11e7-af02-69e470af7417",
+                        "color": "#68BC00",
+                        "split_mode": "everything",
+                        "metrics": [
+                            {
+                                "id": "61ca57f2-469d-11e7-af02-69e470af7417",
+                                "type": "count"
+                            }
+                        ],
+                        "separate_axis": 0,
+                        "axis_position": "right",
+                        "formatter": "number",
+                        "chart_type": "line",
+                        "line_width": 1,
+                        "point_size": 1,
+                        "fill": 0.5,
+                        "stacked": "none",
+                        "label": "Trxns / day",
+                        "split_color_mode": "gradient"
+                    }
+                ],
+                "time_field": "order_date",
+                "interval": "1d",
+                "axis_position": "left",
+                "axis_formatter": "number",
+                "axis_scale": "normal",
+                "show_legend": 1,
+                "show_grid": 1,
+                "time_range_mode": "entire_time_range",
+                "gauge_color_rules": [
+                    {
+                        "value": 150,
+                        "id": "6da070c0-b891-11e8-b645-195edeb9de84",
+                        "gauge": "rgba(104,188,0,1)",
+                        "operator": "gte"
+                    },
+                    {
+                        "value": 150,
+                        "id": "9b0cdbc0-b891-11e8-b645-195edeb9de84",
+                        "gauge": "rgba(244,78,59,1)",
+                        "operator": "lt"
+                    }
+                ],
+                "gauge_width": "15",
+                "gauge_inner_width": 10,
+                "gauge_style": "half",
+                "filter": "",
+                "gauge_max": "300",
+                "use_kibana_indexes": true,
+                "hide_last_value_indicator": true,
+                "index_pattern": {
+                    "id": "ff959d40-b880-11e8-a6d9-e546fe2bba5f"
+                },
+                "tooltip_mode": "show_all",
+                "drop_last_bucket": 0
+            }
+        ],
+        "state": {},
+        "searchSession": {
+            "sessionId": "c3cb35d8-9d4e-454d-84d2-8a1c9dc50c22",
+            "isRestore": false,
+            "isStored": false
+        }
+    },
+    "responseUrl": "http://localhost:5620/api/metrics/vis/data",
+    "responseHeaders": {
+        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
+        "Date": "Wed, 21 Jul 2021 09:59:32 GMT",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=120",
+        "content-length": "628",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1626861572267.357,
+    "responseBody": {
+        "type": "gauge",
+        "uiRestrictions": {
+            "whiteListedMetrics": {
+                "*": true
+            },
+            "whiteListedGroupByFields": {
+                "*": true
+            },
+            "whiteListedTimerangeModes": {
+                "*": true
+            }
+        },
+        "61ca57f0-469d-11e7-af02-69e470af7417": {
+            "annotations": null,
+            "id": "61ca57f0-469d-11e7-af02-69e470af7417",
+            "series": [
+                {
+                    "id": "61ca57f1-469d-11e7-af02-69e470af7417",
+                    "label": "Trxns / day",
+                    "splitByLabel": "Count",
+                    "color": "rgb(104, 188, 0)",
+                    "data": [
+                        [
+                            1625097600000,
+                            1030
+                        ]
+                    ],
+                    "seriesId": "61ca57f1-469d-11e7-af02-69e470af7417",
+                    "stack": "none",
+                    "lines": {
+                        "show": true,
+                        "fill": 0.5,
+                        "lineWidth": 1,
+                        "steps": false
+                    },
+                    "points": {
+                        "show": true,
+                        "radius": 1,
+                        "lineWidth": 1
+                    },
+                    "bars": {
+                        "show": false,
+                        "fill": 0.5,
+                        "lineWidth": 1
+                    }
+                }
+            ]
+        }
+    }
+}

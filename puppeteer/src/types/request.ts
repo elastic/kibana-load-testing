@@ -10,5 +10,6 @@ export interface Request {
     responseHeaders?: Record<string, any>;
     status?: number;
     statusText?: string;
+    responseBody?: string;
     responseTime?: number;
 }

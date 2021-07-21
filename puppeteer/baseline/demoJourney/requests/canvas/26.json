@@ -1,0 +1,205 @@
+{
+    "loaderId": "F0BA51E804DB20020CF81549AFAC7E9B",
+    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "method": "POST",
+    "requestUrl": "http://localhost:5620/api/timelion/run",
+    "requestHeader": {
+        "sec-ch-ua": "",
+        "Accept": "application/json",
+        "Referer": "http://localhost:5620/app/canvas",
+        "kbn-xsrf": "professionally-crafted-string-of-text",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "Content-Type": "application/json"
+    },
+    "postData": {
+        "extended": {
+            "es": {
+                "filter": {
+                    "bool": {
+                        "must": []
+                    }
+                }
+            }
+        },
+        "sheet": [
+            ".es(index=kibana_sample_data_ecommerce, metric=sum:taxless_total_price, timefield=order_date)"
+        ],
+        "time": {
+            "from": "2021-07-08T00:04:19.000Z",
+            "to": "2021-08-07T23:45:36.000Z",
+            "interval": "1d",
+            "timezone": "UTC"
+        }
+    },
+    "responseUrl": "http://localhost:5620/api/timelion/run",
+    "responseHeaders": {
+        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
+        "Date": "Wed, 21 Jul 2021 09:59:47 GMT",
+        "content-encoding": "gzip",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "vary": "accept-encoding",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "Transfer-Encoding": "chunked",
+        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=120",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1626861587874.989,
+    "responseBody": {
+        "sheet": [
+            {
+                "type": "seriesList",
+                "list": [
+                    {
+                        "data": [
+                            [
+                                1625695200000,
+                                10578.53125
+                            ],
+                            [
+                                1625781600000,
+                                10448
+                            ],
+                            [
+                                1625868000000,
+                                10283.484375
+                            ],
+                            [
+                                1625954400000,
+                                10145.5234375
+                            ],
+                            [
+                                1626040800000,
+                                12012.609375
+                            ],
+                            [
+                                1626127200000,
+                                11009.45703125
+                            ],
+                            [
+                                1626213600000,
+                                10720.59375
+                            ],
+                            [
+                                1626300000000,
+                                11185.3671875
+                            ],
+                            [
+                                1626386400000,
+                                13560.140625
+                            ],
+                            [
+                                1626472800000,
+                                9884.78125
+                            ],
+                            [
+                                1626559200000,
+                                11075.65625
+                            ],
+                            [
+                                1626645600000,
+                                10323.8515625
+                            ],
+                            [
+                                1626732000000,
+                                10369.546875
+                            ],
+                            [
+                                1626818400000,
+                                11711.890625
+                            ],
+                            [
+                                1626904800000,
+                                12612.6640625
+                            ],
+                            [
+                                1626991200000,
+                                10176.87890625
+                            ],
+                            [
+                                1627077600000,
+                                11480.33203125
+                            ],
+                            [
+                                1627164000000,
+                                11533.265625
+                            ],
+                            [
+                                1627250400000,
+                                10499.8125
+                            ],
+                            [
+                                1627336800000,
+                                12111.6875
+                            ],
+                            [
+                                1627423200000,
+                                10530.765625
+                            ],
+                            [
+                                1627509600000,
+                                11872.5625
+                            ],
+                            [
+                                1627596000000,
+                                12109.453125
+                            ],
+                            [
+                                1627682400000,
+                                11057.40625
+                            ],
+                            [
+                                1627768800000,
+                                13095.609375
+                            ],
+                            [
+                                1627855200000,
+                                12574.015625
+                            ],
+                            [
+                                1627941600000,
+                                11188.1875
+                            ],
+                            [
+                                1628028000000,
+                                12117.65625
+                            ],
+                            [
+                                1628114400000,
+                                11558.25
+                            ],
+                            [
+                                1628200800000,
+                                11921.1171875
+                            ],
+                            [
+                                1628287200000,
+                                11135.03125
+                            ],
+                            [
+                                1628373600000,
+                                11135.03125
+                            ]
+                        ],
+                        "type": "series",
+                        "fit": "nearest",
+                        "label": "q:* > sum(taxless_total_price)",
+                        "split": "*"
+                    }
+                ]
+            }
+        ],
+        "stats": {
+            "invokeTime": 1626861587856,
+            "queryCount": 1,
+            "queryTime": 1626861587872,
+            "cacheCount": 1,
+            "sheetTime": 1626861587873
+        }
+    }
+}

@@ -1,0 +1,46 @@
+{
+    "loaderId": "7A5DF537E7D3FF1C75E6362B5DB8B74C",
+    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "method": "GET",
+    "requestUrl": "http://localhost:5620/internal/global_search/searchable_types",
+    "requestHeader": {
+        "sec-ch-ua": "",
+        "Referer": "http://localhost:5620/app/discover",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0",
+        "Content-Type": "application/json"
+    },
+    "postData": {},
+    "responseUrl": "http://localhost:5620/internal/global_search/searchable_types",
+    "responseHeaders": {
+        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
+        "Date": "Wed, 21 Jul 2021 09:59:15 GMT",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "Connection": "keep-alive",
+        "accept-ranges": "bytes",
+        "Keep-Alive": "timeout=120",
+        "content-length": "137",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1626861555964.315,
+    "responseBody": {
+        "types": [
+            "query",
+            "index-pattern",
+            "visualization",
+            "timelion-sheet",
+            "graph-workspace",
+            "search",
+            "dashboard",
+            "lens",
+            "canvas-workpad",
+            "map"
+        ]
+    }
+}

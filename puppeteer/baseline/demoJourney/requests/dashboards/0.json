@@ -1,0 +1,31 @@
+{
+    "loaderId": "9E217527DE22B767B1357C56DBA66665",
+    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "method": "GET",
+    "requestUrl": "http://localhost:5620/app/dashboards",
+    "requestHeader": {
+        "Upgrade-Insecure-Requests": "1",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36"
+    },
+    "postData": {},
+    "responseUrl": "http://localhost:5620/app/dashboards",
+    "responseHeaders": {
+        "content-security-policy": "script-src 'unsafe-eval' 'self'; worker-src blob: 'self'; style-src 'unsafe-inline' 'self'",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "vary": "accept-encoding",
+        "content-encoding": "gzip",
+        "Date": "Wed, 21 Jul 2021 09:59:29 GMT",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=120",
+        "Transfer-Encoding": "chunked"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1626861569904.492,
+    "responseBody": {}
+}

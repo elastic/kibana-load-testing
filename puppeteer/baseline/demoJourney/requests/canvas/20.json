@@ -1,0 +1,289 @@
+{
+    "loaderId": "F0BA51E804DB20020CF81549AFAC7E9B",
+    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "method": "POST",
+    "requestUrl": "http://localhost:5620/api/timelion/run",
+    "requestHeader": {
+        "sec-ch-ua": "",
+        "Accept": "application/json",
+        "Referer": "http://localhost:5620/app/canvas",
+        "kbn-xsrf": "professionally-crafted-string-of-text",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "Content-Type": "application/json"
+    },
+    "postData": {
+        "extended": {
+            "es": {
+                "filter": {
+                    "bool": {
+                        "must": []
+                    }
+                }
+            }
+        },
+        "sheet": [
+            ".es(index=kibana_sample_data_ecommerce, metric=sum:taxless_total_price, timefield=order_date)"
+        ],
+        "time": {
+            "from": "2020-07-21T09:59:47.036Z",
+            "to": "2021-07-21T09:59:47.036Z",
+            "interval": "1w",
+            "timezone": "UTC"
+        }
+    },
+    "responseUrl": "http://localhost:5620/api/timelion/run",
+    "responseHeaders": {
+        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
+        "Date": "Wed, 21 Jul 2021 09:59:47 GMT",
+        "content-encoding": "gzip",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "vary": "accept-encoding",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "Transfer-Encoding": "chunked",
+        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=120",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1626861587156.639,
+    "responseBody": {
+        "sheet": [
+            {
+                "type": "seriesList",
+                "list": [
+                    {
+                        "data": [
+                            [
+                                1595109600000,
+                                0
+                            ],
+                            [
+                                1595714400000,
+                                0
+                            ],
+                            [
+                                1596319200000,
+                                0
+                            ],
+                            [
+                                1596924000000,
+                                0
+                            ],
+                            [
+                                1597528800000,
+                                0
+                            ],
+                            [
+                                1598133600000,
+                                0
+                            ],
+                            [
+                                1598738400000,
+                                0
+                            ],
+                            [
+                                1599343200000,
+                                0
+                            ],
+                            [
+                                1599948000000,
+                                0
+                            ],
+                            [
+                                1600552800000,
+                                0
+                            ],
+                            [
+                                1601157600000,
+                                0
+                            ],
+                            [
+                                1601762400000,
+                                0
+                            ],
+                            [
+                                1602367200000,
+                                0
+                            ],
+                            [
+                                1602972000000,
+                                0
+                            ],
+                            [
+                                1603576800000,
+                                0
+                            ],
+                            [
+                                1604185200000,
+                                0
+                            ],
+                            [
+                                1604790000000,
+                                0
+                            ],
+                            [
+                                1605394800000,
+                                0
+                            ],
+                            [
+                                1605999600000,
+                                0
+                            ],
+                            [
+                                1606604400000,
+                                0
+                            ],
+                            [
+                                1607209200000,
+                                0
+                            ],
+                            [
+                                1607814000000,
+                                0
+                            ],
+                            [
+                                1608418800000,
+                                0
+                            ],
+                            [
+                                1609023600000,
+                                0
+                            ],
+                            [
+                                1609628400000,
+                                0
+                            ],
+                            [
+                                1610233200000,
+                                0
+                            ],
+                            [
+                                1610838000000,
+                                0
+                            ],
+                            [
+                                1611442800000,
+                                0
+                            ],
+                            [
+                                1612047600000,
+                                0
+                            ],
+                            [
+                                1612652400000,
+                                0
+                            ],
+                            [
+                                1613257200000,
+                                0
+                            ],
+                            [
+                                1613862000000,
+                                0
+                            ],
+                            [
+                                1614466800000,
+                                0
+                            ],
+                            [
+                                1615071600000,
+                                0
+                            ],
+                            [
+                                1615676400000,
+                                0
+                            ],
+                            [
+                                1616281200000,
+                                0
+                            ],
+                            [
+                                1616886000000,
+                                0
+                            ],
+                            [
+                                1617487200000,
+                                0
+                            ],
+                            [
+                                1618092000000,
+                                0
+                            ],
+                            [
+                                1618696800000,
+                                0
+                            ],
+                            [
+                                1619301600000,
+                                0
+                            ],
+                            [
+                                1619906400000,
+                                0
+                            ],
+                            [
+                                1620511200000,
+                                0
+                            ],
+                            [
+                                1621116000000,
+                                0
+                            ],
+                            [
+                                1621720800000,
+                                0
+                            ],
+                            [
+                                1622325600000,
+                                0
+                            ],
+                            [
+                                1622930400000,
+                                0
+                            ],
+                            [
+                                1623535200000,
+                                0
+                            ],
+                            [
+                                1624140000000,
+                                0
+                            ],
+                            [
+                                1624744800000,
+                                0
+                            ],
+                            [
+                                1625349600000,
+                                41455.5390625
+                            ],
+                            [
+                                1625954400000,
+                                79448.60546875
+                            ],
+                            [
+                                1626559200000,
+                                25055.5859375
+                            ]
+                        ],
+                        "type": "series",
+                        "fit": "nearest",
+                        "label": "q:* > sum(taxless_total_price)",
+                        "split": "*"
+                    }
+                ]
+            }
+        ],
+        "stats": {
+            "invokeTime": 1626861587105,
+            "queryCount": 1,
+            "queryTime": 1626861587142,
+            "cacheCount": 1,
+            "sheetTime": 1626861587155
+        }
+    }
+}

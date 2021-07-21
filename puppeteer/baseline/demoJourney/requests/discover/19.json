@@ -1,0 +1,126 @@
+{
+    "loaderId": "7A5DF537E7D3FF1C75E6362B5DB8B74C",
+    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "method": "POST",
+    "requestUrl": "http://localhost:5620/internal/bsearch",
+    "requestHeader": {
+        "sec-ch-ua": "",
+        "Referer": "http://localhost:5620/app/discover",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0",
+        "X-Chunk-Encoding": "deflate",
+        "Content-Type": "application/json"
+    },
+    "postData": {
+        "batch": [
+            {
+                "request": {
+                    "params": {
+                        "index": "kibana_sample_data_ecommerce",
+                        "body": {
+                            "size": 500,
+                            "sort": [
+                                {
+                                    "order_date": {
+                                        "order": "desc",
+                                        "unmapped_type": "boolean"
+                                    }
+                                }
+                            ],
+                            "version": true,
+                            "fields": [
+                                {
+                                    "field": "*",
+                                    "include_unmapped": "true"
+                                },
+                                {
+                                    "field": "customer_birth_date",
+                                    "format": "strict_date_optional_time"
+                                },
+                                {
+                                    "field": "order_date",
+                                    "format": "strict_date_optional_time"
+                                },
+                                {
+                                    "field": "products.created_on",
+                                    "format": "strict_date_optional_time"
+                                }
+                            ],
+                            "aggs": {
+                                "2": {
+                                    "date_histogram": {
+                                        "field": "order_date",
+                                        "fixed_interval": "30s",
+                                        "time_zone": "Europe/Berlin",
+                                        "min_doc_count": 1
+                                    }
+                                }
+                            },
+                            "script_fields": {},
+                            "stored_fields": [
+                                "*"
+                            ],
+                            "runtime_mappings": {},
+                            "_source": false,
+                            "query": {
+                                "bool": {
+                                    "must": [],
+                                    "filter": [
+                                        {
+                                            "range": {
+                                                "order_date": {
+                                                    "gte": "2021-07-21T09:44:16.390Z",
+                                                    "lte": "2021-07-21T09:59:16.390Z",
+                                                    "format": "strict_date_optional_time"
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "should": [],
+                                    "must_not": []
+                                }
+                            },
+                            "highlight": {
+                                "pre_tags": [
+                                    "@kibana-highlighted-field@"
+                                ],
+                                "post_tags": [
+                                    "@/kibana-highlighted-field@"
+                                ],
+                                "fields": {
+                                    "*": {}
+                                },
+                                "fragment_size": 2147483647
+                            }
+                        },
+                        "track_total_hits": true,
+                        "preference": 1626861555544
+                    }
+                },
+                "options": {
+                    "sessionId": "793ad351-0604-4ea0-9f4d-d04c2b35d9e6",
+                    "isRestore": false,
+                    "strategy": "ese",
+                    "isStored": false
+                }
+            }
+        ]
+    },
+    "responseUrl": "http://localhost:5620/internal/bsearch",
+    "responseHeaders": {
+        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
+        "Date": "Wed, 21 Jul 2021 09:59:16 GMT",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "transfer-encoding": "chunked",
+        "content-type": "application/x-ndjson",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "connection": "keep-alive",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1626861556565.299,
+    "responseBody": {}
+}

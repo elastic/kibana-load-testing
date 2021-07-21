@@ -20,6 +20,21 @@ export function getRequestsSequence(dataSet: Map<string, Request>, baseUrl: stri
     return output;
 }
 
+export function sortByPlugin(dataSet: Map<string, Request>, baseUrl: string) {
+    let pluginRequests = new Map<string, Array<Request>>();
+    dataSet.forEach((request, requestId) => {
+        const str = (/[A-Z0-9]{32}/.test(requestId)) ? request.requestUrl : request.requestHeaders['Referer']
+        const path = str.replace(baseUrl, '').replace('/app/', '');
+        const queryStartIndex = path.indexOf('?');
+        const pluginName = queryStartIndex > -1 ? path.match(/(?<=\/)(.*?)(?=\?)/g)[0] : path
+        const arr = pluginRequests.get(pluginName) || [];
+        arr.push(request);
+        pluginRequests.set(pluginName, arr);
+    });
+
+    return pluginRequests;
+}
+
 export function getDuplicates(dataSet: Map<string, Request>, baseUrl: string) {
     console.log(`Checking for duplicates:`)
     const loaderPathMapper: Map<string, string> = new Map();

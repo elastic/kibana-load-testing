@@ -1,0 +1,43 @@
+{
+    "loaderId": "C05872451CA6933AC5ABD29E44472A04",
+    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "method": "POST",
+    "requestUrl": "http://localhost:5620/internal/security/login",
+    "requestHeader": {
+        "sec-ch-ua": "",
+        "Referer": "http://localhost:5620/login?next=%2F",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0",
+        "Content-Type": "application/json"
+    },
+    "postData": {
+        "providerType": "basic",
+        "providerName": "basic",
+        "currentURL": "http://localhost:5620/login?next=%2F",
+        "params": {
+            "username": "elastic",
+            "password": "changeme"
+        }
+    },
+    "responseUrl": "http://localhost:5620/internal/security/login",
+    "responseHeaders": {
+        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
+        "Date": "Wed, 21 Jul 2021 09:59:12 GMT",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**dff78d1a44571d241d98fd5c3d7b175e3e90349c9ef8226116a1a1f707510479*fGLMefd8Qd5EB3333SXgRg*L2HL35SszWCK-vGccrixte7KkJCav_ev534Y8blBd28XTJ5wH8EOFVf69XTLwEabJmHOqoOz8IgFjFsmcPmNPixLxqG2vh-7WGs8qO2nh-lpXXP7SFYoxade9bsg_-kO32HI3MG1mV0h49bDRLQ8B3D2iGLrIUNTdl4amPJWQIDSiZ5xAQWbKdoRlZq9tiu0HjxR3BMUqQh3y0BZvD4CC8X5IQM0MSjPeVbnF7iQOts**450916d7555e62a826206d08cf216df31d3dfc63ba87806e954a4983b7872a27*esJ3kLrQlDGH_aQJAVh9WijN4AqtmJhWZrCAdUwlCBg; HttpOnly; Path=/",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=120",
+        "content-length": "16",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1626861552368.754,
+    "responseBody": {
+        "location": "/"
+    }
+}

@@ -1,9 +1,9 @@
-import fs from 'fs'
+import fs from 'fs';
 import { resolve } from 'path';
-import { Request } from '../types/request'
+import { Request } from '../types/request';
 import { compareWithBaseline } from './compare';
-import { mapToJSON } from './helpers';
-import { getRequestsSequence } from './requestParser';
+import { mapToJSON, isJSONString, strToJSON } from './helpers';
+import { getRequestsSequence, sortByPlugin } from './requestParser';
 
 
 function writeToFile(filePath: string, data: object | string) {
@@ -24,23 +24,30 @@ export function saveResults(scenario: string, requests: Map<string, Request>, ba
     // save requests split into route group to compare with baseline
     const actualSequence = getRequestsSequence(requests, baseUrl)
 
+    const sorted = sortByPlugin(requests, baseUrl)
+
     writeToFile(resolve(resultRootDir, 'requests.json'), mapToJSON(actualSequence));
     // save individual requests
-    requests.forEach((request, requestId) => {
-        const obj = {
-            loaderId: request.loaderId,
-            frameId: request.frameId,
-            method: request.method,
-            requestUrl: request.requestUrl,
-            requestHeader: request.requestHeaders,
-            postData: request.postData || '',
-            responseUrl: request.responseUrl || '',
-            responseHeaders: request.responseHeaders,
-            status: request.status || 0,
-            statusText: request.statusText,
-            responseTime: request.responseTime
-        }
-        writeToFile(resolve(requestsDir, `${requestId}.json`), obj)
+    sorted.forEach((requests, pluginName) => {
+        const pluginDir = resolve(requestsDir, pluginName);
+        fs.mkdirSync(pluginDir,  { recursive: true });
+        requests.forEach((request, index) => {
+            const obj = {
+                loaderId: request.loaderId,
+                frameId: request.frameId,
+                method: request.method,
+                requestUrl: request.requestUrl,
+                requestHeader: request.requestHeaders,
+                postData: strToJSON(request.postData),
+                responseUrl: request.responseUrl || '',
+                responseHeaders: request.responseHeaders,
+                status: request.status || 0,
+                statusText: request.statusText,
+                responseTime: request.responseTime,
+                responseBody: strToJSON(request.responseBody)
+            }
+            writeToFile(resolve(pluginDir, `${index}.json`), obj)
+        });
     });
 
     //compare sequence with baseline
