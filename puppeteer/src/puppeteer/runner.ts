@@ -8,7 +8,13 @@ import { resolve } from 'path';
 export async function runner(scenarioFiles: string[], options: Config) {
     let runFailed = false;
     const scenarioResponses: Map<string, Map<string, Request>> = new Map();
-    const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox']});// args: ['--no-sandbox']  { headless: false }
+    let browserArgs: any = { args: ['--no-sandbox', '--disable-setuid-sandbox'] }
+    const headless = options.headless || false;
+    if (headless) {
+        browserArgs['headless'] = headless;
+    }
+    console.log(`Starting puppeteer: ${JSON.stringify(browserArgs)}`);
+    const browser = await puppeteer.launch(browserArgs);
     for (let i = 0; i < scenarioFiles.length; i++) {
         const frameRequests = new Map<string, Request>();
         const page = await browser.newPage();

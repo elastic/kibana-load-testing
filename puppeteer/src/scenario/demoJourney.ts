@@ -4,7 +4,8 @@ import { dataTestSubj } from '../puppeteer/helpers'
 
 export async function run(options: Config, page: puppeteer.Page) {
     await page.goto(options.baseUrl, {
-        waitUntil: 'networkidle0',
+        // 'networkidle0' may cause a race condition, described here https://github.com/puppeteer/puppeteer/issues/2284
+        waitUntil: 'networkidle2',
     });
 
     //login
@@ -16,15 +17,14 @@ export async function run(options: Config, page: puppeteer.Page) {
     await page.type(dataTestSubj('loginUsername'), options.username);
     await page.type(dataTestSubj('loginPassword'), options.password);
     await page.click(dataTestSubj('loginSubmit'));
+    await page.waitForNavigation({ waitUntil: 'networkidle2' });
 
     // go to discover
-    await page.waitForNavigation({ waitUntil: 'networkidle0' });
     await page.goto(options.baseUrl + `/app/discover`
         , {
             waitUntil: 'networkidle0',
         });
     await page.waitForSelector(dataTestSubj('loadingSpinner'), { hidden: true });
-    const currentUrl = page.url()
 
     // console.log('2nd query')
     await selectDatePicker({ num: '5', unit: 'd' }, page)
@@ -38,7 +38,7 @@ export async function run(options: Config, page: puppeteer.Page) {
     await page.goto(options.baseUrl + '/app/dashboards#/view/722b74f0-b882-11e8-a6d9-e546fe2bba5f', {
         waitUntil: 'networkidle0',
     });
-    await page.waitForFunction(`document.querySelectorAll('[data-test-subj="dashboardPanel"]').length == 12`);
+    await page.waitForFunction(`document.querySelectorAll('[data-test-subj="dashboardPanel"]').length == 15`);
     await page.waitForTimeout(5000);
 
     // load canvas workpad
