@@ -10,7 +10,7 @@ export async function runner(scenarioFiles: string[], options: Config) {
     const scenarioResponses: Map<string, Map<string, Request>> = new Map();
     let browserArgs: any = { args: ['--no-sandbox', '--disable-setuid-sandbox'] }
     const headless = options.headless || false;
-    if (headless) {
+    if (!headless) {
         browserArgs['headless'] = headless;
     }
     console.log(`Starting puppeteer: ${JSON.stringify(browserArgs)}`);

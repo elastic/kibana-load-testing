@@ -14,13 +14,13 @@ export function compareWithBaseline(scenario: string, actualSequence: Map<string
     const oldOnes = new Map<string, string[]>();
 
     actualSequence.forEach((actualUrls, path) => {
-        const actualConst = actualUrls;
+        const actualConst = [...actualUrls];
         let arr = Array<string>();
         let newReqs = Array<string>();
         let notFoundReqs = Array<string>();
         if (expectedSequence.has(path)) {
             let expectedUrls = expectedSequence.get(path) || []
-            const expectedConst = expectedUrls;
+            const expectedConst = [...expectedUrls];
 
             while ((expectedUrls.length > 0) && (actualUrls.length > 0)) {
                 if (actualUrls[0] === expectedUrls[0]) {
@@ -56,7 +56,7 @@ export function compareWithBaseline(scenario: string, actualSequence: Map<string
             }
             if (expectedUrls.length > 0) {
                 expectedUrls.map(el => {
-                    if (repeatableCalls.includes(el) && expectedConst.filter(i => i === el).length > 1) {
+                    if (repeatableCalls.includes(el) && expectedConst.filter(i => i === el).length > 0) {
                         console.log(`extra '${path} ${el}' is not found, but was in baseline`);
                     } else {
                         arr.push(`${el} - not found`)
@@ -67,7 +67,7 @@ export function compareWithBaseline(scenario: string, actualSequence: Map<string
             }
             if (actualUrls.length > 0) {
                 actualUrls.map(el => {
-                    if (repeatableCalls.includes(el) && actualConst.filter(i => i === el).length > 1) {
+                    if (repeatableCalls.includes(el) && actualConst.filter(i => i === el).length > 0) {
                         console.log(`extra '${path} ${el}' is found, but was not in baseline`);
                     } else {
                         arr.push(`${el} - new request`)
