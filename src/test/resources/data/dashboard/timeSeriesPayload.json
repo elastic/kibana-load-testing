@@ -1,6 +1,6 @@
 {
   "timerange":{
-    "timezone":"Europe/Berlin",
+    "timezone":"Africa/Abidjan",
     "min":"${startTime}",
     "max":"${endTime}"
   },
@@ -15,12 +15,13 @@
   ],
   "panels":[
     {
+      "time_range_mode":"entire_time_range",
       "id":"61ca57f0-469d-11e7-af02-69e470af7417",
       "type":"timeseries",
       "series":[
         {
           "id":"ea20ae70-b88d-11e8-a451-f37365e9f268",
-          "color":"rgba(240,138,217,1)",
+          "color":"rgba(211,96,134,1)",
           "split_mode":"everything",
           "metrics":[
             {
@@ -33,9 +34,9 @@
           "axis_position":"right",
           "formatter":"number",
           "chart_type":"line",
-          "line_width":1,
-          "point_size":1,
-          "fill":"0.7",
+          "line_width":"2",
+          "point_size":"5",
+          "fill":"0",
           "stacked":"none",
           "filter":{
             "query":"products.product_name:*trouser*",
@@ -47,7 +48,7 @@
         },
         {
           "id":"062d77b0-b88e-11e8-a451-f37365e9f268",
-          "color":"rgba(191,240,129,1)",
+          "color":"rgba(84,179,153,1)",
           "split_mode":"everything",
           "metrics":[
             {
@@ -60,9 +61,9 @@
           "axis_position":"right",
           "formatter":"number",
           "chart_type":"line",
-          "line_width":1,
-          "point_size":1,
-          "fill":"0.7",
+          "line_width":"2",
+          "point_size":"05",
+          "fill":"0",
           "stacked":"none",
           "filter":{
             "query":"products.product_name:*watch*",
@@ -74,7 +75,7 @@
         },
         {
           "id":"61ca57f1-469d-11e7-af02-69e470af7417",
-          "color":"rgba(23,233,230,1)",
+          "color":"rgba(96,146,192,1)",
           "split_mode":"everything",
           "metrics":[
             {
@@ -87,9 +88,9 @@
           "axis_position":"right",
           "formatter":"number",
           "chart_type":"line",
-          "line_width":1,
-          "point_size":1,
-          "fill":"0.7",
+          "line_width":"2",
+          "point_size":"5",
+          "fill":"0",
           "stacked":"none",
           "filter":{
             "query":"products.product_name:*bag*",
@@ -101,7 +102,7 @@
         },
         {
           "id":"faa2c170-b88d-11e8-a451-f37365e9f268",
-          "color":"rgba(235,186,180,1)",
+          "color":"rgba(202,142,174,1)",
           "split_mode":"everything",
           "metrics":[
             {
@@ -114,9 +115,9 @@
           "axis_position":"right",
           "formatter":"number",
           "chart_type":"line",
-          "line_width":1,
-          "point_size":1,
-          "fill":"0.7",
+          "line_width":"2",
+          "point_size":"5",
+          "fill":"0",
           "stacked":"none",
           "filter":{
             "query":"products.product_name:*cocktail dress*",
@@ -128,7 +129,7 @@
         }
       ],
       "time_field":"order_date",
-      "interval":">=12h",
+      "interval":"12h",
       "use_kibana_indexes":true,
       "axis_position":"left",
       "axis_formatter":"number",
@@ -139,7 +140,7 @@
       "annotations":[
         {
           "fields":"taxful_total_price",
-          "template":"Ring the bell\u0021 $${{taxful_total_price}}",
+          "template":"Ring the bell! $${{taxful_total_price}}",
           "query_string":{
             "query":"taxful_total_price:>250",
             "language":"lucene"
@@ -155,10 +156,12 @@
           }
         }
       ],
+      "tooltip_mode":"show_all",
+      "drop_last_bucket":0,
+      "isModelInvalid":false,
       "index_pattern":{
         "id":"${indexPatternId}"
-      },
-      "tooltip_mode":"show_all"
+      }
     }
   ],
   "state":{

@@ -1,14 +1,14 @@
 {
-    "loaderId": "9E217527DE22B767B1357C56DBA66665",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "A685DC1E741B20E08598E6493F011AEE",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/internal/bsearch",
     "requestHeader": {
         "sec-ch-ua": "",
         "Referer": "http://localhost:5620/app/dashboards",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "X-Chunk-Encoding": "deflate",
         "Content-Type": "application/json"
     },
@@ -19,35 +19,16 @@
                     "params": {
                         "index": "kibana_sample_data_ecommerce",
                         "body": {
+                            "size": 0,
                             "aggs": {
-                                "2": {
-                                    "date_histogram": {
-                                        "field": "order_date",
-                                        "fixed_interval": "3h",
-                                        "time_zone": "Europe/Berlin",
-                                        "min_doc_count": 1
+                                "join": {
+                                    "terms": {
+                                        "size": 65535,
+                                        "field": "geoip.region_name"
                                     },
-                                    "aggs": {
-                                        "3": {
-                                            "terms": {
-                                                "field": "category.keyword",
-                                                "order": {
-                                                    "1": "desc"
-                                                },
-                                                "size": 5
-                                            },
-                                            "aggs": {
-                                                "1": {
-                                                    "sum": {
-                                                        "field": "total_quantity"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
+                                    "aggs": {}
                                 }
                             },
-                            "size": 0,
                             "fields": [
                                 {
                                     "field": "customer_birth_date",
@@ -77,8 +58,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-14T09:59:31.358Z",
-                                                    "lte": "2021-07-21T09:59:31.358Z",
+                                                    "gte": "2021-07-20T13:59:54.421Z",
+                                                    "lte": "2021-07-27T13:59:54.421Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -89,340 +70,14 @@
                                 }
                             }
                         },
-                        "preference": 1626861570770
+                        "track_total_hits": false,
+                        "preference": 1627394393621
                     }
                 },
                 "options": {
-                    "sessionId": "c3cb35d8-9d4e-454d-84d2-8a1c9dc50c22",
+                    "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
                     "isRestore": false,
-                    "strategy": "ese",
-                    "isStored": false
-                }
-            },
-            {
-                "request": {
-                    "params": {
-                        "index": "kibana_sample_data_ecommerce",
-                        "body": {
-                            "aggs": {
-                                "2": {
-                                    "terms": {
-                                        "field": "customer_gender",
-                                        "order": {
-                                            "_count": "desc"
-                                        },
-                                        "size": 5
-                                    }
-                                }
-                            },
-                            "size": 0,
-                            "fields": [
-                                {
-                                    "field": "customer_birth_date",
-                                    "format": "date_time"
-                                },
-                                {
-                                    "field": "order_date",
-                                    "format": "date_time"
-                                },
-                                {
-                                    "field": "products.created_on",
-                                    "format": "date_time"
-                                }
-                            ],
-                            "script_fields": {},
-                            "stored_fields": [
-                                "*"
-                            ],
-                            "runtime_mappings": {},
-                            "_source": {
-                                "excludes": []
-                            },
-                            "query": {
-                                "bool": {
-                                    "must": [],
-                                    "filter": [
-                                        {
-                                            "range": {
-                                                "order_date": {
-                                                    "gte": "2021-07-14T09:59:31.358Z",
-                                                    "lte": "2021-07-21T09:59:31.358Z",
-                                                    "format": "strict_date_optional_time"
-                                                }
-                                            }
-                                        }
-                                    ],
-                                    "should": [],
-                                    "must_not": []
-                                }
-                            }
-                        },
-                        "preference": 1626861570770
-                    }
-                },
-                "options": {
-                    "sessionId": "c3cb35d8-9d4e-454d-84d2-8a1c9dc50c22",
-                    "isRestore": false,
-                    "strategy": "ese",
-                    "isStored": false
-                }
-            },
-            {
-                "request": {
-                    "params": {
-                        "index": "kibana_sample_data_ecommerce",
-                        "body": {
-                            "aggs": {
-                                "1": {
-                                    "sum": {
-                                        "field": "taxful_total_price"
-                                    }
-                                }
-                            },
-                            "size": 0,
-                            "fields": [
-                                {
-                                    "field": "customer_birth_date",
-                                    "format": "date_time"
-                                },
-                                {
-                                    "field": "order_date",
-                                    "format": "date_time"
-                                },
-                                {
-                                    "field": "products.created_on",
-                                    "format": "date_time"
-                                }
-                            ],
-                            "script_fields": {},
-                            "stored_fields": [
-                                "*"
-                            ],
-                            "runtime_mappings": {},
-                            "_source": {
-                                "excludes": []
-                            },
-                            "query": {
-                                "bool": {
-                                    "must": [],
-                                    "filter": [
-                                        {
-                                            "range": {
-                                                "order_date": {
-                                                    "gte": "2021-07-14T09:59:31.358Z",
-                                                    "lte": "2021-07-21T09:59:31.358Z",
-                                                    "format": "strict_date_optional_time"
-                                                }
-                                            }
-                                        }
-                                    ],
-                                    "should": [],
-                                    "must_not": []
-                                }
-                            }
-                        },
-                        "preference": 1626861570770
-                    }
-                },
-                "options": {
-                    "sessionId": "c3cb35d8-9d4e-454d-84d2-8a1c9dc50c22",
-                    "isRestore": false,
-                    "strategy": "ese",
-                    "isStored": false
-                }
-            },
-            {
-                "request": {
-                    "params": {
-                        "index": "kibana_sample_data_ecommerce",
-                        "body": {
-                            "aggs": {
-                                "1": {
-                                    "avg": {
-                                        "field": "taxful_total_price"
-                                    }
-                                }
-                            },
-                            "size": 0,
-                            "fields": [
-                                {
-                                    "field": "customer_birth_date",
-                                    "format": "date_time"
-                                },
-                                {
-                                    "field": "order_date",
-                                    "format": "date_time"
-                                },
-                                {
-                                    "field": "products.created_on",
-                                    "format": "date_time"
-                                }
-                            ],
-                            "script_fields": {},
-                            "stored_fields": [
-                                "*"
-                            ],
-                            "runtime_mappings": {},
-                            "_source": {
-                                "excludes": []
-                            },
-                            "query": {
-                                "bool": {
-                                    "must": [],
-                                    "filter": [
-                                        {
-                                            "range": {
-                                                "order_date": {
-                                                    "gte": "2021-07-14T09:59:31.358Z",
-                                                    "lte": "2021-07-21T09:59:31.358Z",
-                                                    "format": "strict_date_optional_time"
-                                                }
-                                            }
-                                        }
-                                    ],
-                                    "should": [],
-                                    "must_not": []
-                                }
-                            }
-                        },
-                        "preference": 1626861570770
-                    }
-                },
-                "options": {
-                    "sessionId": "c3cb35d8-9d4e-454d-84d2-8a1c9dc50c22",
-                    "isRestore": false,
-                    "strategy": "ese",
-                    "isStored": false
-                }
-            },
-            {
-                "request": {
-                    "params": {
-                        "index": "kibana_sample_data_ecommerce",
-                        "body": {
-                            "aggs": {
-                                "1": {
-                                    "avg": {
-                                        "field": "total_quantity"
-                                    }
-                                }
-                            },
-                            "size": 0,
-                            "fields": [
-                                {
-                                    "field": "customer_birth_date",
-                                    "format": "date_time"
-                                },
-                                {
-                                    "field": "order_date",
-                                    "format": "date_time"
-                                },
-                                {
-                                    "field": "products.created_on",
-                                    "format": "date_time"
-                                }
-                            ],
-                            "script_fields": {},
-                            "stored_fields": [
-                                "*"
-                            ],
-                            "runtime_mappings": {},
-                            "_source": {
-                                "excludes": []
-                            },
-                            "query": {
-                                "bool": {
-                                    "must": [],
-                                    "filter": [
-                                        {
-                                            "range": {
-                                                "order_date": {
-                                                    "gte": "2021-07-14T09:59:31.358Z",
-                                                    "lte": "2021-07-21T09:59:31.358Z",
-                                                    "format": "strict_date_optional_time"
-                                                }
-                                            }
-                                        }
-                                    ],
-                                    "should": [],
-                                    "must_not": []
-                                }
-                            }
-                        },
-                        "preference": 1626861570770
-                    }
-                },
-                "options": {
-                    "sessionId": "c3cb35d8-9d4e-454d-84d2-8a1c9dc50c22",
-                    "isRestore": false,
-                    "strategy": "ese",
-                    "isStored": false
-                }
-            },
-            {
-                "request": {
-                    "params": {
-                        "index": "kibana_sample_data_ecommerce",
-                        "body": {
-                            "aggs": {
-                                "2": {
-                                    "terms": {
-                                        "field": "products.product_name.keyword",
-                                        "order": {
-                                            "_count": "desc"
-                                        },
-                                        "size": 7
-                                    }
-                                }
-                            },
-                            "size": 0,
-                            "fields": [
-                                {
-                                    "field": "customer_birth_date",
-                                    "format": "date_time"
-                                },
-                                {
-                                    "field": "order_date",
-                                    "format": "date_time"
-                                },
-                                {
-                                    "field": "products.created_on",
-                                    "format": "date_time"
-                                }
-                            ],
-                            "script_fields": {},
-                            "stored_fields": [
-                                "*"
-                            ],
-                            "runtime_mappings": {},
-                            "_source": {
-                                "excludes": []
-                            },
-                            "query": {
-                                "bool": {
-                                    "must": [],
-                                    "filter": [
-                                        {
-                                            "range": {
-                                                "order_date": {
-                                                    "gte": "2021-07-14T09:59:31.358Z",
-                                                    "lte": "2021-07-21T09:59:31.358Z",
-                                                    "format": "strict_date_optional_time"
-                                                }
-                                            }
-                                        }
-                                    ],
-                                    "should": [],
-                                    "must_not": []
-                                }
-                            }
-                        },
-                        "preference": 1626861570770
-                    }
-                },
-                "options": {
-                    "sessionId": "c3cb35d8-9d4e-454d-84d2-8a1c9dc50c22",
-                    "isRestore": false,
+                    "legacyHitsTotal": false,
                     "strategy": "ese",
                     "isStored": false
                 }
@@ -431,18 +86,19 @@
     },
     "responseUrl": "http://localhost:5620/internal/bsearch",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:32 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:57 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "transfer-encoding": "chunked",
+        "connection": "keep-alive",
         "content-type": "application/x-ndjson",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
-        "connection": "keep-alive",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
+        "set-cookie": "sid=Fe26.2**435bfcbe559588da1a104ac158e8fdb44da7c9abec9add2f8085f723a33408e2*6S_PWGNZM5fMSg0RZWOXYA*2GS7H1OeUqXxQpVug0sRromia8eAorlRrmDCJ3edmGQFywsv-wa61Vespo-E8DDvJ8cc34DJBb6U1w3eIGbKhXDFBC6JNbl608Np2jm9RNJWc65TDddMF1FFpBPXXSTXb9GT2-4vPpGFkBH66bT2sFOGiP0r3u5XLQn4ByVKoHwID81eNimEVWeYCABYKUxA6EspUYjjCNJTmarl6geR04bFuR5t_9pALeTKUCjXNTvdhPKiIb9-lHkvGiw1ywhG**5255aed6c5d6abf2b41a2c0f8e4a5314e9b44e003aa81090c7bd610879709dff*5QiltNFcJVm-n7bKnQi4K2Rv31dMwbhICb5NNLLyAwo; HttpOnly; Path=/",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861572392.588,
+    "responseTime": 1627394397116.628,
     "responseBody": {}
 }

@@ -1,14 +1,14 @@
 {
-    "loaderId": "7A5DF537E7D3FF1C75E6362B5DB8B74C",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "661BFC09D1815316AB7C31C09CD42353",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/internal/licensing/feature_usage/register",
     "requestHeader": {
         "sec-ch-ua": "",
         "Referer": "http://localhost:5620/app/discover",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "Content-Type": "application/json"
     },
     "postData": [
@@ -31,12 +31,13 @@
     ],
     "responseUrl": "http://localhost:5620/internal/licensing/feature_usage/register",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:15 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:39 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**c9ebc92508e6bd1f0da56115940d37d7b495b7b3e61a564876786fd78d972b7c*EnVVLqLk5dcRwZSndhtvQw*2iwwolOm_YOimNY486f-dMrFOy4M9-wue6Nc5fb4Q3h_Fx7iB735bNLgFuelh1fcycKgF1xDBP-QO0C3DE9bCtW3k7aAsBq86nBkI0DXzUXDnPYrNFX2AcfF7JenT0-ILwTb-nzh-PlTChr1am2ju8z51KiDASu-scA2_N-DHia4Z8wbNGuSDInJENInz8d2OPRPEOpXWeP1j68ua9z8BHINBRYzRmB9CoIBn7mvE7skxTKU0BABlt3kPLZh9Yof**d64830fa9acfc031cf298f5246f6c15b2d1631af2594e28d4a74ae0269c48eca*DD2g4bwuLHsMDBPSnOvV1U-nhoIL7oKKqyRbR5-ctFs; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "content-length": "16",
@@ -44,7 +45,7 @@
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861555920.589,
+    "responseTime": 1627394379012.282,
     "responseBody": {
         "success": true
     }

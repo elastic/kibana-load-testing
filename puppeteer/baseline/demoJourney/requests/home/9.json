@@ -1,14 +1,14 @@
 {
-    "loaderId": "EE7A2593777385D4CB9308A68790E349",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "1322E1787FAAFAC843B374F7B78C30A0",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/api/saved_objects/_bulk_get",
     "requestHeader": {
         "sec-ch-ua": "",
         "Referer": "http://localhost:5620/app/home",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "Content-Type": "application/json"
     },
     "postData": [
@@ -19,12 +19,13 @@
     ],
     "responseUrl": "http://localhost:5620/api/saved_objects/_bulk_get",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:13 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:32 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**18c0bcbe264579e7bc5ea36ab5d9cb551e0fc5e6311adb81f11fe8670e7cbb65*Lq3AAnhKgJl1zKmhO8N1sg*AbuPurx9lqkLtmN6eqzF_vmJFK-ch-jksYVIArr20fV116OHmOvCm7QeB550SaHEzSNWh5LTgzmbmqmoRybqsQlCLWyXEgJbRvfjj6Kn4hrOV378xc6oC9ZcjE6_9f4WUsnBQzkoirVGaOqHNtIqMHsMZP3GsREuGriwod1lw3kSaMAOsAQjuvZpH_bC_2soOLiFJ91bFdcl2gcsinAHU6aYB8UAf3RTqOE4bJPX720jjdk-_Dmlh5973L-C7wuA**13374a6ca163ee6a58a6506992398e853d607ac99a312369c5e5e50c0731bd9e*DDsKF2EV7iT_F3lM22lArKP-y7lDd-A-UU1WP1qHdM8; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "content-length": "161",
@@ -32,7 +33,7 @@
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861553726.405,
+    "responseTime": 1627394372716.521,
     "responseBody": {
         "saved_objects": [
             {

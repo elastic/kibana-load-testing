@@ -1,14 +1,14 @@
 {
-    "loaderId": "7A5DF537E7D3FF1C75E6362B5DB8B74C",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "661BFC09D1815316AB7C31C09CD42353",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/api/core/capabilities",
     "requestHeader": {
         "sec-ch-ua": "",
         "Referer": "http://localhost:5620/app/discover",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "Content-Type": "application/json"
     },
     "postData": {
@@ -42,9 +42,6 @@
             "integrations",
             "fleet",
             "ingestManager",
-            "enterpriseSearch",
-            "appSearch",
-            "workplaceSearch",
             "osquery",
             "ml",
             "securitySolution",
@@ -55,28 +52,32 @@
             "metrics",
             "infra",
             "monitoring",
+            "enterpriseSearch",
+            "appSearch",
+            "workplaceSearch",
             "apm",
             "ux"
         ]
     },
     "responseUrl": "http://localhost:5620/api/core/capabilities",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:15 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:38 GMT",
         "content-encoding": "gzip",
         "referrer-policy": "no-referrer-when-downgrade",
         "vary": "accept-encoding",
         "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**3ea2d6b8bc63eae9d36b090dd4e1a9cffd632da58af14dd6b6d8047daead4f94*7aKTj9lhXC2EY1v78z3zpA*KxD_Q26HSZz9QtHGYZupLeZ_WWB9lejeQ_tz_V5xOVIafb7J9bEfExcW7Y_WgYZQDHhPTRV7ZmOjhkqzWTwSyQQS5MIgRLFG24xnEvevTEE1gPDjLU13pQMDud7N2y8cvb5s13yN32l5s7Z6t-8krtm7wfEvQUUebgZogHt7HbI7lsIE_cQPvOaTSya14z8JAsoficY9kh8fKXUylzJtZLYDmxOWCuWnSrgKrMpuO57BQYCoPzgk5neE7HVsSD8X**118973be704a876a4e9735cc4b660c89a43119159fbbe8e3c8c4c2d12a70efad*qiSs18lmSN0-SGCePFxFZpRQzKCqXdfE71ylod-_Pmk; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
         "Transfer-Encoding": "chunked",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861555822.273,
+    "responseTime": 1627394378892.678,
     "responseBody": {
         "navLinks": {
             "error": true,
@@ -108,9 +109,6 @@
             "integrations": true,
             "fleet": true,
             "ingestManager": true,
-            "enterpriseSearch": true,
-            "appSearch": true,
-            "workplaceSearch": true,
             "osquery": true,
             "ml": true,
             "securitySolution": true,
@@ -121,6 +119,9 @@
             "metrics": true,
             "infra": true,
             "monitoring": true,
+            "enterpriseSearch": true,
+            "appSearch": true,
+            "workplaceSearch": true,
             "apm": true,
             "ux": true
         },
@@ -168,9 +169,6 @@
             "canvas": true,
             "maps": true,
             "fleet": true,
-            "enterpriseSearch": true,
-            "appSearch": true,
-            "workplaceSearch": true,
             "ml": true,
             "ml_file_data_visualizer": true,
             "securitySolution": true,
@@ -181,6 +179,9 @@
             "infralogging": true,
             "logs": true,
             "monitoring": true,
+            "enterpriseSearch": true,
+            "appSearch": true,
+            "workplaceSearch": true,
             "apm": true,
             "discover": true,
             "visualize": true,
@@ -270,6 +271,7 @@
             "alerting:show": true,
             "alerting:save": true
         },
+        "enterpriseSearch": {},
         "monitoring": {},
         "logs": {
             "show": true,
@@ -336,7 +338,6 @@
             "save": true,
             "delete": true
         },
-        "enterpriseSearch": {},
         "fleet": {
             "show": true,
             "read": true,

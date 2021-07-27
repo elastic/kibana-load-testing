@@ -4,4 +4,5 @@ export interface Config {
     password: string;
     version: string;
     scenarioCheck?: boolean;
+    headless?: boolean;
 }

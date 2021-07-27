@@ -1,42 +1,42 @@
 {
-    "loaderId": "F0BA51E804DB20020CF81549AFAC7E9B",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "370647D9BDC75C52978E0D48114BACCD",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "GET",
     "requestUrl": "http://localhost:5620/api/licensing/info",
     "requestHeader": {
         "sec-ch-ua": "",
         "Referer": "http://localhost:5620/app/canvas",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "kbn-system-request": "true",
         "Content-Type": "application/json"
     },
     "postData": {},
     "responseUrl": "http://localhost:5620/api/licensing/info",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:45 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 14:00:08 GMT",
         "content-encoding": "gzip",
         "referrer-policy": "no-referrer-when-downgrade",
         "vary": "accept-encoding",
         "content-type": "application/json; charset=utf-8",
         "cache-control": "private, no-cache, no-store, must-revalidate",
         "Transfer-Encoding": "chunked",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861585495.636,
+    "responseTime": 1627394408944.802,
     "responseBody": {
         "license": {
-            "uid": "d6f3325b-0812-4c6c-a441-c8b3d79acc98",
+            "uid": "97b960ca-4730-4064-9527-2aa4136666a8",
             "type": "trial",
             "mode": "trial",
-            "expiryDateInMillis": 1629373504227,
+            "expiryDateInMillis": 1629986294514,
             "status": "active"
         },
         "features": {
@@ -129,6 +129,6 @@
                 "isEnabled": true
             }
         },
-        "signature": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00"
+        "signature": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f"
     }
 }

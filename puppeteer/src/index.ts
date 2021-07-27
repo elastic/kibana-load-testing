@@ -31,9 +31,10 @@ process.on('unhandledRejection', error => {
                 .option("password", { alias: "password", describe: "Kibana password", type: "string", demandOption: true })
                 .option("version", { alias: "version", describe: "Kibana version", type: "string", demandOption: true })
                 .option("scenarioCheck", { alias: "scenarioCheck", describe: "Check scenario up-to-date", type: "boolean", demandOption: false })
+                .option("headless", { alias: "headless", describe: "Run browser headless", type: "boolean", demandOption: true })
                 .argv;
-            const { baseUrl, username, password, version, scenarioCheck } = argv
-            config = { baseUrl, username, password, version, scenarioCheck }
+            const { baseUrl, username, password, version, scenarioCheck, headless } = argv
+            config = { baseUrl, username, password, version, scenarioCheck, headless }
         }
 
         if (!isWebUri(config.baseUrl)) {

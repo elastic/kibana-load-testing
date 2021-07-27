@@ -1,60 +1,47 @@
 {
-    "loaderId": "7A5DF537E7D3FF1C75E6362B5DB8B74C",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "661BFC09D1815316AB7C31C09CD42353",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
-    "requestUrl": "http://localhost:5620/api/saved_objects/_bulk_get",
+    "requestUrl": "http://localhost:5620/api/kibana/settings",
     "requestHeader": {
         "sec-ch-ua": "",
+        "accept": "application/json",
         "Referer": "http://localhost:5620/app/discover",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "Content-Type": "application/json"
     },
-    "postData": [
-        {
-            "id": "ff959d40-b880-11e8-a6d9-e546fe2bba5f",
-            "type": "index-pattern"
+    "postData": {
+        "changes": {
+            "defaultIndex": "ff959d40-b880-11e8-a6d9-e546fe2bba5f"
         }
-    ],
-    "responseUrl": "http://localhost:5620/api/saved_objects/_bulk_get",
+    },
+    "responseUrl": "http://localhost:5620/api/kibana/settings",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:16 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:39 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**6391963838cc8ba45798e77e9216cd9e87b6a71706e8c671dab0ef0f2fd60a8e*D7AxzQOx9jBBQEcUflKmWw*oKEmj_4iiA6o1fHYFKXhFsAOIEu0D_O1tj5_wWQrscydYtc7Itks5-q0DHLKYvi0iUmuq6Z69rg8HA5vQ19P7zsXFicTxNL8dRnvpC2TN97yFUoJ0B5i7UxKxDjyKirwy3EsHHqdxpB1p4_qJvNE3KC2VTnR0BM4_qKgp3lSb5uazVS7oL8OcdT9ze7GIksAfOCPa2dXN42Dhk4hicNpH8352eYphow8QWJrrHvhVu5XDLI0jCRKWOlaibljvZse**0033985b986a5ce13ad16c35ed2ce0cf1670b810ee88f952d97b4c55ad8fe8e2*iws5u2rG644hvE2JFs1ZRVHCSbrzmaS-KKuFqZYZRyw; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
-        "content-length": "471",
+        "content-length": "113",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861556229.807,
+    "responseTime": 1627394379541.177,
     "responseBody": {
-        "saved_objects": [
-            {
-                "id": "ff959d40-b880-11e8-a6d9-e546fe2bba5f",
-                "type": "index-pattern",
-                "namespaces": [
-                    "default"
-                ],
-                "updated_at": "2021-07-21T09:59:06.880Z",
-                "version": "Wzk5NCwxXQ==",
-                "attributes": {
-                    "title": "kibana_sample_data_ecommerce",
-                    "timeFieldName": "order_date",
-                    "fields": "[]",
-                    "fieldFormatMap": "{\"taxful_total_price\":{\"id\":\"number\",\"params\":{\"pattern\":\"$0,0.[00]\"}}}"
-                },
-                "references": [],
-                "migrationVersion": {
-                    "index-pattern": "7.11.0"
-                },
-                "coreMigrationVersion": "8.0.0"
+        "settings": {
+            "buildNum": {
+                "userValue": 44766
+            },
+            "defaultIndex": {
+                "userValue": "ff959d40-b880-11e8-a6d9-e546fe2bba5f"
             }
-        ]
+        }
     }
 }

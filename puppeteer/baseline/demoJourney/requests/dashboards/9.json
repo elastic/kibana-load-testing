@@ -1,24 +1,25 @@
 {
-    "loaderId": "9E217527DE22B767B1357C56DBA66665",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "A685DC1E741B20E08598E6493F011AEE",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "GET",
     "requestUrl": "http://localhost:5620/internal/osquery/status",
     "requestHeader": {
         "sec-ch-ua": "",
         "Referer": "http://localhost:5620/app/dashboards",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "Content-Type": "application/json"
     },
     "postData": {},
     "responseUrl": "http://localhost:5620/internal/osquery/status",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:31 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:54 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
+        "set-cookie": "sid=Fe26.2**a0a692529b1e1a5037b4e73d6aace55d958d307068dfd286273e8af0c13ea8c3*27zQXDaG86I9hVmFeAoJxw*BPtE7BAg7e8fCLxhvN-6UjVrBKguIQHKccvXqvePddcadvfbFpSDAxMJj5WkTEVXxyf8CMQGx0Atb2k-7cGaTe_Mk8oB-DtOw-P7G22pJ38-Okzp3FBlBUoPbEFch82A349RgDOyVh2h1hCY9NFX6qIouUZeG2KWkUhPNXxqbEeWKvf84sz_ttLN90cwTB_dMUsV2DMxc00Qwo7jNO-FILmPla2OSxUsAJlTBD4pemcOhi3e88tPaC8D1sjAnSoI**09a82d3cee3bf335fa81ad847beb096e23c3e75d7050a9359d47ca9340bdf214*eW7XZjBBQeQG7abPN1_xw2l9U6zye9We7mrkq0laA54; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "content-length": "0",
@@ -26,6 +27,6 @@
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861571120.287,
+    "responseTime": 1627394394147.154,
     "responseBody": {}
 }

@@ -1,21 +1,22 @@
 {
-    "loaderId": "9E217527DE22B767B1357C56DBA66665",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "A685DC1E741B20E08598E6493F011AEE",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/api/metrics/vis/data",
     "requestHeader": {
         "sec-ch-ua": "",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "Referer": "http://localhost:5620/app/dashboards",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "x-kbn-context": "%7B%22type%22%3A%22visualization%22%2C%22name%22%3A%22metrics%22%2C%22id%22%3A%22b80e6540-b891-11e8-a6d9-e546fe2bba5f%22%2C%22description%22%3A%22%5BeCommerce%5D%20Sold%20Products%20per%20Day%22%2C%22url%22%3A%22%2Fapp%2Fvisualize%23%2Fedit%2Fb80e6540-b891-11e8-a6d9-e546fe2bba5f%22%7D",
         "Content-Type": "application/json"
     },
     "postData": {
         "timerange": {
-            "timezone": "Europe/Berlin",
-            "min": "2021-07-14T09:59:31.358Z",
-            "max": "2021-07-21T09:59:31.358Z"
+            "timezone": "Africa/Abidjan",
+            "min": "2021-07-20T13:59:54.421Z",
+            "max": "2021-07-27T13:59:54.421Z"
         },
         "query": [
             {
@@ -26,6 +27,7 @@
         "filters": [],
         "panels": [
             {
+                "time_range_mode": "entire_time_range",
                 "id": "61ca57f0-469d-11e7-af02-69e470af7417",
                 "type": "gauge",
                 "series": [
@@ -37,18 +39,31 @@
                             {
                                 "id": "61ca57f2-469d-11e7-af02-69e470af7417",
                                 "type": "count"
+                            },
+                            {
+                                "id": "fd1e1b90-e4e3-11eb-8234-cb7bfd534fce",
+                                "type": "math",
+                                "variables": [
+                                    {
+                                        "id": "00374270-e4e4-11eb-8234-cb7bfd534fce",
+                                        "name": "c",
+                                        "field": "61ca57f2-469d-11e7-af02-69e470af7417"
+                                    }
+                                ],
+                                "script": "params.c / (params._interval / 1000 / 60 / 60 / 24)"
                             }
                         ],
                         "separate_axis": 0,
                         "axis_position": "right",
-                        "formatter": "number",
+                        "formatter": "0.0",
                         "chart_type": "line",
                         "line_width": 1,
                         "point_size": 1,
                         "fill": 0.5,
                         "stacked": "none",
                         "label": "Trxns / day",
-                        "split_color_mode": "gradient"
+                        "split_color_mode": "gradient",
+                        "value_template": ""
                     }
                 ],
                 "time_field": "order_date",
@@ -58,7 +73,6 @@
                 "axis_scale": "normal",
                 "show_legend": 1,
                 "show_grid": 1,
-                "time_range_mode": "entire_time_range",
                 "gauge_color_rules": [
                     {
                         "value": 150,
@@ -74,42 +88,44 @@
                     }
                 ],
                 "gauge_width": "15",
-                "gauge_inner_width": 10,
+                "gauge_inner_width": "10",
                 "gauge_style": "half",
                 "filter": "",
                 "gauge_max": "300",
                 "use_kibana_indexes": true,
                 "hide_last_value_indicator": true,
+                "tooltip_mode": "show_all",
+                "drop_last_bucket": 0,
+                "isModelInvalid": false,
                 "index_pattern": {
                     "id": "ff959d40-b880-11e8-a6d9-e546fe2bba5f"
-                },
-                "tooltip_mode": "show_all",
-                "drop_last_bucket": 0
+                }
             }
         ],
         "state": {},
         "searchSession": {
-            "sessionId": "c3cb35d8-9d4e-454d-84d2-8a1c9dc50c22",
+            "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
             "isRestore": false,
             "isStored": false
         }
     },
     "responseUrl": "http://localhost:5620/api/metrics/vis/data",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:32 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:56 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**5d5187f7c192cf62f2a2a54ded0815eec2fcd8a0fc191b1fae41b81248e974e3*OBNgGxG3GmM7N7QEI_p6kA*aPCyBFN1G2FaeIAf0KHYgs0_pgHXhyzaIcl0UJMyVvgvBAODreXzf8eYNtC1PWRP8bhTiWfgKOvlt4RUYrqhGtVyJRVYZHqTKWJc4TRw1J2IX3_Njq_q2P8YjUx1hF4jbSRUyNCZqA24hzDSUSLcj_ZDH3_rEOFjwNDNZZxEpYb4gl5Gt-1BmnPW4z1P61HbEXIs2GJMzuJxvjKaEu8w2zhctSs9eU5xVvWJNJe5cSV5bycWFT4LiUAvxWftwNUD**1671b094bd71627516aaa9112f75d132b6352bdc658e593942224ce13e3116e8*ukhtx0t8v9SIdjpgmSjgDog55tyCW7ZpyJuAozUAiOE; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
-        "content-length": "628",
+        "content-length": "619",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861572267.357,
+    "responseTime": 1627394396621.515,
     "responseBody": {
         "type": "gauge",
         "uiRestrictions": {
@@ -130,12 +146,11 @@
                 {
                     "id": "61ca57f1-469d-11e7-af02-69e470af7417",
                     "label": "Trxns / day",
-                    "splitByLabel": "Count",
                     "color": "rgb(104, 188, 0)",
                     "data": [
                         [
                             1625097600000,
-                            1030
+                            148.57142857142858
                         ]
                     ],
                     "seriesId": "61ca57f1-469d-11e7-af02-69e470af7417",

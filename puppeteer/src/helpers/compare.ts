@@ -2,8 +2,9 @@ import fs from 'fs'
 import { resolve } from 'path';
 
 export function compareWithBaseline(scenario: string, actualSequence: Map<string, string[]>) {
-    console.log(`${scenario} scenario: comparing recorded requestes with baseline:`)
-    let isNewRequestFound = false;
+    console.log(`${scenario} scenario: comparing recorded requestes with baseline:`);
+    const repeatableCalls = ['/internal/bsearch', '/api/saved_objects/_bulk_get'];
+    let isUpdateRequired = false;
     let baselinePath = resolve(__dirname, '..', '..', 'baseline', scenario, 'requests.json');
     const expectedSequence = new Map(Object.entries(JSON.parse(fs.readFileSync(baselinePath, 'utf8')) as JSON)) as Map<string, string[]>;
 
@@ -13,23 +14,30 @@ export function compareWithBaseline(scenario: string, actualSequence: Map<string
     const oldOnes = new Map<string, string[]>();
 
     actualSequence.forEach((actualUrls, path) => {
-        const actualConst = actualUrls;
+        const actualConst = [...actualUrls];
         let arr = Array<string>();
         let newReqs = Array<string>();
         let notFoundReqs = Array<string>();
         if (expectedSequence.has(path)) {
             let expectedUrls = expectedSequence.get(path) || []
+            const expectedConst = [...expectedUrls];
+
             while ((expectedUrls.length > 0) && (actualUrls.length > 0)) {
                 if (actualUrls[0] === expectedUrls[0]) {
                     arr.push(`${actualUrls[0]} - ok`)
                     actualUrls.shift();
                     expectedUrls.shift();
                 } else {
-                    // new request
                     if (expectedUrls.indexOf(actualUrls[0]) == -1) {
-                        arr.push(`${actualUrls[0]} - new request`);
-                        newReqs.push(actualUrls[0]);
-                        isNewRequestFound = true;
+                        // could be extra call of an existing one
+                        if (repeatableCalls.includes(actualUrls[0]) && actualConst.filter(i => i === actualUrls[0]).length > 1) {
+                            console.log(`extra '${path} ${actualUrls[0]}' is found, but was not in baseline`)
+                        } else {
+                            // new request
+                            arr.push(`${actualUrls[0]} - new request`);
+                            newReqs.push(actualUrls[0]);
+                            isUpdateRequired = true;
+                        }
                         actualUrls.shift();
                     // request not found
                     } else if (actualUrls.indexOf(expectedUrls[0]) == -1) {
@@ -48,21 +56,23 @@ export function compareWithBaseline(scenario: string, actualSequence: Map<string
             }
             if (expectedUrls.length > 0) {
                 expectedUrls.map(el => {
-                    if (el.includes('bsearch') && actualConst.indexOf('/internal/bsearch')) {
-                        console.log(`extra '${path} /internal/bsearch' is not found, but was in baseline`)
+                    if (repeatableCalls.includes(el) && expectedConst.filter(i => i === el).length > 0) {
+                        console.log(`extra '${path} ${el}' is not found, but was in baseline`);
                     } else {
-                        actualUrls.push(`${el} - not found`)
+                        arr.push(`${el} - not found`)
+                        isUpdateRequired = true
                         notFoundReqs.push(el)
                     }
                 })
             }
             if (actualUrls.length > 0) {
                 actualUrls.map(el => {
-                    if (el.includes('bsearch') && actualConst.indexOf('/internal/bsearch')) {
-                        console.log(`extra '${path} /internal/bsearch' is found, but was not baseline`)
+                    if (repeatableCalls.includes(el) && actualConst.filter(i => i === el).length > 0) {
+                        console.log(`extra '${path} ${el}' is found, but was not in baseline`);
                     } else {
-                        actualUrls.push(`${el} - new request`)
-                        notFoundReqs.push(el)
+                        arr.push(`${el} - new request`)
+                        isUpdateRequired = true;
+                        newReqs.push(el)
                     }
                 })
             }
@@ -79,5 +89,5 @@ export function compareWithBaseline(scenario: string, actualSequence: Map<string
     newOnes.forEach((urls, path) => urls.map(url => console.log(`new request: ${path} ${url}`)))
 
     console.log(`----------------Finished---------------`)
-    return { isNewRequestFound, verifiedSequence };
+    return { isUpdateRequired, verifiedSequence };
 }

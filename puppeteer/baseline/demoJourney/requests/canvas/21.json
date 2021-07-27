@@ -1,14 +1,14 @@
 {
-    "loaderId": "F0BA51E804DB20020CF81549AFAC7E9B",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "370647D9BDC75C52978E0D48114BACCD",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/internal/bsearch",
     "requestHeader": {
         "sec-ch-ua": "",
         "Referer": "http://localhost:5620/app/canvas",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "X-Chunk-Encoding": "deflate",
         "Content-Type": "application/json"
     },
@@ -227,18 +227,19 @@
     },
     "responseUrl": "http://localhost:5620/internal/bsearch",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:47 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 14:00:10 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "transfer-encoding": "chunked",
+        "connection": "keep-alive",
         "content-type": "application/x-ndjson",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
-        "connection": "keep-alive",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
+        "set-cookie": "sid=Fe26.2**224a5e101fb3f050ffc750ec5e416a79abeb917cdd4d7365da6e6e75c710a8c8*lPbCSWdzA8EA5CQdULFaQA*GovtmLuu2uzgFQnHY1m29jbPuPcIrMvO0aloaVhfpJFVlXW3IG63CtHJx5dq3_ay87udjePtt3sAuc-CEkJtByxS1MsPZTU_befw-rCs98pMyVLwPhO07TOBc5j4NmXTyJwfHqMOyoNfncIB3Cp5Guq6KrBkjxiT9GLC8rzoU5oTKUudMtLh2F8WGP-5mNiHLWQXWBeGJYcGG3Xl0LBChzKrwazEdpltmf9Bb7FkD0Qgu-I6-JLPPM5Y_jvXQ-fy**d41e668941e8d1ce285150555d0c4d59a965e0cbc246c3e9f7e913ec6690bb39*kUGZ50AS28clN0ZOXmKyvdvZf3HtEqBMgTPRzmp8Fyk; HttpOnly; Path=/",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861587142.783,
+    "responseTime": 1627394411337.613,
     "responseBody": {}
 }

@@ -1,30 +1,31 @@
 {
-    "loaderId": "EE7A2593777385D4CB9308A68790E349",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "1322E1787FAAFAC843B374F7B78C30A0",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/internal/global_search/find",
     "requestHeader": {
         "sec-ch-ua": "",
         "Referer": "http://localhost:5620/app/home",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "Content-Type": "application/json"
     },
     "postData": {
         "params": {},
         "options": {
-            "preference": "25935aba-fec9-4410-9ac5-6f5ef05591eb"
+            "preference": "af56971e-6bc1-43e9-b0c1-2a86a5512e20"
         }
     },
     "responseUrl": "http://localhost:5620/internal/global_search/find",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:14 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:33 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**f99f02890954996d4d6a312b9a8b9acdcd0233871e28006b2af4ca42c8ef3caa*ab5eJWTJVy78xGVWeFW5yw*oMsoBM2bvhOy0n2weiD3B7DaU2NMWFTummdR8lo1JsHtkvWB5kqCvNLmKBQ_TB9xhZpNG0u2BM1mpmsnBaMqTV0edV5wZak33ttyyPsErWJyOZC-zQRiOWvkPcd_FoDwL95iRG4VKaRak8yflb88qsaLPhNSvIHMn1l_JWI0NgBkImkaAjoH065AzyEjBKyXoxY13Q59S77tn47CCdkeA0BV_OKruYHRn5H-0z-XUPekazt8_ig2Z4B03PExqwtZ**a061ddfb2b958c05969a6f457c1bf4c5cb50e344dfe49723c4184a11c5c43b26*SsPBpLqT7Llq681X4AKn8b9-0m3--G_18RGmOQpEqf0; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "content-length": "14",
@@ -32,7 +33,7 @@
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861554202.923,
+    "responseTime": 1627394373188.818,
     "responseBody": {
         "results": []
     }

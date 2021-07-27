@@ -1,35 +1,36 @@
 {
-    "loaderId": "F0BA51E804DB20020CF81549AFAC7E9B",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "370647D9BDC75C52978E0D48114BACCD",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "GET",
     "requestUrl": "http://localhost:5620/api/canvas/workpad/workpad-e08b9bdb-ec14-4339-94c4-063bddfd610e",
     "requestHeader": {
         "sec-ch-ua": "",
         "Referer": "http://localhost:5620/app/canvas",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "Content-Type": "application/json"
     },
     "postData": {},
     "responseUrl": "http://localhost:5620/api/canvas/workpad/workpad-e08b9bdb-ec14-4339-94c4-063bddfd610e",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:46 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 14:00:10 GMT",
         "content-encoding": "gzip",
         "referrer-policy": "no-referrer-when-downgrade",
         "vary": "accept-encoding",
         "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**eb2b3e1bf202e58ad45abe17f55975d4eb9972fb7d445159b87d3f064a13c653*MKvs51j7j7pW-tC3Y-bNVA*quySaxTe1NP9UOk2T2YpATMLnMS6MvR-7o2QuaFSbSuqew1Ej6h-GSSzG11jlwjCSTSZK2NKlNSZ4h7xwdk1J9UVaVcjLtfHhu64ShSIOelOzLu7csq5BD3jWnQujJYAVPeuoD6QVPCWGW5uhWGzML8oo-Qz4PTCY0BaX5zhdBk2A7hHOraZRiUUa6aFyTEZr5cC4aMzNTmQLBH0pDll-og6pBMYJp3B7s9H7-Hl9bKNIAkbO9Fb7Ig9eX44B1wq**e902534acd2d823ce714dfe4980fd27c87949ce055fa6ff5df3a27e330bb8553*oTW3l6qkX22kyMEaIY7pbZ2Qmj93NvuiX9G3FNw3lOY; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
         "Transfer-Encoding": "chunked",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861586655.892,
+    "responseTime": 1627394410121.33,
     "responseBody": {
         "id": "workpad-e08b9bdb-ec14-4339-94c4-063bddfd610e",
         "name": "[eCommerce] Revenue Tracking",
@@ -1093,8 +1094,8 @@
             "#FFFFFF",
             "rgba(255,255,255,0)"
         ],
-        "@timestamp": "2021-07-20T11:45:28.302Z",
-        "@created": "2021-07-20T11:45:28.302Z",
+        "@timestamp": "2021-07-27T13:58:50.255Z",
+        "@created": "2021-07-27T13:58:50.255Z",
         "assets": {
             "asset-66a89124-fc39-4109-8acd-e1ac7f382e04": {
                 "id": "asset-66a89124-fc39-4109-8acd-e1ac7f382e04",

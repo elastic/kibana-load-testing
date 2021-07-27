@@ -7,34 +7,13 @@
           "body":{
             "size":0,
             "aggs":{
-              "gridSplit":{
-                "geotile_grid":{
-                  "bounds":{
-                    "top_left":[
-                      -90,
-                      66.51326
-                    ],
-                    "bottom_right":[
-                      45,
-                      0
-                    ]
-                  },
-                  "field":"geoip.location",
-                  "precision":5,
+              "join":{
+                "terms":{
                   "size":65535,
-                  "shard_size":65535
+                  "field":"geoip.country_iso_code"
                 },
                 "aggs":{
-                  "gridCentroid":{
-                    "geo_centroid":{
-                      "field":"geoip.location"
-                    }
-                  },
-                  "sum_of_taxful_total_price":{
-                    "sum":{
-                      "field":"taxful_total_price"
-                    }
-                  }
+
                 }
               }
             },
@@ -73,31 +52,6 @@
                 ],
                 "filter":[
                   {
-                    "bool":{
-                      "must":[
-                        {
-                          "exists":{
-                            "field":"geoip.location"
-                          }
-                        },
-                        {
-                          "geo_bounding_box":{
-                            "geoip.location":{
-                              "top_left":[
-                                -90,
-                                66.51326
-                              ],
-                              "bottom_right":[
-                                56.25,
-                                -11.1784
-                              ]
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  },
-                  {
                     "range":{
                       "order_date":{
                         "gte":"${startTime}",
@@ -130,6 +84,7 @@
     },
     {
       "request":{
+        "id":"FjU1UlhhVFg3UkoyTWZqeng4bjNYa2cbQ2RKcWJ4dEtSVDZ6ay1XUnFrYUd3UTo3NjU3",
         "params":{
           "index":"kibana_sample_data_ecommerce",
           "body":{

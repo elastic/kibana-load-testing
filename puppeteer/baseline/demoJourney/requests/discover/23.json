@@ -51,7 +51,7 @@
                                 "2": {
                                     "date_histogram": {
                                         "field": "order_date",
-                                        "fixed_interval": "30s",
+                                        "fixed_interval": "12h",
                                         "time_zone": "Africa/Abidjan",
                                         "min_doc_count": 1
                                     }
@@ -70,8 +70,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-27T13:44:39.666Z",
-                                                    "lte": "2021-07-27T13:59:39.666Z",
+                                                    "gte": "2021-06-27T13:59:47.216Z",
+                                                    "lte": "2021-07-27T13:59:47.216Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -99,7 +99,7 @@
                     }
                 },
                 "options": {
-                    "sessionId": "d65da379-8d3f-498c-aae1-06b655bb7e65",
+                    "sessionId": "b0b42ddd-be26-4dde-8604-250db77a6bd7",
                     "isRestore": false,
                     "strategy": "ese",
                     "isStored": false
@@ -110,18 +110,18 @@
     "responseUrl": "http://localhost:5620/internal/bsearch",
     "responseHeaders": {
         "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
-        "Date": "Tue, 27 Jul 2021 13:59:39 GMT",
+        "Date": "Tue, 27 Jul 2021 13:59:47 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "transfer-encoding": "chunked",
         "connection": "keep-alive",
         "content-type": "application/x-ndjson",
         "cache-control": "private, no-cache, no-store, must-revalidate",
         "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
-        "set-cookie": "sid=Fe26.2**b6b1e2d3a4bc0ba00f89b1b15e1cc990b2683cfb4d5af607370038b03cb5b5a2*KHKYxantbw-ubIcJkWlidw*zs1mSR0MNurqjdrjke25WdwzRLgmHudY2dCT9qWeCGYMxo52yuBIvZ-4zk1FK0CPyF2d3xBDm868kImTterdfb6vZ1bg5v0Srf9hfQMzeB6-muAO2AelhvwRbwBGjYZyJ5ywYGDqEd1VGHcHwXIU2ZlYSNtq1qjt9DQyYFw812K6_jNQI14LAbgh3oJIAWXR7c5CyqUDO1FcsVgGHQjDpi_wZywYXdwNphszZm2dXgRZFWpormkilLqkmWE5OJlE**46cfac0400db04a1b9ba3fca6c5f761b7b41dd1e999d31c068766d59c8b4228c*_N3klnlC1pBBiwGYzj9zkwWq94gc7HeFnTdKKfQWCB0; HttpOnly; Path=/",
+        "set-cookie": "sid=Fe26.2**a291b54ea47df8e5bce4678b5922850ac6c9ac7a64425b73c8bd3d817a9d370d*O-0butypTT3ausKJbTYqng*Lvaktqx_u4UBmGGm6CQ1legRl1IT5-vo1iMbNhlVqfKrsU18nd9d-b000NdKhb5YkYOq6dd3mvA5fdY611q-rEdiBDAgoRg1sRAS6gpO0e74W0bbUfN65zO4Pq7DrySgPLVSlZ3Vu766K3mpaFJZO7ciH9Zi-8qVszpxajdKJM_KCnJ1_fVcO5TptXVMs5qAV9B9bZYTxB-RtMuWqpUtEh9RfozTbW2WVWFMwrG5XUcm2Do9CUNb7U6ws7h1ffs1**7893858da0903dcab08f24f75c20ff3038005a899a44c33c84e3baedacb76417*EuzOFYebomy-Kvzr7tgutkCb6ec4YgQG-g7L_OxCPJE; HttpOnly; Path=/",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627394379935.552,
+    "responseTime": 1627394387372.684,
     "responseBody": {}
 }

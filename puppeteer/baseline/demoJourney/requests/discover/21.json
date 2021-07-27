@@ -1,14 +1,14 @@
 {
-    "loaderId": "7A5DF537E7D3FF1C75E6362B5DB8B74C",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "661BFC09D1815316AB7C31C09CD42353",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/internal/bsearch",
     "requestHeader": {
         "sec-ch-ua": "",
         "Referer": "http://localhost:5620/app/discover",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "X-Chunk-Encoding": "deflate",
         "Content-Type": "application/json"
     },
@@ -51,8 +51,8 @@
                                 "2": {
                                     "date_histogram": {
                                         "field": "order_date",
-                                        "fixed_interval": "12h",
-                                        "time_zone": "Europe/Berlin",
+                                        "fixed_interval": "3h",
+                                        "time_zone": "Africa/Abidjan",
                                         "min_doc_count": 1
                                     }
                                 }
@@ -70,8 +70,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-06-21T09:59:24.553Z",
-                                                    "lte": "2021-07-21T09:59:24.553Z",
+                                                    "gte": "2021-07-22T13:59:41.360Z",
+                                                    "lte": "2021-07-27T13:59:41.360Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -95,11 +95,11 @@
                             }
                         },
                         "track_total_hits": true,
-                        "preference": 1626861555544
+                        "preference": 1627394378571
                     }
                 },
                 "options": {
-                    "sessionId": "e47ef22b-15cd-456e-80f8-9d3e1c8155a0",
+                    "sessionId": "f4cce0ac-48ab-4c04-97ca-72ebec8a70e0",
                     "isRestore": false,
                     "strategy": "ese",
                     "isStored": false
@@ -109,18 +109,19 @@
     },
     "responseUrl": "http://localhost:5620/internal/bsearch",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:24 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:41 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "transfer-encoding": "chunked",
+        "connection": "keep-alive",
         "content-type": "application/x-ndjson",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
-        "connection": "keep-alive",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
+        "set-cookie": "sid=Fe26.2**fac1a52ff0f1db1ed67eb904ff91f6a068ef2100745c5dd07382db1c757a4629*8YGtoAMT-bE85e6o7kB53w*lZnAT8ExoW7J56zBgVpWPzqAoaSGKVw1Yghvu2Ror5Fw76weMaNCrTM35LDwE10itG9Afi6E5wiLxxYKN3ZVKghrn3HHxzH2SoqZiatpRy7XoHxs-2VnRAcmAMMrOtQIr4QCcS9BFBvkgKpUX5vDHZgh1ppWPSupveikAFyYgoIcZ84Ldblhtgm4GsG0zpEutgGuW5c_6QuxZRPv9ohiEqe4DVgGTkQd2trA9Ln4jIqIhkl4Qxz3im8KSfkTX_FO**2260e5f928fe6f48610a93a2ae0f7803f77157856eaa2bd887ff2810c7b58fdb*eFla-zjxPa3O5_xSe32nQjSR2AQZ3hJ9LrUwG6jEy3k; HttpOnly; Path=/",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861564886.292,
+    "responseTime": 1627394381516.664,
     "responseBody": {}
 }
