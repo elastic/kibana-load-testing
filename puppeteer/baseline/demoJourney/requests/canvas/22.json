@@ -1,205 +1,525 @@
 {
-    "loaderId": "F0BA51E804DB20020CF81549AFAC7E9B",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "43A418682E9570B6CCD51BC2784CB458",
+    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
     "method": "POST",
-    "requestUrl": "http://localhost:5620/api/timelion/run",
+    "requestUrl": "http://localhost:5620/api/canvas/fns",
     "requestHeader": {
         "sec-ch-ua": "",
-        "Accept": "application/json",
         "Referer": "http://localhost:5620/app/canvas",
-        "kbn-xsrf": "professionally-crafted-string-of-text",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
+        "X-Chunk-Encoding": "deflate",
         "Content-Type": "application/json"
     },
     "postData": {
-        "extended": {
-            "es": {
-                "filter": {
-                    "bool": {
-                        "must": []
-                    }
+        "batch": [
+            {
+                "functionName": "pointseries",
+                "args": {
+                    "x": "@timestamp",
+                    "y": "final"
+                },
+                "context": {
+                    "columns": [
+                        {
+                            "id": "@timestamp",
+                            "name": "@timestamp",
+                            "meta": {
+                                "type": "date"
+                            }
+                        },
+                        {
+                            "id": "value",
+                            "name": "value",
+                            "meta": {
+                                "type": "number",
+                                "params": {
+                                    "id": "number"
+                                }
+                            }
+                        },
+                        {
+                            "id": "label",
+                            "name": "label",
+                            "meta": {
+                                "type": "string"
+                            }
+                        },
+                        {
+                            "id": "mean",
+                            "name": "mean",
+                            "meta": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "id": "rnd",
+                            "name": "rnd",
+                            "meta": {
+                                "type": "number",
+                                "params": {
+                                    "id": "number"
+                                }
+                            }
+                        },
+                        {
+                            "id": "final",
+                            "name": "final",
+                            "meta": {
+                                "type": "number",
+                                "params": {
+                                    "id": "number"
+                                }
+                            }
+                        }
+                    ],
+                    "rows": [
+                        [
+                            1595721600000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.92,
+                            2208.92
+                        ],
+                        [
+                            1596326400000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.07,
+                            2569.07
+                        ],
+                        [
+                            1596931200000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.1,
+                            2641.1
+                        ],
+                        [
+                            1597536000000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.93,
+                            2232.93
+                        ],
+                        [
+                            1598140800000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.04,
+                            2497.04
+                        ],
+                        [
+                            1598745600000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.99,
+                            2376.99
+                        ],
+                        [
+                            1599350400000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.98,
+                            2352.98
+                        ],
+                        [
+                            1599955200000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.01,
+                            2425.01
+                        ],
+                        [
+                            1600560000000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.91,
+                            2184.91
+                        ],
+                        [
+                            1601164800000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.08,
+                            2593.08
+                        ],
+                        [
+                            1601769600000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.93,
+                            2232.93
+                        ],
+                        [
+                            1602374400000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.93,
+                            2232.93
+                        ],
+                        [
+                            1602979200000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.04,
+                            2497.04
+                        ],
+                        [
+                            1603584000000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.93,
+                            2232.93
+                        ],
+                        [
+                            1604188800000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1,
+                            2401
+                        ],
+                        [
+                            1604793600000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.97,
+                            2328.97
+                        ],
+                        [
+                            1605398400000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1,
+                            2401
+                        ],
+                        [
+                            1606003200000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.93,
+                            2232.93
+                        ],
+                        [
+                            1606608000000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.05,
+                            2521.05
+                        ],
+                        [
+                            1607212800000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.07,
+                            2569.07
+                        ],
+                        [
+                            1607817600000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.91,
+                            2184.91
+                        ],
+                        [
+                            1608422400000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.95,
+                            2280.95
+                        ],
+                        [
+                            1609027200000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.98,
+                            2352.98
+                        ],
+                        [
+                            1609632000000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.09,
+                            2617.09
+                        ],
+                        [
+                            1610236800000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.01,
+                            2425.01
+                        ],
+                        [
+                            1610841600000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.94,
+                            2256.94
+                        ],
+                        [
+                            1611446400000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.95,
+                            2280.95
+                        ],
+                        [
+                            1612051200000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.04,
+                            2497.04
+                        ],
+                        [
+                            1612656000000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.03,
+                            2473.03
+                        ],
+                        [
+                            1613260800000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.09,
+                            2617.09
+                        ],
+                        [
+                            1613865600000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.06,
+                            2545.06
+                        ],
+                        [
+                            1614470400000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.94,
+                            2256.94
+                        ],
+                        [
+                            1615075200000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.98,
+                            2352.98
+                        ],
+                        [
+                            1615680000000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.91,
+                            2184.91
+                        ],
+                        [
+                            1616284800000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.05,
+                            2521.05
+                        ],
+                        [
+                            1616889600000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.01,
+                            2425.01
+                        ],
+                        [
+                            1617494400000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.07,
+                            2569.07
+                        ],
+                        [
+                            1618099200000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.96,
+                            2304.96
+                        ],
+                        [
+                            1618704000000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.04,
+                            2497.04
+                        ],
+                        [
+                            1619308800000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.07,
+                            2569.07
+                        ],
+                        [
+                            1619913600000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.91,
+                            2184.91
+                        ],
+                        [
+                            1620518400000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.97,
+                            2328.97
+                        ],
+                        [
+                            1621123200000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.02,
+                            2449.02
+                        ],
+                        [
+                            1621728000000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.97,
+                            2328.97
+                        ],
+                        [
+                            1622332800000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.06,
+                            2545.06
+                        ],
+                        [
+                            1622937600000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.04,
+                            2497.04
+                        ],
+                        [
+                            1623542400000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.93,
+                            2232.93
+                        ],
+                        [
+                            1624147200000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.93,
+                            2232.93
+                        ],
+                        [
+                            1624752000000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.99,
+                            2376.99
+                        ],
+                        [
+                            1625356800000,
+                            0,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.96,
+                            2304.96
+                        ],
+                        [
+                            1625961600000,
+                            41456,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.92,
+                            2208.92
+                        ],
+                        [
+                            1626566400000,
+                            79449,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            0.93,
+                            2232.93
+                        ],
+                        [
+                            1627171200000,
+                            6368,
+                            "q:* > sum(taxless_total_price)",
+                            2401,
+                            1.04,
+                            2497.04
+                        ]
+                    ],
+                    "type": "datatable"
                 }
             }
-        },
-        "sheet": [
-            ".es(index=kibana_sample_data_ecommerce, metric=sum:taxless_total_price, timefield=order_date)"
-        ],
-        "time": {
-            "from": "2021-07-08T00:04:19.000Z",
-            "to": "2021-08-07T23:45:36.000Z",
-            "interval": "1d",
-            "timezone": "UTC"
-        }
+        ]
     },
-    "responseUrl": "http://localhost:5620/api/timelion/run",
+    "responseUrl": "http://localhost:5620/api/canvas/fns",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:47 GMT",
-        "content-encoding": "gzip",
+        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
+        "Date": "Mon, 26 Jul 2021 15:57:52 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
-        "vary": "accept-encoding",
-        "content-type": "application/json; charset=utf-8",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "content-type": "application/x-ndjson",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "Transfer-Encoding": "chunked",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
-        "Connection": "keep-alive",
-        "Keep-Alive": "timeout=120",
+        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
+        "set-cookie": "sid=Fe26.2**2363a2a80c0c6ffc7104941b8491a2571ed4ec19d6866e955359490967b6203f*ZkdQfl7E-KK-gOYlCHWa9A*jtF-KUn66RH2OTD6m2XNoouaCRA2vjgB6vbgm5rQ9T9jmmvB9CJVr2_v2YbmWLiEPgQp6gSimdjxuQXhd3B7JResqX-4dUNujHuBAtsSlevI64IWz67bZOEmbjGx5hEBPU6bKk761bD9RttsFKZ38bNhTDNzu4ZO47D7qzc7gpihDhkHe1Hng8FpaXP2C2dQnlFhaldmsZmmBWuoihkldkhFEoA7rHGAN0_QSpLeK2vg8cKSK9G8dv2KS1ZRU4TH**a87f78fd12e1dc591d21de5eb8905712759f705c70454449c7da7c45941e1e6e*akIdXj2fSlqIGwRxhE8JMaSuNmkuzhJJ1SvO9DAW2v8; HttpOnly; Path=/",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861587412.298,
-    "responseBody": {
-        "sheet": [
-            {
-                "type": "seriesList",
-                "list": [
-                    {
-                        "data": [
-                            [
-                                1625695200000,
-                                10578.53125
-                            ],
-                            [
-                                1625781600000,
-                                10448
-                            ],
-                            [
-                                1625868000000,
-                                10283.484375
-                            ],
-                            [
-                                1625954400000,
-                                10145.5234375
-                            ],
-                            [
-                                1626040800000,
-                                12012.609375
-                            ],
-                            [
-                                1626127200000,
-                                11009.45703125
-                            ],
-                            [
-                                1626213600000,
-                                10720.59375
-                            ],
-                            [
-                                1626300000000,
-                                11185.3671875
-                            ],
-                            [
-                                1626386400000,
-                                13560.140625
-                            ],
-                            [
-                                1626472800000,
-                                9884.78125
-                            ],
-                            [
-                                1626559200000,
-                                11075.65625
-                            ],
-                            [
-                                1626645600000,
-                                10323.8515625
-                            ],
-                            [
-                                1626732000000,
-                                10369.546875
-                            ],
-                            [
-                                1626818400000,
-                                11711.890625
-                            ],
-                            [
-                                1626904800000,
-                                12612.6640625
-                            ],
-                            [
-                                1626991200000,
-                                10176.87890625
-                            ],
-                            [
-                                1627077600000,
-                                11480.33203125
-                            ],
-                            [
-                                1627164000000,
-                                11533.265625
-                            ],
-                            [
-                                1627250400000,
-                                10499.8125
-                            ],
-                            [
-                                1627336800000,
-                                12111.6875
-                            ],
-                            [
-                                1627423200000,
-                                10530.765625
-                            ],
-                            [
-                                1627509600000,
-                                11872.5625
-                            ],
-                            [
-                                1627596000000,
-                                12109.453125
-                            ],
-                            [
-                                1627682400000,
-                                11057.40625
-                            ],
-                            [
-                                1627768800000,
-                                13095.609375
-                            ],
-                            [
-                                1627855200000,
-                                12574.015625
-                            ],
-                            [
-                                1627941600000,
-                                11188.1875
-                            ],
-                            [
-                                1628028000000,
-                                12117.65625
-                            ],
-                            [
-                                1628114400000,
-                                11558.25
-                            ],
-                            [
-                                1628200800000,
-                                11921.1171875
-                            ],
-                            [
-                                1628287200000,
-                                11135.03125
-                            ],
-                            [
-                                1628373600000,
-                                11135.03125
-                            ]
-                        ],
-                        "type": "series",
-                        "fit": "nearest",
-                        "label": "q:* > sum(taxless_total_price)",
-                        "split": "*"
-                    }
-                ]
-            }
-        ],
-        "stats": {
-            "invokeTime": 1626861587395,
-            "queryCount": 1,
-            "queryTime": 1626861587410,
-            "cacheCount": 1,
-            "sheetTime": 1626861587411
-        }
-    }
+    "responseTime": 1627315072634.784,
+    "responseBody": {}
 }

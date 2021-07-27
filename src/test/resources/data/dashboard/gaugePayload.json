@@ -1,6 +1,6 @@
 {
   "timerange":{
-    "timezone":"Europe/Berlin",
+    "timezone":"Africa/Abidjan",
     "min":"${startTime}",
     "max":"${endTime}"
   },
@@ -15,6 +15,7 @@
   ],
   "panels":[
     {
+      "time_range_mode":"entire_time_range",
       "id":"61ca57f0-469d-11e7-af02-69e470af7417",
       "type":"gauge",
       "series":[
@@ -26,18 +27,31 @@
             {
               "id":"61ca57f2-469d-11e7-af02-69e470af7417",
               "type":"count"
+            },
+            {
+              "id":"fd1e1b90-e4e3-11eb-8234-cb7bfd534fce",
+              "type":"math",
+              "variables":[
+                {
+                  "id":"00374270-e4e4-11eb-8234-cb7bfd534fce",
+                  "name":"c",
+                  "field":"61ca57f2-469d-11e7-af02-69e470af7417"
+                }
+              ],
+              "script":"params.c / (params._interval / 1000 / 60 / 60 / 24)"
             }
           ],
           "separate_axis":0,
           "axis_position":"right",
-          "formatter":"number",
+          "formatter":"0.0",
           "chart_type":"line",
           "line_width":1,
           "point_size":1,
           "fill":0.5,
           "stacked":"none",
           "label":"Trxns / day",
-          "split_color_mode":"gradient"
+          "split_color_mode":"gradient",
+          "value_template":""
         }
       ],
       "time_field":"order_date",
@@ -62,16 +76,18 @@
         }
       ],
       "gauge_width":"15",
-      "gauge_inner_width":10,
+      "gauge_inner_width":"10",
       "gauge_style":"half",
       "filter":"",
       "gauge_max":"300",
       "use_kibana_indexes":true,
       "hide_last_value_indicator":true,
+      "tooltip_mode":"show_all",
+      "drop_last_bucket":0,
+      "isModelInvalid":false,
       "index_pattern":{
         "id":"${indexPatternId}"
-      },
-      "tooltip_mode":"show_all"
+      }
     }
   ],
   "state":{

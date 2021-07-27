@@ -1,6 +1,6 @@
 {
-    "loaderId": "F0BA51E804DB20020CF81549AFAC7E9B",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "43A418682E9570B6CCD51BC2784CB458",
+    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/api/timelion/run",
     "requestHeader": {
@@ -9,7 +9,7 @@
         "Referer": "http://localhost:5620/app/canvas",
         "kbn-xsrf": "professionally-crafted-string-of-text",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
         "Content-Type": "application/json"
     },
     "postData": {
@@ -26,30 +26,31 @@
             ".es(index=kibana_sample_data_ecommerce, metric=sum:taxless_total_price, timefield=order_date)"
         ],
         "time": {
-            "from": "2020-07-21T09:59:47.036Z",
-            "to": "2021-07-21T09:59:47.036Z",
+            "from": "2020-07-26T15:57:52.337Z",
+            "to": "2021-07-26T15:57:52.337Z",
             "interval": "1w",
             "timezone": "UTC"
         }
     },
     "responseUrl": "http://localhost:5620/api/timelion/run",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:47 GMT",
+        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
+        "Date": "Mon, 26 Jul 2021 15:57:52 GMT",
         "content-encoding": "gzip",
         "referrer-policy": "no-referrer-when-downgrade",
         "vary": "accept-encoding",
         "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**6c167501d04ce7664121aa1837941e09b59a4327c12ce3c5907875526b7b244a*zPPItYbB7JgUHoT_emux_Q*MgUAXgZKgWHJP69Nv1-X2WKV1cTYttNyWdg4Nhuee_gPz558Z0rVu8jeW0rN4CNkPAAUQ85KZnX-E-BZHIwP4e2D9MBdkUkDZyMa4wI8hwPnE8_U76YuegnydNPNnMSvHFU6UinRumtKqffAidThpXbDq4q8Q6iuLZ4ZsOmL72LAZPBTTazhbPYfcMpeqBykyyHUB2-mB6H6R5UkQxoN4KKe6sHiQOoa5jIJ--37vdr1aLGEcp_SlMbKcqIGp-pc**af1526a58728afd83001103b0e7a4a4b620524d03af93f9b28d36ce17492ff7a*tcfljpkimfzH94e6YKMcDPw6qOaVDm5B7DmBae3nBzE; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
         "Transfer-Encoding": "chunked",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861587156.639,
+    "responseTime": 1627315072506.759,
     "responseBody": {
         "sheet": [
             {
@@ -58,216 +59,216 @@
                     {
                         "data": [
                             [
-                                1595109600000,
+                                1595721600000,
                                 0
                             ],
                             [
-                                1595714400000,
+                                1596326400000,
                                 0
                             ],
                             [
-                                1596319200000,
+                                1596931200000,
                                 0
                             ],
                             [
-                                1596924000000,
+                                1597536000000,
                                 0
                             ],
                             [
-                                1597528800000,
+                                1598140800000,
                                 0
                             ],
                             [
-                                1598133600000,
+                                1598745600000,
                                 0
                             ],
                             [
-                                1598738400000,
+                                1599350400000,
                                 0
                             ],
                             [
-                                1599343200000,
+                                1599955200000,
                                 0
                             ],
                             [
-                                1599948000000,
+                                1600560000000,
                                 0
                             ],
                             [
-                                1600552800000,
+                                1601164800000,
                                 0
                             ],
                             [
-                                1601157600000,
+                                1601769600000,
                                 0
                             ],
                             [
-                                1601762400000,
+                                1602374400000,
                                 0
                             ],
                             [
-                                1602367200000,
+                                1602979200000,
                                 0
                             ],
                             [
-                                1602972000000,
+                                1603584000000,
                                 0
                             ],
                             [
-                                1603576800000,
+                                1604188800000,
                                 0
                             ],
                             [
-                                1604185200000,
+                                1604793600000,
                                 0
                             ],
                             [
-                                1604790000000,
+                                1605398400000,
                                 0
                             ],
                             [
-                                1605394800000,
+                                1606003200000,
                                 0
                             ],
                             [
-                                1605999600000,
+                                1606608000000,
                                 0
                             ],
                             [
-                                1606604400000,
+                                1607212800000,
                                 0
                             ],
                             [
-                                1607209200000,
+                                1607817600000,
                                 0
                             ],
                             [
-                                1607814000000,
+                                1608422400000,
                                 0
                             ],
                             [
-                                1608418800000,
+                                1609027200000,
                                 0
                             ],
                             [
-                                1609023600000,
+                                1609632000000,
                                 0
                             ],
                             [
-                                1609628400000,
+                                1610236800000,
                                 0
                             ],
                             [
-                                1610233200000,
+                                1610841600000,
                                 0
                             ],
                             [
-                                1610838000000,
+                                1611446400000,
                                 0
                             ],
                             [
-                                1611442800000,
+                                1612051200000,
                                 0
                             ],
                             [
-                                1612047600000,
+                                1612656000000,
                                 0
                             ],
                             [
-                                1612652400000,
+                                1613260800000,
                                 0
                             ],
                             [
-                                1613257200000,
+                                1613865600000,
                                 0
                             ],
                             [
-                                1613862000000,
+                                1614470400000,
                                 0
                             ],
                             [
-                                1614466800000,
+                                1615075200000,
                                 0
                             ],
                             [
-                                1615071600000,
+                                1615680000000,
                                 0
                             ],
                             [
-                                1615676400000,
+                                1616284800000,
                                 0
                             ],
                             [
-                                1616281200000,
+                                1616889600000,
                                 0
                             ],
                             [
-                                1616886000000,
+                                1617494400000,
                                 0
                             ],
                             [
-                                1617487200000,
+                                1618099200000,
                                 0
                             ],
                             [
-                                1618092000000,
+                                1618704000000,
                                 0
                             ],
                             [
-                                1618696800000,
+                                1619308800000,
                                 0
                             ],
                             [
-                                1619301600000,
+                                1619913600000,
                                 0
                             ],
                             [
-                                1619906400000,
+                                1620518400000,
                                 0
                             ],
                             [
-                                1620511200000,
+                                1621123200000,
                                 0
                             ],
                             [
-                                1621116000000,
+                                1621728000000,
                                 0
                             ],
                             [
-                                1621720800000,
+                                1622332800000,
                                 0
                             ],
                             [
-                                1622325600000,
+                                1622937600000,
                                 0
                             ],
                             [
-                                1622930400000,
+                                1623542400000,
                                 0
                             ],
                             [
-                                1623535200000,
+                                1624147200000,
                                 0
                             ],
                             [
-                                1624140000000,
+                                1624752000000,
                                 0
                             ],
                             [
-                                1624744800000,
+                                1625356800000,
                                 0
                             ],
                             [
-                                1625349600000,
+                                1625961600000,
                                 41455.5390625
                             ],
                             [
-                                1625954400000,
+                                1626566400000,
                                 79448.60546875
                             ],
                             [
-                                1626559200000,
-                                25055.5859375
+                                1627171200000,
+                                6367.6171875
                             ]
                         ],
                         "type": "series",
@@ -279,11 +280,11 @@
             }
         ],
         "stats": {
-            "invokeTime": 1626861587105,
+            "invokeTime": 1627315072440,
             "queryCount": 1,
-            "queryTime": 1626861587142,
+            "queryTime": 1627315072500,
             "cacheCount": 1,
-            "sheetTime": 1626861587155
+            "sheetTime": 1627315072504
         }
     }
 }

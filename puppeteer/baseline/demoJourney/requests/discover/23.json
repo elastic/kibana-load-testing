@@ -51,7 +51,7 @@
                                 "2": {
                                     "date_histogram": {
                                         "field": "order_date",
-                                        "fixed_interval": "30s",
+                                        "fixed_interval": "12h",
                                         "time_zone": "Africa/Abidjan",
                                         "min_doc_count": 1
                                     }
@@ -70,8 +70,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-26T15:42:18.924Z",
-                                                    "lte": "2021-07-26T15:57:18.924Z",
+                                                    "gte": "2021-06-26T15:57:28.597Z",
+                                                    "lte": "2021-07-26T15:57:28.597Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -99,7 +99,7 @@
                     }
                 },
                 "options": {
-                    "sessionId": "46148838-2a1d-4282-98bb-9534dd010451",
+                    "sessionId": "4f8a38a4-6fd0-4dcb-a9be-72d1b6b37cb9",
                     "isRestore": false,
                     "strategy": "ese",
                     "isStored": false
@@ -110,18 +110,18 @@
     "responseUrl": "http://localhost:5620/internal/bsearch",
     "responseHeaders": {
         "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:18 GMT",
+        "Date": "Mon, 26 Jul 2021 15:57:28 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "transfer-encoding": "chunked",
         "connection": "keep-alive",
         "content-type": "application/x-ndjson",
         "cache-control": "private, no-cache, no-store, must-revalidate",
         "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
-        "set-cookie": "sid=Fe26.2**78344ed4fca09460b472abd9e276855db2d0c2261d44d39ec6350e5698bbec1c*AaqzQSEuxvXLaf0JfFFT1Q*PaGT5ndCtJSGd2WXEhK2xmq0J3x3WH71xHpmKuvuy7ZIIHQqBneUySembTgN6lj4JPx5meKtJquLdxSyU_zXqiZ5alaC1rFoHT4n-TUL9Q4lGfjbEkmovsJqebEN6zaEKsnd4E1-q3hvkJSKLl5kmeUJTwKjlhPC1A8H328F0SWqa1KF4xueIc_18SR6J609y9f_l2xMPo8s31TIVUVat8A7QAR_S_Gn5KnC7iA9JCda62U60JtMB6_9TYXDe5nP**a43cd688c795b8c3acdb74e5b98e4d3176663b42cfb1d978df355eb04a3954c0*OpL1KGR8eVZYQwDXnDMyswlvI8eU58GR3JSqMtTREHw; HttpOnly; Path=/",
+        "set-cookie": "sid=Fe26.2**79112cedc96cfe782aca687b1f3252191c769a6361bedd126040b28a97754812*TEswUU4Vh-_gBSm7AG-o3Q*XoEJvPs8d5K0YNMc4r5mZGLnaNzaWXPkx2EiRitT_-vgrime7gOwEPNl0kXVorJJna8U6VcpfC8Jtn_QcfMO8YLaW849ClgHHz3XWKFTVV98tjkc96Oa00660aIrGn3BJfuKoBS532nAWgXfXpleje16Q0i2BRb0GmzBVVRxVXHZaZhKG3c1w0Pyu2EeGHvpY8owPI1ORdd1bhMKx6sKVwB-Rut9mWi0eMzn1L6kIAfHNnSlP77SRAJ8XVYMuG3H**417a074706be5a8d1392d6387e83510c0da882bd915c8bd132c1a3e84187948c*-UR1aK-VtDu4z8nbV1zpS3dRX62qTLwM6R4LuHpcBec; HttpOnly; Path=/",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315039224.172,
+    "responseTime": 1627315048751.72,
     "responseBody": {}
 }

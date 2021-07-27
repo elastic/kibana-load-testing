@@ -7,8 +7,8 @@ import org.kibanaLoadTest.helpers.Helper
 import java.util.Calendar
 
 object Dashboard {
-  // bsearch1.json ... bsearch4.json
-  private val bSearchPayloadSeq = Seq(1, 2, 3, 4)
+  // bsearch1.json ... bsearch6.json
+  private val bSearchPayloadSeq = Seq(1, 2, 3, 4,5,6)
 
   def load(baseUrl: String, headers: Map[String, String]): ChainBuilder = {
     exec(// unique search sessionId for each virtual user
@@ -17,6 +17,8 @@ object Dashboard {
       session => session.set("startTime", Helper.getDate(Calendar.DAY_OF_MONTH, -7))
     ).exec(// unique date picker end time for each virtual user
       session => session.set("endTime", Helper.getDate(Calendar.DAY_OF_MONTH, 0))
+    ).exec(// unique date picker end time for each virtual user
+      session => session.set("7dBeforeTime", Helper.getDate(Calendar.DAY_OF_MONTH, -14))
     ).exec(
       http("query dashboards list")
         .get("/api/saved_objects/_find")
@@ -127,7 +129,7 @@ object Dashboard {
         ).pause(1).exec(
           http("query timeseries data")
             .post("/api/metrics/vis/data")
-            .body(ElFileBody("data/timeSeriesPayload.json"))
+            .body(ElFileBody("data/dashboard/timeSeriesPayload.json"))
             .asJson
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")
@@ -135,7 +137,7 @@ object Dashboard {
         ).pause(1).exec(
           http("query gauge data")
             .post("/api/metrics/vis/data")
-            .body(ElFileBody("data/gaugePayload.json"))
+            .body(ElFileBody("data/dashboard/gaugePayload.json"))
             .asJson
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")

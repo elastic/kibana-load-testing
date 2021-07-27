@@ -1,11 +1,11 @@
 {
-    "loaderId": "9E217527DE22B767B1357C56DBA66665",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
+    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
     "method": "GET",
     "requestUrl": "http://localhost:5620/app/dashboards",
     "requestHeader": {
         "Upgrade-Insecure-Requests": "1",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36"
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36"
     },
     "postData": {},
     "responseUrl": "http://localhost:5620/app/dashboards",
@@ -13,19 +13,20 @@
         "content-security-policy": "script-src 'unsafe-eval' 'self'; worker-src blob: 'self'; style-src 'unsafe-inline' 'self'",
         "x-content-type-options": "nosniff",
         "referrer-policy": "no-referrer-when-downgrade",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
+        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
+        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
         "content-type": "text/html; charset=utf-8",
         "cache-control": "private, no-cache, no-store, must-revalidate",
+        "set-cookie": "sid=Fe26.2**fdb2ca82bb4227989c383990c28d0f533125d2c781507f1e7f6f7df672192087*cd0TGFTg-uGXZTD0-i8Vng*gdQ4rYa0sg3EO0p9Qyy_BFQcVD5GWFWKWVx1UdN6vVRCYdXmPqcX6n7WEz6syOJpXq_A1JaW67RKT-KFVxaTeja3XdvyMBmDnezl4HsqvcaTDhjdcQOoFy89ON1Btl8qew0daJ3aMQr-eB1NxGqyAtpJAWCeuf4sO_IZ27WWBf4lUsnjl2lidXuxtS0ESYk2ucEpQsy9nqUdTZOgYHlbATJo_efA0RuIqPQcvBGjag5FM_ghPLZQTDZCOfoXVFNu**f5aec5b198b2a18ead68fa6c751bbcd9970189fc6b49be5d29c913cd34d481db*1CAldKlU60gPpXOplF1wyAo2lyNu8aQtvGOoEQK2pEg; HttpOnly; Path=/",
         "vary": "accept-encoding",
         "content-encoding": "gzip",
-        "Date": "Wed, 21 Jul 2021 09:59:29 GMT",
+        "Date": "Mon, 26 Jul 2021 15:57:33 GMT",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "Transfer-Encoding": "chunked"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861569904.492,
+    "responseTime": 1627315053976.579,
     "responseBody": {}
 }

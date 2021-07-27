@@ -1,35 +1,36 @@
 {
-    "loaderId": "9E217527DE22B767B1357C56DBA66665",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
+    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
     "method": "GET",
     "requestUrl": "http://localhost:5620/api/alerts/list_alert_types",
     "requestHeader": {
         "sec-ch-ua": "",
         "Referer": "http://localhost:5620/app/dashboards",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "Content-Type": "application/json"
     },
     "postData": {},
     "responseUrl": "http://localhost:5620/api/alerts/list_alert_types",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:31 GMT",
+        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
+        "Date": "Mon, 26 Jul 2021 15:57:35 GMT",
         "content-encoding": "gzip",
         "referrer-policy": "no-referrer-when-downgrade",
         "vary": "accept-encoding",
         "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**e4fc6cf5570c4adf64b6b8292672703b22d0fb332515684badca40b6fc4d8fe1*t2hMB6IVRNOhPdUu9CQblw*iZ-OenyY1a4Aco9WM2Fd0M7DgDFYZ6_5nRoRHdxFWMA0UblpfrIBYF_nTpH7_Q01IbfPVltZbDOEH6dHSezQHL5wlozvoeG1sKgWMgq2cshDUEE0FQEYCrhYLcGzwmuc7TeOwH3kgyQSJ-rxgCKDhdo2n791venz8iCdOnjmiKKvDx9NF6y2pYLcLZzGCsYUVe5ysFSIm4OrXi6fOEn_TUAYyT8vwBkrgBxVdydDnV2rj-GPHoYg5puBxkEngF-A**d6104152ce182773dbb3ea24d9733fd61a664a8ce425cb0115a35c14bcbe81f6*sefawvg3R6phiv8T5WFt8DJUhZrfBymMv2LgeFfoUgY; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
         "Transfer-Encoding": "chunked",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861571183.543,
+    "responseTime": 1627315055464.551,
     "responseBody": [
         {
             "id": ".index-threshold",
@@ -404,7 +405,7 @@
                     },
                     {
                         "name": "jobIds",
-                        "description": "List of job IDs that triggered the alert instance"
+                        "description": "List of job IDs that triggered the alert"
                     },
                     {
                         "name": "message",
@@ -430,6 +431,81 @@
                         "name": "anomalyExplorerUrl",
                         "description": "URL to open in the Anomaly Explorer",
                         "useWithTripleBracesInTemplates": true
+                    }
+                ],
+                "state": [],
+                "params": []
+            },
+            "producer": "ml",
+            "minimumLicenseRequired": "platinum",
+            "isExportable": true,
+            "enabledInLicense": true,
+            "authorizedConsumers": {
+                "alerts": {
+                    "read": true,
+                    "all": true
+                },
+                "stackAlerts": {
+                    "read": true,
+                    "all": true
+                },
+                "ml": {
+                    "read": true,
+                    "all": true
+                },
+                "siem": {
+                    "read": true,
+                    "all": true
+                },
+                "uptime": {
+                    "read": true,
+                    "all": true
+                },
+                "infrastructure": {
+                    "read": true,
+                    "all": true
+                },
+                "logs": {
+                    "read": true,
+                    "all": true
+                },
+                "monitoring": {
+                    "read": true,
+                    "all": true
+                },
+                "apm": {
+                    "read": true,
+                    "all": true
+                }
+            }
+        },
+        {
+            "id": "xpack.ml.anomaly_detection_jobs_health",
+            "name": "Anomaly detection jobs health",
+            "actionGroups": [
+                {
+                    "id": "anomaly_detection_realtime_issue",
+                    "name": "Real-time issue detected"
+                },
+                {
+                    "id": "recovered",
+                    "name": "Recovered"
+                }
+            ],
+            "recoveryActionGroup": {
+                "id": "recovered",
+                "name": "Recovered"
+            },
+            "defaultActionGroupId": "anomaly_detection_realtime_issue",
+            "actionVariables": {
+                "context": [
+                    {
+                        "name": "jobIds",
+                        "description": "List of job IDs that triggered the alert"
+                    },
+                    {
+                        "name": "message",
+                        "description": "Alert info message"
                     }
                 ],
                 "state": [],
@@ -862,6 +938,137 @@
             }
         },
         {
+            "id": "xpack.uptime.alerts.durationAnomaly",
+            "name": "Uptime Duration Anomaly",
+            "actionGroups": [
+                {
+                    "id": "xpack.uptime.alerts.actionGroups.durationAnomaly",
+                    "name": "Uptime Duration Anomaly"
+                },
+                {
+                    "id": "recovered",
+                    "name": "Recovered"
+                }
+            ],
+            "recoveryActionGroup": {
+                "id": "recovered",
+                "name": "Recovered"
+            },
+            "defaultActionGroupId": "xpack.uptime.alerts.actionGroups.durationAnomaly",
+            "actionVariables": {
+                "context": [],
+                "state": [
+                    {
+                        "name": "severity",
+                        "description": "The severity of the anomaly."
+                    },
+                    {
+                        "name": "anomalyStartTimestamp",
+                        "description": "ISO8601 timestamp of the start of the anomaly."
+                    },
+                    {
+                        "name": "monitor",
+                        "description": "A human friendly rendering of name or ID, preferring name (e.g. My Monitor)"
+                    },
+                    {
+                        "name": "monitorId",
+                        "description": "ID of the monitor."
+                    },
+                    {
+                        "name": "monitorUrl",
+                        "description": "URL of the monitor."
+                    },
+                    {
+                        "name": "slowestAnomalyResponse",
+                        "description": "Slowest response time during anomaly bucket with unit (ms, s) attached."
+                    },
+                    {
+                        "name": "expectedResponseTime",
+                        "description": "Expected response time"
+                    },
+                    {
+                        "name": "severityScore",
+                        "description": "Anomaly severity score"
+                    },
+                    {
+                        "name": "observerLocation",
+                        "description": "Observer location from which heartbeat check is performed."
+                    },
+                    {
+                        "name": "firstCheckedAt",
+                        "description": "Timestamp indicating when this alert first checked"
+                    },
+                    {
+                        "name": "firstTriggeredAt",
+                        "description": "Timestamp indicating when the alert first triggered"
+                    },
+                    {
+                        "name": "currentTriggerStarted",
+                        "description": "Timestamp indicating when the current trigger state began, if alert is triggered"
+                    },
+                    {
+                        "name": "isTriggered",
+                        "description": "Flag indicating if the alert is currently triggering"
+                    },
+                    {
+                        "name": "lastCheckedAt",
+                        "description": "Timestamp indicating the alert's most recent check time"
+                    },
+                    {
+                        "name": "lastResolvedAt",
+                        "description": "Timestamp indicating the most recent resolution time for this alert"
+                    },
+                    {
+                        "name": "lastTriggeredAt",
+                        "description": "Timestamp indicating the alert's most recent trigger time"
+                    }
+                ],
+                "params": []
+            },
+            "producer": "uptime",
+            "minimumLicenseRequired": "platinum",
+            "isExportable": true,
+            "enabledInLicense": true,
+            "authorizedConsumers": {
+                "alerts": {
+                    "read": true,
+                    "all": true
+                },
+                "stackAlerts": {
+                    "read": true,
+                    "all": true
+                },
+                "ml": {
+                    "read": true,
+                    "all": true
+                },
+                "siem": {
+                    "read": true,
+                    "all": true
+                },
+                "uptime": {
+                    "read": true,
+                    "all": true
+                },
+                "infrastructure": {
+                    "read": true,
+                    "all": true
+                },
+                "logs": {
+                    "read": true,
+                    "all": true
+                },
+                "monitoring": {
+                    "read": true,
+                    "all": true
+                },
+                "apm": {
+                    "read": true,
+                    "all": true
+                }
+            }
+        },
+        {
             "id": "xpack.uptime.alerts.tls",
             "name": "Uptime TLS (Legacy)",
             "actionGroups": [
@@ -977,137 +1184,6 @@
             }
         },
         {
-            "id": "xpack.uptime.alerts.durationAnomaly",
-            "name": "Uptime Duration Anomaly",
-            "actionGroups": [
-                {
-                    "id": "xpack.uptime.alerts.actionGroups.durationAnomaly",
-                    "name": "Uptime Duration Anomaly"
-                },
-                {
-                    "id": "recovered",
-                    "name": "Recovered"
-                }
-            ],
-            "recoveryActionGroup": {
-                "id": "recovered",
-                "name": "Recovered"
-            },
-            "defaultActionGroupId": "xpack.uptime.alerts.actionGroups.durationAnomaly",
-            "actionVariables": {
-                "context": [],
-                "state": [
-                    {
-                        "name": "severity",
-                        "description": "The severity of the anomaly."
-                    },
-                    {
-                        "name": "anomalyStartTimestamp",
-                        "description": "ISO8601 timestamp of the start of the anomaly."
-                    },
-                    {
-                        "name": "monitor",
-                        "description": "A human friendly rendering of name or ID, preferring name (e.g. My Monitor)"
-                    },
-                    {
-                        "name": "monitorId",
-                        "description": "ID of the monitor."
-                    },
-                    {
-                        "name": "monitorUrl",
-                        "description": "URL of the monitor."
-                    },
-                    {
-                        "name": "slowestAnomalyResponse",
-                        "description": "Slowest response time during anomaly bucket with unit (ms, s) attached."
-                    },
-                    {
-                        "name": "expectedResponseTime",
-                        "description": "Expected response time"
-                    },
-                    {
-                        "name": "severityScore",
-                        "description": "Anomaly severity score"
-                    },
-                    {
-                        "name": "observerLocation",
-                        "description": "Observer location from which heartbeat check is performed."
-                    },
-                    {
-                        "name": "firstCheckedAt",
-                        "description": "Timestamp indicating when this alert first checked"
-                    },
-                    {
-                        "name": "firstTriggeredAt",
-                        "description": "Timestamp indicating when the alert first triggered"
-                    },
-                    {
-                        "name": "currentTriggerStarted",
-                        "description": "Timestamp indicating when the current trigger state began, if alert is triggered"
-                    },
-                    {
-                        "name": "isTriggered",
-                        "description": "Flag indicating if the alert is currently triggering"
-                    },
-                    {
-                        "name": "lastCheckedAt",
-                        "description": "Timestamp indicating the alert's most recent check time"
-                    },
-                    {
-                        "name": "lastResolvedAt",
-                        "description": "Timestamp indicating the most recent resolution time for this alert"
-                    },
-                    {
-                        "name": "lastTriggeredAt",
-                        "description": "Timestamp indicating the alert's most recent trigger time"
-                    }
-                ],
-                "params": []
-            },
-            "producer": "uptime",
-            "minimumLicenseRequired": "basic",
-            "isExportable": true,
-            "enabledInLicense": true,
-            "authorizedConsumers": {
-                "alerts": {
-                    "read": true,
-                    "all": true
-                },
-                "stackAlerts": {
-                    "read": true,
-                    "all": true
-                },
-                "ml": {
-                    "read": true,
-                    "all": true
-                },
-                "siem": {
-                    "read": true,
-                    "all": true
-                },
-                "uptime": {
-                    "read": true,
-                    "all": true
-                },
-                "infrastructure": {
-                    "read": true,
-                    "all": true
-                },
-                "logs": {
-                    "read": true,
-                    "all": true
-                },
-                "monitoring": {
-                    "read": true,
-                    "all": true
-                },
-                "apm": {
-                    "read": true,
-                    "all": true
-                }
-            }
-        },
-        {
             "id": "metrics.alert.threshold",
             "name": "Metric threshold",
             "actionGroups": [
@@ -1129,105 +1205,6 @@
                 "name": "Recovered"
             },
             "defaultActionGroupId": "metrics.threshold.fired",
-            "actionVariables": {
-                "context": [
-                    {
-                        "name": "group",
-                        "description": "Name of the group reporting data"
-                    },
-                    {
-                        "name": "alertState",
-                        "description": "Current state of the alert"
-                    },
-                    {
-                        "name": "reason",
-                        "description": "A description of why the alert is in this state, including which metrics have crossed which thresholds"
-                    },
-                    {
-                        "name": "timestamp",
-                        "description": "A timestamp of when the alert was detected."
-                    },
-                    {
-                        "name": "value",
-                        "description": "The value of the metric in the specified condition. Usage: (ctx.value.condition0, ctx.value.condition1, etc...)."
-                    },
-                    {
-                        "name": "metric",
-                        "description": "The metric name in the specified condition. Usage: (ctx.metric.condition0, ctx.metric.condition1, etc...)."
-                    },
-                    {
-                        "name": "threshold",
-                        "description": "The threshold value of the metric for the specified condition. Usage: (ctx.threshold.condition0, ctx.threshold.condition1, etc...)."
-                    }
-                ],
-                "state": [],
-                "params": []
-            },
-            "producer": "infrastructure",
-            "minimumLicenseRequired": "basic",
-            "isExportable": true,
-            "enabledInLicense": true,
-            "authorizedConsumers": {
-                "alerts": {
-                    "read": true,
-                    "all": true
-                },
-                "stackAlerts": {
-                    "read": true,
-                    "all": true
-                },
-                "ml": {
-                    "read": true,
-                    "all": true
-                },
-                "siem": {
-                    "read": true,
-                    "all": true
-                },
-                "uptime": {
-                    "read": true,
-                    "all": true
-                },
-                "infrastructure": {
-                    "read": true,
-                    "all": true
-                },
-                "logs": {
-                    "read": true,
-                    "all": true
-                },
-                "monitoring": {
-                    "read": true,
-                    "all": true
-                },
-                "apm": {
-                    "read": true,
-                    "all": true
-                }
-            }
-        },
-        {
-            "id": "metrics.alert.inventory.threshold",
-            "name": "Inventory",
-            "actionGroups": [
-                {
-                    "id": "metrics.inventory_threshold.fired",
-                    "name": "Alert"
-                },
-                {
-                    "id": "metrics.inventory_threshold.warning",
-                    "name": "Warning"
-                },
-                {
-                    "id": "recovered",
-                    "name": "Recovered"
-                }
-            ],
-            "recoveryActionGroup": {
-                "id": "recovered",
-                "name": "Recovered"
-            },
-            "defaultActionGroupId": "metrics.inventory_threshold.fired",
             "actionVariables": {
                 "context": [
                     {
@@ -1461,6 +1438,105 @@
                 "params": []
             },
             "producer": "logs",
+            "minimumLicenseRequired": "basic",
+            "isExportable": true,
+            "enabledInLicense": true,
+            "authorizedConsumers": {
+                "alerts": {
+                    "read": true,
+                    "all": true
+                },
+                "stackAlerts": {
+                    "read": true,
+                    "all": true
+                },
+                "ml": {
+                    "read": true,
+                    "all": true
+                },
+                "siem": {
+                    "read": true,
+                    "all": true
+                },
+                "uptime": {
+                    "read": true,
+                    "all": true
+                },
+                "infrastructure": {
+                    "read": true,
+                    "all": true
+                },
+                "logs": {
+                    "read": true,
+                    "all": true
+                },
+                "monitoring": {
+                    "read": true,
+                    "all": true
+                },
+                "apm": {
+                    "read": true,
+                    "all": true
+                }
+            }
+        },
+        {
+            "id": "metrics.alert.inventory.threshold",
+            "name": "Inventory",
+            "actionGroups": [
+                {
+                    "id": "metrics.inventory_threshold.fired",
+                    "name": "Alert"
+                },
+                {
+                    "id": "metrics.inventory_threshold.warning",
+                    "name": "Warning"
+                },
+                {
+                    "id": "recovered",
+                    "name": "Recovered"
+                }
+            ],
+            "recoveryActionGroup": {
+                "id": "recovered",
+                "name": "Recovered"
+            },
+            "defaultActionGroupId": "metrics.inventory_threshold.fired",
+            "actionVariables": {
+                "context": [
+                    {
+                        "name": "group",
+                        "description": "Name of the group reporting data"
+                    },
+                    {
+                        "name": "alertState",
+                        "description": "Current state of the alert"
+                    },
+                    {
+                        "name": "reason",
+                        "description": "A description of why the alert is in this state, including which metrics have crossed which thresholds"
+                    },
+                    {
+                        "name": "timestamp",
+                        "description": "A timestamp of when the alert was detected."
+                    },
+                    {
+                        "name": "value",
+                        "description": "The value of the metric in the specified condition. Usage: (ctx.value.condition0, ctx.value.condition1, etc...)."
+                    },
+                    {
+                        "name": "metric",
+                        "description": "The metric name in the specified condition. Usage: (ctx.metric.condition0, ctx.metric.condition1, etc...)."
+                    },
+                    {
+                        "name": "threshold",
+                        "description": "The threshold value of the metric for the specified condition. Usage: (ctx.threshold.condition0, ctx.threshold.condition1, etc...)."
+                    }
+                ],
+                "state": [],
+                "params": []
+            },
+            "producer": "infrastructure",
             "minimumLicenseRequired": "basic",
             "isExportable": true,
             "enabledInLicense": true,

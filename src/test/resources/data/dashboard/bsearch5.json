@@ -10,7 +10,7 @@
               "join":{
                 "terms":{
                   "size":65535,
-                  "field":"geoip.region_name"
+                  "field":"geoip.country_iso_code"
                 },
                 "aggs":{
 
@@ -55,7 +55,7 @@
                     "range":{
                       "order_date":{
                         "gte":"${startTime}",
-                        "lte":"${endTime}",
+                        "lte":"${startTime}",
                         "format":"strict_date_optional_time"
                       }
                     }

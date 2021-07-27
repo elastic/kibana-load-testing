@@ -2,33 +2,36 @@
   "batch":[
     {
       "request":{
+        "id":"FnQyVXpoaWV0UTVPYTFIdnNvY1o3Y2cbU2RnNXhreHFRMDI3N0VTYXhuT0FKQTo3NTEw",
         "params":{
           "index":"kibana_sample_data_ecommerce",
           "body":{
-            "size":0,
-            "aggs":{
-              "join":{
-                "terms":{
-                  "size":65535,
-                  "field":"geoip.region_name"
-                },
-                "aggs":{
-
+            "version":true,
+            "size":500,
+            "sort":[
+              {
+                "order_date":{
+                  "order":"desc",
+                  "unmapped_type":"boolean"
                 }
               }
-            },
+            ],
             "fields":[
               {
+                "field":"*",
+                "include_unmapped":"true"
+              },
+              {
                 "field":"customer_birth_date",
-                "format":"date_time"
+                "format":"strict_date_optional_time"
               },
               {
                 "field":"order_date",
-                "format":"date_time"
+                "format":"strict_date_optional_time"
               },
               {
                 "field":"products.created_on",
-                "format":"date_time"
+                "format":"strict_date_optional_time"
               }
             ],
             "script_fields":{
@@ -40,11 +43,7 @@
             "runtime_mappings":{
 
             },
-            "_source":{
-              "excludes":[
-
-              ]
-            },
+            "_source":false,
             "query":{
               "bool":{
                 "must":[
@@ -68,16 +67,28 @@
 
                 ]
               }
+            },
+            "highlight":{
+              "pre_tags":[
+                "@kibana-highlighted-field@"
+              ],
+              "post_tags":[
+                "@/kibana-highlighted-field@"
+              ],
+              "fields":{
+                "*":{
+
+                }
+              },
+              "fragment_size":2147483647
             }
           },
-          "track_total_hits":false,
           "preference":1627315054890
         }
       },
       "options":{
         "sessionId":"${searchSessionId}",
         "isRestore":false,
-        "legacyHitsTotal":false,
         "strategy":"ese",
         "isStored":false
       }

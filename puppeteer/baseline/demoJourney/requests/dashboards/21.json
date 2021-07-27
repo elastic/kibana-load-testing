@@ -1,115 +1,677 @@
 {
-    "loaderId": "9E217527DE22B767B1357C56DBA66665",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
-    "method": "POST",
-    "requestUrl": "http://localhost:5620/internal/bsearch",
+    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
+    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "method": "GET",
+    "requestUrl": "http://localhost:5620/api/index_patterns/_fields_for_wildcard?pattern=kibana_sample_data_ecommerce&meta_fields=_source&meta_fields=_id&meta_fields=_type&meta_fields=_index&meta_fields=_score",
     "requestHeader": {
         "sec-ch-ua": "",
         "Referer": "http://localhost:5620/app/dashboards",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
-        "X-Chunk-Encoding": "deflate",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "Content-Type": "application/json"
     },
-    "postData": {
-        "batch": [
-            {
-                "request": {
-                    "params": {
-                        "index": "kibana_sample_data_ecommerce",
-                        "body": {
-                            "version": true,
-                            "size": 500,
-                            "sort": [
-                                {
-                                    "order_date": {
-                                        "order": "desc",
-                                        "unmapped_type": "boolean"
-                                    }
-                                }
-                            ],
-                            "fields": [
-                                {
-                                    "field": "*",
-                                    "include_unmapped": "true"
-                                },
-                                {
-                                    "field": "customer_birth_date",
-                                    "format": "strict_date_optional_time"
-                                },
-                                {
-                                    "field": "order_date",
-                                    "format": "strict_date_optional_time"
-                                },
-                                {
-                                    "field": "products.created_on",
-                                    "format": "strict_date_optional_time"
-                                }
-                            ],
-                            "script_fields": {},
-                            "stored_fields": [
-                                "*"
-                            ],
-                            "runtime_mappings": {},
-                            "_source": false,
-                            "query": {
-                                "bool": {
-                                    "must": [],
-                                    "filter": [
-                                        {
-                                            "range": {
-                                                "order_date": {
-                                                    "gte": "2021-07-14T09:59:31.358Z",
-                                                    "lte": "2021-07-21T09:59:31.358Z",
-                                                    "format": "strict_date_optional_time"
-                                                }
-                                            }
-                                        }
-                                    ],
-                                    "should": [],
-                                    "must_not": []
-                                }
-                            },
-                            "highlight": {
-                                "pre_tags": [
-                                    "@kibana-highlighted-field@"
-                                ],
-                                "post_tags": [
-                                    "@/kibana-highlighted-field@"
-                                ],
-                                "fields": {
-                                    "*": {}
-                                },
-                                "fragment_size": 2147483647
-                            }
-                        },
-                        "preference": 1626861570770
-                    }
-                },
-                "options": {
-                    "sessionId": "c3cb35d8-9d4e-454d-84d2-8a1c9dc50c22",
-                    "isRestore": false,
-                    "strategy": "ese",
-                    "isStored": false
-                }
-            }
-        ]
-    },
-    "responseUrl": "http://localhost:5620/internal/bsearch",
+    "postData": {},
+    "responseUrl": "http://localhost:5620/api/index_patterns/_fields_for_wildcard?pattern=kibana_sample_data_ecommerce&meta_fields=_source&meta_fields=_id&meta_fields=_type&meta_fields=_index&meta_fields=_score",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:31 GMT",
+        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
+        "Date": "Mon, 26 Jul 2021 15:57:36 GMT",
+        "content-encoding": "gzip",
         "referrer-policy": "no-referrer-when-downgrade",
-        "transfer-encoding": "chunked",
-        "content-type": "application/x-ndjson",
+        "vary": "accept-encoding",
+        "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**32b819c4d1fa95483bfc717224510f8dc438b8884fd7fd46a3ac6972bb01755c*mCjS3x3q4uqaLCL4RYJpYw*kkMjKyMb-QZGjOZHB_e-2cWgfS3mHVOSspOjai3PBDQCDDHMSwrh4KJuYCzO9wkVm_f5kLHyx1STRDj5-61JhQCXGbSSnnHU3kgaE-E5yrPAuN3jf4legL6kQaugTQp62ah7FvJeZn6J5LGEkQjFE1I2k9an7BOoEppunhg0w_Zf_zyufCGFQ1PNowKDLyzj8NsmtTWBLhfT8aYHn0hSDBHNC-L37Z5qjBushRzG6We1N07yC0VB4uolkPMllwke**38ce6b1ee3b2943ac02976cf859c15b6246f76030bb78c76a60f56c4a8ffa576*t0xhKaMpo93ycxxmxcjb9TVGjZMI7j86fmKs_Jaujrg; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
-        "connection": "keep-alive",
+        "Transfer-Encoding": "chunked",
+        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=120",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861571879.809,
-    "responseBody": {}
+    "responseTime": 1627315056222.859,
+    "responseBody": {
+        "fields": [
+            {
+                "name": "_id",
+                "type": "string",
+                "esTypes": [
+                    "_id"
+                ],
+                "searchable": true,
+                "aggregatable": false,
+                "readFromDocValues": false
+            },
+            {
+                "name": "_index",
+                "type": "string",
+                "esTypes": [
+                    "_index"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": false
+            },
+            {
+                "name": "_score",
+                "type": "number",
+                "searchable": false,
+                "aggregatable": false,
+                "readFromDocValues": false
+            },
+            {
+                "name": "_source",
+                "type": "_source",
+                "esTypes": [
+                    "_source"
+                ],
+                "searchable": false,
+                "aggregatable": false,
+                "readFromDocValues": false
+            },
+            {
+                "name": "_type",
+                "type": "string",
+                "searchable": false,
+                "aggregatable": false,
+                "readFromDocValues": false
+            },
+            {
+                "name": "category",
+                "type": "string",
+                "esTypes": [
+                    "text"
+                ],
+                "searchable": true,
+                "aggregatable": false,
+                "readFromDocValues": false
+            },
+            {
+                "name": "category.keyword",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true,
+                "subType": {
+                    "multi": {
+                        "parent": "category"
+                    }
+                }
+            },
+            {
+                "name": "currency",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "customer_birth_date",
+                "type": "date",
+                "esTypes": [
+                    "date"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "customer_first_name",
+                "type": "string",
+                "esTypes": [
+                    "text"
+                ],
+                "searchable": true,
+                "aggregatable": false,
+                "readFromDocValues": false
+            },
+            {
+                "name": "customer_first_name.keyword",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true,
+                "subType": {
+                    "multi": {
+                        "parent": "customer_first_name"
+                    }
+                }
+            },
+            {
+                "name": "customer_full_name",
+                "type": "string",
+                "esTypes": [
+                    "text"
+                ],
+                "searchable": true,
+                "aggregatable": false,
+                "readFromDocValues": false
+            },
+            {
+                "name": "customer_full_name.keyword",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true,
+                "subType": {
+                    "multi": {
+                        "parent": "customer_full_name"
+                    }
+                }
+            },
+            {
+                "name": "customer_gender",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "customer_id",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "customer_last_name",
+                "type": "string",
+                "esTypes": [
+                    "text"
+                ],
+                "searchable": true,
+                "aggregatable": false,
+                "readFromDocValues": false
+            },
+            {
+                "name": "customer_last_name.keyword",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true,
+                "subType": {
+                    "multi": {
+                        "parent": "customer_last_name"
+                    }
+                }
+            },
+            {
+                "name": "customer_phone",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "day_of_week",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "day_of_week_i",
+                "type": "number",
+                "esTypes": [
+                    "integer"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "email",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "event.dataset",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "geoip.city_name",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "geoip.continent_name",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "geoip.country_iso_code",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "geoip.location",
+                "type": "geo_point",
+                "esTypes": [
+                    "geo_point"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "geoip.region_name",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "manufacturer",
+                "type": "string",
+                "esTypes": [
+                    "text"
+                ],
+                "searchable": true,
+                "aggregatable": false,
+                "readFromDocValues": false
+            },
+            {
+                "name": "manufacturer.keyword",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true,
+                "subType": {
+                    "multi": {
+                        "parent": "manufacturer"
+                    }
+                }
+            },
+            {
+                "name": "order_date",
+                "type": "date",
+                "esTypes": [
+                    "date"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "order_id",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "products._id",
+                "type": "string",
+                "esTypes": [
+                    "text"
+                ],
+                "searchable": true,
+                "aggregatable": false,
+                "readFromDocValues": false
+            },
+            {
+                "name": "products._id.keyword",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true,
+                "subType": {
+                    "multi": {
+                        "parent": "products._id"
+                    }
+                }
+            },
+            {
+                "name": "products.base_price",
+                "type": "number",
+                "esTypes": [
+                    "half_float"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "products.base_unit_price",
+                "type": "number",
+                "esTypes": [
+                    "half_float"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "products.category",
+                "type": "string",
+                "esTypes": [
+                    "text"
+                ],
+                "searchable": true,
+                "aggregatable": false,
+                "readFromDocValues": false
+            },
+            {
+                "name": "products.category.keyword",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true,
+                "subType": {
+                    "multi": {
+                        "parent": "products.category"
+                    }
+                }
+            },
+            {
+                "name": "products.created_on",
+                "type": "date",
+                "esTypes": [
+                    "date"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "products.discount_amount",
+                "type": "number",
+                "esTypes": [
+                    "half_float"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "products.discount_percentage",
+                "type": "number",
+                "esTypes": [
+                    "half_float"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "products.manufacturer",
+                "type": "string",
+                "esTypes": [
+                    "text"
+                ],
+                "searchable": true,
+                "aggregatable": false,
+                "readFromDocValues": false
+            },
+            {
+                "name": "products.manufacturer.keyword",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true,
+                "subType": {
+                    "multi": {
+                        "parent": "products.manufacturer"
+                    }
+                }
+            },
+            {
+                "name": "products.min_price",
+                "type": "number",
+                "esTypes": [
+                    "half_float"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "products.price",
+                "type": "number",
+                "esTypes": [
+                    "half_float"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "products.product_id",
+                "type": "number",
+                "esTypes": [
+                    "long"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "products.product_name",
+                "type": "string",
+                "esTypes": [
+                    "text"
+                ],
+                "searchable": true,
+                "aggregatable": false,
+                "readFromDocValues": false
+            },
+            {
+                "name": "products.product_name.keyword",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true,
+                "subType": {
+                    "multi": {
+                        "parent": "products.product_name"
+                    }
+                }
+            },
+            {
+                "name": "products.quantity",
+                "type": "number",
+                "esTypes": [
+                    "integer"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "products.sku",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "products.tax_amount",
+                "type": "number",
+                "esTypes": [
+                    "half_float"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "products.taxful_price",
+                "type": "number",
+                "esTypes": [
+                    "half_float"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "products.taxless_price",
+                "type": "number",
+                "esTypes": [
+                    "half_float"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "products.unit_discount_amount",
+                "type": "number",
+                "esTypes": [
+                    "half_float"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "sku",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "taxful_total_price",
+                "type": "number",
+                "esTypes": [
+                    "half_float"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "taxless_total_price",
+                "type": "number",
+                "esTypes": [
+                    "half_float"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "total_quantity",
+                "type": "number",
+                "esTypes": [
+                    "integer"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "total_unique_products",
+                "type": "number",
+                "esTypes": [
+                    "integer"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "type",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            },
+            {
+                "name": "user",
+                "type": "string",
+                "esTypes": [
+                    "keyword"
+                ],
+                "searchable": true,
+                "aggregatable": true,
+                "readFromDocValues": true
+            }
+        ]
+    }
 }

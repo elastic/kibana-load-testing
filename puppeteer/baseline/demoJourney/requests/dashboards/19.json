@@ -1,675 +1,185 @@
 {
-    "loaderId": "9E217527DE22B767B1357C56DBA66665",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
-    "method": "GET",
-    "requestUrl": "http://localhost:5620/api/index_patterns/_fields_for_wildcard?pattern=kibana_sample_data_ecommerce&meta_fields=_source&meta_fields=_id&meta_fields=_type&meta_fields=_index&meta_fields=_score",
+    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
+    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "method": "POST",
+    "requestUrl": "http://localhost:5620/api/saved_objects/_bulk_get",
     "requestHeader": {
         "sec-ch-ua": "",
         "Referer": "http://localhost:5620/app/dashboards",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "Content-Type": "application/json"
     },
-    "postData": {},
-    "responseUrl": "http://localhost:5620/api/index_patterns/_fields_for_wildcard?pattern=kibana_sample_data_ecommerce&meta_fields=_source&meta_fields=_id&meta_fields=_type&meta_fields=_index&meta_fields=_score",
+    "postData": [
+        {
+            "id": "45e07720-b890-11e8-a6d9-e546fe2bba5f",
+            "type": "visualization"
+        },
+        {
+            "id": "b80e6540-b891-11e8-a6d9-e546fe2bba5f",
+            "type": "visualization"
+        },
+        {
+            "id": "ff959d40-b880-11e8-a6d9-e546fe2bba5f",
+            "type": "index-pattern"
+        },
+        {
+            "id": "3ba638e0-b894-11e8-a6d9-e546fe2bba5f",
+            "type": "search"
+        }
+    ],
+    "responseUrl": "http://localhost:5620/api/saved_objects/_bulk_get",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:31 GMT",
+        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
+        "Date": "Mon, 26 Jul 2021 15:57:35 GMT",
         "content-encoding": "gzip",
         "referrer-policy": "no-referrer-when-downgrade",
         "vary": "accept-encoding",
         "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**bb2d5ee3fa2716cf5b1601a1b320222d1bdfd9e25916a2c36c784501c260f10a*EH0xWB5_XUVrGyRJnEayRg*lm_PJVdkvQzDVAOfVO7ri3DcqpSffZ_PC5i2eiB_KuXkoezm8RNEu0uvMQ2TdHiq91Zxu_SH_WN0p9859HJKdrA8tnRZlEyk_SXXt-a4NVkg6wBSYpCLiGIh4rYMLGYvzs_M3ASYkjJ9QIvrMLpkOES0RSZv6_rnlmtFhX42o0EgcvLQ5itHJqHDbpUjMQfL_-unOxyCqMxFL6jKtPV9_GP5KckvN9tlPZU6I8G_SAfyMR9RyJB6X3wRE58WA_RC**15372cebfe9096992b3b0377172677d3aa5970daf3651fdb1cd640d50623ef32*CcS8VTc8bSKY4eXblYN_BN4T-wMz9jVf8syGZ8Mqx-Y; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
         "Transfer-Encoding": "chunked",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861571508.044,
+    "responseTime": 1627315055893.402,
     "responseBody": {
-        "fields": [
+        "saved_objects": [
             {
-                "name": "_id",
-                "type": "string",
-                "esTypes": [
-                    "_id"
+                "id": "45e07720-b890-11e8-a6d9-e546fe2bba5f",
+                "type": "visualization",
+                "namespaces": [
+                    "default"
                 ],
-                "searchable": true,
-                "aggregatable": false,
-                "readFromDocValues": false
-            },
-            {
-                "name": "_index",
-                "type": "string",
-                "esTypes": [
-                    "_index"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": false
-            },
-            {
-                "name": "_score",
-                "type": "number",
-                "searchable": false,
-                "aggregatable": false,
-                "readFromDocValues": false
-            },
-            {
-                "name": "_source",
-                "type": "_source",
-                "esTypes": [
-                    "_source"
-                ],
-                "searchable": false,
-                "aggregatable": false,
-                "readFromDocValues": false
-            },
-            {
-                "name": "_type",
-                "type": "string",
-                "searchable": false,
-                "aggregatable": false,
-                "readFromDocValues": false
-            },
-            {
-                "name": "category",
-                "type": "string",
-                "esTypes": [
-                    "text"
-                ],
-                "searchable": true,
-                "aggregatable": false,
-                "readFromDocValues": false
-            },
-            {
-                "name": "category.keyword",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true,
-                "subType": {
-                    "multi": {
-                        "parent": "category"
+                "updated_at": "2021-07-26T15:57:10.333Z",
+                "version": "WzksMV0=",
+                "attributes": {
+                    "title": "[eCommerce] Promotion Tracking",
+                    "visState": "{\"title\":\"[eCommerce] Promotion Tracking\",\"type\":\"metrics\",\"aggs\":[],\"params\":{\"time_range_mode\":\"entire_time_range\",\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"type\":\"timeseries\",\"series\":[{\"id\":\"ea20ae70-b88d-11e8-a451-f37365e9f268\",\"color\":\"rgba(211,96,134,1)\",\"split_mode\":\"everything\",\"metrics\":[{\"id\":\"ea20ae71-b88d-11e8-a451-f37365e9f268\",\"type\":\"sum\",\"field\":\"taxful_total_price\"}],\"separate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"number\",\"chart_type\":\"line\",\"line_width\":\"2\",\"point_size\":\"5\",\"fill\":\"0\",\"stacked\":\"none\",\"filter\":{\"query\":\"products.product_name:*trouser*\",\"language\":\"lucene\"},\"label\":\"Revenue Trousers\",\"value_template\":\"${{value}}\",\"split_color_mode\":\"gradient\"},{\"id\":\"062d77b0-b88e-11e8-a451-f37365e9f268\",\"color\":\"rgba(84,179,153,1)\",\"split_mode\":\"everything\",\"metrics\":[{\"id\":\"062d77b1-b88e-11e8-a451-f37365e9f268\",\"type\":\"sum\",\"field\":\"taxful_total_price\"}],\"separate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"number\",\"chart_type\":\"line\",\"line_width\":\"2\",\"point_size\":\"05\",\"fill\":\"0\",\"stacked\":\"none\",\"filter\":{\"query\":\"products.product_name:*watch*\",\"language\":\"lucene\"},\"label\":\"Revenue Watches\",\"value_template\":\"${{value}}\",\"split_color_mode\":\"gradient\"},{\"id\":\"61ca57f1-469d-11e7-af02-69e470af7417\",\"color\":\"rgba(96,146,192,1)\",\"split_mode\":\"everything\",\"metrics\":[{\"id\":\"61ca57f2-469d-11e7-af02-69e470af7417\",\"type\":\"sum\",\"field\":\"taxful_total_price\"}],\"separate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"number\",\"chart_type\":\"line\",\"line_width\":\"2\",\"point_size\":\"5\",\"fill\":\"0\",\"stacked\":\"none\",\"filter\":{\"query\":\"products.product_name:*bag*\",\"language\":\"lucene\"},\"label\":\"Revenue Bags\",\"value_template\":\"${{value}}\",\"split_color_mode\":\"gradient\"},{\"id\":\"faa2c170-b88d-11e8-a451-f37365e9f268\",\"color\":\"rgba(202,142,174,1)\",\"split_mode\":\"everything\",\"metrics\":[{\"id\":\"faa2c171-b88d-11e8-a451-f37365e9f268\",\"type\":\"sum\",\"field\":\"taxful_total_price\"}],\"separate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"number\",\"chart_type\":\"line\",\"line_width\":\"2\",\"point_size\":\"5\",\"fill\":\"0\",\"stacked\":\"none\",\"filter\":{\"query\":\"products.product_name:*cocktail dress*\",\"language\":\"lucene\"},\"label\":\"Revenue Cocktail Dresses\",\"value_template\":\"${{value}}\",\"split_color_mode\":\"gradient\"}],\"time_field\":\"order_date\",\"interval\":\"12h\",\"use_kibana_indexes\":true,\"axis_position\":\"left\",\"axis_formatter\":\"number\",\"axis_scale\":\"normal\",\"show_legend\":1,\"show_grid\":1,\"legend_position\":\"bottom\",\"annotations\":[{\"fields\":\"taxful_total_price\",\"template\":\"Ring the bell! ${{taxful_total_price}}\",\"query_string\":{\"query\":\"taxful_total_price:>250\",\"language\":\"lucene\"},\"id\":\"c8c30be0-b88f-11e8-a451-f37365e9f268\",\"color\":\"rgba(25,77,51,1)\",\"time_field\":\"order_date\",\"icon\":\"fa-bell\",\"ignore_global_filters\":1,\"ignore_panel_filters\":1,\"index_pattern_ref_name\":\"metrics_1_index_pattern\"}],\"tooltip_mode\":\"show_all\",\"drop_last_bucket\":0,\"isModelInvalid\":false,\"index_pattern_ref_name\":\"metrics_0_index_pattern\"}}",
+                    "uiStateJSON": "{}",
+                    "description": "",
+                    "version": 1,
+                    "kibanaSavedObjectMeta": {
+                        "searchSourceJSON": "{\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[]}"
                     }
-                }
-            },
-            {
-                "name": "currency",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "customer_birth_date",
-                "type": "date",
-                "esTypes": [
-                    "date"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "customer_first_name",
-                "type": "string",
-                "esTypes": [
-                    "text"
-                ],
-                "searchable": true,
-                "aggregatable": false,
-                "readFromDocValues": false
-            },
-            {
-                "name": "customer_first_name.keyword",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true,
-                "subType": {
-                    "multi": {
-                        "parent": "customer_first_name"
+                },
+                "references": [
+                    {
+                        "id": "ff959d40-b880-11e8-a6d9-e546fe2bba5f",
+                        "name": "metrics_0_index_pattern",
+                        "type": "index-pattern"
+                    },
+                    {
+                        "id": "ff959d40-b880-11e8-a6d9-e546fe2bba5f",
+                        "name": "metrics_1_index_pattern",
+                        "type": "index-pattern"
                     }
-                }
+                ],
+                "migrationVersion": {
+                    "visualization": "7.14.0"
+                },
+                "coreMigrationVersion": "8.0.0"
             },
             {
-                "name": "customer_full_name",
-                "type": "string",
-                "esTypes": [
-                    "text"
+                "id": "b80e6540-b891-11e8-a6d9-e546fe2bba5f",
+                "type": "visualization",
+                "namespaces": [
+                    "default"
                 ],
-                "searchable": true,
-                "aggregatable": false,
-                "readFromDocValues": false
-            },
-            {
-                "name": "customer_full_name.keyword",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true,
-                "subType": {
-                    "multi": {
-                        "parent": "customer_full_name"
+                "updated_at": "2021-07-26T15:57:10.333Z",
+                "version": "WzEwLDFd",
+                "attributes": {
+                    "title": "[eCommerce] Sold Products per Day",
+                    "visState": "{\"title\":\"[eCommerce] Sold Products per Day\",\"type\":\"metrics\",\"aggs\":[],\"params\":{\"time_range_mode\":\"entire_time_range\",\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"type\":\"gauge\",\"series\":[{\"id\":\"61ca57f1-469d-11e7-af02-69e470af7417\",\"color\":\"#68BC00\",\"split_mode\":\"everything\",\"metrics\":[{\"id\":\"61ca57f2-469d-11e7-af02-69e470af7417\",\"type\":\"count\"},{\"id\":\"fd1e1b90-e4e3-11eb-8234-cb7bfd534fce\",\"type\":\"math\",\"variables\":[{\"id\":\"00374270-e4e4-11eb-8234-cb7bfd534fce\",\"name\":\"c\",\"field\":\"61ca57f2-469d-11e7-af02-69e470af7417\"}],\"script\":\"params.c / (params._interval / 1000 / 60 / 60 / 24)\"}],\"separate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"0.0\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":0.5,\"stacked\":\"none\",\"label\":\"Trxns / day\",\"split_color_mode\":\"gradient\",\"value_template\":\"\"}],\"time_field\":\"order_date\",\"interval\":\"1d\",\"axis_position\":\"left\",\"axis_formatter\":\"number\",\"axis_scale\":\"normal\",\"show_legend\":1,\"show_grid\":1,\"gauge_color_rules\":[{\"value\":150,\"id\":\"6da070c0-b891-11e8-b645-195edeb9de84\",\"gauge\":\"rgba(104,188,0,1)\",\"operator\":\"gte\"},{\"value\":150,\"id\":\"9b0cdbc0-b891-11e8-b645-195edeb9de84\",\"gauge\":\"rgba(244,78,59,1)\",\"operator\":\"lt\"}],\"gauge_width\":\"15\",\"gauge_inner_width\":\"10\",\"gauge_style\":\"half\",\"filter\":\"\",\"gauge_max\":\"300\",\"use_kibana_indexes\":true,\"hide_last_value_indicator\":true,\"tooltip_mode\":\"show_all\",\"drop_last_bucket\":0,\"isModelInvalid\":false,\"index_pattern_ref_name\":\"metrics_0_index_pattern\"}}",
+                    "uiStateJSON": "{}",
+                    "description": "",
+                    "version": 1,
+                    "kibanaSavedObjectMeta": {
+                        "searchSourceJSON": "{\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[]}"
                     }
-                }
-            },
-            {
-                "name": "customer_gender",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "customer_id",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "customer_last_name",
-                "type": "string",
-                "esTypes": [
-                    "text"
-                ],
-                "searchable": true,
-                "aggregatable": false,
-                "readFromDocValues": false
-            },
-            {
-                "name": "customer_last_name.keyword",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true,
-                "subType": {
-                    "multi": {
-                        "parent": "customer_last_name"
+                },
+                "references": [
+                    {
+                        "id": "ff959d40-b880-11e8-a6d9-e546fe2bba5f",
+                        "name": "metrics_0_index_pattern",
+                        "type": "index-pattern"
                     }
-                }
+                ],
+                "migrationVersion": {
+                    "visualization": "7.14.0"
+                },
+                "coreMigrationVersion": "8.0.0"
             },
             {
-                "name": "customer_phone",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
+                "id": "ff959d40-b880-11e8-a6d9-e546fe2bba5f",
+                "type": "index-pattern",
+                "namespaces": [
+                    "default"
                 ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
+                "updated_at": "2021-07-26T15:57:10.333Z",
+                "version": "WzEzLDFd",
+                "attributes": {
+                    "title": "kibana_sample_data_ecommerce",
+                    "timeFieldName": "order_date",
+                    "fieldAttrs": "{\"products.manufacturer\":{\"count\":1},\"products.price\":{\"count\":1},\"products.product_name\":{\"count\":1},\"total_quantity\":{\"count\":1}}",
+                    "fieldFormatMap": "{\"taxful_total_price\":{\"id\":\"number\",\"params\":{\"pattern\":\"$0,0.[00]\"}},\"products.price\":{\"id\":\"number\",\"params\":{\"pattern\":\"$0,0.00\"}},\"taxless_total_price\":{\"id\":\"number\",\"params\":{\"pattern\":\"$0,0.00\"}},\"products.taxless_price\":{\"id\":\"number\",\"params\":{\"pattern\":\"$0,0.00\"}},\"products.taxful_price\":{\"id\":\"number\",\"params\":{\"pattern\":\"$0,0.00\"}},\"products.min_price\":{\"id\":\"number\",\"params\":{\"pattern\":\"$0,0.00\"}},\"products.base_unit_price\":{\"id\":\"number\",\"params\":{\"pattern\":\"$0,0.00\"}},\"products.base_price\":{\"id\":\"number\",\"params\":{\"pattern\":\"$0,0.00\"}}}",
+                    "fields": "[]",
+                    "runtimeFieldMap": "{}",
+                    "typeMeta": "{}"
+                },
+                "references": [],
+                "migrationVersion": {
+                    "index-pattern": "7.11.0"
+                },
+                "coreMigrationVersion": "8.0.0"
             },
             {
-                "name": "day_of_week",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
+                "id": "3ba638e0-b894-11e8-a6d9-e546fe2bba5f",
+                "type": "search",
+                "namespaces": [
+                    "default"
                 ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "day_of_week_i",
-                "type": "number",
-                "esTypes": [
-                    "integer"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "email",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "event.dataset",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "geoip.city_name",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "geoip.continent_name",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "geoip.country_iso_code",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "geoip.location",
-                "type": "geo_point",
-                "esTypes": [
-                    "geo_point"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "geoip.region_name",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "manufacturer",
-                "type": "string",
-                "esTypes": [
-                    "text"
-                ],
-                "searchable": true,
-                "aggregatable": false,
-                "readFromDocValues": false
-            },
-            {
-                "name": "manufacturer.keyword",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true,
-                "subType": {
-                    "multi": {
-                        "parent": "manufacturer"
+                "updated_at": "2021-07-26T15:57:10.333Z",
+                "version": "WzExLDFd",
+                "attributes": {
+                    "title": "[eCommerce] Orders",
+                    "description": "",
+                    "hits": 0,
+                    "columns": [
+                        "category",
+                        "taxful_total_price",
+                        "products.price",
+                        "products.product_name",
+                        "products.manufacturer",
+                        "sku"
+                    ],
+                    "sort": [
+                        [
+                            "order_date",
+                            "desc"
+                        ]
+                    ],
+                    "version": 1,
+                    "kibanaSavedObjectMeta": {
+                        "searchSourceJSON": "{\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[],\"indexRefName\":\"kibanaSavedObjectMeta.searchSourceJSON.index\"}"
                     }
-                }
-            },
-            {
-                "name": "order_date",
-                "type": "date",
-                "esTypes": [
-                    "date"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "order_id",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "products._id",
-                "type": "string",
-                "esTypes": [
-                    "text"
-                ],
-                "searchable": true,
-                "aggregatable": false,
-                "readFromDocValues": false
-            },
-            {
-                "name": "products._id.keyword",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true,
-                "subType": {
-                    "multi": {
-                        "parent": "products._id"
+                },
+                "references": [
+                    {
+                        "id": "ff959d40-b880-11e8-a6d9-e546fe2bba5f",
+                        "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                        "type": "index-pattern"
                     }
-                }
-            },
-            {
-                "name": "products.base_price",
-                "type": "number",
-                "esTypes": [
-                    "half_float"
                 ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "products.base_unit_price",
-                "type": "number",
-                "esTypes": [
-                    "half_float"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "products.category",
-                "type": "string",
-                "esTypes": [
-                    "text"
-                ],
-                "searchable": true,
-                "aggregatable": false,
-                "readFromDocValues": false
-            },
-            {
-                "name": "products.category.keyword",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true,
-                "subType": {
-                    "multi": {
-                        "parent": "products.category"
-                    }
-                }
-            },
-            {
-                "name": "products.created_on",
-                "type": "date",
-                "esTypes": [
-                    "date"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "products.discount_amount",
-                "type": "number",
-                "esTypes": [
-                    "half_float"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "products.discount_percentage",
-                "type": "number",
-                "esTypes": [
-                    "half_float"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "products.manufacturer",
-                "type": "string",
-                "esTypes": [
-                    "text"
-                ],
-                "searchable": true,
-                "aggregatable": false,
-                "readFromDocValues": false
-            },
-            {
-                "name": "products.manufacturer.keyword",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true,
-                "subType": {
-                    "multi": {
-                        "parent": "products.manufacturer"
-                    }
-                }
-            },
-            {
-                "name": "products.min_price",
-                "type": "number",
-                "esTypes": [
-                    "half_float"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "products.price",
-                "type": "number",
-                "esTypes": [
-                    "half_float"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "products.product_id",
-                "type": "number",
-                "esTypes": [
-                    "long"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "products.product_name",
-                "type": "string",
-                "esTypes": [
-                    "text"
-                ],
-                "searchable": true,
-                "aggregatable": false,
-                "readFromDocValues": false
-            },
-            {
-                "name": "products.product_name.keyword",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true,
-                "subType": {
-                    "multi": {
-                        "parent": "products.product_name"
-                    }
-                }
-            },
-            {
-                "name": "products.quantity",
-                "type": "number",
-                "esTypes": [
-                    "integer"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "products.sku",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "products.tax_amount",
-                "type": "number",
-                "esTypes": [
-                    "half_float"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "products.taxful_price",
-                "type": "number",
-                "esTypes": [
-                    "half_float"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "products.taxless_price",
-                "type": "number",
-                "esTypes": [
-                    "half_float"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "products.unit_discount_amount",
-                "type": "number",
-                "esTypes": [
-                    "half_float"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "sku",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "taxful_total_price",
-                "type": "number",
-                "esTypes": [
-                    "half_float"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "taxless_total_price",
-                "type": "number",
-                "esTypes": [
-                    "half_float"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "total_quantity",
-                "type": "number",
-                "esTypes": [
-                    "integer"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "total_unique_products",
-                "type": "number",
-                "esTypes": [
-                    "integer"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "type",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
-            },
-            {
-                "name": "user",
-                "type": "string",
-                "esTypes": [
-                    "keyword"
-                ],
-                "searchable": true,
-                "aggregatable": true,
-                "readFromDocValues": true
+                "migrationVersion": {
+                    "search": "7.9.3"
+                },
+                "coreMigrationVersion": "8.0.0"
             }
         ]
     }

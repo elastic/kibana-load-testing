@@ -1,14 +1,14 @@
 {
-    "loaderId": "9E217527DE22B767B1357C56DBA66665",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "FE4F2B707523168BB7BE53BBC86AAA42",
+    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/internal/bsearch",
     "requestHeader": {
         "sec-ch-ua": "",
-        "Referer": "http://localhost:5620/app/dashboards",
+        "Referer": "http://localhost:5620/app/discover",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "X-Chunk-Encoding": "deflate",
         "Content-Type": "application/json"
     },
@@ -16,11 +16,10 @@
         "batch": [
             {
                 "request": {
-                    "id": "FlhKenhTWkRwUlpLYmlyUGVYcU5nbkEdZEtjRTlvQUtRWk95eUtkM1hyLWRwUTo5MDgwNTY=",
+                    "id": "FnJDZk1jNWY5UzdLMGNpakRjSURzMEEbU2RnNXhreHFRMDI3N0VTYXhuT0FKQTo2NDg1",
                     "params": {
                         "index": "kibana_sample_data_ecommerce",
                         "body": {
-                            "version": true,
                             "size": 500,
                             "sort": [
                                 {
@@ -30,6 +29,7 @@
                                     }
                                 }
                             ],
+                            "version": true,
                             "fields": [
                                 {
                                     "field": "*",
@@ -48,6 +48,16 @@
                                     "format": "strict_date_optional_time"
                                 }
                             ],
+                            "aggs": {
+                                "2": {
+                                    "date_histogram": {
+                                        "field": "order_date",
+                                        "fixed_interval": "12h",
+                                        "time_zone": "Africa/Abidjan",
+                                        "min_doc_count": 1
+                                    }
+                                }
+                            },
                             "script_fields": {},
                             "stored_fields": [
                                 "*"
@@ -61,8 +71,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-14T09:59:31.358Z",
-                                                    "lte": "2021-07-21T09:59:31.358Z",
+                                                    "gte": "2021-06-26T15:57:28.597Z",
+                                                    "lte": "2021-07-26T15:57:28.597Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -85,11 +95,12 @@
                                 "fragment_size": 2147483647
                             }
                         },
-                        "preference": 1626861570770
+                        "track_total_hits": true,
+                        "preference": 1627315037923
                     }
                 },
                 "options": {
-                    "sessionId": "c3cb35d8-9d4e-454d-84d2-8a1c9dc50c22",
+                    "sessionId": "4f8a38a4-6fd0-4dcb-a9be-72d1b6b37cb9",
                     "isRestore": false,
                     "strategy": "ese",
                     "isStored": false
@@ -99,18 +110,19 @@
     },
     "responseUrl": "http://localhost:5620/internal/bsearch",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:33 GMT",
+        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
+        "Date": "Mon, 26 Jul 2021 15:57:29 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "transfer-encoding": "chunked",
+        "connection": "keep-alive",
         "content-type": "application/x-ndjson",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
-        "connection": "keep-alive",
+        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
+        "set-cookie": "sid=Fe26.2**3404c2756bf46456366917fb421d75637b11f924e735035d1bf5f4e75ccd83b1*_sXRQY0B75XBACcXFGbDLg*B5yPPtPaDyH2Hnq4l9SBsqrRDj47F4OuQHsySXjS5OnhswFprprDHys6nmRleWzGlmE2sSBvgjBkFZ2AV8MTvIrZZWd1aYOkKdCJjTDHPDnZGVrFoiu10lqkzd2qapNBakeY7uJGJtgE9GCIQkHL2nljRgUnjJpv-TizMizOUT8lScU4piBykJb9GeMP7QxD2F1CEy7EQbaM1WZvdk4BQbDKNPOYqvuqV7-KeAWi2poDpIZ7ZXaHomf5IeZmVCzm**6a048f274b6a569044d69af4e1e2051b5e50ad50718626041ac6119d12a33b4a*jzas5jx2FrNkG-5Nim7X34UN_TF9nCzy6PrVzuqYSFg; HttpOnly; Path=/",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861573205.909,
+    "responseTime": 1627315049918.127,
     "responseBody": {}
 }

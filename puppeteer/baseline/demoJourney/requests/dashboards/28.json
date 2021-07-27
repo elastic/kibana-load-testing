@@ -1,14 +1,14 @@
 {
-    "loaderId": "9E217527DE22B767B1357C56DBA66665",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
+    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/internal/bsearch",
     "requestHeader": {
         "sec-ch-ua": "",
         "Referer": "http://localhost:5620/app/dashboards",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "X-Chunk-Encoding": "deflate",
         "Content-Type": "application/json"
     },
@@ -21,35 +21,12 @@
                         "body": {
                             "size": 0,
                             "aggs": {
-                                "gridSplit": {
-                                    "geotile_grid": {
-                                        "bounds": {
-                                            "top_left": [
-                                                -90,
-                                                66.51326
-                                            ],
-                                            "bottom_right": [
-                                                45,
-                                                0
-                                            ]
-                                        },
-                                        "field": "geoip.location",
-                                        "precision": 5,
+                                "join": {
+                                    "terms": {
                                         "size": 65535,
-                                        "shard_size": 65535
+                                        "field": "geoip.country_iso_code"
                                     },
-                                    "aggs": {
-                                        "gridCentroid": {
-                                            "geo_centroid": {
-                                                "field": "geoip.location"
-                                            }
-                                        },
-                                        "sum_of_taxful_total_price": {
-                                            "sum": {
-                                                "field": "taxful_total_price"
-                                            }
-                                        }
-                                    }
+                                    "aggs": {}
                                 }
                             },
                             "fields": [
@@ -79,35 +56,10 @@
                                     "must": [],
                                     "filter": [
                                         {
-                                            "bool": {
-                                                "must": [
-                                                    {
-                                                        "exists": {
-                                                            "field": "geoip.location"
-                                                        }
-                                                    },
-                                                    {
-                                                        "geo_bounding_box": {
-                                                            "geoip.location": {
-                                                                "top_left": [
-                                                                    -90,
-                                                                    66.51326
-                                                                ],
-                                                                "bottom_right": [
-                                                                    56.25,
-                                                                    -11.1784
-                                                                ]
-                                                            }
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-14T09:59:31.358Z",
-                                                    "lte": "2021-07-21T09:59:31.358Z",
+                                                    "gte": "2021-07-19T15:57:35.660Z",
+                                                    "lte": "2021-07-26T15:57:35.660Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -119,11 +71,11 @@
                             }
                         },
                         "track_total_hits": false,
-                        "preference": 1626861570770
+                        "preference": 1627315054890
                     }
                 },
                 "options": {
-                    "sessionId": "c3cb35d8-9d4e-454d-84d2-8a1c9dc50c22",
+                    "sessionId": "3fceedfe-a08f-485f-bb69-0d52defb3e52",
                     "isRestore": false,
                     "legacyHitsTotal": false,
                     "strategy": "ese",
@@ -134,18 +86,19 @@
     },
     "responseUrl": "http://localhost:5620/internal/bsearch",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:32 GMT",
+        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
+        "Date": "Mon, 26 Jul 2021 15:57:38 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "transfer-encoding": "chunked",
+        "connection": "keep-alive",
         "content-type": "application/x-ndjson",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
-        "connection": "keep-alive",
+        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
+        "set-cookie": "sid=Fe26.2**6eb5e6073d94c78dbc396d5fe054a65c655c944f77a311e4840ad81452346b39*U6lcTvEv8vCIZgDBxC_3gg*fb5To-fxbH5EqGrtMz-ImZ09UOUFoxiqStQok7Ra7ynRZJND8xANzqvjBmhNhfeLPgJu1dPifmr_GOX93mEiEv7vtNs1PT3CMo4hzB2pJ3EMhjAzcgIc0yuw9mW0fZEg5Xfn6ROMMhfabsTstx2O-vuZtqiTX97mCUEODRH2P7AUJ_vfN0qOH0ObPxGOyzq5pe9D85fSlHGuX7X98Vbxp8PTgH_CJIEvDSqHkv8aYTFGxwrFoeIsjC6kMBDPOU-6**46f4297e5e4025b607ea34d1e7697ac63011fa0a9654803f1cfc031c0059d786*5m7M49FzO95QhGTNUIZ3FWYnLI7DCqhHbsGI6-dyqko; HttpOnly; Path=/",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861572754.603,
+    "responseTime": 1627315058650.059,
     "responseBody": {}
 }

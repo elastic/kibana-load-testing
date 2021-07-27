@@ -1,6 +1,6 @@
 {
-    "loaderId": "F0BA51E804DB20020CF81549AFAC7E9B",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "43A418682E9570B6CCD51BC2784CB458",
+    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/api/timelion/run",
     "requestHeader": {
@@ -9,7 +9,7 @@
         "Referer": "http://localhost:5620/app/canvas",
         "kbn-xsrf": "professionally-crafted-string-of-text",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
         "Content-Type": "application/json"
     },
     "postData": {
@@ -26,30 +26,31 @@
             ".es(index=kibana_sample_data_ecommerce, metric=sum:taxless_total_price, timefield=order_date)"
         ],
         "time": {
-            "from": "2021-07-08T00:04:19.000Z",
-            "to": "2021-08-07T23:45:36.000Z",
+            "from": "2021-07-15T00:04:19.000Z",
+            "to": "2021-08-14T23:45:36.000Z",
             "interval": "1d",
             "timezone": "UTC"
         }
     },
     "responseUrl": "http://localhost:5620/api/timelion/run",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:47 GMT",
+        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
+        "Date": "Mon, 26 Jul 2021 15:57:53 GMT",
         "content-encoding": "gzip",
         "referrer-policy": "no-referrer-when-downgrade",
         "vary": "accept-encoding",
         "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**d2c0c88210fc8c7fbf0530839b25241c821b673dd190040bbe47d39a9c6f226d*7ZwiJwDQsxby21zzjhMORA*Ugtt1H6cvqrfP1OJdCW5stSfEMsf9N0uh-UwXQ7loj6uQcwcJ7JJCzZkgUZrsKeNbtaMKEmPp1OkxcLq2442dUd0NHAR9h3ts7msiC4423lyzvaW4WM-LSJVSfTnQaRPhPv8T28KyZaID5R4-TMonqj-SriAxvlYRw1beWspE-9jiAWI5ssSsI7AT61S3WU5wbtHx0RVos7mcHK8Dv8Zeesr8Fdt8jOF1gUNq98ABSDg4LxZQOBJXZYFH5ZsweAz**5c4ec1a6354cf976e573d15a8b66481ea3a987b5afd351b5b383a1e7e16e8f88*ii-ISbtdXayaKDYAhkS7BwVn7-9jFe-Gid3pIxuwF_0; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
         "Transfer-Encoding": "chunked",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861587874.989,
+    "responseTime": 1627315073922.675,
     "responseBody": {
         "sheet": [
             {
@@ -58,131 +59,127 @@
                     {
                         "data": [
                             [
-                                1625695200000,
+                                1626307200000,
                                 10578.53125
                             ],
                             [
-                                1625781600000,
+                                1626393600000,
                                 10448
                             ],
                             [
-                                1625868000000,
+                                1626480000000,
                                 10283.484375
                             ],
                             [
-                                1625954400000,
+                                1626566400000,
                                 10145.5234375
                             ],
                             [
-                                1626040800000,
+                                1626652800000,
                                 12012.609375
                             ],
                             [
-                                1626127200000,
+                                1626739200000,
                                 11009.45703125
                             ],
                             [
-                                1626213600000,
+                                1626825600000,
                                 10720.59375
                             ],
                             [
-                                1626300000000,
+                                1626912000000,
                                 11185.3671875
                             ],
                             [
-                                1626386400000,
+                                1626998400000,
                                 13560.140625
                             ],
                             [
-                                1626472800000,
+                                1627084800000,
                                 9884.78125
                             ],
                             [
-                                1626559200000,
+                                1627171200000,
                                 11075.65625
                             ],
                             [
-                                1626645600000,
+                                1627257600000,
                                 10323.8515625
                             ],
                             [
-                                1626732000000,
+                                1627344000000,
                                 10369.546875
                             ],
                             [
-                                1626818400000,
+                                1627430400000,
                                 11711.890625
                             ],
                             [
-                                1626904800000,
+                                1627516800000,
                                 12612.6640625
                             ],
                             [
-                                1626991200000,
+                                1627603200000,
                                 10176.87890625
                             ],
                             [
-                                1627077600000,
+                                1627689600000,
                                 11480.33203125
                             ],
                             [
-                                1627164000000,
+                                1627776000000,
                                 11533.265625
                             ],
                             [
-                                1627250400000,
+                                1627862400000,
                                 10499.8125
                             ],
                             [
-                                1627336800000,
+                                1627948800000,
                                 12111.6875
                             ],
                             [
-                                1627423200000,
+                                1628035200000,
                                 10530.765625
                             ],
                             [
-                                1627509600000,
+                                1628121600000,
                                 11872.5625
                             ],
                             [
-                                1627596000000,
+                                1628208000000,
                                 12109.453125
                             ],
                             [
-                                1627682400000,
+                                1628294400000,
                                 11057.40625
                             ],
                             [
-                                1627768800000,
+                                1628380800000,
                                 13095.609375
                             ],
                             [
-                                1627855200000,
+                                1628467200000,
                                 12574.015625
                             ],
                             [
-                                1627941600000,
+                                1628553600000,
                                 11188.1875
                             ],
                             [
-                                1628028000000,
+                                1628640000000,
                                 12117.65625
                             ],
                             [
-                                1628114400000,
+                                1628726400000,
                                 11558.25
                             ],
                             [
-                                1628200800000,
+                                1628812800000,
                                 11921.1171875
                             ],
                             [
-                                1628287200000,
-                                11135.03125
-                            ],
-                            [
-                                1628373600000,
+                                1628899200000,
                                 11135.03125
                             ]
                         ],
@@ -195,11 +192,11 @@
             }
         ],
         "stats": {
-            "invokeTime": 1626861587856,
+            "invokeTime": 1627315073875,
             "queryCount": 1,
-            "queryTime": 1626861587872,
+            "queryTime": 1627315073911,
             "cacheCount": 1,
-            "sheetTime": 1626861587873
+            "sheetTime": 1627315073920
         }
     }
 }

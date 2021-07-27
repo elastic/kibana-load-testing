@@ -1,34 +1,35 @@
 {
-    "loaderId": "9E217527DE22B767B1357C56DBA66665",
-    "frameId": "E7F9EA40DAC6744A800E7997E08F29D3",
+    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
+    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
     "method": "GET",
     "requestUrl": "http://localhost:5620/api/saved_objects/_find?fields=title&per_page=10000&type=index-pattern",
     "requestHeader": {
         "sec-ch-ua": "",
         "Referer": "http://localhost:5620/app/dashboards",
         "sec-ch-ua-mobile": "?0",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
-        "kbn-version": "8.0.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
         "Content-Type": "application/json"
     },
     "postData": {},
     "responseUrl": "http://localhost:5620/api/saved_objects/_find?fields=title&per_page=10000&type=index-pattern",
     "responseHeaders": {
-        "kbn-license-sig": "3daf442e21f4b27c06988c2f92e44b6a285fbf8d1c1be3de66c5c5e9fbb84f00",
-        "Date": "Wed, 21 Jul 2021 09:59:31 GMT",
+        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
+        "Date": "Mon, 26 Jul 2021 15:57:35 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**6dd6d6eee6cee68fe65522d72bfee71994a7fb5a0f5bbe472584fa1bf337fcd5*shCr4uyLLV-L5JNLSblWbw*HT9I1i7cP4NvTJvzC6AtSFnaZIrT_aMh6Qvli04qANPEP1gmOkiND9-6YWzeSVR951zuwqMNo2F7G_hjyHYesgO6-LcCZKvwVivl6zDSIEjzJJjUWdMcbNAOPNyeJxtxfghJXjTNf8kHGzDpnzHN7jEc-ygI7XAftZZoOiC_RiEj1bBL6j-xvVIlW6bmuLjR1unETWPHjHR0A2nhoh-BMedZsSmeqGgTfK2lvKZCk6cnYK9TQuNwaOfMJhGyO7rE**d4da4612583808f801674a96cf0ab8ba42b815c9b662b8386c2423c22c46a979*1GLXDNr-DIlX3AVUImUfT8rcRsrGwkA1TaYBkk-WsCg; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "Dzmitrys-MBP.fritz.box",
+        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
         "Connection": "keep-alive",
         "accept-ranges": "bytes",
         "Keep-Alive": "timeout=120",
-        "content-length": "371",
+        "content-length": "367",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1626861571196.914,
+    "responseTime": 1627315055491.299,
     "responseBody": {
         "page": 1,
         "per_page": 10000,
@@ -45,8 +46,8 @@
                     "index-pattern": "7.11.0"
                 },
                 "coreMigrationVersion": "8.0.0",
-                "updated_at": "2021-07-21T09:59:06.880Z",
-                "version": "Wzk5NCwxXQ==",
+                "updated_at": "2021-07-26T15:57:10.333Z",
+                "version": "WzEzLDFd",
                 "namespaces": [
                     "default"
                 ],
