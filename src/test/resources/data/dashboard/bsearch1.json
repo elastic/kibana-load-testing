@@ -75,7 +75,7 @@
               }
             }
           },
-          "preference":1627315054890
+          "preference":1627394393621
         }
       },
       "options":{
@@ -158,7 +158,7 @@
               }
             }
           },
-          "preference":1627315054890
+          "preference":1627394393621
         }
       },
       "options":{
@@ -244,7 +244,7 @@
               }
             }
           },
-          "preference":1627315054890
+          "preference":1627394393621
         }
       },
       "options":{
@@ -391,7 +391,7 @@
               }
             }
           },
-          "preference":1627315054890
+          "preference":1627394393621
         }
       },
       "options":{
@@ -474,7 +474,7 @@
               }
             }
           },
-          "preference":1627315054890
+          "preference":1627394393621
         }
       },
       "options":{
@@ -570,7 +570,7 @@
               }
             }
           },
-          "preference":1627315054890
+          "preference":1627394393621
         }
       },
       "options":{
@@ -727,7 +727,7 @@
               }
             }
           },
-          "preference":1627315054890
+          "preference":1627394393621
         }
       },
       "options":{
@@ -798,8 +798,8 @@
                   {
                     "range":{
                       "order_date":{
-                        "gte":"${startTime}",
-                        "lte":"${endTime}",
+                        "gte":"${7dBeforeTime}",
+                        "lte":"${startTime}",
                         "format":"strict_date_optional_time"
                       }
                     }
@@ -814,7 +814,7 @@
               }
             }
           },
-          "preference":1627315054890
+          "preference":1627394393621
         }
       },
       "options":{
@@ -901,7 +901,7 @@
               }
             }
           },
-          "preference":1627315054890
+          "preference":1627394393621
         }
       },
       "options":{

@@ -1,6 +1,6 @@
 {
-    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "A685DC1E741B20E08598E6493F011AEE",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "GET",
     "requestUrl": "http://localhost:5620/internal/security/me",
     "requestHeader": {
@@ -15,12 +15,12 @@
     "postData": {},
     "responseUrl": "http://localhost:5620/internal/security/me",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:35 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:54 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "content-type": "application/json; charset=utf-8",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "accept-ranges": "bytes",
         "Keep-Alive": "timeout=120",
@@ -29,7 +29,7 @@
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315055391.08,
+    "responseTime": 1627394394143.964,
     "responseBody": {
         "username": "elastic",
         "roles": [

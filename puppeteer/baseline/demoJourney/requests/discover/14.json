@@ -1,6 +1,6 @@
 {
-    "loaderId": "FE4F2B707523168BB7BE53BBC86AAA42",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "661BFC09D1815316AB7C31C09CD42353",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "GET",
     "requestUrl": "http://localhost:5620/api/alerts/list_alert_types",
     "requestHeader": {
@@ -14,23 +14,23 @@
     "postData": {},
     "responseUrl": "http://localhost:5620/api/alerts/list_alert_types",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:21 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:39 GMT",
         "content-encoding": "gzip",
         "referrer-policy": "no-referrer-when-downgrade",
         "vary": "accept-encoding",
         "content-type": "application/json; charset=utf-8",
-        "set-cookie": "sid=Fe26.2**bb38c96bf07eeb2af4c1f71aa28ad417df3054d5bbfdf26451bf7ad72ca0841e*fB084K12qIqzODBs-dgPOg*ssnos6JxaIRUx-IhVNC2l9FdqunmiGT890_AaxBYCgRhmr_VtD-MHnpgp7Mtbpk9HGPBMwORdf57-TqZazTXcdf69IIl8NrrS1SbVsf_LuLkjXe-Ube3J9SdMcqXVOv1sBmT2YzALaRQ5rTGsC8hbKynae369HwO2JODRaXbsatAsEVU6cGowpLmgjrvm9zP-EuJZ9RT1vLGhfoc0Kuio1xT5Em_t9Y0CwhJDXrs25zmbT9VqIrJ8gjby-teUuXb**c10541d89cfd13efcea28abb9cb1382b4679102785be8ec9d4bdda8d5402d600*2YMdVHkXE1_fSIczNLJ3d_-N2xvMFGLqjAExnu4zWq8; HttpOnly; Path=/",
+        "set-cookie": "sid=Fe26.2**a9b58285dcc545aa8979f556fc74ff9595b03676ccee636db2be0af96d96907b*X3wRCCIFjRTPjVLkSniMvg*MUyQI9PngB8pB8CHWtVY0FqbmlQBYsSzsqAJl1rAbjGs6iR1PsWltOI9HCELkCNwO5WaWWZN8MwAy4fwHxYCmHFEydwnF24LRGJ-EqdAz9VYcU-RfmnGpaFHfz0z5CyB0_njARaljAR9rK4SeNULu5KjiWJIM5kDoZXii5RiQJWNgDxULJkmxtAUSoMvnPyLIIwN3POp03ZEN7uAq4pz70yNXfL0LBr9jLGwJLEgVkcYaFo0S0WAZ8tIWIZCdyb3**7f4197e99a6f286a4c582efa49f21c0529dca5a2a83dcf9c70337138404baf9f*2QfTzBxt94Cy77C9OQs4Wxm7dEAAqQYncL_1s82lio4; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
         "Transfer-Encoding": "chunked",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315041876.251,
+    "responseTime": 1627394379193.344,
     "responseBody": [
         {
             "id": ".index-threshold",

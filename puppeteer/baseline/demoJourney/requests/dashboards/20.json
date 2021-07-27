@@ -1,6 +1,6 @@
 {
-    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "A685DC1E741B20E08598E6493F011AEE",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/api/saved_objects/_bulk_get",
     "requestHeader": {
@@ -19,23 +19,23 @@
     ],
     "responseUrl": "http://localhost:5620/api/saved_objects/_bulk_get",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:36 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:54 GMT",
         "content-encoding": "gzip",
         "referrer-policy": "no-referrer-when-downgrade",
         "vary": "accept-encoding",
         "content-type": "application/json; charset=utf-8",
-        "set-cookie": "sid=Fe26.2**6e7ba76753491d6f8cc73726a3d9c439d5ff03f2f91fb42ddabccc2bcf016c69*z6cYuaD6BBozQra1uYYVSA*oJyFRNNZhYyYZ1s1hUd8yqWM_9KdBAbSvU6zeEnjn7Uz23R0aE19fUg4ePWowq_S2VQ-S7DNPXa9sAVao3Wl3ttAOXMRA53h9v7DVKPRvuZVaMgkEQKzXXn3Isn6LyL_HJ1aX825w6MZvDuyeQuM4XloLJZZg9lyo5YQY7y7q2EvudCAwCfAEPmj7b7_GYoedsc8o7E3cu2vyhTWwMYmrXi76jhniL1yxzXffhnv9x8lTtZDlmkz5-DKdJ15Wl4p**0b79704d352974620708bebd5c8820114c14a8c57a3739d9a4f8a807999e17fc*geaPfMR_GqiBV6QM8r22nP_UzKkHIo5gwC0pxOGjwuo; HttpOnly; Path=/",
+        "set-cookie": "sid=Fe26.2**aed847486c18ad77d2861983b484f8d3b0e45c137c9dc72ecd14138fb6f506d9*b7pt0p-VfpFcsSzQTbpzwg*InrsJhwmZ6-gbENcGADvkU0zIrLXJk2sQG7apDKjR_kYuRjACptssy9iB55alxCIhD7gZX51eS9ibumZaQMQzSVTDoIkyt8ZGoUV6Ytdte59Ff8L_5BBdTf8ebriOPOeFSsqCxO5kIne9spqFzIUjm2ERBBvgVepsP65Jj6DbKCjjCbIHeGnoysllp2Q_hruTho6Wm_pL-bsc5CcOCuKDJjuOUypyUzVSuMf2Mc-qoUd0fAPL8JkkvuoeZNbDJvU**401f46bdc00f8de787c6dac1041bee9371ddbc2e6b917508b70ad1f7e5a9cf5e*qSRwTC8Vdjtc185ef-PJSNegWsOm3_sf7hteMb5-zN0; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
         "Transfer-Encoding": "chunked",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315056201.378,
+    "responseTime": 1627394394977.547,
     "responseBody": {
         "saved_objects": [
             {
@@ -44,7 +44,7 @@
                 "namespaces": [
                     "default"
                 ],
-                "updated_at": "2021-07-26T15:57:10.333Z",
+                "updated_at": "2021-07-27T13:59:25.117Z",
                 "version": "WzE3LDFd",
                 "attributes": {
                     "title": "[eCommerce] Orders by Country",

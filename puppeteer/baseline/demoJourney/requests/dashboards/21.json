@@ -1,6 +1,6 @@
 {
-    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "A685DC1E741B20E08598E6493F011AEE",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "GET",
     "requestUrl": "http://localhost:5620/api/index_patterns/_fields_for_wildcard?pattern=kibana_sample_data_ecommerce&meta_fields=_source&meta_fields=_id&meta_fields=_type&meta_fields=_index&meta_fields=_score",
     "requestHeader": {
@@ -14,23 +14,23 @@
     "postData": {},
     "responseUrl": "http://localhost:5620/api/index_patterns/_fields_for_wildcard?pattern=kibana_sample_data_ecommerce&meta_fields=_source&meta_fields=_id&meta_fields=_type&meta_fields=_index&meta_fields=_score",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:36 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:54 GMT",
         "content-encoding": "gzip",
         "referrer-policy": "no-referrer-when-downgrade",
         "vary": "accept-encoding",
         "content-type": "application/json; charset=utf-8",
-        "set-cookie": "sid=Fe26.2**32b819c4d1fa95483bfc717224510f8dc438b8884fd7fd46a3ac6972bb01755c*mCjS3x3q4uqaLCL4RYJpYw*kkMjKyMb-QZGjOZHB_e-2cWgfS3mHVOSspOjai3PBDQCDDHMSwrh4KJuYCzO9wkVm_f5kLHyx1STRDj5-61JhQCXGbSSnnHU3kgaE-E5yrPAuN3jf4legL6kQaugTQp62ah7FvJeZn6J5LGEkQjFE1I2k9an7BOoEppunhg0w_Zf_zyufCGFQ1PNowKDLyzj8NsmtTWBLhfT8aYHn0hSDBHNC-L37Z5qjBushRzG6We1N07yC0VB4uolkPMllwke**38ce6b1ee3b2943ac02976cf859c15b6246f76030bb78c76a60f56c4a8ffa576*t0xhKaMpo93ycxxmxcjb9TVGjZMI7j86fmKs_Jaujrg; HttpOnly; Path=/",
+        "set-cookie": "sid=Fe26.2**5dce87bed568252c3360839f830e75649ce9b86364c3b6ff089c5a8313262484*k-Z6NqHK898HUG0bGEkl_g*JCBkRFZyNuUgjz2Poezxosfv3Eh26rBuXWd-KDcAtEtn5SY2i0vR5--HOVPkXCuSeqXLgIfxbq2xsk2z2USeR2i06PbOZJLIO82GTXSJhhVgGhrRcEygW85BvzcAdKJ-d2ACMw6gVgMZ4zoTrQxqQuHJVi2qgrPI0z5m6EJqYKMeQ5AODUEd8KGr7o_xF6o1_1fvl71hf3qi_rzYN9BKY7oQV_iyU-OfgZJobR0ZpQZvaplG3k7y0RtS4rpDzBbK**733531e299e8cca173d1874f52c24ff586ff1bd3fc73bc6872538015070f389d*t0QFQHlzdy3PICZzFrFPNETUxQjL7BtCJrIWO47j6Ac; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
         "Transfer-Encoding": "chunked",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315056222.859,
+    "responseTime": 1627394394976.81,
     "responseBody": {
         "fields": [
             {

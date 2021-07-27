@@ -7,9 +7,6 @@
         "/internal/security/login"
     ],
     "/app/home": [
-        "/api/core/capabilities"
-    ],
-    "/app/discover": [
         "/api/core/capabilities",
         "/api/licensing/info",
         "/internal/licensing/feature_usage/register",
@@ -22,13 +19,31 @@
         "/internal/global_search/searchable_types",
         "/internal/security/me",
         "/internal/security/session",
+        "/api/alerts/list_alert_types",
+        "/api/saved_objects/_find?fields=title&per_page=1&search=*&search_fields=title&type=index-pattern",
+        "/internal/spaces/_active_space",
+        "/internal/global_search/find"
+    ],
+    "/app/discover": [
+        "/api/core/capabilities",
+        "/internal/licensing/feature_usage/register",
+        "/api/banners/info",
+        "/internal/security_oss/app_state",
+        "/internal/security/me",
+        "/api/saved_objects_tagging/tags",
+        "/api/licensing/info",
+        "/internal/security/me",
+        "/internal/osquery/status",
+        "/api/saved_objects/_bulk_get",
+        "/internal/global_search/searchable_types",
+        "/internal/security/session",
         "/internal/spaces/_active_space",
         "/api/alerts/list_alert_types",
         "/api/saved_objects/_find?fields=title&per_page=10000&type=index-pattern",
         "/api/kibana/settings",
         "/api/saved_objects/_bulk_get",
-        "/api/index_patterns/_fields_for_wildcard?pattern=kibana_sample_data_ecommerce&meta_fields=_source&meta_fields=_id&meta_fields=_type&meta_fields=_index&meta_fields=_score",
         "/internal/global_search/find",
+        "/api/index_patterns/_fields_for_wildcard?pattern=kibana_sample_data_ecommerce&meta_fields=_source&meta_fields=_id&meta_fields=_type&meta_fields=_index&meta_fields=_score",
         "/internal/bsearch",
         "/internal/bsearch",
         "/internal/bsearch",
@@ -63,7 +78,6 @@
         "/internal/bsearch",
         "/internal/bsearch",
         "/internal/bsearch",
-        "/internal/bsearch",
         "/internal/bsearch"
     ],
     "/app/canvas": [
@@ -91,9 +105,9 @@
         "/api/canvas/fns",
         "/api/timelion/run",
         "/api/canvas/fns",
+        "/api/canvas/fns",
         "/internal/bsearch",
         "/api/timelion/run",
-        "/api/canvas/fns",
         "/api/canvas/fns"
     ]
 }

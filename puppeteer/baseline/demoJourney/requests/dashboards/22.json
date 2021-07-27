@@ -1,6 +1,6 @@
 {
-    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "A685DC1E741B20E08598E6493F011AEE",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/api/metrics/vis/data",
     "requestHeader": {
@@ -15,8 +15,8 @@
     "postData": {
         "timerange": {
             "timezone": "Africa/Abidjan",
-            "min": "2021-07-19T15:57:35.660Z",
-            "max": "2021-07-26T15:57:35.660Z"
+            "min": "2021-07-20T13:59:54.421Z",
+            "max": "2021-07-27T13:59:54.421Z"
         },
         "query": [
             {
@@ -178,30 +178,30 @@
         ],
         "state": {},
         "searchSession": {
-            "sessionId": "3fceedfe-a08f-485f-bb69-0d52defb3e52",
+            "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
             "isRestore": false,
             "isStored": false
         }
     },
     "responseUrl": "http://localhost:5620/api/metrics/vis/data",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:36 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:55 GMT",
         "content-encoding": "gzip",
         "referrer-policy": "no-referrer-when-downgrade",
         "vary": "accept-encoding",
         "content-type": "application/json; charset=utf-8",
-        "set-cookie": "sid=Fe26.2**e95ad95662e3d44cf44b6fc97dc4a12e070e53ae78c7c99bddd9104cea7f41bf*F4m35rzPvn6C5WlKvE2vNA*r3l19H16dKUl1nbEIdtk033qhPZkYcAmaNLUQlPBr0Vstny5V50si1yXsDsUBshk43Fge6HzDcDtoWKQDhrojJxJHucdt6XJKx8rqbghwP15v5Vmxnoi8696FBUXgR9_E90XN4FX-Vo8HrINgaNmiFblIIGJ0AjAaMTh_Zl8s7XCqWzttv-qEXJCmykDsA-n7uYFYQkI6nDdoMjT-0GUQfF8ngbjNCHoocihCw0VJ3ITBtkml5FOsQqWUYovAxYM**794248468ee5b0c92f0b7f32ad551f946939c34c2b9133af4461b5507198103c*WqQPlZPgq2gsc475LT64COXbKjxODB-RwBACfAbk7j0; HttpOnly; Path=/",
+        "set-cookie": "sid=Fe26.2**80a8e4843090c7541801a3bcec106c9a437d102a7e0db3399cc130262eb8c61a*xWOWnwBoNUAAcnTZ68WiZg*skxFfa5qp_zpWv5Jaxooa6bQ51DlroQ-TKnOTLIb2WIeqsUGMJdqm-59yrpFDCr3Pu0tzExJWqZE2cZ-QY0tubgYhOlyY0KE7L_9Bg0zzj9CSFrF6UptiT6Wy09JHatHkvLKakgqNRD2N1TKNgbq0LwRhoFR4C6-fDq4qmCDZeNUMKVDGCo3lJOJq5HlvZ0EAv0_9QrwgSwXyVA3P20qCA8IUMnPN8M2OsUqZEezC4GQBIjF7sC6Evg9wiUbcZny**a4adfee0f94f84aaa370476330010b6030bedcec510833d428724d5d91659ddd*ws1KRAfx70C3m6I1CmvqqPisIQ306pLxYSKVKSaGKkk; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
         "Transfer-Encoding": "chunked",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315056766.749,
+    "responseTime": 1627394395592.064,
     "responseBody": {
         "type": "timeseries",
         "uiRestrictions": {
@@ -218,24 +218,6 @@
         "61ca57f0-469d-11e7-af02-69e470af7417": {
             "annotations": {
                 "c8c30be0-b88f-11e8-a451-f37365e9f268": [
-                    {
-                        "key": 1626717600000,
-                        "docs": [
-                            {
-                                "order_date": "2021-07-19T20:12:29.000Z",
-                                "taxful_total_price": "316"
-                            }
-                        ]
-                    },
-                    {
-                        "key": 1626750000000,
-                        "docs": [
-                            {
-                                "order_date": "2021-07-20T04:56:38.000Z",
-                                "taxful_total_price": "344"
-                            }
-                        ]
-                    },
                     {
                         "key": 1627052400000,
                         "docs": [
@@ -262,6 +244,15 @@
                                 "taxful_total_price": "283"
                             }
                         ]
+                    },
+                    {
+                        "key": 1627354800000,
+                        "docs": [
+                            {
+                                "order_date": "2021-07-27T03:50:24.000Z",
+                                "taxful_total_price": "301"
+                            }
+                        ]
                     }
                 ]
             },
@@ -273,14 +264,6 @@
                     "splitByLabel": "Sum of taxful_total_price",
                     "color": "rgb(211, 96, 134)",
                     "data": [
-                        [
-                            1626696000000,
-                            421.9375
-                        ],
-                        [
-                            1626739200000,
-                            285.90625
-                        ],
                         [
                             1626782400000,
                             278.96875
@@ -332,6 +315,14 @@
                         [
                             1627300800000,
                             85
+                        ],
+                        [
+                            1627344000000,
+                            147.90625
+                        ],
+                        [
+                            1627387200000,
+                            0
                         ]
                     ],
                     "seriesId": "ea20ae70-b88d-11e8-a451-f37365e9f268",
@@ -359,14 +350,6 @@
                     "splitByLabel": "Sum of taxful_total_price",
                     "color": "rgb(84, 179, 153)",
                     "data": [
-                        [
-                            1626696000000,
-                            216.90625
-                        ],
-                        [
-                            1626739200000,
-                            31.984375
-                        ],
                         [
                             1626782400000,
                             427.875
@@ -418,6 +401,14 @@
                         [
                             1627300800000,
                             0
+                        ],
+                        [
+                            1627344000000,
+                            0
+                        ],
+                        [
+                            1627387200000,
+                            0
                         ]
                     ],
                     "seriesId": "062d77b0-b88e-11e8-a451-f37365e9f268",
@@ -445,14 +436,6 @@
                     "splitByLabel": "Sum of taxful_total_price",
                     "color": "rgb(96, 146, 192)",
                     "data": [
-                        [
-                            1626696000000,
-                            230.921875
-                        ],
-                        [
-                            1626739200000,
-                            624.90625
-                        ],
                         [
                             1626782400000,
                             214.9375
@@ -503,7 +486,15 @@
                         ],
                         [
                             1627300800000,
-                            0
+                            569.875
+                        ],
+                        [
+                            1627344000000,
+                            473.953125
+                        ],
+                        [
+                            1627387200000,
+                            182.90625
                         ]
                     ],
                     "seriesId": "61ca57f1-469d-11e7-af02-69e470af7417",
@@ -531,14 +522,6 @@
                     "splitByLabel": "Sum of taxful_total_price",
                     "color": "rgb(202, 142, 174)",
                     "data": [
-                        [
-                            1626696000000,
-                            258.90625
-                        ],
-                        [
-                            1626739200000,
-                            567.84375
-                        ],
                         [
                             1626782400000,
                             581.828125
@@ -589,7 +572,15 @@
                         ],
                         [
                             1627300800000,
-                            66
+                            728.84375
+                        ],
+                        [
+                            1627344000000,
+                            902.6875
+                        ],
+                        [
+                            1627387200000,
+                            0
                         ]
                     ],
                     "seriesId": "faa2c170-b88d-11e8-a451-f37365e9f268",

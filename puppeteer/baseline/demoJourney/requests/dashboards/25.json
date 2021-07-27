@@ -1,6 +1,6 @@
 {
-    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "A685DC1E741B20E08598E6493F011AEE",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/internal/bsearch",
     "requestHeader": {
@@ -106,8 +106,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-19T15:57:35.660Z",
-                                                    "lte": "2021-07-26T15:57:35.660Z",
+                                                    "gte": "2021-07-20T13:59:54.421Z",
+                                                    "lte": "2021-07-27T13:59:54.421Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -119,11 +119,11 @@
                             }
                         },
                         "track_total_hits": false,
-                        "preference": 1627315054890
+                        "preference": 1627394393621
                     }
                 },
                 "options": {
-                    "sessionId": "3fceedfe-a08f-485f-bb69-0d52defb3e52",
+                    "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
                     "isRestore": false,
                     "legacyHitsTotal": false,
                     "strategy": "ese",
@@ -176,8 +176,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-19T15:57:35.660Z",
-                                                    "lte": "2021-07-26T15:57:35.660Z",
+                                                    "gte": "2021-07-20T13:59:54.421Z",
+                                                    "lte": "2021-07-27T13:59:54.421Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -200,11 +200,11 @@
                                 "fragment_size": 2147483647
                             }
                         },
-                        "preference": 1627315054890
+                        "preference": 1627394393621
                     }
                 },
                 "options": {
-                    "sessionId": "3fceedfe-a08f-485f-bb69-0d52defb3e52",
+                    "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
                     "isRestore": false,
                     "strategy": "ese",
                     "isStored": false
@@ -214,19 +214,19 @@
     },
     "responseUrl": "http://localhost:5620/internal/bsearch",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:37 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:55 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "transfer-encoding": "chunked",
         "connection": "keep-alive",
         "content-type": "application/x-ndjson",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
-        "set-cookie": "sid=Fe26.2**3277f7c04bd212be7c5905a3897331fe62f186eeb0b88d934c7ed382f0a52657*RBur0_MzJrEcuZR64TqKew*OtA1cGvHgG8w3HHP1OwKIi6ooMgrQm-ypi_V_3UObjc2eBNJvroEpvTp0Enb-GqXba3G5HnNFs9EfSqEcKy2LEFwJ5ZvsKr_ZRzI_HirnvCFT3KaLRJvIzTKfpS9Y1abLZdngqDZEl23an92P1OBoNnqem0IDFE-yqJM9EV0h6CLmPN6DnFjeb__0X_UHA72hNT3qTiBOX1WQZD8doll5ZdhK6DgMslUYrSngJavt9eqrItl1nHcBdjB9dI8v2JQ**3c8b24b58af0d3d33f9ed172c3e5e54a17d7898f759c2c1b62fa13594f5230ee*MRA16VpPSqRbf4oMgt2R9j8A1EroRrd1rVmZUNxTDLY; HttpOnly; Path=/",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
+        "set-cookie": "sid=Fe26.2**7563ce237b6d87b4a1f204374df808bb7601e5aace4910f858d37d92e5b085f5*u0XqJWHRmmH0UMwBHPIb-g*k-98la8mRleJAOmjw6Zi77GN0FaEBY1b0K_-WDrpKu1o1qcaUAXLHE7TlTZ9ZnTTsyCtnnJPdRs_Ta073IrGO9SDI36BIwnFZOXSoS8p4RLecE_3wWZN1fmS4FFb7hs4NkfnKujC3h4rfnxgABea3ntsK8vil5r1S9xRwDEE9sw30JO_y5T1gCpNnhgZ0-CWx6Kbv0fTHvxY1rXf9TwBMGQaSDcO25YpX97QRFcFbdYSH7CzvxDUqZ3OWNumfFKl**9a8d91a46c3b4b8ddef4335564651c5d254582044bc2ee0cc45704ce2714caac*Ctw_MZ9uoDvmEFgcDOUIvNjS6iIGWM24fCjQL_tY-Ko; HttpOnly; Path=/",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315057294.625,
+    "responseTime": 1627394396051.56,
     "responseBody": {}
 }

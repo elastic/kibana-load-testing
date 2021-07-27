@@ -7,8 +7,8 @@ import org.kibanaLoadTest.helpers.Helper
 import java.util.Calendar
 
 object Dashboard {
-  // bsearch1.json ... bsearch6.json
-  private val bSearchPayloadSeq = Seq(1, 2, 3, 4,5,6)
+  // bsearch1.json ... bsearch5.json
+  private val bSearchPayloadSeq = Seq(1, 2, 3, 4, 5)
 
   def load(baseUrl: String, headers: Map[String, String]): ChainBuilder = {
     exec(// unique search sessionId for each virtual user

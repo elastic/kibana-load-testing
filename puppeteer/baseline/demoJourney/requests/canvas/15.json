@@ -1,6 +1,6 @@
 {
-    "loaderId": "43A418682E9570B6CCD51BC2784CB458",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "370647D9BDC75C52978E0D48114BACCD",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "GET",
     "requestUrl": "http://localhost:5620/api/canvas/fns",
     "requestHeader": {
@@ -14,23 +14,23 @@
     "postData": {},
     "responseUrl": "http://localhost:5620/api/canvas/fns",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:50 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 14:00:09 GMT",
         "content-encoding": "gzip",
         "referrer-policy": "no-referrer-when-downgrade",
         "vary": "accept-encoding",
         "content-type": "text/html; charset=utf-8",
-        "set-cookie": "sid=Fe26.2**ba81d2dccb2e4a925fd9db4272e55cc648797788266dc2eae4d4867583c7c6d8*2TVSa6xkTj0-2psnnfWSLg*CHaCmsKKJY6kRrtcQ4x6tDX0kBtBzpHCaQmXs6WOq1ly8TiTsr_vXJzXQ_lD3w8RGQw1IGnzrHIDd1tlvdJW6iMAIm83G3i3D8xlc43mMxSYmfhwe3c_y1eHlbToQqlAamaU2FbSh9V8Lu4hqn1SdQQVQDvdA3JrtKw0FgOOF19lhKi1RLSrRZlS1dWzZI2DsPbuRaKFI_0MmZdAcZ4D2RcdOTj-oVVB52oX_e-EoXq3N5aAeSdXJ26vuz6xHm9I**b177c54be76e131d1c954767faead5b4f1a5669b5cded4394f5e5be7b04c728e*RF3kdACxiRLfLjStGNK3YUyWRUm7GC2sXc5Maqm9Dik; HttpOnly; Path=/",
+        "set-cookie": "sid=Fe26.2**14aa8ea93f0ebce432e75c895852c7844982f0035d003228ebf9e9ebd0a832ce*YYH-4ppyQWV2h2uRiwTD9w*0UIyngJdAY2Z__PybxHr85kEMOLRBzJMuR1PPXhoKvIoR37DepFU28qPxZtw5RZygTJ3AeOm1QOfcYOzx2VHVwj8kGXCeVYT8iCSDxARWi4Y1lVwsnV8y7RSaVmsqw3hfEN3oGFh3_pOCUlYhiw68klrpGNfrP152BTbpGQMlfZES6DbC4mX9uOVlG4bIbWS085G1-sMhL4a6KHuwflBh8qR3LtByJxYjpLP6fIE_IPppWriifdCrneDXzkEAakN**a53c13d6b03906a13e4b69ccacdef29dc9bc4d6c3f59a03340392df6f3fb99af*SIl-fZl0wuUCuUU0HDWAkGEqq-kCEHt1qMh-3PKeltY; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
         "Transfer-Encoding": "chunked",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315070842.814,
+    "responseTime": 1627394409152.544,
     "responseBody": {
         "clog": {
             "name": "clog",
@@ -5628,6 +5628,78 @@
             },
             "inputTypes": [
                 "number"
+            ],
+            "disabled": false,
+            "migrations": {}
+        },
+        "metric": {
+            "name": "metric",
+            "aliases": [],
+            "type": "render",
+            "help": "Displays a number over a label.",
+            "args": {
+                "label": {
+                    "name": "label",
+                    "required": false,
+                    "help": "The text describing the metric.",
+                    "types": [
+                        "string"
+                    ],
+                    "default": "\"\"",
+                    "aliases": [
+                        "_",
+                        "text",
+                        "description"
+                    ],
+                    "multi": false,
+                    "resolve": true,
+                    "options": []
+                },
+                "labelFont": {
+                    "name": "labelFont",
+                    "required": false,
+                    "help": "The CSS font properties for the label. For example, `font-family` or `font-weight`.",
+                    "types": [
+                        "style"
+                    ],
+                    "default": "{font size=14 family=\"'Open Sans', Helvetica, Arial, sans-serif\" color=\"#000000\" align=center}",
+                    "aliases": [],
+                    "multi": false,
+                    "resolve": true,
+                    "options": []
+                },
+                "metricFont": {
+                    "name": "metricFont",
+                    "required": false,
+                    "help": "The CSS font properties for the metric. For example, `font-family` or `font-weight`.",
+                    "types": [
+                        "style"
+                    ],
+                    "default": "{font size=48 family=\"'Open Sans', Helvetica, Arial, sans-serif\" color=\"#000000\" align=center lHeight=48}",
+                    "aliases": [],
+                    "multi": false,
+                    "resolve": true,
+                    "options": []
+                },
+                "metricFormat": {
+                    "name": "metricFormat",
+                    "required": false,
+                    "help": "A Numeral pattern format string. For example, `\"0.0a\"` or `\"0%\"`.",
+                    "types": [
+                        "string"
+                    ],
+                    "aliases": [
+                        "format"
+                    ],
+                    "multi": false,
+                    "resolve": true,
+                    "options": []
+                }
+            },
+            "inputTypes": [
+                "number",
+                "string",
+                "null"
             ],
             "disabled": false,
             "migrations": {}

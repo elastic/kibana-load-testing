@@ -1,6 +1,6 @@
 {
-    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "A685DC1E741B20E08598E6493F011AEE",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "GET",
     "requestUrl": "http://localhost:5620/internal/osquery/status",
     "requestHeader": {
@@ -14,12 +14,12 @@
     "postData": {},
     "responseUrl": "http://localhost:5620/internal/osquery/status",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:35 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:54 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
-        "set-cookie": "sid=Fe26.2**f3bf9d91e854fa1b1f9f88c91e5bacb4af72b296972059365c9f1c4ecae36f78*FvAHDptv4JG2DQJn9SnnSw*ke0OgXzTQoG3vhxsdWKnspLX3UyrbMustsI9bkrf1mq69tCS0lYi0s6v60S23bb5xC5AIsy8n9P9s6nopmkQ0AAHRIO4DX936Pj7ary95yMFmY6Eg4jekQR408LrgaMNTO3crqxOw4kd2Q6Ona8xtfxbwxwn523CHERXbY8pMMtTSNYGImIE1v5s1QrUQrrAjLvgKGsYXm8vdYdHTfXS4__ksueq3ZfPuBfiEq4W-sl0tF6hq8cQ9RpVRtP2NeIe**ba99c974425f15ba4208460fcbaf756794cd00ffa967f265bfc21cc970894613*4OHRCIe8MEnxdFsmI7WzWKzGIjk_-SrtAZ5_WnD5GvE; HttpOnly; Path=/",
+        "set-cookie": "sid=Fe26.2**a0a692529b1e1a5037b4e73d6aace55d958d307068dfd286273e8af0c13ea8c3*27zQXDaG86I9hVmFeAoJxw*BPtE7BAg7e8fCLxhvN-6UjVrBKguIQHKccvXqvePddcadvfbFpSDAxMJj5WkTEVXxyf8CMQGx0Atb2k-7cGaTe_Mk8oB-DtOw-P7G22pJ38-Okzp3FBlBUoPbEFch82A349RgDOyVh2h1hCY9NFX6qIouUZeG2KWkUhPNXxqbEeWKvf84sz_ttLN90cwTB_dMUsV2DMxc00Qwo7jNO-FILmPla2OSxUsAJlTBD4pemcOhi3e88tPaC8D1sjAnSoI**09a82d3cee3bf335fa81ad847beb096e23c3e75d7050a9359d47ca9340bdf214*eW7XZjBBQeQG7abPN1_xw2l9U6zye9We7mrkq0laA54; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "content-length": "0",
@@ -27,6 +27,6 @@
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315055396.361,
+    "responseTime": 1627394394147.154,
     "responseBody": {}
 }

@@ -1,0 +1,32 @@
+{
+    "loaderId": "1322E1787FAAFAC843B374F7B78C30A0",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
+    "method": "GET",
+    "requestUrl": "http://localhost:5620/internal/osquery/status",
+    "requestHeader": {
+        "sec-ch-ua": "",
+        "Referer": "http://localhost:5620/app/home",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
+        "Content-Type": "application/json"
+    },
+    "postData": {},
+    "responseUrl": "http://localhost:5620/internal/osquery/status",
+    "responseHeaders": {
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:32 GMT",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "set-cookie": "sid=Fe26.2**4f9871e748eeff9ce913be13653d59bdd0d475b253b5dcc2d88fbe9a473077bf*2NrAFMf4NSF5WfOmpVKRPA*YymonGgQcczo18MCC1fv3JyqKZkaFEkkjOwHlQd3HMk4eti-G4eWhmQmrejTzDj1d5SCStv7Q9EozCS1L7qUatcnVe5X40ZBx_O0zkbHl1FjgItzKkzrdtXlZ-qIw6ch_Q-XF7796dSVPu9w9noWhJ2qZo1fSqZj7-PdyEvuKM9u-ymKgvfkmpK3D5MUNYsaoT1_PfcjrcZ7iDUVfkZQN1B3I3DnOxmrScrXqc9869UFC1-A9sE-yrMvKPTwEO2K**f05c78b921e1bb55ec3d4e32ecb8fca5ef9f110e4361d38d43bb757853593c10*jMwVPlgE-oDqUfDG2ypZDeSxWJj3UsSXE-ppVjpMRoE; HttpOnly; Path=/",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=120",
+        "content-length": "0",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1627394372718.078,
+    "responseBody": {}
+}

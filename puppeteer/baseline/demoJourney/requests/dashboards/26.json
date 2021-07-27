@@ -1,6 +1,6 @@
 {
-    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "A685DC1E741B20E08598E6493F011AEE",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/internal/bsearch",
     "requestHeader": {
@@ -61,8 +61,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-19T15:57:35.660Z",
-                                                    "lte": "2021-07-26T15:57:35.660Z",
+                                                    "gte": "2021-07-20T13:59:54.421Z",
+                                                    "lte": "2021-07-27T13:59:54.421Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -73,7 +73,7 @@
                                 }
                             }
                         },
-                        "preference": 1627315054890
+                        "preference": 1627394393621
                     }
                 },
                 "options": {
@@ -127,8 +127,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-19T15:57:35.660Z",
-                                                    "lte": "2021-07-26T15:57:35.660Z",
+                                                    "gte": "2021-07-20T13:59:54.421Z",
+                                                    "lte": "2021-07-27T13:59:54.421Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -139,7 +139,7 @@
                                 }
                             }
                         },
-                        "preference": 1627315054890
+                        "preference": 1627394393621
                     }
                 },
                 "options": {
@@ -193,8 +193,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-19T15:57:35.660Z",
-                                                    "lte": "2021-07-26T15:57:35.660Z",
+                                                    "gte": "2021-07-20T13:59:54.421Z",
+                                                    "lte": "2021-07-27T13:59:54.421Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -205,7 +205,7 @@
                                 }
                             }
                         },
-                        "preference": 1627315054890
+                        "preference": 1627394393621
                     }
                 },
                 "options": {
@@ -216,19 +216,19 @@
     },
     "responseUrl": "http://localhost:5620/internal/bsearch",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:37 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:56 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "transfer-encoding": "chunked",
         "connection": "keep-alive",
         "content-type": "application/x-ndjson",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
-        "set-cookie": "sid=Fe26.2**8706c9cfbe0b15d897439ae1934ed7eade446487a5ded50eb0076362101757a6*z2LQoYwdvMYVVGD-zYTrtg*yYSUljiCehrCqX7RQD1OYD6XicBKSaYGDMx-PbfqupGZS2uySujWYh1BZNKT3E182GxP2iwqmArNO8kMgV7UHs8Xn9Yr7nhWoF5KBV6_usCxaQrRWbQFGgOsoRbfaM-kKkkhleDi3-rJ9B_cehvFTChU9XTwRijlbqnRWgQZ-eoInpYDXTRlOujoUMTCf0K3FKVYUBwE4UipKXQsihER_iumZwhVCfBOJPkjtjs3TcEl3wmnYDPJPkpitn3bfzHJ**dc7e0f23089f01041dc2d504ef421e738c418ab2166ecfe56bea7dca7cc84774*J9xzGYFj9XywK8Hz1WYlpff0LpPvKD-IeasBcMUHWbg; HttpOnly; Path=/",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
+        "set-cookie": "sid=Fe26.2**9008fe0cf5d39a708381129784a4f6f57ee1996c64a337ff62b988089b705e00*n9z7zjuYB1JHeKJoZJ7ChA*zMiCmlWhkR-Lb2mceoYwh7jb8aPXzBHTagysyv-nZbxU694_Klp_hbUiP-5MNPWvrwLPk6ildu5MVV-pweP6J7kVegN0oZhGTPf5gpBqUdwHj8oH7t7D3A255OlK8JXzsL3rvpBuQmQ07431rPr--Tgw98-aPhlYN3pb3Juz_xa394evgvbJN2J-Iyev08Mdshrzy247REPAm04kkgvQR-I40R5BLhCFXFtraqy7X1WT6C0qN6EmrmQNr21veUcc**318fc66b7c142598e544c788d4bdc03535c1b8d9c559d165e304694d8b3bccb4*-BWBBX7L6oRnWoDO8e7YmX_2UahMhhRGaHoio6JlDSw; HttpOnly; Path=/",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315057689.603,
+    "responseTime": 1627394396225.696,
     "responseBody": {}
 }

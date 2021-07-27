@@ -1,0 +1,41 @@
+{
+    "loaderId": "1322E1787FAAFAC843B374F7B78C30A0",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
+    "method": "GET",
+    "requestUrl": "http://localhost:5620/internal/spaces/_active_space",
+    "requestHeader": {
+        "sec-ch-ua": "",
+        "Referer": "http://localhost:5620/app/home",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
+        "Content-Type": "application/json"
+    },
+    "postData": {},
+    "responseUrl": "http://localhost:5620/internal/spaces/_active_space",
+    "responseHeaders": {
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:32 GMT",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**1ba62eb9243fc132b91ba230dd36a63c234b59346b7b8ddb5b0334758fd9209c*C6dGyRdPcoWQ-yj3zlXC_A*-hPI4tUOrrM4Gs77RkL9V3ZVFM_a-EcZkWnfB9VMgSfjly1Im5K1jpVeeZjk4Oyu0hW_3SX0i4pSb877gbLJkzWm_ClcGRGWtv0Vglt-Cn1Ntyua4mxDgK6vnEC8MQQMhR2unYpS3GBs8g1fX-GdJ0NemkoIWDtXoOEQfKA6_yVIYLl0tPKhxE9J_ZQwa0jEI_2MOlWCvUlFBSSJ_1tVh0653kKPV7SYpBwzh9XLnr1vSPxD8t13MwDCLRvzPA-B**bdd6f97b796686871bdd29a8072d6109b3ae2c44644c477ae7f3cbe6b849f69a*gDC3oURXafl3Qc8auXK3Gip2vqYy0vixc6BkXJrCBlw; HttpOnly; Path=/",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
+        "Connection": "keep-alive",
+        "accept-ranges": "bytes",
+        "Keep-Alive": "timeout=120",
+        "content-length": "134",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1627394372795.702,
+    "responseBody": {
+        "id": "default",
+        "name": "Default",
+        "description": "This is your default space!",
+        "color": "#00bfb3",
+        "disabledFeatures": [],
+        "_reserved": true
+    }
+}

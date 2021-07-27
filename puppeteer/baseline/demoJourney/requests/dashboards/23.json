@@ -1,6 +1,6 @@
 {
-    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "A685DC1E741B20E08598E6493F011AEE",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/api/metrics/vis/data",
     "requestHeader": {
@@ -15,8 +15,8 @@
     "postData": {
         "timerange": {
             "timezone": "Africa/Abidjan",
-            "min": "2021-07-19T15:57:35.660Z",
-            "max": "2021-07-26T15:57:35.660Z"
+            "min": "2021-07-20T13:59:54.421Z",
+            "max": "2021-07-27T13:59:54.421Z"
         },
         "query": [
             {
@@ -104,20 +104,20 @@
         ],
         "state": {},
         "searchSession": {
-            "sessionId": "3fceedfe-a08f-485f-bb69-0d52defb3e52",
+            "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
             "isRestore": false,
             "isStored": false
         }
     },
     "responseUrl": "http://localhost:5620/api/metrics/vis/data",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:37 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:56 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "content-type": "application/json; charset=utf-8",
-        "set-cookie": "sid=Fe26.2**0e122e7ee4fe4272c56f2cca53dde995290d187a481f31c63652c1e8ed05eb0c*Dd9I4caIUneqj_DTvkd7WQ*Ik6GllgL8Z4RR8zOI5EOefbkmWKsWBwHyKg5AaA_P3nKcsg9Rhbvq2exuE-DulMgCXTL36Gt6MacfK6fgPhVMccyDojI5TAchomzpfImqR7xj04c_7rZ2hYpqWbacexkgJ3ccDKGRQxsuzvMhgQJjKit7o5O9MuqHH0Rw4UH8o-aOgAjQwdFVT8en2JXxcyuyjZ7NQfpt6NxC5SEZDPym_Wf1i8od0jFLTKO1iW01XY-wwh33Rc2RR46wMd48ibh**fd95db95ced30b9a3d15f06eb2d493a956d5dc2e7c2f649178f29e08c482885c*MLi30zGY1lYGfWn3WUT8Cz3pAaHXQ4yL4X6Y1Gz7gaM; HttpOnly; Path=/",
+        "set-cookie": "sid=Fe26.2**5d5187f7c192cf62f2a2a54ded0815eec2fcd8a0fc191b1fae41b81248e974e3*OBNgGxG3GmM7N7QEI_p6kA*aPCyBFN1G2FaeIAf0KHYgs0_pgHXhyzaIcl0UJMyVvgvBAODreXzf8eYNtC1PWRP8bhTiWfgKOvlt4RUYrqhGtVyJRVYZHqTKWJc4TRw1J2IX3_Njq_q2P8YjUx1hF4jbSRUyNCZqA24hzDSUSLcj_ZDH3_rEOFjwNDNZZxEpYb4gl5Gt-1BmnPW4z1P61HbEXIs2GJMzuJxvjKaEu8w2zhctSs9eU5xVvWJNJe5cSV5bycWFT4LiUAvxWftwNUD**1671b094bd71627516aaa9112f75d132b6352bdc658e593942224ce13e3116e8*ukhtx0t8v9SIdjpgmSjgDog55tyCW7ZpyJuAozUAiOE; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "content-length": "619",
@@ -125,7 +125,7 @@
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315057793.29,
+    "responseTime": 1627394396621.515,
     "responseBody": {
         "type": "gauge",
         "uiRestrictions": {
@@ -150,7 +150,7 @@
                     "data": [
                         [
                             1625097600000,
-                            149.85714285714286
+                            148.57142857142858
                         ]
                     ],
                     "seriesId": "61ca57f1-469d-11e7-af02-69e470af7417",

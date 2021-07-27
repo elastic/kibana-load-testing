@@ -1,6 +1,6 @@
 {
-    "loaderId": "FE4F2B707523168BB7BE53BBC86AAA42",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "661BFC09D1815316AB7C31C09CD42353",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/internal/bsearch",
     "requestHeader": {
@@ -16,7 +16,7 @@
         "batch": [
             {
                 "request": {
-                    "id": "FmYtZ3VvLTZKUjZpME5EUVFHdlg2akEbU2RnNXhreHFRMDI3N0VTYXhuT0FKQTo2MDAy",
+                    "id": "FmtFalE2Y2p6VFNld1o1c1FiUEg1ZVEbQ2RKcWJ4dEtSVDZ6ay1XUnFrYUd3UTo2Mjg5",
                     "params": {
                         "index": "kibana_sample_data_ecommerce",
                         "body": {
@@ -71,8 +71,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-21T15:57:22.768Z",
-                                                    "lte": "2021-07-26T15:57:22.768Z",
+                                                    "gte": "2021-07-22T13:59:41.360Z",
+                                                    "lte": "2021-07-27T13:59:41.360Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -96,11 +96,11 @@
                             }
                         },
                         "track_total_hits": true,
-                        "preference": 1627315037923
+                        "preference": 1627394378571
                     }
                 },
                 "options": {
-                    "sessionId": "56ace6af-cd7b-454d-8a95-13a1bbd81e26",
+                    "sessionId": "f4cce0ac-48ab-4c04-97ca-72ebec8a70e0",
                     "isRestore": false,
                     "strategy": "ese",
                     "isStored": false
@@ -110,19 +110,19 @@
     },
     "responseUrl": "http://localhost:5620/internal/bsearch",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:23 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:42 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "transfer-encoding": "chunked",
         "connection": "keep-alive",
         "content-type": "application/x-ndjson",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
-        "set-cookie": "sid=Fe26.2**2bbf7bdb2367063e38fb7193409b1b4a293e7bfae002f9294001e8587eba2216*fDjXAWB3nWfW6x2D4JGsgA*AuOUMUqJWBfwTFnOAGzpLKNYAt_7p642GvYZR5YIRTYqK2OWjvBf02Sf1RtasgkDxsxqX9_OGwIPzu__buGLL2TlAoYW2SxzgyP7Kwsu1u4lWQ2wcsu2sTxXi3wJKmXkFV-FnMDmNPGDPcSqIcxCFF-5Mu18owWjYhNkc7w7TZluU4iw6UnDDKqVS5WAC7IUWWRFY8VO2aqOgxiPBqJesRdSihjdVncsS8If98ce3fBPWPDJvCgjgCI-Oke8uip-**450634257bbd278e616ca7ec18d01eee41b2a0dd70a9e4dc0bad9c6cbbe46594*AnU8c7QKvUrEUvkXYB_Len6OIX_LwsivQ1m0IfVjSZk; HttpOnly; Path=/",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
+        "set-cookie": "sid=Fe26.2**9d00b4ac4385ce3ca48a46990cae67e5ecc097da782e3f8f905bc8788b8b23e5*6N5n4GYXjJqHi9_Ec3qJIA*pff7RMKSyNP8CCQIYmQOi_40WsVSjS5clehi3M1Ftn1gfoHrIBppx4Dz3ravsn1103mHCOnp96e8PLVuhF24ygVGKzolUU9xPmdEE-KFeyuQFIu9jYhEwOqZTYCuf5oY-b2RXh-Mqcr1A1dMGylZa83vE5szPupkaVV_qP3trCaoykgAd8z8RUMhN_WaMlu9kiad3BRSp-C-uTtPeQxSeFO61yW2s-SmTU4azvYaLm2u1IeuVV9zJYxmAENFRvAP**0ded6d731ed707cb3789654554168eeed2a8881f56bc1d58cf52df5e1eda4875*R7CTINmNeyhVp0TIA1kfxHam2U2IWnmz5eaCsBhtoqo; HttpOnly; Path=/",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315044099.823,
+    "responseTime": 1627394382678.18,
     "responseBody": {}
 }

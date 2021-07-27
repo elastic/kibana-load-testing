@@ -1,0 +1,42 @@
+{
+    "loaderId": "1322E1787FAAFAC843B374F7B78C30A0",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
+    "method": "GET",
+    "requestUrl": "http://localhost:5620/api/banners/info",
+    "requestHeader": {
+        "sec-ch-ua": "",
+        "Referer": "http://localhost:5620/app/home",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
+        "Content-Type": "application/json"
+    },
+    "postData": {},
+    "responseUrl": "http://localhost:5620/api/banners/info",
+    "responseHeaders": {
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:32 GMT",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**fb5b25f8d7bd3b6bb079650f9acc2ebf92a0813d2ab5038261932083250455b1*uSPk1s5MOiDbHNQTujMk7g*bVylveb7cyxm8ucYyZutqGBMTi33MwjXDEf0LG_ZAb8coxbh7MvWq39MmTtvX8QA6SavzJImYi8SquQVmUC-l_zXlWFwp81cUF8vHPCBEDCswVaRMzvDJx2pyrkGV4k8AhAnuMOhbCaRuurYpRpjOuDinrWKvd_OQWcu9k85tp3gLcAHKMKi1w4BVdsSapGqJLVQ8Yh1BbBm-MiFNnkd06ArhYyC2gB3vEnMUgLo8fhh99rDDtasT0jJdI8KKJ95**b0fe666820071679c6d15e78276dc52187a4d7def5004ce0f6f8eaf28fdcdc6f*p4gf0_JPkOcKXP7kBERjR1TGsh2jZqCFrUXV7dSidFY; HttpOnly; Path=/",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
+        "Connection": "keep-alive",
+        "accept-ranges": "bytes",
+        "Keep-Alive": "timeout=120",
+        "content-length": "117",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1627394372654.892,
+    "responseBody": {
+        "allowed": true,
+        "banner": {
+            "placement": "disabled",
+            "textContent": "",
+            "textColor": "#8A6A0A",
+            "backgroundColor": "#FFF9E8"
+        }
+    }
+}

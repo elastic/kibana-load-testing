@@ -1,6 +1,6 @@
 {
-    "loaderId": "FE4F2B707523168BB7BE53BBC86AAA42",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "661BFC09D1815316AB7C31C09CD42353",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/internal/bsearch",
     "requestHeader": {
@@ -16,7 +16,7 @@
         "batch": [
             {
                 "request": {
-                    "id": "FnJDZk1jNWY5UzdLMGNpakRjSURzMEEbU2RnNXhreHFRMDI3N0VTYXhuT0FKQTo2NDg1",
+                    "id": "FklraS1UV2tIU3YyaDBUdDRZSy1DMGcbQ2RKcWJ4dEtSVDZ6ay1XUnFrYUd3UTo2NzQ5",
                     "params": {
                         "index": "kibana_sample_data_ecommerce",
                         "body": {
@@ -71,8 +71,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-06-26T15:57:28.597Z",
-                                                    "lte": "2021-07-26T15:57:28.597Z",
+                                                    "gte": "2021-06-27T13:59:47.216Z",
+                                                    "lte": "2021-07-27T13:59:47.216Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -96,11 +96,11 @@
                             }
                         },
                         "track_total_hits": true,
-                        "preference": 1627315037923
+                        "preference": 1627394378571
                     }
                 },
                 "options": {
-                    "sessionId": "4f8a38a4-6fd0-4dcb-a9be-72d1b6b37cb9",
+                    "sessionId": "b0b42ddd-be26-4dde-8604-250db77a6bd7",
                     "isRestore": false,
                     "strategy": "ese",
                     "isStored": false
@@ -110,19 +110,19 @@
     },
     "responseUrl": "http://localhost:5620/internal/bsearch",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:29 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:48 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "transfer-encoding": "chunked",
         "connection": "keep-alive",
         "content-type": "application/x-ndjson",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
-        "set-cookie": "sid=Fe26.2**3404c2756bf46456366917fb421d75637b11f924e735035d1bf5f4e75ccd83b1*_sXRQY0B75XBACcXFGbDLg*B5yPPtPaDyH2Hnq4l9SBsqrRDj47F4OuQHsySXjS5OnhswFprprDHys6nmRleWzGlmE2sSBvgjBkFZ2AV8MTvIrZZWd1aYOkKdCJjTDHPDnZGVrFoiu10lqkzd2qapNBakeY7uJGJtgE9GCIQkHL2nljRgUnjJpv-TizMizOUT8lScU4piBykJb9GeMP7QxD2F1CEy7EQbaM1WZvdk4BQbDKNPOYqvuqV7-KeAWi2poDpIZ7ZXaHomf5IeZmVCzm**6a048f274b6a569044d69af4e1e2051b5e50ad50718626041ac6119d12a33b4a*jzas5jx2FrNkG-5Nim7X34UN_TF9nCzy6PrVzuqYSFg; HttpOnly; Path=/",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
+        "set-cookie": "sid=Fe26.2**50c581b432e6935ff96aa1c005745ae31a723c83453fb9174dded6281dc0148a*lh8cVvPZA9YiIpAwl7qpKQ*lFzOqUBuSGwgAC2DiRavgiATHa7Ni1A-cJG34qMSHl3VVb4GRt50vTcnNj2iKIGyETfi30Royh5e4LagKxBIKJpZlVGM3Dno_4ewYvrSqQowLCAEcjnWOx31KDyq3keLtwyb6Mcg47IWYh-39_5abhKUXpZEWkZRWO6NdSOfY4YmY0l046tXPWdLyyKdKd97CVfT28Kc2hl9d1bp3_-2N_sZxreHxFEosxWht0kW5WQUFDjXSiUHN9dD7ZW4OvQf**5e08e6a4a034793a57c488c378b28ec6784e0939e1bb6bd08bf11a7773d6eab3*pS6KQHrpg6Fg2Jy28CEdKU2KVOh63Xyti0oMar2gotU; HttpOnly; Path=/",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315049918.127,
+    "responseTime": 1627394388523.336,
     "responseBody": {}
 }

@@ -1,6 +1,6 @@
 {
-    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "A685DC1E741B20E08598E6493F011AEE",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/internal/bsearch",
     "requestHeader": {
@@ -65,8 +65,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-19T15:57:35.660Z",
-                                                    "lte": "2021-07-26T15:57:35.660Z",
+                                                    "gte": "2021-07-20T13:59:54.421Z",
+                                                    "lte": "2021-07-27T13:59:54.421Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -77,11 +77,11 @@
                                 }
                             }
                         },
-                        "preference": 1627315054890
+                        "preference": 1627394393621
                     }
                 },
                 "options": {
-                    "sessionId": "3fceedfe-a08f-485f-bb69-0d52defb3e52",
+                    "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
                     "isRestore": false,
                     "strategy": "ese",
                     "isStored": false,
@@ -136,8 +136,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-19T15:57:35.660Z",
-                                                    "lte": "2021-07-26T15:57:35.660Z",
+                                                    "gte": "2021-07-20T13:59:54.421Z",
+                                                    "lte": "2021-07-27T13:59:54.421Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -148,11 +148,11 @@
                                 }
                             }
                         },
-                        "preference": 1627315054890
+                        "preference": 1627394393621
                     }
                 },
                 "options": {
-                    "sessionId": "3fceedfe-a08f-485f-bb69-0d52defb3e52",
+                    "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
                     "isRestore": false,
                     "strategy": "ese",
                     "isStored": false,
@@ -210,8 +210,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-19T15:57:35.660Z",
-                                                    "lte": "2021-07-26T15:57:35.660Z",
+                                                    "gte": "2021-07-20T13:59:54.421Z",
+                                                    "lte": "2021-07-27T13:59:54.421Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -222,11 +222,11 @@
                                 }
                             }
                         },
-                        "preference": 1627315054890
+                        "preference": 1627394393621
                     }
                 },
                 "options": {
-                    "sessionId": "3fceedfe-a08f-485f-bb69-0d52defb3e52",
+                    "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
                     "isRestore": false,
                     "strategy": "ese",
                     "isStored": false,
@@ -251,16 +251,16 @@
                                             "0": {
                                                 "range": {
                                                     "order_date": {
-                                                        "gte": "2021-07-19T15:57:35.660Z",
-                                                        "lte": "2021-07-26T15:57:35.660Z"
+                                                        "gte": "2021-07-20T13:59:54.421Z",
+                                                        "lte": "2021-07-27T13:59:54.421Z"
                                                     }
                                                 }
                                             },
                                             "604800000": {
                                                 "range": {
                                                     "order_date": {
-                                                        "gte": "2021-07-12T15:57:35.660Z",
-                                                        "lte": "2021-07-19T15:57:35.660Z"
+                                                        "gte": "2021-07-13T13:59:54.421Z",
+                                                        "lte": "2021-07-20T13:59:54.421Z"
                                                     }
                                                 }
                                             }
@@ -325,8 +325,8 @@
                                                                 {
                                                                     "range": {
                                                                         "order_date": {
-                                                                            "gte": "2021-07-19T15:57:35.660Z",
-                                                                            "lte": "2021-07-26T15:57:35.660Z"
+                                                                            "gte": "2021-07-20T13:59:54.421Z",
+                                                                            "lte": "2021-07-27T13:59:54.421Z"
                                                                         }
                                                                     }
                                                                 }
@@ -339,8 +339,8 @@
                                                                 {
                                                                     "range": {
                                                                         "order_date": {
-                                                                            "gte": "2021-07-12T15:57:35.660Z",
-                                                                            "lte": "2021-07-19T15:57:35.660Z"
+                                                                            "gte": "2021-07-13T13:59:54.421Z",
+                                                                            "lte": "2021-07-20T13:59:54.421Z"
                                                                         }
                                                                     }
                                                                 }
@@ -357,11 +357,11 @@
                                 }
                             }
                         },
-                        "preference": 1627315054890
+                        "preference": 1627394393621
                     }
                 },
                 "options": {
-                    "sessionId": "3fceedfe-a08f-485f-bb69-0d52defb3e52",
+                    "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
                     "isRestore": false,
                     "strategy": "ese",
                     "isStored": false,
@@ -416,8 +416,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-19T15:57:35.660Z",
-                                                    "lte": "2021-07-26T15:57:35.660Z",
+                                                    "gte": "2021-07-20T13:59:54.421Z",
+                                                    "lte": "2021-07-27T13:59:54.421Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -428,11 +428,11 @@
                                 }
                             }
                         },
-                        "preference": 1627315054890
+                        "preference": 1627394393621
                     }
                 },
                 "options": {
-                    "sessionId": "3fceedfe-a08f-485f-bb69-0d52defb3e52",
+                    "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
                     "isRestore": false,
                     "strategy": "ese",
                     "isStored": false,
@@ -500,8 +500,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-19T15:57:35.660Z",
-                                                    "lte": "2021-07-26T15:57:35.660Z",
+                                                    "gte": "2021-07-20T13:59:54.421Z",
+                                                    "lte": "2021-07-27T13:59:54.421Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -512,11 +512,11 @@
                                 }
                             }
                         },
-                        "preference": 1627315054890
+                        "preference": 1627394393621
                     }
                 },
                 "options": {
-                    "sessionId": "3fceedfe-a08f-485f-bb69-0d52defb3e52",
+                    "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
                     "isRestore": false,
                     "strategy": "ese",
                     "isStored": false,
@@ -541,16 +541,16 @@
                                             "0": {
                                                 "range": {
                                                     "order_date": {
-                                                        "gte": "2021-07-19T15:57:35.660Z",
-                                                        "lte": "2021-07-26T15:57:35.660Z"
+                                                        "gte": "2021-07-20T13:59:54.421Z",
+                                                        "lte": "2021-07-27T13:59:54.421Z"
                                                     }
                                                 }
                                             },
                                             "604800000": {
                                                 "range": {
                                                     "order_date": {
-                                                        "gte": "2021-07-12T15:57:35.660Z",
-                                                        "lte": "2021-07-19T15:57:35.660Z"
+                                                        "gte": "2021-07-13T13:59:54.421Z",
+                                                        "lte": "2021-07-20T13:59:54.421Z"
                                                     }
                                                 }
                                             }
@@ -625,8 +625,8 @@
                                                                 {
                                                                     "range": {
                                                                         "order_date": {
-                                                                            "gte": "2021-07-19T15:57:35.660Z",
-                                                                            "lte": "2021-07-26T15:57:35.660Z"
+                                                                            "gte": "2021-07-20T13:59:54.421Z",
+                                                                            "lte": "2021-07-27T13:59:54.421Z"
                                                                         }
                                                                     }
                                                                 }
@@ -639,8 +639,8 @@
                                                                 {
                                                                     "range": {
                                                                         "order_date": {
-                                                                            "gte": "2021-07-12T15:57:35.660Z",
-                                                                            "lte": "2021-07-19T15:57:35.660Z"
+                                                                            "gte": "2021-07-13T13:59:54.421Z",
+                                                                            "lte": "2021-07-20T13:59:54.421Z"
                                                                         }
                                                                     }
                                                                 }
@@ -657,11 +657,11 @@
                                 }
                             }
                         },
-                        "preference": 1627315054890
+                        "preference": 1627394393621
                     }
                 },
                 "options": {
-                    "sessionId": "3fceedfe-a08f-485f-bb69-0d52defb3e52",
+                    "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
                     "isRestore": false,
                     "strategy": "ese",
                     "isStored": false,
@@ -720,8 +720,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-12T15:57:35.660Z",
-                                                    "lte": "2021-07-19T15:57:35.660Z",
+                                                    "gte": "2021-07-13T13:59:54.421Z",
+                                                    "lte": "2021-07-20T13:59:54.421Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -732,11 +732,11 @@
                                 }
                             }
                         },
-                        "preference": 1627315054890
+                        "preference": 1627394393621
                     }
                 },
                 "options": {
-                    "sessionId": "3fceedfe-a08f-485f-bb69-0d52defb3e52",
+                    "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
                     "isRestore": false,
                     "strategy": "ese",
                     "isStored": false,
@@ -795,8 +795,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-19T15:57:35.660Z",
-                                                    "lte": "2021-07-26T15:57:35.660Z",
+                                                    "gte": "2021-07-20T13:59:54.421Z",
+                                                    "lte": "2021-07-27T13:59:54.421Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -807,11 +807,11 @@
                                 }
                             }
                         },
-                        "preference": 1627315054890
+                        "preference": 1627394393621
                     }
                 },
                 "options": {
-                    "sessionId": "3fceedfe-a08f-485f-bb69-0d52defb3e52",
+                    "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
                     "isRestore": false,
                     "strategy": "ese",
                     "isStored": false,
@@ -828,19 +828,19 @@
     },
     "responseUrl": "http://localhost:5620/internal/bsearch",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:36 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:55 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "transfer-encoding": "chunked",
         "connection": "keep-alive",
         "content-type": "application/x-ndjson",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
-        "set-cookie": "sid=Fe26.2**aa5e8b27ad3992721e7dc5b312e294cc5ca1ae69ccbad6e5552d562dbd4c5923*-O3OMpDEh7_-Tzr3HSGUyA*_48a0PrTJGCZaKxmgyhw2ns6HAmnwwm0BsMBK27jkRn6A4A-ZdtxosFh1DJR7-OKcccx0bGbD2T3cC2KzyM_E3Y5FrZLLipB4T8zXr37kWuR8U7dtPyT-mh92Lp6b7WN2yxpVfV0M5kh2qZnF8sDGx47qX7DUPbWcP2CwRG3lwJO68F6l-eMSJ35XHl1EDRfFI6eFxX39T41O-kklGlzZJUlJvpU_0l9_tMcnlhgKAHG35EydZaCbtlixuY_bIO1**10e346d376ed2eabd00270ca68f8b43a867026a7b5e912e6a0c798b8066e2941*ZmqDPkLoh37leiL1I1tznASNFy79jqml_a5VMs2ejvM; HttpOnly; Path=/",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
+        "set-cookie": "sid=Fe26.2**9b0bdd268e79b40cb75752a0b52aa4013d7fdd436106d9f6b0a7e55900de5c7a*C6dmEW5fdrKLl05shmnlGg*OunDi0z-fcTME8UNIXtghZ45Ezg1gQHOLjwqLQ5sAVFdliZW1X3KvFl9W9-ME7J1U9SCwGX7xDv4qJI6EWIJo335826gb4YBfJVVXv79j65_pQaFejFy-yi7RJ-BZGC4int_uMle85Uirn27Hsvl6gLMLt7qEpqY_N_WHAsz1QAvilpVqAIcj_MhxcyxNLB1i3h07pEEE6erm8P428mNRnSoV3ciM_XS9RizlIKNdO-IsLH3j1nTK671l9tQz3Rc**2e8f33be557eda989a8bf22aa958afdedd58d8ab61b42ed8498316944e4dba91*uvrdCrUstc65LRj9r6awAD662tFRAbjxWmIvdW-wDKg; HttpOnly; Path=/",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315056883.739,
+    "responseTime": 1627394395662.999,
     "responseBody": {}
 }

@@ -1,202 +1,245 @@
 {
-    "loaderId": "43A418682E9570B6CCD51BC2784CB458",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "370647D9BDC75C52978E0D48114BACCD",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
-    "requestUrl": "http://localhost:5620/api/timelion/run",
+    "requestUrl": "http://localhost:5620/internal/bsearch",
     "requestHeader": {
         "sec-ch-ua": "",
-        "Accept": "application/json",
         "Referer": "http://localhost:5620/app/canvas",
-        "kbn-xsrf": "professionally-crafted-string-of-text",
         "sec-ch-ua-mobile": "?0",
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
+        "X-Chunk-Encoding": "deflate",
         "Content-Type": "application/json"
     },
     "postData": {
-        "extended": {
-            "es": {
-                "filter": {
-                    "bool": {
-                        "must": []
-                    }
+        "batch": [
+            {
+                "request": {
+                    "query": "select COUNT(*) as total_count, SUM(CASE WHEN customer_gender='MALE' THEN 1 else 0 END) as male_count from kibana_sample_data_ecommerce",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "select COUNT(*) as total_count, SUM(CASE WHEN customer_gender='FEMALE' THEN 1 else 0 END) as female_count from kibana_sample_data_ecommerce",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "SELECT order_date as min FROM kibana_sample_data_ecommerce order by order_date limit 1",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "SELECT order_date as max FROM kibana_sample_data_ecommerce order by order_date DESC limit 1",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category ORDER BY category",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "select COUNT(*) as total_count, SUM(CASE WHEN customer_gender='FEMALE' THEN 1 else 0 END) as female_count from kibana_sample_data_ecommerce",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "select COUNT(*) as total_count, SUM(CASE WHEN customer_gender='MALE' THEN 1 else 0 END) as male_count from kibana_sample_data_ecommerce",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
+                }
+            },
+            {
+                "request": {
+                    "query": "SELECT sum(taxless_total_price) AS sum_total_price FROM \"kibana_sample_data_ecommerce\"",
+                    "count": 1000,
+                    "timezone": "UTC",
+                    "filter": []
+                },
+                "options": {
+                    "strategy": "essql"
                 }
             }
-        },
-        "sheet": [
-            ".es(index=kibana_sample_data_ecommerce, metric=sum:taxless_total_price, timefield=order_date)"
-        ],
-        "time": {
-            "from": "2021-07-15T00:04:19.000Z",
-            "to": "2021-08-14T23:45:36.000Z",
-            "interval": "1d",
-            "timezone": "UTC"
-        }
+        ]
     },
-    "responseUrl": "http://localhost:5620/api/timelion/run",
+    "responseUrl": "http://localhost:5620/internal/bsearch",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:53 GMT",
-        "content-encoding": "gzip",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 14:00:12 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
-        "vary": "accept-encoding",
-        "content-type": "application/json; charset=utf-8",
-        "set-cookie": "sid=Fe26.2**d2c0c88210fc8c7fbf0530839b25241c821b673dd190040bbe47d39a9c6f226d*7ZwiJwDQsxby21zzjhMORA*Ugtt1H6cvqrfP1OJdCW5stSfEMsf9N0uh-UwXQ7loj6uQcwcJ7JJCzZkgUZrsKeNbtaMKEmPp1OkxcLq2442dUd0NHAR9h3ts7msiC4423lyzvaW4WM-LSJVSfTnQaRPhPv8T28KyZaID5R4-TMonqj-SriAxvlYRw1beWspE-9jiAWI5ssSsI7AT61S3WU5wbtHx0RVos7mcHK8Dv8Zeesr8Fdt8jOF1gUNq98ABSDg4LxZQOBJXZYFH5ZsweAz**5c4ec1a6354cf976e573d15a8b66481ea3a987b5afd351b5b383a1e7e16e8f88*ii-ISbtdXayaKDYAhkS7BwVn7-9jFe-Gid3pIxuwF_0; HttpOnly; Path=/",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "content-type": "application/x-ndjson",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "Transfer-Encoding": "chunked",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
-        "Connection": "keep-alive",
-        "Keep-Alive": "timeout=120",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
+        "set-cookie": "sid=Fe26.2**e8a61799c372fe3e9fbd043ac947853c9e1481703de8d6e561e18aafc1b6fbb7*HfOaop59gbDhPYlqYsiq5g*EVkXHbXxAGhXYECNxQTPFa_EtitmIr8ug1c0LYVCWmyx4ik1L0xDj-B1hQ12x1pIvF3arN45yXKoSRONpK_wZLtmFz7Xie5oR_lgMLXqGcZ1VnD2ftPe1lEfil-FHmwZulrTybV7YS8ABHWBS1Iij0MUhXz9Byrb6jPHiBIUeTXjOke4Cpt4JTV5miqqPEjtuXvy37h4ZrjZ6WXjvNE-3rh-wZse12f_13P9FeFZMh-7vh_dLWnNfeTdtOcT1FYl**4557f6069cf7e4a7b3a65f8ad7d02e62b3b8c9d65ba85046f84b047e2943c721*fH9ntSQJraqiiWEd96S23lIBn2kZrUzgmnk4RbJ8mGc; HttpOnly; Path=/",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315073922.675,
-    "responseBody": {
-        "sheet": [
-            {
-                "type": "seriesList",
-                "list": [
-                    {
-                        "data": [
-                            [
-                                1626307200000,
-                                10578.53125
-                            ],
-                            [
-                                1626393600000,
-                                10448
-                            ],
-                            [
-                                1626480000000,
-                                10283.484375
-                            ],
-                            [
-                                1626566400000,
-                                10145.5234375
-                            ],
-                            [
-                                1626652800000,
-                                12012.609375
-                            ],
-                            [
-                                1626739200000,
-                                11009.45703125
-                            ],
-                            [
-                                1626825600000,
-                                10720.59375
-                            ],
-                            [
-                                1626912000000,
-                                11185.3671875
-                            ],
-                            [
-                                1626998400000,
-                                13560.140625
-                            ],
-                            [
-                                1627084800000,
-                                9884.78125
-                            ],
-                            [
-                                1627171200000,
-                                11075.65625
-                            ],
-                            [
-                                1627257600000,
-                                10323.8515625
-                            ],
-                            [
-                                1627344000000,
-                                10369.546875
-                            ],
-                            [
-                                1627430400000,
-                                11711.890625
-                            ],
-                            [
-                                1627516800000,
-                                12612.6640625
-                            ],
-                            [
-                                1627603200000,
-                                10176.87890625
-                            ],
-                            [
-                                1627689600000,
-                                11480.33203125
-                            ],
-                            [
-                                1627776000000,
-                                11533.265625
-                            ],
-                            [
-                                1627862400000,
-                                10499.8125
-                            ],
-                            [
-                                1627948800000,
-                                12111.6875
-                            ],
-                            [
-                                1628035200000,
-                                10530.765625
-                            ],
-                            [
-                                1628121600000,
-                                11872.5625
-                            ],
-                            [
-                                1628208000000,
-                                12109.453125
-                            ],
-                            [
-                                1628294400000,
-                                11057.40625
-                            ],
-                            [
-                                1628380800000,
-                                13095.609375
-                            ],
-                            [
-                                1628467200000,
-                                12574.015625
-                            ],
-                            [
-                                1628553600000,
-                                11188.1875
-                            ],
-                            [
-                                1628640000000,
-                                12117.65625
-                            ],
-                            [
-                                1628726400000,
-                                11558.25
-                            ],
-                            [
-                                1628812800000,
-                                11921.1171875
-                            ],
-                            [
-                                1628899200000,
-                                11135.03125
-                            ]
-                        ],
-                        "type": "series",
-                        "fit": "nearest",
-                        "label": "q:* > sum(taxless_total_price)",
-                        "split": "*"
-                    }
-                ]
-            }
-        ],
-        "stats": {
-            "invokeTime": 1627315073875,
-            "queryCount": 1,
-            "queryTime": 1627315073911,
-            "cacheCount": 1,
-            "sheetTime": 1627315073920
-        }
-    }
+    "responseTime": 1627394412145.216,
+    "responseBody": {}
 }

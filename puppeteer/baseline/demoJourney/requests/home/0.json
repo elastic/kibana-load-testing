@@ -1,6 +1,6 @@
 {
-    "loaderId": "D734C4DB1B42CEE5E44FDD4EBBA80872",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "1322E1787FAAFAC843B374F7B78C30A0",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "GET",
     "requestUrl": "http://localhost:5620/app/home",
     "requestHeader": {
@@ -14,20 +14,20 @@
         "content-security-policy": "script-src 'unsafe-eval' 'self'; worker-src blob: 'self'; style-src 'unsafe-inline' 'self'",
         "x-content-type-options": "nosniff",
         "referrer-policy": "no-referrer-when-downgrade",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
         "content-type": "text/html; charset=utf-8",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "set-cookie": "sid=Fe26.2**8b5cb9acf81200958bb044a2e1ffd2b66db864fe89279f505027721ab2bdc8b3*dxwmiJB_gSsHnYnzcfeqqA*herKqh7bbZauLLiF7-JDsQ6uV7VbCfvjhrU9_v28RVDzwuZwUikLdMsfawLBV8t-ylD8ONNU2xBqqpnGgVJv3VE1IKWCRYLwH-Hipq88WcvZhkgkvbg6Wk6quFdVEIzd4oo2bRcMVgK1QlYbp0c66hLCuSJ0CqNWEeATcyn2vZRxvaMSZSMGs6-ar7lbflGfX_sTi1Uf1VkNTy2IcNEl7VyZkAd161w0fRMh3XxBGwiXpADCbLenZC6C3eG8JbHB**fc47b971281e26417785c965735021be9783a90a05aa2936f9c1f257fb6c7ce3*9SomlNzcPa0okH4VIj_soHN7kT6qQHmgc2fT0hPcZW0; HttpOnly; Path=/",
+        "set-cookie": "sid=Fe26.2**9bd25e0dd18c174352b17241caf2f59dfcc520364e42a773415ed4c1b53921c8*cZrSLarHpMs4WwbqJ0mY8g*MbTDZ5B61LfSYMnxOaDWJpocRuH_hWgxH1hF3YMme7Iscn6XQSbg0W9osSWUcP7JtgJAMfFACKABr83q8yK7l0JxBF3LN-8n79XT9RHVbkrC-yShSrpELuOUk6I1tV15Itv-fwJz_WhQWtKiheosm6N42aBBPxbmo2vQGB0qlH7hSbcQXPc9y7Lt9_Hsup1jPZ0pm6V05N35dfHhBkJjEByq3Mg_v60DQnf3tqJqfaHuCSf0N4DIVjbX2uD7eIdn**a99d8384114b7a5e04a309302e542d4d0d0b49109eb845f7f36fdbd4dfd7bbd3*ZJMpFcOB1RpDVkgHfpXOPxjgnplu5eoOub48xJU3uCs; HttpOnly; Path=/",
         "vary": "accept-encoding",
         "content-encoding": "gzip",
-        "Date": "Mon, 26 Jul 2021 15:57:15 GMT",
+        "Date": "Tue, 27 Jul 2021 13:59:30 GMT",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "Transfer-Encoding": "chunked"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315035335.752,
+    "responseTime": 1627394370371.53,
     "responseBody": {}
 }

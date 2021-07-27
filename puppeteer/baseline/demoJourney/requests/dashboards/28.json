@@ -1,6 +1,6 @@
 {
-    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "A685DC1E741B20E08598E6493F011AEE",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/internal/bsearch",
     "requestHeader": {
@@ -58,8 +58,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-19T15:57:35.660Z",
-                                                    "lte": "2021-07-26T15:57:35.660Z",
+                                                    "gte": "2021-07-20T13:59:54.421Z",
+                                                    "lte": "2021-07-27T13:59:54.421Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -71,13 +71,94 @@
                             }
                         },
                         "track_total_hits": false,
-                        "preference": 1627315054890
+                        "preference": 1627394393621
                     }
                 },
                 "options": {
-                    "sessionId": "3fceedfe-a08f-485f-bb69-0d52defb3e52",
+                    "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
                     "isRestore": false,
                     "legacyHitsTotal": false,
+                    "strategy": "ese",
+                    "isStored": false
+                }
+            },
+            {
+                "request": {
+                    "id": "FjU1UlhhVFg3UkoyTWZqeng4bjNYa2cbQ2RKcWJ4dEtSVDZ6ay1XUnFrYUd3UTo3NjU3",
+                    "params": {
+                        "index": "kibana_sample_data_ecommerce",
+                        "body": {
+                            "version": true,
+                            "size": 500,
+                            "sort": [
+                                {
+                                    "order_date": {
+                                        "order": "desc",
+                                        "unmapped_type": "boolean"
+                                    }
+                                }
+                            ],
+                            "fields": [
+                                {
+                                    "field": "*",
+                                    "include_unmapped": "true"
+                                },
+                                {
+                                    "field": "customer_birth_date",
+                                    "format": "strict_date_optional_time"
+                                },
+                                {
+                                    "field": "order_date",
+                                    "format": "strict_date_optional_time"
+                                },
+                                {
+                                    "field": "products.created_on",
+                                    "format": "strict_date_optional_time"
+                                }
+                            ],
+                            "script_fields": {},
+                            "stored_fields": [
+                                "*"
+                            ],
+                            "runtime_mappings": {},
+                            "_source": false,
+                            "query": {
+                                "bool": {
+                                    "must": [],
+                                    "filter": [
+                                        {
+                                            "range": {
+                                                "order_date": {
+                                                    "gte": "2021-07-20T13:59:54.421Z",
+                                                    "lte": "2021-07-27T13:59:54.421Z",
+                                                    "format": "strict_date_optional_time"
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "should": [],
+                                    "must_not": []
+                                }
+                            },
+                            "highlight": {
+                                "pre_tags": [
+                                    "@kibana-highlighted-field@"
+                                ],
+                                "post_tags": [
+                                    "@/kibana-highlighted-field@"
+                                ],
+                                "fields": {
+                                    "*": {}
+                                },
+                                "fragment_size": 2147483647
+                            }
+                        },
+                        "preference": 1627394393621
+                    }
+                },
+                "options": {
+                    "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
+                    "isRestore": false,
                     "strategy": "ese",
                     "isStored": false
                 }
@@ -86,19 +167,19 @@
     },
     "responseUrl": "http://localhost:5620/internal/bsearch",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:38 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:57 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "transfer-encoding": "chunked",
         "connection": "keep-alive",
         "content-type": "application/x-ndjson",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
-        "set-cookie": "sid=Fe26.2**6eb5e6073d94c78dbc396d5fe054a65c655c944f77a311e4840ad81452346b39*U6lcTvEv8vCIZgDBxC_3gg*fb5To-fxbH5EqGrtMz-ImZ09UOUFoxiqStQok7Ra7ynRZJND8xANzqvjBmhNhfeLPgJu1dPifmr_GOX93mEiEv7vtNs1PT3CMo4hzB2pJ3EMhjAzcgIc0yuw9mW0fZEg5Xfn6ROMMhfabsTstx2O-vuZtqiTX97mCUEODRH2P7AUJ_vfN0qOH0ObPxGOyzq5pe9D85fSlHGuX7X98Vbxp8PTgH_CJIEvDSqHkv8aYTFGxwrFoeIsjC6kMBDPOU-6**46f4297e5e4025b607ea34d1e7697ac63011fa0a9654803f1cfc031c0059d786*5m7M49FzO95QhGTNUIZ3FWYnLI7DCqhHbsGI6-dyqko; HttpOnly; Path=/",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
+        "set-cookie": "sid=Fe26.2**2134213ed1e7e69191c0527b12f4aabb1a1ead25a86c0cfd5f195aa4b9d00aa1*xpAlop_X6-IdakQGRIBrSw*JVv_K36jUWaFSOf1DnJebETlyWUJHwM1cbukXKAACBUym6Vli6ODoaqtiyfUn6gDlCws6wOAlT4A_1RuYJGKpjkoY41UmMgrH5G9y5uTKB1jzhGMyQJukNUwtL4spkk_xaaZq93gk1RXgAbzawMdB2WTs9DFiK_cCvz28uTA0Z0NXPSYHnjRIMAlVcNyx7eBjbP8FFFINSlzyomLHoCSq9Dxj6ogcBp2M0hnsZiLe4yRhGljQZpS5ddeQB7hhvgg**8d224cfa20feb32be128950994b011673808602bd1adf65c6c92d09a393acb63*EfknQYXuhx_NODzvHT33U943w4FCHrpQiW0iF3ijvX4; HttpOnly; Path=/",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315058650.059,
+    "responseTime": 1627394397316.408,
     "responseBody": {}
 }

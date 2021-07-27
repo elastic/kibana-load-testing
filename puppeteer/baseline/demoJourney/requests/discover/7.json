@@ -1,8 +1,8 @@
 {
-    "loaderId": "FE4F2B707523168BB7BE53BBC86AAA42",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "661BFC09D1815316AB7C31C09CD42353",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "GET",
-    "requestUrl": "http://localhost:5620/internal/security/me",
+    "requestUrl": "http://localhost:5620/api/licensing/info",
     "requestHeader": {
         "sec-ch-ua": "",
         "Referer": "http://localhost:5620/app/discover",
@@ -13,46 +13,122 @@
         "Content-Type": "application/json"
     },
     "postData": {},
-    "responseUrl": "http://localhost:5620/internal/security/me",
+    "responseUrl": "http://localhost:5620/api/licensing/info",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:18 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:39 GMT",
+        "content-encoding": "gzip",
         "referrer-policy": "no-referrer-when-downgrade",
+        "vary": "accept-encoding",
         "content-type": "application/json; charset=utf-8",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
+        "Transfer-Encoding": "chunked",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
-        "accept-ranges": "bytes",
         "Keep-Alive": "timeout=120",
-        "content-length": "321",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315038360.446,
+    "responseTime": 1627394379042.494,
     "responseBody": {
-        "username": "elastic",
-        "roles": [
-            "superuser"
-        ],
-        "full_name": null,
-        "email": null,
-        "metadata": {
-            "_reserved": true
+        "license": {
+            "uid": "97b960ca-4730-4064-9527-2aa4136666a8",
+            "type": "trial",
+            "mode": "trial",
+            "expiryDateInMillis": 1629986294514,
+            "status": "active"
         },
-        "enabled": true,
-        "authentication_realm": {
-            "name": "reserved",
-            "type": "reserved"
+        "features": {
+            "aggregate_metric": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "analytics": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "ccr": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "data_streams": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "data_tiers": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "enrich": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "eql": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "frozen_indices": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "graph": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "ilm": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "logstash": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "ml": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "monitoring": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "rollup": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "searchable_snapshots": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "security": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "slm": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "spatial": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "sql": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "transform": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "voting_only": {
+                "isAvailable": true,
+                "isEnabled": true
+            },
+            "watcher": {
+                "isAvailable": true,
+                "isEnabled": true
+            }
         },
-        "lookup_realm": {
-            "name": "reserved",
-            "type": "reserved"
-        },
-        "authentication_type": "realm",
-        "authentication_provider": {
-            "type": "basic",
-            "name": "basic"
-        }
+        "signature": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f"
     }
 }

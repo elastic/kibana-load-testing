@@ -1,6 +1,6 @@
 {
-    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "A685DC1E741B20E08598E6493F011AEE",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/internal/bsearch",
     "requestHeader": {
@@ -58,8 +58,8 @@
                                         {
                                             "range": {
                                                 "order_date": {
-                                                    "gte": "2021-07-19T15:57:35.660Z",
-                                                    "lte": "2021-07-26T15:57:35.660Z",
+                                                    "gte": "2021-07-20T13:59:54.421Z",
+                                                    "lte": "2021-07-27T13:59:54.421Z",
                                                     "format": "strict_date_optional_time"
                                                 }
                                             }
@@ -71,11 +71,11 @@
                             }
                         },
                         "track_total_hits": false,
-                        "preference": 1627315054890
+                        "preference": 1627394393621
                     }
                 },
                 "options": {
-                    "sessionId": "3fceedfe-a08f-485f-bb69-0d52defb3e52",
+                    "sessionId": "887d8e19-fc08-4bd9-9b82-72ebe97813da",
                     "isRestore": false,
                     "legacyHitsTotal": false,
                     "strategy": "ese",
@@ -86,19 +86,19 @@
     },
     "responseUrl": "http://localhost:5620/internal/bsearch",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:38 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:57 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "transfer-encoding": "chunked",
         "connection": "keep-alive",
         "content-type": "application/x-ndjson",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
-        "set-cookie": "sid=Fe26.2**77df38e2512b8086d6fd759d962eee07b7c387194cdaea96d91c2d4a98668e4c*-nnU5GGMPLhAWe3Mxd8bfQ*YPTMMgFAzM0B3PcNxevgQC0-ZUZSL2aoNE0-KddzN5IbgAzGaS24iVY5LLiRHp6P7BdElAbM74UiXLA_NoCn0k7u41Fr7amVN0VJM3--Dm-4cliedpoXtU7UU6crI6944iLFkvNv38scbss0b0yGhfeChhaQ66mcin2XxdMo64oY-0H3m_nYN71V1G3k2fL3_azOqEsAJireulVl-UISIzSeLFD9QisEyB6ETpEuzvMGf6Q3chy81oPEI2YnKbKJ**d4a19c59472fa9bf8038d171eec8dc6f00ad4e974644b57829d6755d3a72c314*mbEUxCEJ9KZXF5nFQ9EkvGXSjh6ZlfJINAscJfyPM2M; HttpOnly; Path=/",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
+        "set-cookie": "sid=Fe26.2**435bfcbe559588da1a104ac158e8fdb44da7c9abec9add2f8085f723a33408e2*6S_PWGNZM5fMSg0RZWOXYA*2GS7H1OeUqXxQpVug0sRromia8eAorlRrmDCJ3edmGQFywsv-wa61Vespo-E8DDvJ8cc34DJBb6U1w3eIGbKhXDFBC6JNbl608Np2jm9RNJWc65TDddMF1FFpBPXXSTXb9GT2-4vPpGFkBH66bT2sFOGiP0r3u5XLQn4ByVKoHwID81eNimEVWeYCABYKUxA6EspUYjjCNJTmarl6geR04bFuR5t_9pALeTKUCjXNTvdhPKiIb9-lHkvGiw1ywhG**5255aed6c5d6abf2b41a2c0f8e4a5314e9b44e003aa81090c7bd610879709dff*5QiltNFcJVm-n7bKnQi4K2Rv31dMwbhICb5NNLLyAwo; HttpOnly; Path=/",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315058355.502,
+    "responseTime": 1627394397116.628,
     "responseBody": {}
 }

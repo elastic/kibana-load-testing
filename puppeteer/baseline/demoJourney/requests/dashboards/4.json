@@ -1,6 +1,6 @@
 {
-    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "A685DC1E741B20E08598E6493F011AEE",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "GET",
     "requestUrl": "http://localhost:5620/internal/security_oss/app_state",
     "requestHeader": {
@@ -14,13 +14,13 @@
     "postData": {},
     "responseUrl": "http://localhost:5620/internal/security_oss/app_state",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:35 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:54 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "content-type": "application/json; charset=utf-8",
-        "set-cookie": "sid=Fe26.2**f6a39a92070c74124932fd6351b114050b9acd693a06ad7bfd6121846e5dc78f*CCl6-Jv54XYJHAr0O6BwNw*oKqRgQi8ltUbI02kax2kBeYGKu8XSUQ7O3CKPF29ywxrJt2KGabkgauaiJru2OmYsxzjFd2iZYsf_K0SWRYwZBACnl3BN4bC9PKvvjKUip51xkqGz6kz9eCDMVAg33vQc0h3gWBhnf_B_AapWiHw9vTOD--NKyiU5UYUKsxVF2U-gpi9idbnup8qzWa_3aA_Uxe-5_7zKtcJGjkOB8KVR2S4mnwtBTrUD_YKG2iIHY6-4wEPHZJS61R0oZ8AxonT**50575d92289e0b41790ded6d457dd019e96b8740f835e71a2fb9270fa1a1bcca*dI6bVZbYgX0Tgni1uJP0wHAI2KWD2a_6rrRBlQ-AOkE; HttpOnly; Path=/",
+        "set-cookie": "sid=Fe26.2**7c02f4725f522f1fd38366040c58baf5b401b1ec916956895ea53637950b3bec*sb7gITaz7Kzhln_hcN5Zrw*3G7WSsm_Ag9F-xnGYYlmdFlcQQCtcHSq7ZwiYQ2eTWza9RUY8NhUDe8H7VkO0t8Z-OwmB5bQChNulbI5oCKXwM14YpgrQsy3OL-KElTIXKqBTaiu9qG0ah1Dm_WjlOPAT44vqXcJKsHqIKQEnISlR6llhEoI-gpsJaiIyNKVIGhTVVD8hXKRws5I0_3pCzeeMNhVTqvfS0mgkQRzV0A-rGWnNX2fnLz_8VwOrskmZtFhBA6TtCGtOYZoIzTSZCcV**6b63dfe3bd8ee41e0f87193ac936b26d82405fd963f06d452d783bb73f21d4ac*YdKswzPsALBr6pKKLEMBaSiLOKQuro_Hd1tBzqcqrp0; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "accept-ranges": "bytes",
         "Keep-Alive": "timeout=120",
@@ -29,7 +29,7 @@
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315055339.299,
+    "responseTime": 1627394394088.111,
     "responseBody": {
         "insecureClusterAlert": {
             "displayAlert": false

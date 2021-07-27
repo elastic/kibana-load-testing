@@ -1,0 +1,52 @@
+{
+    "loaderId": "1322E1787FAAFAC843B374F7B78C30A0",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
+    "method": "POST",
+    "requestUrl": "http://localhost:5620/internal/licensing/feature_usage/register",
+    "requestHeader": {
+        "sec-ch-ua": "",
+        "Referer": "http://localhost:5620/app/home",
+        "sec-ch-ua-mobile": "?0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/91.0.4469.0 Safari/537.36",
+        "kbn-version": "8.0.0-SNAPSHOT",
+        "Content-Type": "application/json"
+    },
+    "postData": [
+        {
+            "featureName": "URL drilldown",
+            "licenseType": "gold"
+        },
+        {
+            "featureName": "geo_line aggregation",
+            "licenseType": "gold"
+        },
+        {
+            "featureName": "geo_tile aggregation on geo_shape field-type",
+            "licenseType": "gold"
+        },
+        {
+            "featureName": "layer from local Elastic Maps Server",
+            "licenseType": "enterprise"
+        }
+    ],
+    "responseUrl": "http://localhost:5620/internal/licensing/feature_usage/register",
+    "responseHeaders": {
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:32 GMT",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "content-type": "application/json; charset=utf-8",
+        "set-cookie": "sid=Fe26.2**8612c162b38d51f65ffb7c81c1a9b6b400e11d87555c72f42f23902479fd3966*I3OGYpcV5lM-57mvGPSdfQ*VJO2dEiroNCfkZzlA7uDvdIzjHydVzC106ynmKFbUk6AiGtqMpHpVTUlCyclgiD1Rv3ezADNH-w6b5k7LPol0Oi03KfZ-AfB4IOmAlot8faU5ameLZvRrko3VqKtjSsqoDvzVdQXQtUrB8ztOshFmrjggQZYqeJ9vLTRnFSWK7DvToYNHRG-wdrJ-4emnZDb37m1fs8qCQfKcj9TzI4OuXNGYkPgonwSlZMpS2FSUFCZDk1jDzfg4_TyA7HVEmAo**ed0010a11a3114c84a83731ebc8bdc0fcae3b7a5062d7c5ec8fd39126f161ca6*Vp7aF_FGtvIaopYeGaiC48XnAdNb0sOEV26u6boyg6M; HttpOnly; Path=/",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=120",
+        "content-length": "16",
+        "x-content-type-options": "nosniff"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "responseTime": 1627394372623.931,
+    "responseBody": {
+        "success": true
+    }
+}

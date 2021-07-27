@@ -1,6 +1,6 @@
 {
-    "loaderId": "43A418682E9570B6CCD51BC2784CB458",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "370647D9BDC75C52978E0D48114BACCD",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/api/canvas/fns",
     "requestHeader": {
@@ -14,6 +14,366 @@
     },
     "postData": {
         "batch": [
+            {
+                "functionName": "pointseries",
+                "args": {
+                    "color": "category",
+                    "size": "percentage"
+                },
+                "context": {
+                    "columns": [
+                        {
+                            "id": "category",
+                            "name": "category",
+                            "meta": {
+                                "type": "string",
+                                "params": {
+                                    "id": "string"
+                                }
+                            }
+                        },
+                        {
+                            "id": "count",
+                            "name": "count",
+                            "meta": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "id": "total",
+                            "name": "total",
+                            "meta": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "id": "percentage",
+                            "name": "percentage",
+                            "meta": {
+                                "type": "number",
+                                "params": {
+                                    "id": "number"
+                                }
+                            }
+                        }
+                    ],
+                    "rows": [
+                        [
+                            "Other",
+                            6579,
+                            7409,
+                            88.8
+                        ],
+                        [
+                            "Women's Accessories",
+                            830,
+                            7409,
+                            11.2
+                        ]
+                    ],
+                    "type": "datatable"
+                }
+            },
+            {
+                "functionName": "pointseries",
+                "args": {
+                    "color": "category",
+                    "size": "percentage"
+                },
+                "context": {
+                    "columns": [
+                        {
+                            "id": "category",
+                            "name": "category",
+                            "meta": {
+                                "type": "string",
+                                "params": {
+                                    "id": "string"
+                                }
+                            }
+                        },
+                        {
+                            "id": "count",
+                            "name": "count",
+                            "meta": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "id": "total",
+                            "name": "total",
+                            "meta": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "id": "percentage",
+                            "name": "percentage",
+                            "meta": {
+                                "type": "number",
+                                "params": {
+                                    "id": "number"
+                                }
+                            }
+                        }
+                    ],
+                    "rows": [
+                        [
+                            "Other",
+                            6273,
+                            7409,
+                            84.67
+                        ],
+                        [
+                            "Women's Shoes",
+                            1136,
+                            7409,
+                            15.33
+                        ]
+                    ],
+                    "type": "datatable"
+                }
+            },
+            {
+                "functionName": "pointseries",
+                "args": {
+                    "color": "category",
+                    "size": "percentage"
+                },
+                "context": {
+                    "columns": [
+                        {
+                            "id": "category",
+                            "name": "category",
+                            "meta": {
+                                "type": "string",
+                                "params": {
+                                    "id": "string"
+                                }
+                            }
+                        },
+                        {
+                            "id": "count",
+                            "name": "count",
+                            "meta": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "id": "total",
+                            "name": "total",
+                            "meta": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "id": "percentage",
+                            "name": "percentage",
+                            "meta": {
+                                "type": "number",
+                                "params": {
+                                    "id": "number"
+                                }
+                            }
+                        }
+                    ],
+                    "rows": [
+                        [
+                            "Other",
+                            5506,
+                            7409,
+                            74.32
+                        ],
+                        [
+                            "Women's Clothing",
+                            1903,
+                            7409,
+                            25.68
+                        ]
+                    ],
+                    "type": "datatable"
+                }
+            },
+            {
+                "functionName": "pointseries",
+                "args": {
+                    "color": "category",
+                    "size": "percentage"
+                },
+                "context": {
+                    "columns": [
+                        {
+                            "id": "category",
+                            "name": "category",
+                            "meta": {
+                                "type": "string",
+                                "params": {
+                                    "id": "string"
+                                }
+                            }
+                        },
+                        {
+                            "id": "count",
+                            "name": "count",
+                            "meta": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "id": "total",
+                            "name": "total",
+                            "meta": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "id": "percentage",
+                            "name": "percentage",
+                            "meta": {
+                                "type": "number",
+                                "params": {
+                                    "id": "number"
+                                }
+                            }
+                        }
+                    ],
+                    "rows": [
+                        [
+                            "Men's Accessories",
+                            572,
+                            7409,
+                            7.72
+                        ],
+                        [
+                            "Other",
+                            6837,
+                            7409,
+                            92.28
+                        ]
+                    ],
+                    "type": "datatable"
+                }
+            },
+            {
+                "functionName": "pointseries",
+                "args": {
+                    "color": "category",
+                    "size": "percentage"
+                },
+                "context": {
+                    "columns": [
+                        {
+                            "id": "category",
+                            "name": "category",
+                            "meta": {
+                                "type": "string",
+                                "params": {
+                                    "id": "string"
+                                }
+                            }
+                        },
+                        {
+                            "id": "count",
+                            "name": "count",
+                            "meta": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "id": "total",
+                            "name": "total",
+                            "meta": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "id": "percentage",
+                            "name": "percentage",
+                            "meta": {
+                                "type": "number",
+                                "params": {
+                                    "id": "number"
+                                }
+                            }
+                        }
+                    ],
+                    "rows": [
+                        [
+                            "Other",
+                            6465,
+                            7409,
+                            87.26
+                        ],
+                        [
+                            "Men's Shoes",
+                            944,
+                            7409,
+                            12.74
+                        ]
+                    ],
+                    "type": "datatable"
+                }
+            },
+            {
+                "functionName": "pointseries",
+                "args": {
+                    "color": "category",
+                    "size": "percentage"
+                },
+                "context": {
+                    "columns": [
+                        {
+                            "id": "category",
+                            "name": "category",
+                            "meta": {
+                                "type": "string",
+                                "params": {
+                                    "id": "string"
+                                }
+                            }
+                        },
+                        {
+                            "id": "count",
+                            "name": "count",
+                            "meta": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "id": "total",
+                            "name": "total",
+                            "meta": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "id": "percentage",
+                            "name": "percentage",
+                            "meta": {
+                                "type": "number",
+                                "params": {
+                                    "id": "number"
+                                }
+                            }
+                        }
+                    ],
+                    "rows": [
+                        [
+                            "Men's Clothing",
+                            2024,
+                            7409,
+                            27.32
+                        ],
+                        [
+                            "Other",
+                            5385,
+                            7409,
+                            72.68
+                        ]
+                    ],
+                    "type": "datatable"
+                }
+            },
             {
                 "functionName": "pointseries",
                 "args": {
@@ -211,19 +571,19 @@
     },
     "responseUrl": "http://localhost:5620/api/canvas/fns",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:54 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 14:00:12 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "transfer-encoding": "chunked",
         "connection": "keep-alive",
         "content-type": "application/x-ndjson",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
-        "set-cookie": "sid=Fe26.2**65e78f4318d6d24bf2ff444f3696d29c49f18b60d5d501bc5df1abd99dc0fdc1*nukt6FKi1Z-peDRPeEV4ig*VXZ7XyxDQUiKjWLXn3bkMttJ1ivvXScijR0CSTTs3bMp3XXRaIVcEiQPrLdVQIe3WDM9kphtTf43Oe1T_i8b7DBt2DGBczZAvjBefN_nv67UuC7EkpXX_OF8R9eGSw6QBHLPHy-gbTxJFZjKB1pZq_eeJf5g4OeZFgFqdH88NWSr4hLRmt6HOswKV5vozSh-uekJWX0ArxZR7Rhf5qs1C0H5FgmhIiIdWIDbMuLavMrZQPMvnDs085nD_g06xRvF**d022640855fcc4ecb86334f8fdb06acd3f628b7145251832b8f555b4b86dd1f3*ory8CRE0MdPioUS7iOCRrsrY3lPBgGcMlN3lh9cBAlg; HttpOnly; Path=/",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
+        "set-cookie": "sid=Fe26.2**a8922b146492a1775d5d56c7f8c3de76b3bca1b28f35480a166fb3bc06999570*jj0Qp6dzNcms3xvZNW4nqw*-oDVcpg4coJMHHc7JMmQnAw0fTZ6thlFWpoDMUc5nvGsNeBO3A-_VwSNBo3V8JNc2phUCvNBaBgGCfOVcaOz8_bHeSin48NnTsjtqUkrdNhpaN221EuKnuOlWrId9qh-WMW3AIs9g0STVXKTTyr4t0aGOAhFEy49GjkQZCk7SMip-_8WwzB2eGS1ioITdGMiUqsFUJdCAeFtTc2octT7ciKGA6BGyRr_m5sk598cvtbov2lil4bADTsx-RTYX9w2**152d35c86d0a22fc4cafb4bd3fbd67e37b75754b81106f9178b631f3785cc94e*i11aNasxNBxvRVRkKASLgWA3R6LsEAadBOYBYbHTs3c; HttpOnly; Path=/",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315074008.764,
+    "responseTime": 1627394412397.19,
     "responseBody": {}
 }

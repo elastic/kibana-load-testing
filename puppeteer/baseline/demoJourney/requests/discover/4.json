@@ -1,8 +1,8 @@
 {
-    "loaderId": "FE4F2B707523168BB7BE53BBC86AAA42",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "661BFC09D1815316AB7C31C09CD42353",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "GET",
-    "requestUrl": "http://localhost:5620/api/banners/info",
+    "requestUrl": "http://localhost:5620/internal/security_oss/app_state",
     "requestHeader": {
         "sec-ch-ua": "",
         "Referer": "http://localhost:5620/app/discover",
@@ -12,31 +12,31 @@
         "Content-Type": "application/json"
     },
     "postData": {},
-    "responseUrl": "http://localhost:5620/api/banners/info",
+    "responseUrl": "http://localhost:5620/internal/security_oss/app_state",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:18 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:39 GMT",
         "referrer-policy": "no-referrer-when-downgrade",
         "content-type": "application/json; charset=utf-8",
-        "set-cookie": "sid=Fe26.2**671580041068a903d1ac378602da879c5e1f20f729df8d3a9ec9d7a9487efd42*6OEKYWGy4Zgnqyp0aKfquQ*XDoFxKTIHiuIlPcH0_DPSvUjWiPCzBBSBHIMlcJfyudxQbiLwpxpa_z05uYh2SuqvFRKZW8fy7qOd-j-1gn1uK7w361VXmFVKTdHkCBVz30I4GqrSeU-VmpY_cq_lvFTLBeLJoBZ9AHIG0eNdLtxikJhjJE6Iiu9vxYjSk8TVyQqGUL70ELcCiGuZ2IeCBuplu9xWv1Xf3512iFYwUw4yFaOdlKM-qh4Vvp6r9F6rpyUzMUaLeoDEkDn1cP1ZCAv**0cb204dbb67a17d926f127bb88b5a49f42bd6ec68be48c6ed8d2decc6a2a8207*cKukvYeSigkqdwq5Ac7z4nRjm6HS7TNn4CmxJ7JXkC4; HttpOnly; Path=/",
+        "set-cookie": "sid=Fe26.2**49eab909901fbdc79fdbf1c7988604766ec8a54e2dc53ffa8701c4dce4128f15*GyZ05mV6Q-RbuDARuGcDhw*hwvUuVhdQlQBb5JsPhI3hjhfo6rJ55PoB3yzOwY_3DQlKLkCXpqB7lT8fvfPBM9BT4pp_7V0tY8gdYWVeO8k0clSk_KgnjFXBpWNfTyGQEHOKIqdPz7uZrgsGKNZN7g3Qd2fRaxNfx1VU4Ctpat8SEymOCgXZ7HHGbadu111uOmMf8uK666dqRtkPp_DMbGFHzEZgBqsKxvV90WCwjQNDMp1Lau4Q8dPoOoPr0bXsuhGW8NIBvF1hqtk8iFKD_ww**7df93bcd585cb05bebda942e7f20c23f74812f20aabdbd3014201a9bfd7b392a*CsCt2LjUxXgzbne5VlP6dasJ2ap6_OqORkKOEH2QqwA; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "accept-ranges": "bytes",
         "Keep-Alive": "timeout=120",
-        "content-length": "117",
+        "content-length": "112",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315038385.474,
+    "responseTime": 1627394379032.603,
     "responseBody": {
-        "allowed": true,
-        "banner": {
-            "placement": "disabled",
-            "textContent": "",
-            "textColor": "#8A6A0A",
-            "backgroundColor": "#FFF9E8"
+        "insecureClusterAlert": {
+            "displayAlert": false
+        },
+        "anonymousAccess": {
+            "isEnabled": false,
+            "accessURLParameters": null
         }
     }
 }

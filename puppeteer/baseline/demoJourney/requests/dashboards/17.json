@@ -1,6 +1,6 @@
 {
-    "loaderId": "D58E0807BEA7F6D151118D34C297340D",
-    "frameId": "8FC2108EFAE63CFD2D9B606DE1AFC61D",
+    "loaderId": "A685DC1E741B20E08598E6493F011AEE",
+    "frameId": "D16DB5D5074F9B37A1E22A1CBA4C667D",
     "method": "POST",
     "requestUrl": "http://localhost:5620/api/saved_objects/_bulk_get",
     "requestHeader": {
@@ -19,23 +19,23 @@
     ],
     "responseUrl": "http://localhost:5620/api/saved_objects/_bulk_get",
     "responseHeaders": {
-        "kbn-license-sig": "17b26a5b3e7f5548d23a6a39787a0da3a19d210e499518984839b2a8154fdfab",
-        "Date": "Mon, 26 Jul 2021 15:57:35 GMT",
+        "kbn-license-sig": "614d40d20071515060378522226d61c5eba316ed9a6ae888c338e6eae14b5e9f",
+        "Date": "Tue, 27 Jul 2021 13:59:54 GMT",
         "content-encoding": "gzip",
         "referrer-policy": "no-referrer-when-downgrade",
         "vary": "accept-encoding",
         "content-type": "application/json; charset=utf-8",
-        "set-cookie": "sid=Fe26.2**f04c9db2493547433c3c4b01e003bfd406b7f188b269f4fc72cbd0d4227aff74*ttpBitmQbO-T-CBfzB6ukA*kqGwWLLhh3eZ64OpwZ7IprNohpatw5aYI53f1JXMD1-R4qlmBXL7AcZJfwsBcjYGOoj1SRKdMq5TGq8i5Prf9QI9ieoyfjqULJpRsUVHJBVOzVcZ23qVDwEiUfHk70vn3PN-gqxEz9dgT3Jn_piRlf4xpGMzlNv0DDkqwjHPIq5PhqtPh5YgJGaOFz1VZX8a1ESd3XnXJwO1qTIOEkTztXjgAOihCmiZsqJMeW7AvnRwpzBVFPyLDGXWYQEtbTJo**dc62084abce019501b3974546e1f15f1be732c373cf25cb4068160599aa53473*Q3CbmICNIV0WYovVB-sEm19OKPibY2DcD-zswbutuzo; HttpOnly; Path=/",
+        "set-cookie": "sid=Fe26.2**7efcac38d602a1c6645d4d8a3c80c44d3bfdfb39b004100f3d5a33b2863b7bda*22QF7dl3fSN-8PhSIXWlRA*ZgL7EYOIDwfcVOzFkt7WL_t4RfuYQ4ldhkkjtVLPmiRIewzK9SM2B9ws4yJ0fqc1sYVlUO_nVIOhRo6Q_4Z3FhVRq4e39TTeCRQCR-56C4nGJtJIlQHlQamy7OgIp-THrzgMf20R5t_2P5HYfaIhS5p71CJw1FMUWma7Z0VbvVEeBpKDKgQqsbRyYK3vChyPKPhNkuh4ukhe4qmr0oDvBQEKJFIO-2Io18vrW0vrxRZcDFOEHSNEg9H-yoBcrBNQ**4e439c0fa4022cfa4eeb620b1a3ea80a72a7f5478603208517fdfaa93debad36*Jo9ttympIQXih165BK6jFTUeRaFpo24A-EHiokyGLaQ; HttpOnly; Path=/",
         "cache-control": "private, no-cache, no-store, must-revalidate",
         "Transfer-Encoding": "chunked",
-        "kbn-name": "kibana-ci-immutable-ubuntu-18-tests-xxl-1627313566701079434",
+        "kbn-name": "kibana-ci-immutable-centos-tests-xxl-1627392684852139635",
         "Connection": "keep-alive",
         "Keep-Alive": "timeout=120",
         "x-content-type-options": "nosniff"
     },
     "status": 200,
     "statusText": "OK",
-    "responseTime": 1627315055626.106,
+    "responseTime": 1627394394386.373,
     "responseBody": {
         "saved_objects": [
             {
@@ -44,7 +44,7 @@
                 "namespaces": [
                     "default"
                 ],
-                "updated_at": "2021-07-26T15:57:10.333Z",
+                "updated_at": "2021-07-27T13:59:25.117Z",
                 "version": "WzE0LDFd",
                 "attributes": {
                     "title": "[eCommerce] Revenue Dashboard",
