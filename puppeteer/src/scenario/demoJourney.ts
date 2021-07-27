@@ -4,8 +4,7 @@ import { dataTestSubj } from '../puppeteer/helpers'
 
 export async function run(options: Config, page: puppeteer.Page) {
     await page.goto(options.baseUrl, {
-        // 'networkidle0' may cause a race condition, described here https://github.com/puppeteer/puppeteer/issues/2284
-        waitUntil: 'networkidle2',
+        waitUntil: 'networkidle0',
     });
 
     //login
@@ -17,7 +16,7 @@ export async function run(options: Config, page: puppeteer.Page) {
     await page.type(dataTestSubj('loginUsername'), options.username);
     await page.type(dataTestSubj('loginPassword'), options.password);
     await page.click(dataTestSubj('loginSubmit'));
-    await page.waitForNavigation({ waitUntil: 'networkidle2' });
+    await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
     // go to discover
     await page.goto(options.baseUrl + `/app/discover`
