@@ -5,8 +5,8 @@ import io.gatling.core.structure.ScenarioBuilder
 import org.kibanaLoadTest.scenario.{Visualize, Login}
 import org.kibanaLoadTest.simulation.BaseSimulation
 
-class TagCloudJourney extends BaseSimulation {
-  val scenarioName = s"Demo journey ${appConfig.buildVersion}"
+class VegaJourney extends BaseSimulation {
+  val scenarioName = s"Vega journey ${appConfig.buildVersion}"
 
   props.maxUsers = 1200
 
@@ -23,9 +23,9 @@ class TagCloudJourney extends BaseSimulation {
     .exec(
       Visualize
         .load(
-          "tag_cloud",
-          "b72dd430-bb4d-11e8-9c84-77068524bcab",
-          "data/visualize/tag_cloud_top_products.json",
+          "vega",
+          "9c6f83f0-bb4d-11e8-9c84-77068524bcab",
+          "data/visualize/vega.json",
           appConfig.baseUrl,
           defaultHeaders
         )
