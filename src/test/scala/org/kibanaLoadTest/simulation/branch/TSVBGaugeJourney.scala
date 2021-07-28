@@ -6,7 +6,7 @@ import org.kibanaLoadTest.scenario.{Login, Visualize}
 import org.kibanaLoadTest.simulation.BaseSimulation
 
 class TSVBGaugeJourney extends BaseSimulation {
-  val scenarioName = s"Demo journey ${appConfig.buildVersion}"
+  val scenarioName = s"Gauge journey ${appConfig.buildVersion}"
 
   props.maxUsers = 1200
 

@@ -1,0 +1,64 @@
+{
+  "batch":[
+    {
+      "request":{
+        "params":{
+          "index":"kibana_sample_data_ecommerce",
+          "body":{
+            "size":0,
+            "aggs":{
+              "gridSplit":{
+                "geotile_grid":{
+                  "field":"geoip.location",
+                  "precision":4,
+                  "size":10000
+                },
+                "aggs":{
+                  "gridCentroid":{
+                    "geo_centroid":{
+                      "field":"geoip.location"
+                    }
+                  }
+                }
+              }
+            },
+            "query":{
+              "bool":{
+                "must":[
+                  {
+                    "range":{
+                      "order_date":{
+                        "gte":"${startTime}",
+                        "lte":"${endTime}",
+                        "format":"strict_date_optional_time"
+                      }
+                    }
+                  }
+                ],
+                "filter":[
+
+                ],
+                "should":[
+
+                ],
+                "must_not":[
+
+                ]
+              }
+            },
+            "runtime_mappings":{
+
+            }
+          },
+          "preference":1627464578983
+        }
+      },
+      "options":{
+        "sessionId":"${sessionId}",
+        "isRestore":false,
+        "strategy":"ese",
+        "isStored":false
+      }
+    }
+  ]
+}

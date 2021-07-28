@@ -20,6 +20,7 @@ object Visualize {
         .set("startTime", Helper.getDate(Calendar.DAY_OF_MONTH, -7))
         .set("endTime", Helper.getDate(Calendar.DAY_OF_MONTH, 0))
         .set("preference", System.currentTimeMillis())
+        .set("sessionId", Helper.generateUUID)
     ).exec(
         http("saved_objects/_bulk_get")
           .post("/api/saved_objects/_bulk_get")
