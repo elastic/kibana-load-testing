@@ -8,7 +8,7 @@ import org.kibanaLoadTest.simulation.BaseSimulation
 class TagCloudJourney extends BaseSimulation {
   val scenarioName = s"Demo journey ${appConfig.buildVersion}"
 
-  props.maxUsers = 800
+  props.maxUsers = 1200
 
   val scn: ScenarioBuilder = scenario(scenarioName)
     .exec(
