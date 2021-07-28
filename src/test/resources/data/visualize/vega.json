@@ -54,7 +54,7 @@
         }
       },
       "options":{
-        "sessionId":"${searchSessionId}",
+        "sessionId":"${sessionId}",
         "isRestore":false,
         "strategy":"ese",
         "isStored":false
