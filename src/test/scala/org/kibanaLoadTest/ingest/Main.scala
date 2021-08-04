@@ -58,7 +58,7 @@ object Main {
           Source.fromFile(statsFilePath).getLines().mkString
         )
       val statsJson = parse(statsJsonString).getOrElse(Json.Null)
-      val requests = LogParser.getRequests(simLogFilePath)
+      val requests = LogParser.getRequestTimeline(simLogFilePath)
       val metaJson = Helper.getMetaJson(testRunFilePath, simLogFilePath)
       // final Json objects to ingest
       val combinedStatsJson = statsJson.deepMerge(metaJson)

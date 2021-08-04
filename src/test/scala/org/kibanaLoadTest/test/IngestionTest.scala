@@ -23,7 +23,7 @@ class IngestionTest {
         + File.separator + "test" + File.separator
         + "simulation.log"
     ).getAbsolutePath
-    val requests = LogParser.getRequests(logFilePath)
+    val requests = LogParser.getRequestTimeline(logFilePath)
     assertEquals(
       expCollectionSize,
       requests.length,
@@ -62,7 +62,7 @@ class IngestionTest {
     val simLogFilePath = getClass.getResource("test/simulation.log").getPath
     val lastRunFilePath = getClass.getResource("test/lastRun.txt").getPath
     val metaJson = Helper.getMetaJson(lastRunFilePath, simLogFilePath)
-    val requests = LogParser.getRequests(simLogFilePath)
+    val requests = LogParser.getRequestTimeline(simLogFilePath)
 
     val requestJsonList = requests.par
       .map(request => {

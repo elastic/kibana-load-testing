@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.{assertEquals, assertThrows, assertTrue}
 import org.junit.jupiter.api.Test
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.Helper.{generateUUID, getTargetPath}
-import org.kibanaLoadTest.helpers.{Helper, Version}
+import org.kibanaLoadTest.helpers.{Helper, LogParser, RequestParser, Version}
 
 import java.io.File
 import java.util.Calendar
@@ -139,5 +139,25 @@ class HelpersTest {
   def generateUUIDTest(): Unit = {
     val uuid = generateUUID
     assertTrue(uuid.matches("[a-zA-Z0-9-]+"))
+  }
+
+  @Test
+  def testParser(): Unit = {
+    val path =
+      getTargetPath + File.separator + "responses-20210803225521.log" // "responses-20210803104459.log"
+    val path2 =
+      getTargetPath + File.separator + "gatling" + File.separator + "demojourney-20210803205600085" /*"demojourney-20210803084538127"*/ + File.separator + "simulation.log"
+    val responseList = RequestParser.getRequests(path)
+    val requests = LogParser.getRequestTimeline(path2)
+    for (i <- 0 to responseList.length - 1) {
+      val value = responseList(i)
+      responseList(i) = value.copy(
+        requestSendStartTime = requests(i).requestSendStartTime,
+        responseReceiveEndTime = requests(i).responseReceiveEndTime,
+        message = requests(i).message,
+        requestTime = requests(i).requestTime
+      )
+    }
+    println("test");
   }
 }

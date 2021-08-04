@@ -5,8 +5,8 @@ import scala.collection.mutable.ListBuffer
 
 object LogParser {
 
-  def getRequests(filePath: String): List[Request] = {
-    var requests = new ListBuffer[Request]()
+  def getRequestTimeline(filePath: String): List[Request] = {
+    val requests = new ListBuffer[Request]()
     val fsStream = new FileInputStream(filePath)
     val br = new BufferedReader(new InputStreamReader(fsStream))
     var strLine = br.readLine
