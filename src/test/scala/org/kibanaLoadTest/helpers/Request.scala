@@ -11,8 +11,8 @@ case class Request(
   override def toString: String = {
     val baseStr: String =
       s"$name - $requestSendStartTime - $responseReceiveEndTime - $requestTime - $status"
-    if (message != null && message.length > 0) baseStr
-    else s"$baseStr - $message"
+    if (message != null && message.length > 0) s"$baseStr - $message"
+    else baseStr
   }
 }
 
