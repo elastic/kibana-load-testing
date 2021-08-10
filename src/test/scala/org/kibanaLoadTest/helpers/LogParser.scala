@@ -27,7 +27,7 @@ object LogParser {
           values(2).toLong,
           values(3).toLong,
           values(4),
-          values(5).trim
+          if (values.length == 6) values(5) else ""
         )
       } else if (strLine.startsWith("USER")) {
         val statePattern = "START|END".r
