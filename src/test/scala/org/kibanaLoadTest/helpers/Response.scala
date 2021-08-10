@@ -17,8 +17,11 @@ case class Response(
     requestTime: Long
 ) {
   override def toString: String =
-    s"$userId - $name - $status - $method - $url $requestHeaders - $requestBody - $responseStatus - $responseHeaders" +
-      s" - $responseBody - $requestSendStartTime - $responseReceiveEndTime - $responseReceiveEndTime - $message - $requestTime"
+    """$userId - $name - $status - 
+      |$method - $url - $requestHeaders - $requestBody - $responseStatus - 
+      |$responseHeaders - $responseBody - $requestSendStartTime - 
+      |$responseReceiveEndTime - $responseReceiveEndTime - $message - 
+      |$requestTime""".stripMargin
 }
 
 object Response {
