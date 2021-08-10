@@ -43,6 +43,8 @@ for version in "${version_array[@]}"; do
     for j in "${sim_array[@]}"; do
       echo "Running simulation $j $i-time..."
       mvn gatling:test -q -DdeploymentId="${deploymentId}" -Dgatling.simulationClass=org.kibanaLoadTest.simulation.$j
+      echo "Move response.log to gatling results..."
+      mv target/response-*.log $(find target/gatling/* -type d -prune -exec ls -d {} \; |tail -1)/response.log
       # wait a minute between scenarios
       sleep 1m
     done
