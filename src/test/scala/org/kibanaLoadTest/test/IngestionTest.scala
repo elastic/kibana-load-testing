@@ -99,8 +99,7 @@ class IngestionTest {
       LogParser.parseSimulationLog(simLogFilePath)
     val responses = ResponseParser.getRequests(responseFilePath)
     for (i <- 0 to responses.length - 1) {
-      val value = responses(i)
-      responses(i) = value.copy(
+      responses(i) = responses(i).copy(
         requestSendStartTime = requestsTimeline(i).requestSendStartTime,
         responseReceiveEndTime = requestsTimeline(i).responseReceiveEndTime,
         message = requestsTimeline(i).message,
