@@ -17,10 +17,10 @@ import scala.collection.parallel.CollectionConverters.IterableIsParallelizable
 
 class IngestionTest {
 
-  val expRequestRecordCount = 159
-  val expUserRecordCount = 10
-  val expRequestString = "login - 1628587734200 - 1628587734881 - 681 - OK"
-  val expUserString = "1628587734180 - 1"
+  val expRequestRecordCount = 18
+  val expUserRecordCount = 6
+  val expRequestString = "login - 1628588469069 - 1628588469812 - 743 - OK"
+  val expUserString = "1628588469042 - 1"
 
   @Test
   def parseSimulationLogTest(): Unit = {
