@@ -4,6 +4,7 @@ import io.gatling.core.Predef._
 import io.gatling.core.structure.ChainBuilder
 import io.gatling.http.protocol.HttpProtocolBuilder
 import org.kibanaLoadTest.KibanaConfiguration
+import org.kibanaLoadTest.helpers.Helper.moveResponseLogToResultsDir
 import org.kibanaLoadTest.helpers.{
   CloudHttpClient,
   Helper,
@@ -104,6 +105,8 @@ class BaseSimulation extends Simulation {
 
   after {
     SimulationHelper.copyRunConfigurationToReportPath()
+    // move response log from /target to gatling report folder
+    moveResponseLogToResultsDir
     if (
       appConfig.deploymentId.isDefined && appConfig.deleteDeploymentOnFinish
     ) {

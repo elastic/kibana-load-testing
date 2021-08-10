@@ -2,7 +2,7 @@ package org.kibanaLoadTest.helpers
 
 import java.io.{File, PrintWriter}
 import java.net.{MalformedURLException, URL}
-import java.nio.file.Paths
+import java.nio.file.{Files, Paths, StandardCopyOption}
 import java.text.SimpleDateFormat
 import java.time.{Instant, ZoneId}
 import java.time.format.DateTimeFormatter
@@ -92,6 +92,15 @@ object Helper {
     files.toList
       .filter(file => file.isDirectory)
       .map(file => file.getAbsolutePath)
+  }
+
+  def getTargetFiles: List[String] = {
+    val dir: File = new File(getTargetPath)
+    if (!dir.exists()) {
+      return List.empty
+    }
+    val files: Array[File] = dir.listFiles
+    files.toList.map(file => file.getAbsolutePath)
   }
 
   def validateUrl(
@@ -203,5 +212,19 @@ object Helper {
 
   def generateUUID: String = {
     UUID.randomUUID.toString
+  }
+
+  def moveResponseLogToResultsDir: Unit = {
+    val lastReportPath = getLastReportPath
+    val regexp = "[\\w|\\/\\-\\+]+response-\\d{14}.log"
+    val responseLogsPaths = getTargetFiles.filter(p => p matches regexp)
+    if (responseLogsPaths.isEmpty) {
+      throw new RuntimeException("response.log file is not found in /target")
+    }
+    Files.move(
+      Paths.get(responseLogsPaths(0)),
+      Paths.get(lastReportPath + File.separator + "response.log"),
+      StandardCopyOption.REPLACE_EXISTING
+    )
   }
 }
