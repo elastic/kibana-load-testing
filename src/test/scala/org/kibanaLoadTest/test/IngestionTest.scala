@@ -1,5 +1,7 @@
 package org.kibanaLoadTest.test
 
+import com.google.gson.Gson
+
 import java.io.File
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
 import io.circe.Json
@@ -8,31 +10,57 @@ import org.junit.jupiter.api.Assertions.{assertEquals, assertTrue}
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import org.kibanaLoadTest.ESConfiguration
-import org.kibanaLoadTest.helpers.{ESClient, Helper, LogParser}
-import scala.collection.parallel.CollectionConverters.ImmutableIterableIsParallelizable
+import org.kibanaLoadTest.helpers.{ESClient, Helper, LogParser, ResponseParser}
+import org.kibanaLoadTest.ingest.Main.USERS_INDEX
+
+import scala.collection.parallel.CollectionConverters.IterableIsParallelizable
 
 class IngestionTest {
 
-  val expCollectionSize = 799
-  val expRequestString = "login - 1606920743240 - 1606920743948 - 708 - OK"
+  val expRequestRecordCount = 942
+  val expUserRecordCount = 56
+  val expRequestString = "login - 1628082216005 - 1628082219329 - 3324 - OK"
+  val expUserString = "1628082215986 - 1"
 
   @Test
-  def parseLogsTest(): Unit = {
+  def parseSimulationLogTest(): Unit = {
     val logFilePath: String = new File(
       Helper.getTargetPath + File.separator + "test-classes"
         + File.separator + "test" + File.separator
         + "simulation.log"
     ).getAbsolutePath
-    val requests = LogParser.getRequestTimeline(logFilePath)
+    val (requestsTimeline, concurrentUsers) =
+      LogParser.parseSimulationLog(logFilePath)
     assertEquals(
-      expCollectionSize,
-      requests.length,
-      "Incorrect collection size"
+      expRequestRecordCount,
+      requestsTimeline.length,
+      "Incorrect request record count"
     )
     assertEquals(
       expRequestString,
-      requests.head.toString,
+      requestsTimeline.head.toString,
       "Incorrect content in first object"
+    )
+    assertEquals(
+      expUserRecordCount,
+      concurrentUsers.length,
+      "Incorrect users record count"
+    )
+    assertEquals(
+      expUserString,
+      concurrentUsers.head.toString,
+      "Incorrect content in first object"
+    )
+  }
+
+  @Test
+  def parseResponseLogTest(): Unit = {
+    val responseFilePath = getClass.getResource("/test/response.log").getPath
+    val responses = ResponseParser.getRequests(responseFilePath)
+    assertEquals(
+      expRequestRecordCount,
+      responses.length,
+      "Incorrect response record count"
     )
   }
 
@@ -59,19 +87,43 @@ class IngestionTest {
     )
 
     val esClient = new ESClient(esConfig)
-    val simLogFilePath = getClass.getResource("test/simulation.log").getPath
-    val lastRunFilePath = getClass.getResource("test/lastRun.txt").getPath
+    val simLogFilePath = getClass.getResource("/test/simulation.log").getPath
+    val lastRunFilePath = getClass.getResource("/test/lastRun.txt").getPath
+    val responseFilePath = getClass.getResource("/test/response.log").getPath
     val metaJson = Helper.getMetaJson(lastRunFilePath, simLogFilePath)
-    val requests = LogParser.getRequestTimeline(simLogFilePath)
+    val (requestsTimeline, concurrentUsers) =
+      LogParser.parseSimulationLog(simLogFilePath)
+    val responses = ResponseParser.getRequests(responseFilePath)
+    for (i <- 0 to responses.length - 1) {
+      val value = responses(i)
+      responses(i) = value.copy(
+        requestSendStartTime = requestsTimeline(i).requestSendStartTime,
+        responseReceiveEndTime = requestsTimeline(i).responseReceiveEndTime,
+        message = requestsTimeline(i).message,
+        requestTime = requestsTimeline(i).requestTime
+      )
+    }
 
-    val requestJsonList = requests.par
+    val requestJsonList = responses.par
       .map(request => {
-        val requestJson = parse(request.toJsonString).getOrElse(Json.Null)
+        val gson = new Gson
+        val requestJson = parse(gson.toJson(request)).getOrElse(Json.Null)
+        if (requestJson == Json.Null) {
+          println("failed to parse json")
+        }
         val combinedRequestJson = requestJson.deepMerge(metaJson)
         combinedRequestJson
       })
       .toList
     esClient.ingest(DATA_INDEX, requestJsonList)
+
+    val concurrentUsersJsonList = concurrentUsers.map(stat => {
+      val gson = new Gson
+      val json = parse(gson.toJson(stat)).getOrElse(Json.Null)
+      json.deepMerge(metaJson)
+    })
+
+    esClient.ingest(USERS_INDEX, concurrentUsersJsonList)
   }
 
   @Test

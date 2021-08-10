@@ -48,17 +48,24 @@ class ESClient(config: ESConfiguration) {
     try {
       logger.info(s"Ingesting to stats cluster: ${jsonList.size} docs")
       jsonList.par.foreach(json => {
-        client.index(
-          new IndexRequest(indexName)
-            .source(json.toString(), XContentType.JSON),
-          RequestOptions.DEFAULT
-        )
+        try {
+          client.index(
+            new IndexRequest(indexName)
+              .source(json.toString(), XContentType.JSON),
+            RequestOptions.DEFAULT
+          )
+        } catch {
+          case e: IOException =>
+            logger.error(
+              s"Failed to add document for :\n ${json.toString()} \n ${e.toString}"
+            )
+        }
       })
       logger.info("Ingestion is completed")
     } catch {
       case e: IOException =>
         logger.error(
-          s"Exception occurred during ingestion:\n ${e.getStackTrace}"
+          s"Exception occurred during ingestion:\n ${e.toString}"
         )
     } finally {
       logger.info("Closing connection")

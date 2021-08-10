@@ -1,14 +1,16 @@
 package org.kibanaLoadTest.helpers
 
+import com.google.gson.{Gson, JsonObject}
+
 import java.io.{BufferedReader, FileInputStream, InputStreamReader}
 import scala.collection.mutable.ListBuffer
 
-object RequestParser {
+object ResponseParser {
   private val RECORD_START_LINE = ">>>>>>>>>>>>>>>>>>>>>>>>>>"
   private val SPLIT_LINE = "========================="
   private val RECORD_END_LINE = "<<<<<<<<<<<<<<<<<<<<<<<<<"
   private val BODY_LINE = "body"
-  private val REQUEST_BODY_REGEXP = "(?<=content=).*".r
+  private val REQUEST_BODY_REGEXP = "(?<=content=).*(?=\\})".r
   private val RESPONSE_BODY_REGEXP = "(?<=body:).*".r
   private val RESPONSE_STATUS_CODE_REGEXP = "\\d{3}".r
   private val STATUS_REGEXP = "OK|KO".r
@@ -16,8 +18,8 @@ object RequestParser {
   private var br: BufferedReader = null
   private var strLine: String = null
 
-  def getRequests(filePath: String): ListBuffer[GatlingRequest] = {
-    val responseList = ListBuffer[GatlingRequest]()
+  def getRequests(filePath: String): ListBuffer[Response] = {
+    val responseList = ListBuffer[Response]()
     val fsStream = new FileInputStream(filePath)
     br = new BufferedReader(new InputStreamReader(fsStream))
     strLine = br.readLine()
@@ -49,36 +51,44 @@ object RequestParser {
         // HTTP request:
         val requestStr = br.readLine()
         // POST http://localhost:5620/internal/security/login
-        val methodAndUrl = requestStr.split(" ")
+        val methodAndUrl = requestStr.split(" ", 2)
+        val method = methodAndUrl(0)
+        val url = if (methodAndUrl.length == 2) methodAndUrl(1) else ""
         strLine = br.readLine
         // headers:
         strLine = br.readLine
         val requestHeaders = getHeaders(SPLIT_LINE)
-        val requestBody = getBodyString(SPLIT_LINE)
+        val requestBody =
+          REQUEST_BODY_REGEXP
+            .findFirstIn(getBodyString(SPLIT_LINE))
+            .getOrElse("")
         // =========================
         br.readLine()
         // HTTP response:
         strLine = br.readLine()
         // status:
-        val responseStatus = br.readLine()
+        val responseStatus =
+          RESPONSE_STATUS_CODE_REGEXP.findFirstIn(br.readLine()).getOrElse("")
         strLine = br.readLine()
         //headers:
         strLine = br.readLine()
-        val responseHeaders = getHeaders(RECORD_END_LINE)
-        val responseBody = getBodyString(RECORD_END_LINE)
+        val responseHeaders =
+          getHeaders(RECORD_END_LINE)
+        val responseBody = RESPONSE_BODY_REGEXP
+          .findFirstIn(getBodyString(RECORD_END_LINE))
+          .getOrElse("")
 
-        responseList += GatlingRequest(
+        responseList += Response(
           userId,
           name,
           status,
-          sessionValue,
-          methodAndUrl(0),
-          methodAndUrl(1),
+          method,
+          url,
           requestHeaders,
-          REQUEST_BODY_REGEXP.findFirstIn(requestBody).getOrElse(""),
-          RESPONSE_STATUS_CODE_REGEXP.findFirstIn(responseStatus).getOrElse(""),
+          requestBody,
+          responseStatus,
           responseHeaders,
-          RESPONSE_BODY_REGEXP.findFirstIn(responseBody).getOrElse(""),
+          responseBody,
           0L,
           0L,
           ""
@@ -101,19 +111,20 @@ object RequestParser {
       }
     }
 
-    bodyString
+    // remove multiple spaces
+    bodyString.replaceAll("\\s+", " ")
   }
 
   private def getHeaders(endLine: String): String = {
-    var headers = ""
+    val gson = new Gson
+    val jsonObject = new JsonObject()
     while (!strLine.startsWith(BODY_LINE) && !strLine.startsWith(endLine)) {
-      if (headers.length > 0) {
-        headers += " ; "
+      val values = strLine.trim.split(":", 2)
+      if (values.length == 2) {
+        jsonObject.addProperty(values(0).trim, values(1).trim)
       }
-      headers += strLine.trim
       strLine = br.readLine
     }
-
-    headers
+    gson.toJson(jsonObject)
   }
 }

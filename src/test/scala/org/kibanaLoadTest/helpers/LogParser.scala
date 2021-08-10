@@ -1,15 +1,20 @@
 package org.kibanaLoadTest.helpers
 
 import java.io.{BufferedReader, FileInputStream, InputStreamReader}
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 object LogParser {
 
-  def getRequestTimeline(filePath: String): List[Request] = {
+  def parseSimulationLog(
+      filePath: String
+  ): (List[Request], List[UsersCount]) = {
     val requests = new ListBuffer[Request]()
+    val concurrentUsersMap = mutable.SortedMap[String, Number]()
     val fsStream = new FileInputStream(filePath)
     val br = new BufferedReader(new InputStreamReader(fsStream))
     var strLine = br.readLine
+    var usersCount = 0
     while (strLine != null) {
       /* collect only lines starting with REQUEST */
       // [REQUEST	10		login	1601482441483	1601482441868	OK	]
@@ -17,19 +22,30 @@ object LogParser {
       if (strLine.startsWith("REQUEST")) {
         val values = strLine.replaceAll("[\\t]{2,}", "\t").split("\t")
         // [REQUEST, NAME, REQUEST_FIRST_BYTE_TIME, RESPONSE_LAST_BYTE_TIME, STATUS, MESSAGE]
-        requests += new Request(
+        requests += Request(
           values(1),
           values(2).toLong,
           values(3).toLong,
           values(4),
-          values(5)
+          values(5).trim
         )
+      } else if (strLine.startsWith("USER")) {
+        val statePattern = "START|END".r
+        val state: String = statePattern.findFirstIn(strLine).get
+        usersCount = if (state == "START") usersCount + 1 else usersCount - 1
+        val timeStampEndPattern = "\\d{13,}$".r
+        val timestamp: String =
+          timeStampEndPattern.findFirstIn(strLine).getOrElse("")
+        concurrentUsersMap += (timestamp -> usersCount)
       }
       strLine = br.readLine
     }
     fsStream.close()
 
-    requests.toList
+    (
+      requests.toList,
+      concurrentUsersMap.map { case (k, v) => UsersCount(k, v) }.toList
+    )
   }
 
   def getSimulationClass(filePath: String): String = {

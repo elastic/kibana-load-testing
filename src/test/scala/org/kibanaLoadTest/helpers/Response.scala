@@ -1,10 +1,9 @@
 package org.kibanaLoadTest.helpers
 
-case class GatlingRequest(
+case class Response(
     userId: String,
     name: String,
     status: String,
-    session: String,
     method: String,
     url: String,
     requestHeaders: String,
@@ -16,13 +15,17 @@ case class GatlingRequest(
     responseReceiveEndTime: Long,
     message: String,
     requestTime: Long
-)
-object GatlingRequest {
+) {
+  override def toString: String =
+    s"$userId - $name - $status - $method - $url $requestHeaders - $requestBody - $responseStatus - $responseHeaders" +
+      s" - $responseBody - $requestSendStartTime - $responseReceiveEndTime - $responseReceiveEndTime - $message - $requestTime"
+}
+
+object Response {
   def apply(
       userId: String,
       name: String,
       status: String,
-      session: String,
       method: String,
       url: String,
       requestHeaders: String,
@@ -33,12 +36,11 @@ object GatlingRequest {
       requestSendStartTime: Long,
       responseReceiveEndTime: Long,
       message: String
-  ): GatlingRequest =
-    GatlingRequest(
+  ): Response =
+    Response(
       userId,
       name,
       status,
-      session,
       method,
       url,
       requestHeaders,
