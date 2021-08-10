@@ -55,7 +55,11 @@ class IngestionTest {
 
   @Test
   def parseResponseLogTest(): Unit = {
-    val responseFilePath = getClass.getResource("/test/response.log").getPath
+    val responseFilePath: String = new File(
+      Helper.getTargetPath + File.separator + "test-classes"
+        + File.separator + "test" + File.separator
+        + "response.log"
+    ).getAbsolutePath
     val responses = ResponseParser.getRequests(responseFilePath)
     assertEquals(
       expRequestRecordCount,
