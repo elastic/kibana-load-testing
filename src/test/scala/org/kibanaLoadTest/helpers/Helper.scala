@@ -219,7 +219,12 @@ object Helper {
     val regexp = "[\\w|\\/\\-\\+]+response-\\d{14}.log"
     val targetFiles = getTargetFiles
     targetFiles.foreach(p => println(p))
-    val responseLogsPaths = targetFiles.filter(p => p matches regexp)
+    val responseLogsPaths =
+      targetFiles
+        .filter(p => p matches regexp)
+        .filter(p =>
+          new File(p).length() > 1000
+        ) // sometimes Gatling leaves extra empty log file
     if (responseLogsPaths.isEmpty) {
       throw new RuntimeException("response.log file is not found in /target")
     }
