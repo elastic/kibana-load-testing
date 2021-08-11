@@ -217,7 +217,9 @@ object Helper {
   def moveResponseLogToResultsDir: Unit = {
     val lastReportPath = getLastReportPath
     val regexp = "[\\w|\\/\\-\\+]+response-\\d{14}.log"
-    val responseLogsPaths = getTargetFiles.filter(p => p matches regexp)
+    val targetFiles = getTargetFiles
+    targetFiles.foreach(p => println(p))
+    val responseLogsPaths = targetFiles.filter(p => p matches regexp)
     if (responseLogsPaths.isEmpty) {
       throw new RuntimeException("response.log file is not found in /target")
     }
