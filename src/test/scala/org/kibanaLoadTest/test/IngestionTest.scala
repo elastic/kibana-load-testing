@@ -102,7 +102,6 @@ class IngestionTest {
       responses(i) = responses(i).copy(
         requestSendStartTime = requestsTimeline(i).requestSendStartTime,
         responseReceiveEndTime = requestsTimeline(i).responseReceiveEndTime,
-        message = requestsTimeline(i).message,
         requestTime = requestsTimeline(i).requestTime
       )
     }
