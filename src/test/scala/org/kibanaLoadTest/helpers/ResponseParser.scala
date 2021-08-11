@@ -15,6 +15,7 @@ object ResponseParser {
   private val RESPONSE_STATUS_CODE_REGEXP = "\\d{3}".r
   private val STATUS_REGEXP = "OK|KO".r
   private val STATUS_MESSAGE_REGEXP = "(?:OK|KO).*$"
+  private val ERROR_MESSAGE_REGEXP = "(?<=KO).*".r
   private var br: BufferedReader = null
   private var strLine: String = null
 
@@ -31,6 +32,10 @@ object ResponseParser {
         strLine = br.readLine.trim
         // login: OK
         val status = STATUS_REGEXP.findFirstIn(strLine).getOrElse("")
+        val message =
+          if (status == "KO")
+            ERROR_MESSAGE_REGEXP.findFirstIn(strLine).getOrElse("").trim
+          else ""
         val name =
           strLine
             .replaceAll(STATUS_MESSAGE_REGEXP, "")
@@ -58,25 +63,39 @@ object ResponseParser {
         // headers:
         strLine = br.readLine
         val requestHeaders = getHeaders(SPLIT_LINE)
+        // skip cookies
+        if (strLine.startsWith("cookies")) {
+          while (!strLine.startsWith("body") && strLine != SPLIT_LINE) {
+            strLine = br.readLine()
+          }
+        }
+
         val requestBody =
           REQUEST_BODY_REGEXP
             .findFirstIn(getBodyString(SPLIT_LINE))
             .getOrElse("")
         // =========================
-        br.readLine()
+        strLine = br.readLine()
         // HTTP response:
         strLine = br.readLine()
-        // status:
-        val responseStatus =
-          RESPONSE_STATUS_CODE_REGEXP.findFirstIn(br.readLine()).getOrElse("")
-        strLine = br.readLine()
-        //headers:
-        strLine = br.readLine()
-        val responseHeaders =
-          getHeaders(RECORD_END_LINE)
-        val responseBody = RESPONSE_BODY_REGEXP
-          .findFirstIn(getBodyString(RECORD_END_LINE))
-          .getOrElse("")
+
+        var responseStatus = ""
+        var responseHeaders = ""
+        var responseBody = ""
+
+        if (!strLine.startsWith(RECORD_END_LINE)) {
+          // status:
+          responseStatus =
+            RESPONSE_STATUS_CODE_REGEXP.findFirstIn(br.readLine()).getOrElse("")
+          strLine = br.readLine()
+          // headers:
+          strLine = br.readLine()
+          responseHeaders = getHeaders(RECORD_END_LINE)
+          // response:
+          responseBody = RESPONSE_BODY_REGEXP
+            .findFirstIn(getBodyString(RECORD_END_LINE))
+            .getOrElse("")
+        }
 
         responseList += Response(
           userId,
@@ -91,11 +110,11 @@ object ResponseParser {
           responseBody,
           0L,
           0L,
-          ""
+          message
         )
       }
-      strLine = br.readLine
       // <<<<<<<<<<<<<<<<<<<<<<<<<
+      strLine = br.readLine
     }
     fsStream.close()
 
@@ -118,7 +137,10 @@ object ResponseParser {
   private def getHeaders(endLine: String): String = {
     val gson = new Gson
     val jsonObject = new JsonObject()
-    while (!strLine.startsWith(BODY_LINE) && !strLine.startsWith(endLine)) {
+    while (
+      !strLine.startsWith(BODY_LINE) && !strLine.startsWith(endLine) && !strLine
+        .startsWith("cookies")
+    ) {
       val values = strLine.trim.split(":", 2)
       if (values.length == 2) {
         jsonObject.addProperty(values(0).trim, values(1).trim)
