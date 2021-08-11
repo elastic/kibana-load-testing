@@ -233,5 +233,7 @@ object Helper {
       Paths.get(lastReportPath + File.separator + "response.log"),
       StandardCopyOption.REPLACE_EXISTING
     )
+    // delete all listed response-*.log files
+    responseLogsPaths.foreach(p => Files.deleteIfExists(Paths.get(p)))
   }
 }
