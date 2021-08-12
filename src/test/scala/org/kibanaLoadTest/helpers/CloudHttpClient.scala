@@ -406,7 +406,7 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
     Map() ++ (ids zip names)
   }
 
-  def getVersions(): Array[String] = {
+  def getVersions(category: String): Array[String] = {
     logger.info(s"Get available version")
     val response = httpGet(
       "/platform/configuration/templates/deployments/global"
@@ -415,7 +415,7 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
     val seq = jsonString
       .extract[Array[String]](
         filter(
-          "template_category_id".is[String](_ == "compute-optimized")
+          "template_category_id".is[String](_ == category)
         ) / Symbol("regions") / filter(
           "region_id".is[String](_ == "gcp-us-central1")
         ) / Symbol("versions")
@@ -423,10 +423,10 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
     if (seq.isEmpty) null else seq.head
   }
 
-  def getLatestAvailableVersion(prefix: String): Version = {
+  def getLatestAvailableVersion(prefix: String, category: String): Version = {
     // get the latest available version on Cloud
     val versions = this
-      .getVersions()
+      .getVersions(category)
       .filter(s => s.startsWith(prefix))
       .map(s => new Version(s))
       .sorted

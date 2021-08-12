@@ -27,7 +27,8 @@ object SimulationHelper {
     val cloudClient = new CloudHttpClient
     val version = if (stackVersion.endsWith(LATEST_AVAILABLE)) {
       cloudClient.getLatestAvailableVersion(
-        stackVersion.replace(LATEST_AVAILABLE, "")
+        stackVersion.replace(LATEST_AVAILABLE, ""),
+        config.getString("category")
       )
     } else new Version(stackVersion)
     val providerName = if (version.isAbove79x) "cloud-basic" else "basic-cloud"

@@ -13,20 +13,22 @@ object Create {
   private val LATEST_AVAILABLE = ".x"
 
   def main(args: Array[String]): Unit = {
-    val deployConfig: String =
+    val deployConfigPath: String =
       System.getProperty("deploymentConfig", "config/deploy/default.conf")
+    val deployConfig = Helper.readResourceConfigFile(deployConfigPath)
     val versionString: String = System.getProperty("cloudStackVersion")
 
     val cloudClient = new CloudHttpClient
     val version = if (versionString.endsWith(LATEST_AVAILABLE)) {
       cloudClient.getLatestAvailableVersion(
-        versionString.replace(LATEST_AVAILABLE, "")
+        versionString.replace(LATEST_AVAILABLE, ""),
+        deployConfig.getString("category")
       )
     } else new Version(versionString)
 
     val payload = cloudClient.preparePayload(
       version.get,
-      Helper.readResourceConfigFile(deployConfig)
+      deployConfig
     )
     var metadata = cloudClient.createDeployment(payload)
     val isReady = cloudClient.waitForClusterToStart(metadata("deploymentId"))
