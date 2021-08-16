@@ -161,6 +161,14 @@
                 <groupId>io.gatling</groupId>
                 <artifactId>gatling-maven-plugin</artifactId>
                 <version>${gatling-maven-plugin.version}</version>
+                <configuration>
+                    <compilerJvmArgs>
+                        <compilerJvmArg>-Xmx512m</compilerJvmArg>
+                    </compilerJvmArgs>
+                    <jvmArgs>
+                        <jvmArg>-Xmx4g</jvmArg>
+                    </jvmArgs>
+                </configuration>
             </plugin>
 
             <!-- This plugin allows us to run junit tests-->
