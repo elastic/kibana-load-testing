@@ -17,6 +17,7 @@ object Canvas {
       headers.combine(Map("Referer" -> s"$baseUrl/app/canvas"))
     val headersWithXsrf = defaultHeaders.combine(
       Map(
+        "Referer" -> s"$baseUrl/app/canvas",
         "kbn-xsrf" -> "professionally-crafted-string-of-text"
       )
     )
@@ -52,30 +53,33 @@ object Canvas {
           .set("endTime", session("currentTime").as[String])
           .set("interval", "1w")
       )
+      .pause(1)
       .exec(
         http("canvas: run query 1")
           .post("/api/timelion/run")
-          .body(ElFileBody("data/canvasTimelionPayload.json"))
+          .body(ElFileBody("data/canvas/timelion.json"))
           .asJson
           .headers(headersWithXsrf)
           .check(status.is(200))
       )
       .exec(
-        http("canvas: fns es docs 1")
-          .post("/api/canvas/fns")
-          .body(ElFileBody("data/fns_esdocs.json"))
+        http("canvas: bsearch 1")
+          .post("/internal/bsearch")
+          .body(ElFileBody("data/canvas/bsearch1.json"))
           .asJson
           .headers(defaultHeaders)
+          .header("Referer", baseUrl + "/app/canvas")
           .check(status.is(200))
       )
       .exec(
-        http("canvas: fns point series 1")
+        http("canvas: fns 1")
           .post("/api/canvas/fns")
-          .body(ElFileBody("data/fns_pointseries.json"))
+          .body(ElFileBody("data/canvas/fns1.json"))
           .asJson
           .headers(defaultHeaders)
           .check(status.is(200))
       )
+      .pause(1)
       .exec(session =>
         session
           .set("startTime", session("startMonth").as[String])
@@ -85,39 +89,56 @@ object Canvas {
       .exec(
         http("canvas: run query 2")
           .post("/api/timelion/run")
-          .body(ElFileBody("data/canvasTimelionPayload.json"))
+          .body(ElFileBody("data/canvas/timelion.json"))
           .asJson
           .headers(headersWithXsrf)
           .check(status.is(200))
       )
       .exec(
-        http("canvas: fns es docs 2")
+        http("canvas: fns 2")
           .post("/api/canvas/fns")
-          .body(ElFileBody("data/fns_esdocs2.json"))
+          .body(ElFileBody("data/canvas/fns2.json"))
           .asJson
           .headers(defaultHeaders)
           .check(status.is(200))
       )
       .exec(
-        http("canvas: fns point series 2")
+        http("canvas: fns 3")
           .post("/api/canvas/fns")
-          .body(ElFileBody("data/fns_pointseries2.json"))
+          .body(ElFileBody("data/canvas/fns3.json"))
           .asJson
           .headers(defaultHeaders)
           .check(status.is(200))
       )
+      .exec(
+        http("canvas: bsearch 2")
+          .post("/internal/bsearch")
+          .body(ElFileBody("data/canvas/bsearch2.json"))
+          .asJson
+          .headers(defaultHeaders)
+          .check(status.is(200))
+      )
+      .pause(1)
       .exec(
         http("canvas: run query 3")
           .post("/api/timelion/run")
-          .body(ElFileBody("data/canvasTimelionPayload.json"))
+          .body(ElFileBody("data/canvas/timelion.json"))
           .asJson
           .headers(headersWithXsrf)
           .check(status.is(200))
       )
       .exec(
-        http("canvas: fns point series 3")
+        http("canvas: fns 4")
           .post("/api/canvas/fns")
-          .body(ElFileBody("data/fns_pointseries3.json"))
+          .body(ElFileBody("data/canvas/fns4.json"))
+          .asJson
+          .headers(defaultHeaders)
+          .check(status.is(200))
+      )
+      .exec(
+        http("canvas: fns 5")
+          .post("/api/canvas/fns")
+          .body(ElFileBody("data/canvas/fns5.json"))
           .asJson
           .headers(defaultHeaders)
           .check(status.is(200))

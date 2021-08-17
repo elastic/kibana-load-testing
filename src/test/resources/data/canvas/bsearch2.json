@@ -1,0 +1,213 @@
+{
+  "batch": [
+    {
+      "request": {
+        "query": "select COUNT(*) as total_count, SUM(CASE WHEN customer_gender='MALE' THEN 1 else 0 END) as male_count from kibana_sample_data_ecommerce",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "select COUNT(*) as total_count, SUM(CASE WHEN customer_gender='FEMALE' THEN 1 else 0 END) as female_count from kibana_sample_data_ecommerce",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "SELECT order_date as min FROM kibana_sample_data_ecommerce order by order_date limit 1",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "SELECT order_date as max FROM kibana_sample_data_ecommerce order by order_date DESC limit 1",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category ORDER BY category",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "SELECT category, COUNT(category) AS count FROM \"kibana_sample_data_ecommerce\" GROUP BY category",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "select COUNT(*) as total_count, SUM(CASE WHEN customer_gender='FEMALE' THEN 1 else 0 END) as female_count from kibana_sample_data_ecommerce",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "select COUNT(*) as total_count, SUM(CASE WHEN customer_gender='MALE' THEN 1 else 0 END) as male_count from kibana_sample_data_ecommerce",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    },
+    {
+      "request": {
+        "query": "SELECT sum(taxless_total_price) AS sum_total_price FROM \"kibana_sample_data_ecommerce\"",
+        "count": 1000,
+        "timezone": "UTC",
+        "filter": []
+      },
+      "options": {
+        "strategy": "essql"
+      }
+    }
+  ]
+}
