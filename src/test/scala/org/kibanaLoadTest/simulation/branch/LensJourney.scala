@@ -2,11 +2,11 @@ package org.kibanaLoadTest.simulation.branch
 
 import io.gatling.core.Predef._
 import io.gatling.core.structure.ScenarioBuilder
-import org.kibanaLoadTest.scenario.{Visualize, Login}
+import org.kibanaLoadTest.scenario.{Lens, Login}
 import org.kibanaLoadTest.simulation.BaseSimulation
 
-class VegaJourney extends BaseSimulation {
-  val scenarioName = s"Vega journey ${appConfig.buildVersion}"
+class LensJourney extends BaseSimulation {
+  val scenarioName = s"Lens journey ${appConfig.buildVersion}"
 
   props.maxUsers = 1200
 
@@ -21,11 +21,9 @@ class VegaJourney extends BaseSimulation {
         .pause(5)
     )
     .exec(
-      Visualize
+      Lens
         .load(
-          "vega",
-          "9c6f83f0-bb4d-11e8-9c84-77068524bcab",
-          "data/visualize/vega.json",
+          "c762b7a0-f5ea-11eb-a78e-83aac3c38a60",
           appConfig.baseUrl,
           defaultHeaders
         )

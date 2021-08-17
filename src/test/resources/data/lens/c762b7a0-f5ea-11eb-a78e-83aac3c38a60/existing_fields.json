@@ -1,0 +1,21 @@
+{
+  "dslQuery":{
+    "bool":{
+      "must":[
+
+      ],
+      "filter":[
+
+      ],
+      "should":[
+
+      ],
+      "must_not":[
+
+      ]
+    }
+  },
+  "fromDate":"${startTime}",
+  "toDate":"${endTime}",
+  "timeFieldName":"order_date"
+}
