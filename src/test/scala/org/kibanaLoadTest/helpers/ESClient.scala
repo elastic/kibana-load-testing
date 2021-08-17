@@ -14,6 +14,8 @@ import org.elasticsearch.common.xcontent.XContentType
 import org.kibanaLoadTest.ESConfiguration
 import org.slf4j.{Logger, LoggerFactory}
 import io.circe.Json
+import org.elasticsearch.action.bulk.BulkRequest
+
 import java.io.IOException
 import scala.collection.parallel.CollectionConverters._
 
@@ -47,20 +49,27 @@ class ESClient(config: ESConfiguration) {
 
     try {
       logger.info(s"Ingesting to stats cluster: ${jsonList.size} docs")
+      val bulkReq = new BulkRequest()
       jsonList.par.foreach(json => {
-        try {
-          client.index(
-            new IndexRequest(indexName)
-              .source(json.toString(), XContentType.JSON),
-            RequestOptions.DEFAULT
-          )
-        } catch {
-          case e: IOException =>
-            logger.error(
-              s"Failed to add document for :\n ${json.toString()} \n ${e.toString}"
-            )
-        }
+        val req =
+          new IndexRequest(indexName).source(json.toString(), XContentType.JSON)
+        bulkReq.add(req)
       })
+      val bulkResponse = client.bulk(bulkReq, RequestOptions.DEFAULT)
+//      jsonList.par.foreach(json => {
+//        try {
+//          client.index(
+//            new IndexRequest(indexName)
+//              .source(json.toString(), XContentType.JSON),
+//            RequestOptions.DEFAULT
+//          )
+//        } catch {
+//          case e: IOException =>
+//            logger.error(
+//              s"Failed to add document for :\n ${json.toString()} \n ${e.toString}"
+//            )
+//        }
+//      })
       logger.info("Ingestion is completed")
     } catch {
       case e: IOException =>

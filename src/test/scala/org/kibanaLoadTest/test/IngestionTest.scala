@@ -77,12 +77,12 @@ class IngestionTest {
   }
 
   @Test
-  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
+  //@EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
   def ingestReportTest(): Unit = {
     val DATA_INDEX = "gatling-data"
-    val host = System.getenv("HOST_FROM_VAULT")
-    val username = System.getenv("USER_FROM_VAULT")
-    val password = System.getenv("PASS_FROM_VAULT")
+    val host = "http://localhost:9220" //System.getenv("HOST_FROM_VAULT")
+    val username = "elastic" //System.getenv("USER_FROM_VAULT")
+    val password = "changeme" //System.getenv("PASS_FROM_VAULT")
     val esConfig = new ESConfiguration(
       ConfigFactory.load
         .withValue("host", ConfigValueFactory.fromAnyRef(host))
@@ -91,9 +91,17 @@ class IngestionTest {
     )
 
     val esClient = new ESClient(esConfig)
-    val simLogFilePath = getClass.getResource("/test/simulation.log").getPath
-    val lastRunFilePath = getClass.getResource("/test/lastRun.txt").getPath
-    val responseFilePath = getClass.getResource("/test/response.log").getPath
+    val testPath =
+      Helper.getTargetPath + File.separator + "test-classes" + File.separator + "test" + File.separator
+    val simLogFilePath: String = new File(
+      testPath + "simulation.log"
+    ).getAbsolutePath
+    val lastRunFilePath: String = new File(
+      testPath + "lastRun.txt"
+    ).getAbsolutePath
+    val responseFilePath: String = new File(
+      testPath + "response.log"
+    ).getAbsolutePath
     val metaJson = Helper.getMetaJson(lastRunFilePath, simLogFilePath)
     val (requestsTimeline, concurrentUsers) =
       LogParser.parseSimulationLog(simLogFilePath)
