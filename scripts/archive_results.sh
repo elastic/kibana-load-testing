@@ -9,5 +9,5 @@ fi
 GATLING_OUTPUT_DIR="kibana-load-testing/target/gatling/"
 if [ -d "$GATLING_OUTPUT_DIR" ]; then
   echo "archive gatling test results"
-  tar -czf report.tar.gz kibana-load-testing/target/gatling/**/*
+  tar --exclude='*.log' -czf report.tar.gz kibana-load-testing/target/gatling/**/*
 fi
