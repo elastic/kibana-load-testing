@@ -94,7 +94,7 @@
 
   },
   "searchSession":{
-    "sessionId":"${searchSessionId}",
+    "sessionId":"${sessionId}",
     "isRestore":false,
     "isStored":false
   }

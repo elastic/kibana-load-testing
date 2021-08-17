@@ -7,12 +7,12 @@ import org.kibanaLoadTest.helpers.Helper
 import java.util.Calendar
 
 object Dashboard {
-  // bsearch1.json ... bsearch5.json
-  private val bSearchPayloadSeq = Seq(1, 2, 3, 4, 5)
+  // bsearch1.json ... bsearch4.json
+  private val bSearchPayloadSeq = Seq(1, 2, 3, 4)
 
   def load(baseUrl: String, headers: Map[String, String]): ChainBuilder = {
     exec(// unique search sessionId for each virtual user
-      session => session.set("searchSessionId", Helper.generateUUID)
+      session => session.set("sessionId", Helper.generateUUID)
     ).exec(// unique date picker start time for each virtual user
       session => session.set("startTime", Helper.getDate(Calendar.DAY_OF_MONTH, -7))
     ).exec(// unique date picker end time for each virtual user
@@ -51,10 +51,21 @@ object Dashboard {
             ) //remove name attribute
             .saveAs("searchAndMapVector")
         )
+        .check(
+          jsonPath(
+            "$.saved_objects[?(@.attributes.title=='[eCommerce] Revenue Dashboard')].references[?(@.type=='lens')]"
+          ).findAll
+            .transform(
+              _.map(_.replaceAll("\"name(.+?),", ""))
+            ) //remove name attribute
+            .saveAs("LensVector")
+        )
     ).pause(1).exec(
         http("query index pattern")
           .get("/api/saved_objects/_find")
           .queryParam("fields", "title")
+          .queryParam("fields", "type")
+          .queryParam("fields", "typeMeta")
           .queryParam("per_page", "10000")
           .queryParam("type", "index-pattern")
           .headers(headers)
@@ -87,10 +98,16 @@ object Dashboard {
             "searchAndMapString",
             session("searchAndMapVector").as[Seq[String]].mkString(",")
           )
+        ).exec(session =>
+          //convert Vector -> String for search&map request
+          session.set(
+            "LensListString",
+            session("LensVector").as[Seq[String]].mkString(",")
+          )
         ).exec(
           http("query visualizations")
             .post("/api/saved_objects/_bulk_get")
-            .body(StringBody("[${vizListString}, {\"id\":\"${indexPatternId}\", \"type\":\"index-pattern\"}]"))
+            .body(StringBody("[${vizListString}]"))
             .asJson
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")
@@ -98,7 +115,15 @@ object Dashboard {
         ).exec(
           http("query search & map")
             .post("/api/saved_objects/_bulk_get")
-            .body(StringBody("[${searchAndMapString}, {\"id\":\"${indexPatternId}\", \"type\":\"index-pattern\"}]"))
+            .body(StringBody("[${searchAndMapString}]"))
+            .asJson
+            .headers(headers)
+            .header("Referer", baseUrl + "/app/dashboards")
+            .check(status.is(200))
+        ).exec(
+          http("query lens")
+            .post("/api/saved_objects/_bulk_get")
+            .body(StringBody("[${LensListString}, {\"id\":\"${indexPatternId}\", \"type\":\"index-pattern\"}]"))
             .asJson
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")
