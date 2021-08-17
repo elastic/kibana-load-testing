@@ -64,6 +64,8 @@ object Dashboard {
         http("query index pattern")
           .get("/api/saved_objects/_find")
           .queryParam("fields", "title")
+          .queryParam("fields", "type")
+          .queryParam("fields", "typeMeta")
           .queryParam("per_page", "10000")
           .queryParam("type", "index-pattern")
           .headers(headers)
