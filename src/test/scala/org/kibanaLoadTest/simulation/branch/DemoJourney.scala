@@ -2,7 +2,7 @@ package org.kibanaLoadTest.simulation.branch
 
 import io.gatling.core.Predef._
 import io.gatling.core.structure.ScenarioBuilder
-import org.kibanaLoadTest.scenario.{Canvas, Dashboard, Discover, Login}
+import org.kibanaLoadTest.scenario.{Canvas, Dashboard, Discover, Login, Home}
 import org.kibanaLoadTest.simulation.BaseSimulation
 
 class DemoJourney extends BaseSimulation {
@@ -20,6 +20,7 @@ class DemoJourney extends BaseSimulation {
         )
         .pause(5)
     )
+    .exec(Home.load(appConfig.baseUrl, defaultHeaders).pause(10))
     .exec(Discover.load(appConfig.baseUrl, defaultHeaders).pause(10))
     .exec(Discover.do2ExtraQueries(appConfig.baseUrl, defaultHeaders).pause(10))
     .exec(Dashboard.load(appConfig.baseUrl, defaultHeaders).pause(10))
