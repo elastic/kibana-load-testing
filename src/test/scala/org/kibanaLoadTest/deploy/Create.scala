@@ -30,19 +30,25 @@ object Create {
       version.get,
       deployConfig
     )
-    var metadata = cloudClient.createDeployment(payload)
-    val isReady = cloudClient.waitForClusterToStart(metadata("deploymentId"))
+    var deployment = cloudClient.createDeployment(payload)
+    val isReady = cloudClient.waitForClusterToStart(deployment)
     // delete deployment if it was not finished successfully
     if (!isReady) {
-      cloudClient.deleteDeployment(metadata("deploymentId"))
+      cloudClient.deleteDeployment(deployment.id)
       throw new RuntimeException("Stop due to failed deployment...")
     }
 
-    val host = cloudClient.getKibanaUrl(metadata("deploymentId"))
-    metadata += "version" -> version.get
-    metadata += "host" -> host
-    // do not delete deployment after simulation run
-    metadata += "deleteDeploymentOnFinish" -> "false"
+    val host = cloudClient.getKibanaUrl(deployment.id)
+
+    val metadata = Map(
+      "deploymentId" -> deployment.id,
+      "username" -> deployment.username,
+      "password" -> deployment.password,
+      "version" -> version.get,
+      "host" -> host,
+      // do not delete deployment after simulation run
+      "deleteDeploymentOnFinish" -> "false"
+    )
 
     Helper.writeMapToFile(metadata, cloudDeploymentFilePath)
   }

@@ -15,6 +15,15 @@ import spray.json.lenses.JsonLenses._
 import spray.json._
 import spray.json.DefaultJsonProtocol._
 
+import scala.collection.mutable.ListBuffer
+
+case class DeploymentInfo(
+    id: String,
+    username: String,
+    password: String,
+    resources: List[String]
+)
+
 class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
   private val DEPLOYMENT_READY_TIMEOUT = 7 * 60 * 1000 // 7 min
   private val DEPLOYMENT_POLLING_INTERVAL = 30 * 1000 // 20 sec
@@ -26,6 +35,8 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
   private val STAGING_URL = "https://staging.found.no/api/v1"
   private val PROD_URL = "https://cloud.elastic.co/api/v1"
   private val deployPayloadTemplate = "cloudPayload/createDeployment.json"
+  private val deployWithAPMPayloadTemplate =
+    "cloudPayload/createExtendedDeployment.json"
   private val searchDeploymentsTemplate = "cloudPayload/searchDeployments.json"
   private val apiKey = Option(System.getenv("API_KEY"))
   private val baseUrl = if (env == CloudEnv.PROD) PROD_URL else STAGING_URL
@@ -107,15 +118,25 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
   }
 
   def preparePayload(stackVersion: String, config: Config): String = {
+    val resources = ListBuffer("elasticsearch", "kibana")
+
+    if (config.hasPath("apm")) resources += "apm"
+    if (config.hasPath("enterprise_search"))
+      throw new RuntimeException(
+        "'enterprise_search' is not supported at the moment"
+      )
+    val templatePath: String =
+      if (config.hasPath("apm")) deployWithAPMPayloadTemplate
+      else deployPayloadTemplate
+
     logger.info(
-      s"preparePayload: Using $deployPayloadTemplate payload template"
+      s"preparePayload: Using $templatePath payload template"
     )
-    val template = Helper.loadJsonString(deployPayloadTemplate)
+    val template = Helper.loadJsonString(templatePath)
     logger.info(
       s"preparePayload: Stack version $stackVersion with ${config.toString} configuration"
     )
 
-    val resources = Array("apm", "elasticsearch", "kibana")
     val esNodesId =
       Array("coordinating", "hot_content", "warm", "cold", "frozen", "master")
 
@@ -155,7 +176,7 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
     })
 
     // Nodes setup
-    Array("apm", "elasticsearch", "kibana").foreach(res => {
+    resources.foreach(res => {
       val basePath =
         Symbol("resources") / Symbol(res) / element(0) / Symbol(
           "plan"
@@ -245,7 +266,7 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
     payload.toString
   }
 
-  def createDeployment(payload: String): Map[String, String] = {
+  def createDeployment(payload: String): DeploymentInfo = {
     logger.info(s"createDeployment: Creating new deployment")
     val response = httpPost("/deployments?validate_only=false", payload)
     if (response.isDefined)
@@ -260,25 +281,26 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
       )
     }
 
-    val meta = Map(
-      "deploymentId" -> res.jsonString.extract[String](Symbol("id")),
-      "username" -> res.jsonString.extract[String](
-        Symbol("resources") / element(0) / Symbol("credentials") / Symbol(
-          "username"
-        )
-      ),
-      "password" -> res.jsonString.extract[String](
-        Symbol("resources") / element(0) / Symbol("credentials") / Symbol(
-          "password"
-        )
+    val deploymentId = res.jsonString.extract[String](Symbol("id"))
+    val username = res.jsonString.extract[String](
+      Symbol("resources") / element(0) / Symbol("credentials") / Symbol(
+        "username"
       )
     )
+    val password = res.jsonString.extract[String](
+      Symbol("resources") / element(0) / Symbol("credentials") / Symbol(
+        "password"
+      )
+    )
+    val resources = res.jsonString
+      .extract[String](Symbol("resources") / elements / Symbol("kind"))
+      .toList
 
     logger.info(
-      s"createDeployment: deployment ${meta("deploymentId")} is created"
+      s"createDeployment: deployment $deploymentId is created"
     )
 
-    meta
+    DeploymentInfo(deploymentId, username, password, resources)
   }
 
   def getDeploymentStateInfo(id: String): String = {
@@ -302,11 +324,10 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
     new Version(stackVersion)
   }
 
-  def getInstanceStatus(deploymentId: String): Map[String, String] = {
-    val jsonString = getDeploymentStateInfo(deploymentId)
-    val items = Array("kibana", "elasticsearch", "apm")
+  def getInstanceStatus(info: DeploymentInfo): Map[String, String] = {
+    val jsonString = getDeploymentStateInfo(info.id)
 
-    items
+    info.resources
       .map(item => {
         var status = "undefined"
         try {
@@ -334,8 +355,8 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
   }
 
   def waitForClusterToStart(
-      deploymentId: String,
-      fn: String => Map[String, String] = getInstanceStatus,
+      info: DeploymentInfo,
+      fn: DeploymentInfo => Map[String, String] = getInstanceStatus,
       timeout: Int = DEPLOYMENT_READY_TIMEOUT,
       interval: Int = DEPLOYMENT_POLLING_INTERVAL
   ): Boolean = {
@@ -346,7 +367,7 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
       s"waitForClusterToStart: waitTime ${timeout}ms, poolingInterval ${poolingInterval}ms"
     )
     while (!started && timeLeft > 0) {
-      val statuses = fn(deploymentId)
+      val statuses = fn(info)
       if (statuses.isEmpty || statuses.values.exists(s => s != "started")) {
         logger.info(
           s"waitForClusterToStart: Deployment is in progress... ${statuses.toString()}"
@@ -360,7 +381,7 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
     }
 
     if (!started)
-      logger.error(s"Deployment $deploymentId was not ready after $timeout ms")
+      logger.error(s"Deployment ${info.id} was not ready after $timeout ms")
 
     started
   }

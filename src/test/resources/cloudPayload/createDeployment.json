@@ -1,40 +1,26 @@
 {
-  "resources": {
-    "elasticsearch": [
+  "resources":{
+    "elasticsearch":[
       {
-        "region": "gcp-us-central1",
-        "settings": {
-          "dedicated_masters_threshold": 6
+        "region":"gcp-us-central1",
+        "settings":{
+          "dedicated_masters_threshold":6
         },
-        "plan": {
-          "autoscaling_enabled": false,
-          "cluster_topology": [
+        "plan":{
+          "autoscaling_enabled":false,
+          "cluster_topology":[
             {
-              "zone_count": 2,
-              "instance_configuration_id": "gcp.coordinating.1",
-              "node_roles": [
-                "ingest",
-                "remote_cluster_client"
-              ],
-              "id": "coordinating",
-              "size": {
-                "resource": "memory",
-                "value": 0
-              },
-              "elasticsearch": {
-                "enabled_built_in_plugins": []
-              }
-            },
-            {
-              "zone_count": 2,
-              "elasticsearch": {
-                "node_attributes": {
-                  "data": "hot"
+              "zone_count":2,
+              "elasticsearch":{
+                "node_attributes":{
+                  "data":"hot"
                 },
-                "enabled_built_in_plugins": []
+                "enabled_built_in_plugins":[
+
+                ]
               },
-              "instance_configuration_id": "gcp.data.highio.1",
-              "node_roles": [
+              "instance_configuration_id":"gcp.es.datahot.n2.68x10x45",
+              "node_roles":[
                 "master",
                 "ingest",
                 "transform",
@@ -42,159 +28,170 @@
                 "remote_cluster_client",
                 "data_content"
               ],
-              "id": "hot_content",
-              "size": {
-                "resource": "memory",
-                "value": 8192
+              "id":"hot_content",
+              "size":{
+                "resource":"memory",
+                "value":8192
               }
             },
             {
-              "zone_count": 2,
-              "elasticsearch": {
-                "node_attributes": {
-                  "data": "warm"
+              "zone_count":2,
+              "elasticsearch":{
+                "node_attributes":{
+                  "data":"warm"
                 },
-                "enabled_built_in_plugins": []
+                "enabled_built_in_plugins":[
+
+                ]
               },
-              "instance_configuration_id": "gcp.data.highstorage.1",
-              "node_roles": [
+              "instance_configuration_id":"gcp.es.datawarm.n2.68x10x190",
+              "node_roles":[
                 "data_warm",
                 "remote_cluster_client"
               ],
-              "id": "warm",
-              "size": {
-                "resource": "memory",
-                "value": 0
+              "id":"warm",
+              "size":{
+                "resource":"memory",
+                "value":0
               }
             },
             {
-              "zone_count": 1,
-              "elasticsearch": {
-                "node_attributes": {
-                  "data": "cold"
+              "zone_count":1,
+              "elasticsearch":{
+                "node_attributes":{
+                  "data":"cold"
                 },
-                "enabled_built_in_plugins": []
+                "enabled_built_in_plugins":[
+
+                ]
               },
-              "instance_configuration_id": "gcp.data.highstorage.1",
-              "node_roles": [
+              "instance_configuration_id":"gcp.es.datacold.n2.68x10x190",
+              "node_roles":[
                 "data_cold",
                 "remote_cluster_client"
               ],
-              "id": "cold",
-              "size": {
-                "resource": "memory",
-                "value": 0
+              "id":"cold",
+              "size":{
+                "resource":"memory",
+                "value":0
               }
             },
             {
-              "zone_count": 1,
-              "elasticsearch": {
-                "node_attributes": {
-                  "data": "frozen"
+              "zone_count":1,
+              "elasticsearch":{
+                "node_attributes":{
+                  "data":"frozen"
                 },
-                "enabled_built_in_plugins": []
+                "enabled_built_in_plugins":[
+
+                ]
               },
-              "instance_configuration_id": "gcp.es.datafrozen.n2d.64x8x95",
-              "node_roles": [
+              "instance_configuration_id":"gcp.es.datafrozen.n2.68x10x95",
+              "node_roles":[
                 "data_frozen"
               ],
-              "id": "frozen",
-              "size": {
-                "resource": "memory",
-                "value": 0
+              "id":"frozen",
+              "size":{
+                "resource":"memory",
+                "value":0
               }
             },
             {
-              "zone_count": 3,
-              "instance_configuration_id": "gcp.master.1",
-              "node_roles": [
+              "zone_count":3,
+              "instance_configuration_id":"gcp.es.master.n2.68x32x45",
+              "node_roles":[
                 "master",
                 "remote_cluster_client"
               ],
-              "id": "master",
-              "size": {
-                "resource": "memory",
-                "value": 0
+              "id":"master",
+              "size":{
+                "resource":"memory",
+                "value":0
               },
-              "elasticsearch": {
-                "enabled_built_in_plugins": []
+              "elasticsearch":{
+                "enabled_built_in_plugins":[
+
+                ]
               }
             },
             {
-              "zone_count": 1,
-              "instance_configuration_id": "gcp.ml.1",
-              "node_roles": [
+              "zone_count":2,
+              "instance_configuration_id":"gcp.es.coordinating.n2.68x16x45",
+              "node_roles":[
+                "ingest",
+                "remote_cluster_client"
+              ],
+              "id":"coordinating",
+              "size":{
+                "resource":"memory",
+                "value":0
+              },
+              "elasticsearch":{
+                "enabled_built_in_plugins":[
+
+                ]
+              }
+            },
+            {
+              "zone_count":1,
+              "instance_configuration_id":"gcp.es.ml.n2.68x16x45",
+              "node_roles":[
                 "ml",
                 "remote_cluster_client"
               ],
-              "id": "ml",
-              "size": {
-                "resource": "memory",
-                "value": 0
+              "id":"ml",
+              "size":{
+                "resource":"memory",
+                "value":0
               },
-              "elasticsearch": {
-                "enabled_built_in_plugins": []
+              "elasticsearch":{
+                "enabled_built_in_plugins":[
+
+                ]
               }
             }
           ],
-          "elasticsearch": {
-            "version": "7.13.0"
+          "elasticsearch":{
+            "version":"7.14.0"
           },
-          "deployment_template": {
-            "id": "gcp-io-optimized"
+          "deployment_template":{
+            "id":"gcp-storage-optimized"
           }
         },
-        "ref_id": "main-elasticsearch"
+        "ref_id":"main-elasticsearch"
       }
     ],
-    "enterprise_search": [],
-    "kibana": [
+    "enterprise_search":[
+
+    ],
+    "kibana":[
       {
-        "elasticsearch_cluster_ref_id": "main-elasticsearch",
-        "region": "gcp-us-central1",
-        "plan": {
-          "cluster_topology": [
+        "elasticsearch_cluster_ref_id":"main-elasticsearch",
+        "region":"gcp-us-central1",
+        "plan":{
+          "cluster_topology":[
             {
-              "instance_configuration_id": "gcp.kibana.1",
-              "zone_count": 1,
-              "size": {
-                "resource": "memory",
-                "value": 1024
+              "instance_configuration_id":"gcp.kibana.n2.68x32x45",
+              "zone_count":1,
+              "size":{
+                "resource":"memory",
+                "value":1024
               }
             }
           ],
-          "kibana": {
-            "version": "7.13.0"
+          "kibana":{
+            "version":"7.14.0"
           }
         },
-        "ref_id": "main-kibana"
+        "ref_id":"main-kibana"
       }
     ],
-    "apm": [
-      {
-        "elasticsearch_cluster_ref_id": "main-elasticsearch",
-        "region": "gcp-us-central1",
-        "plan": {
-          "cluster_topology": [
-            {
-              "instance_configuration_id": "gcp.apm.1",
-              "zone_count": 1,
-              "size": {
-                "resource": "memory",
-                "value": 512
-              }
-            }
-          ],
-          "apm": {
-            "version": "7.13.0"
-          }
-        },
-        "ref_id": "main-apm"
-      }
+    "apm":[
+
     ]
   },
-  "name": "i-o-optimized-deployment",
-  "metadata": {
-    "system_owned": false
+  "name":"My deployment",
+  "metadata":{
+    "system_owned":false
   }
 }
