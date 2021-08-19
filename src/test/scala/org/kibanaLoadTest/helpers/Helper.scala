@@ -1,5 +1,7 @@
 package org.kibanaLoadTest.helpers
 
+import com.google.gson.Gson
+
 import java.io.{File, PrintWriter}
 import java.net.{MalformedURLException, URL}
 import java.nio.file.{Files, Paths, StandardCopyOption}
@@ -15,7 +17,6 @@ import spray.json.JsonParser
 import spray.json.JsonParser.ParsingException
 
 import scala.io.Source
-import scala.util.parsing.json.JSONObject
 
 object Helper {
   val dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
@@ -179,7 +180,7 @@ object Helper {
         .getSimulationClass(simLogFilePath),
       "timestamp" -> convertDateToUTC(Instant.now.toEpochMilli)
     )
-    parse(JSONObject(meta).toString()).getOrElse(Json.Null)
+    parse((new Gson).toJson(meta)).getOrElse(Json.Null)
   }
 
   def updateValues(str: String, kv: Map[String, String]): String = {
@@ -214,7 +215,7 @@ object Helper {
     UUID.randomUUID.toString
   }
 
-  def moveResponseLogToResultsDir: Unit = {
+  def moveResponseLogToResultsDir(): Unit = {
     val lastReportPath = getLastReportPath
     val regexp = "[\\w|\\/\\-\\+]+response-\\d{14}.log"
     val targetFiles = getTargetFiles
@@ -229,7 +230,7 @@ object Helper {
       throw new RuntimeException("response.log file is not found in /target")
     }
     Files.move(
-      Paths.get(responseLogsPaths(0)),
+      Paths.get(responseLogsPaths.head),
       Paths.get(lastReportPath + File.separator + "response.log"),
       StandardCopyOption.REPLACE_EXISTING
     )
