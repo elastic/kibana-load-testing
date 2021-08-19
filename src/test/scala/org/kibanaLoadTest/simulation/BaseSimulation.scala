@@ -106,7 +106,7 @@ class BaseSimulation extends Simulation {
   after {
     SimulationHelper.copyRunConfigurationToReportPath()
     // move response log from /target to gatling report folder
-    moveResponseLogToResultsDir
+    moveResponseLogToResultsDir()
     if (
       appConfig.deploymentId.isDefined && appConfig.deleteDeploymentOnFinish
     ) {
