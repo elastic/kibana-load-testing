@@ -33,19 +33,19 @@ object SimulationHelper {
     } else new Version(stackVersion)
     val providerName = if (version.isAbove79x) "cloud-basic" else "basic-cloud"
     val payload = cloudClient.preparePayload(stackVersion, config)
-    val metadata = cloudClient.createDeployment(payload)
-    val isReady = cloudClient.waitForClusterToStart(metadata("deploymentId"))
+    val deployment = cloudClient.createDeployment(payload)
+    val isReady = cloudClient.waitForClusterToStart(deployment)
     // delete deployment if it was not finished successfully
     if (!isReady) {
-      cloudClient.deleteDeployment(metadata("deploymentId"))
+      cloudClient.deleteDeployment(deployment.id)
       throw new RuntimeException("Stop due to failed deployment...")
     }
-    val host = cloudClient.getKibanaUrl(metadata("deploymentId"))
+    val host = cloudClient.getKibanaUrl(deployment.id)
     val cloudConfig = ConfigFactory
       .load()
       .withValue(
         "deploymentId",
-        ConfigValueFactory.fromAnyRef(metadata("deploymentId"))
+        ConfigValueFactory.fromAnyRef(deployment.id)
       )
       .withValue("app.host", ConfigValueFactory.fromAnyRef(host))
       .withValue(
@@ -60,11 +60,11 @@ object SimulationHelper {
       )
       .withValue(
         "auth.username",
-        ConfigValueFactory.fromAnyRef(metadata("username"))
+        ConfigValueFactory.fromAnyRef(deployment.username)
       )
       .withValue(
         "auth.password",
-        ConfigValueFactory.fromAnyRef(metadata("password"))
+        ConfigValueFactory.fromAnyRef(deployment.password)
       )
 
     new KibanaConfiguration(cloudConfig)
