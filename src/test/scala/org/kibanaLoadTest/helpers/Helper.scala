@@ -15,6 +15,7 @@ import io.circe.parser.parse
 import org.slf4j.{Logger, LoggerFactory}
 import spray.json.JsonParser
 import spray.json.JsonParser.ParsingException
+import scala.jdk.CollectionConverters._
 
 import scala.io.Source
 
@@ -180,7 +181,7 @@ object Helper {
         .getSimulationClass(simLogFilePath),
       "timestamp" -> convertDateToUTC(Instant.now.toEpochMilli)
     )
-    parse((new Gson).toJson(meta)).getOrElse(Json.Null)
+    parse(new Gson().toJson(meta.asJava)).getOrElse(Json.Null)
   }
 
   def updateValues(str: String, kv: Map[String, String]): String = {
