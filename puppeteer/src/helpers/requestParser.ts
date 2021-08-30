@@ -12,7 +12,7 @@ export function getRequestsSequence(dataSet: Map<string, Request>, baseUrl: stri
         } else {
             let path = loaderPathMapper.get(request.loaderId) || ''
             let array = output.get(path) || []
-            array.push(request.requestUrl.replace(baseUrl, ''))
+            array.push(`${request.method} ${request.requestUrl.replace(baseUrl, '')} ${request.status}`)
             output.set(path, array)
         }
     });
