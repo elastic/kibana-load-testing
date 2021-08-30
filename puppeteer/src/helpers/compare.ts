@@ -3,7 +3,11 @@ import { resolve } from 'path';
 
 export function compareWithBaseline(scenario: string, actualSequence: Map<string, string[]>) {
     console.log(`${scenario} scenario: comparing recorded requestes with baseline:`);
-    const repeatableCalls = ['/internal/bsearch', '/api/saved_objects/_bulk_get', '/api/canvas/fns'];
+    const repeatableCalls = [
+        'POST /internal/bsearch 200',
+        'POST /api/saved_objects/_bulk_get 200',
+        'POST /api/canvas/fns 200'
+    ];
     let isUpdateRequired = false;
     let baselinePath = resolve(__dirname, '..', '..', 'baseline', scenario, 'requests.json');
     const expectedSequence = new Map(Object.entries(JSON.parse(fs.readFileSync(baselinePath, 'utf8')) as JSON)) as Map<string, string[]>;
