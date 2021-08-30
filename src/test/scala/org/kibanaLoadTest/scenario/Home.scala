@@ -1,6 +1,6 @@
 package org.kibanaLoadTest.scenario
 
-import cats.implicits._
+import cats.implicits.catsSyntaxSemigroup
 
 import io.gatling.core.Predef.{exec, _}
 import io.gatling.http.Predef._
@@ -24,15 +24,15 @@ object Home {
       )
       .pause(1)
       .exec(
-        http("home: list_alert_types")
-          .get("/api/alerts/list_alert_types")
+        http("home: has_user_index_pattern")
+          .get("/api/index_patterns/has_user_index_pattern")
           .headers(defaultHeaders)
           .check(status.is(200))
       )
       .pause(1)
       .exec(
-        http("home: new_instance_status")
-          .get("/internal/home/new_instance_status")
+        http("home: list_alert_types")
+          .get("/api/alerts/list_alert_types")
           .headers(defaultHeaders)
           .check(status.is(200))
       )

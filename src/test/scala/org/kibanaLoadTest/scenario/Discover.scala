@@ -1,5 +1,7 @@
 package org.kibanaLoadTest.scenario
 
+import cats.implicits.catsSyntaxSemigroup
+
 import java.util.Calendar
 import io.gatling.core.Predef.{exec, _}
 import io.gatling.core.structure.ChainBuilder
@@ -20,6 +22,8 @@ object Discover {
         "doQuery 'interval' argument should be in 'name:value' format"
       )
     }
+    val defaultHeaders =
+      headers.combine(Map("Referer" -> s"$baseUrl/app/discover"))
     val Array(intervalName, intervalValue) = interval.split(":")
     exec(session =>
       session
@@ -32,8 +36,7 @@ object Discover {
     ).exec(
         http(s"Discover query $name")
           .post("/internal/bsearch")
-          .headers(headers)
-          .header("Referer", baseUrl + "/app/discover")
+          .headers(defaultHeaders)
           .body(ElFileBody("data/discover/bsearch.json"))
           .asJson
           .check(status.is(200).saveAs("status"))
@@ -50,8 +53,7 @@ object Discover {
         exec(
           http(s"Discover query (fetch by id) $name")
             .post("/internal/bsearch")
-            .headers(headers)
-            .header("Referer", baseUrl + "/app/discover")
+            .headers(defaultHeaders)
             .body(ElFileBody("data/discover/bsearchRequestId.json"))
             .asJson
             .check(status.is(200).saveAs("status"))
@@ -65,6 +67,8 @@ object Discover {
       baseUrl: String,
       headers: Map[String, String]
   ): ChainBuilder = {
+    val defaultHeaders =
+      headers.combine(Map("Referer" -> s"$baseUrl/app/discover"))
     val startTime = Helper.getDate(Calendar.MINUTE, -15)
     val endTime = Helper.getDate(Calendar.DAY_OF_MONTH, 0)
     exec(session => session.set("preference", System.currentTimeMillis()))
@@ -76,9 +80,15 @@ object Discover {
           .queryParam("fields", "typeMeta")
           .queryParam("per_page", "10000")
           .queryParam("type", "index-pattern")
-          .headers(headers)
-          .header("Referer", baseUrl + "/app/discover")
+          .headers(defaultHeaders)
           .asJson
+          .check(status.is(200))
+      )
+      .pause(1)
+      .exec(
+        http("home: has_user_index_pattern")
+          .get("/api/index_patterns/has_user_index_pattern")
+          .headers(defaultHeaders)
           .check(status.is(200))
       )
       .exitBlockOnFail {
@@ -91,8 +101,7 @@ object Discover {
             .queryParam("meta_fields", "_type")
             .queryParam("meta_fields", "_index")
             .queryParam("meta_fields", "_score")
-            .headers(headers)
-            .header("Referer", baseUrl + "/app/discover")
+            .headers(defaultHeaders)
             .asJson
             .check(status.is(200))
         ).exec(
