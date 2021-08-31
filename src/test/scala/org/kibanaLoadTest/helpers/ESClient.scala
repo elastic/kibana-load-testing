@@ -17,10 +17,10 @@ import io.circe.Json
 import org.elasticsearch.action.bulk.BulkRequest
 
 import java.io.IOException
-import scala.collection.parallel.CollectionConverters._
 
 class ESClient(config: ESConfiguration) {
   val logger: Logger = LoggerFactory.getLogger("ES_Client")
+  val BULK_SIZE = 200
 
   def ingest(indexName: String, jsonList: List[Json]): Unit = {
     val credentialsProvider = new BasicCredentialsProvider
@@ -49,27 +49,29 @@ class ESClient(config: ESConfiguration) {
 
     try {
       logger.info(s"Ingesting to stats cluster: ${jsonList.size} docs")
-      val bulkReq = new BulkRequest()
-      jsonList.par.foreach(json => {
-        val req =
-          new IndexRequest(indexName).source(json.toString(), XContentType.JSON)
-        bulkReq.add(req)
+
+      val it = jsonList.sliding(BULK_SIZE, BULK_SIZE)
+      val bulkBuffer = scala.collection.mutable.ListBuffer.empty[BulkRequest]
+      while (it.hasNext) {
+        val chunk = it.next()
+        val bulkReq = new BulkRequest()
+        chunk.foreach(json => {
+          bulkReq.add(
+            new IndexRequest(indexName)
+              .source(json.toString(), XContentType.JSON)
+          )
+        })
+        bulkBuffer += bulkReq
+      }
+
+      bulkBuffer.foreach(bulkReq => {
+        val bulkResponse = client.bulk(bulkReq, RequestOptions.DEFAULT)
+        bulkResponse.getTook.toString
+        logger.info(s"Bulk ingested within: ${bulkResponse.getTook.toString}")
+        if (bulkResponse.hasFailures) {
+          logger.error("Ingested with failures")
+        }
       })
-      val bulkResponse = client.bulk(bulkReq, RequestOptions.DEFAULT)
-//      jsonList.par.foreach(json => {
-//        try {
-//          client.index(
-//            new IndexRequest(indexName)
-//              .source(json.toString(), XContentType.JSON),
-//            RequestOptions.DEFAULT
-//          )
-//        } catch {
-//          case e: IOException =>
-//            logger.error(
-//              s"Failed to add document for :\n ${json.toString()} \n ${e.toString}"
-//            )
-//        }
-//      })
       logger.info("Ingestion is completed")
     } catch {
       case e: IOException =>
