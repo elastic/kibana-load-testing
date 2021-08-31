@@ -20,7 +20,8 @@ import java.io.IOException
 
 class ESClient(config: ESConfiguration) {
   val logger: Logger = LoggerFactory.getLogger("ES_Client")
-  val BULK_SIZE = 200
+  val BULK_SIZE =
+    Option(System.getenv("INGEST_BULK_SIZE")).map(_.toInt).getOrElse(200)
 
   def ingest(indexName: String, jsonList: List[Json]): Unit = {
     val credentialsProvider = new BasicCredentialsProvider
