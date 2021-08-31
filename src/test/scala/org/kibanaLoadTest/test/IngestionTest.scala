@@ -77,12 +77,12 @@ class IngestionTest {
   }
 
   @Test
-  //@EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
+  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
   def ingestReportTest(): Unit = {
     val DATA_INDEX = "gatling-data"
-    val host = "http://localhost:9220" //System.getenv("HOST_FROM_VAULT")
-    val username = "elastic" //System.getenv("USER_FROM_VAULT")
-    val password = "changeme" //System.getenv("PASS_FROM_VAULT")
+    val host = System.getenv("HOST_FROM_VAULT")
+    val username = System.getenv("USER_FROM_VAULT")
+    val password = System.getenv("PASS_FROM_VAULT")
     val esConfig = new ESConfiguration(
       ConfigFactory.load
         .withValue("host", ConfigValueFactory.fromAnyRef(host))
