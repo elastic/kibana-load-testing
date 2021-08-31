@@ -91,9 +91,17 @@ class IngestionTest {
     )
 
     val esClient = new ESClient(esConfig)
-    val simLogFilePath = getClass.getResource("/test/simulation.log").getPath
-    val lastRunFilePath = getClass.getResource("/test/lastRun.txt").getPath
-    val responseFilePath = getClass.getResource("/test/response.log").getPath
+    val testPath =
+      Helper.getTargetPath + File.separator + "test-classes" + File.separator + "test" + File.separator
+    val simLogFilePath: String = new File(
+      testPath + "simulation.log"
+    ).getAbsolutePath
+    val lastRunFilePath: String = new File(
+      testPath + "lastRun.txt"
+    ).getAbsolutePath
+    val responseFilePath: String = new File(
+      testPath + "response.log"
+    ).getAbsolutePath
     val metaJson = Helper.getMetaJson(lastRunFilePath, simLogFilePath)
     val (requestsTimeline, concurrentUsers) =
       LogParser.parseSimulationLog(simLogFilePath)

@@ -14,11 +14,14 @@ import org.elasticsearch.common.xcontent.XContentType
 import org.kibanaLoadTest.ESConfiguration
 import org.slf4j.{Logger, LoggerFactory}
 import io.circe.Json
+import org.elasticsearch.action.bulk.BulkRequest
+
 import java.io.IOException
-import scala.collection.parallel.CollectionConverters._
 
 class ESClient(config: ESConfiguration) {
   val logger: Logger = LoggerFactory.getLogger("ES_Client")
+  val BULK_SIZE =
+    Option(System.getenv("INGEST_BULK_SIZE")).map(_.toInt).getOrElse(200)
 
   def ingest(indexName: String, jsonList: List[Json]): Unit = {
     val credentialsProvider = new BasicCredentialsProvider
@@ -47,18 +50,27 @@ class ESClient(config: ESConfiguration) {
 
     try {
       logger.info(s"Ingesting to stats cluster: ${jsonList.size} docs")
-      jsonList.par.foreach(json => {
-        try {
-          client.index(
+
+      val it = jsonList.grouped(BULK_SIZE)
+      val bulkBuffer = scala.collection.mutable.ListBuffer.empty[BulkRequest]
+      while (it.hasNext) {
+        val chunk = it.next()
+        val bulkReq = new BulkRequest()
+        chunk.foreach(json => {
+          bulkReq.add(
             new IndexRequest(indexName)
-              .source(json.toString(), XContentType.JSON),
-            RequestOptions.DEFAULT
+              .source(json.toString(), XContentType.JSON)
           )
-        } catch {
-          case e: IOException =>
-            logger.error(
-              s"Failed to add document for :\n ${json.toString()} \n ${e.toString}"
-            )
+        })
+        bulkBuffer += bulkReq
+      }
+
+      bulkBuffer.foreach(bulkReq => {
+        val bulkResponse = client.bulk(bulkReq, RequestOptions.DEFAULT)
+        bulkResponse.getTook.toString
+        logger.info(s"Bulk ingested within: ${bulkResponse.getTook.toString}")
+        if (bulkResponse.hasFailures) {
+          logger.error("Ingested with failures")
         }
       })
       logger.info("Ingestion is completed")
