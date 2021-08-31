@@ -50,7 +50,7 @@ class ESClient(config: ESConfiguration) {
     try {
       logger.info(s"Ingesting to stats cluster: ${jsonList.size} docs")
 
-      val it = jsonList.sliding(BULK_SIZE, BULK_SIZE)
+      val it = jsonList.grouped(BULK_SIZE)
       val bulkBuffer = scala.collection.mutable.ListBuffer.empty[BulkRequest]
       while (it.hasNext) {
         val chunk = it.next()
