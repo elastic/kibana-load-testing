@@ -42,6 +42,7 @@ pipeline {
                                 -s '${params.SIMULATION}' \
                                 -n '${env.NUMBER_TEST_RUNS}'
                                """
+                            sh """ ./kibana-load-testing/scripts/archive_results.sh """
                         }
                         loadPipeline.uploadGatlingReport()
                         if (params.INGEST_RESULTS.toBoolean()) {
