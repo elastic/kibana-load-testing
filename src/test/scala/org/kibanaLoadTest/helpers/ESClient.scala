@@ -20,8 +20,9 @@ import java.io.IOException
 
 class ESClient(config: ESConfiguration) {
   val logger: Logger = LoggerFactory.getLogger("ES_Client")
+  val BULK_SIZE_DEFAULT = 100
   val BULK_SIZE =
-    Option(System.getenv("INGEST_BULK_SIZE")).map(_.toInt).getOrElse(200)
+    Option(System.getenv("INGEST_BULK_SIZE")).map(_.toInt).getOrElse(300)
 
   def ingest(indexName: String, jsonList: List[Json]): Unit = {
     val credentialsProvider = new BasicCredentialsProvider
@@ -51,7 +52,9 @@ class ESClient(config: ESConfiguration) {
     try {
       logger.info(s"Ingesting to stats cluster: ${jsonList.size} docs")
 
-      val it = jsonList.grouped(BULK_SIZE)
+      val bulkSize =
+        if (indexName == "gatling-data") BULK_SIZE_DEFAULT else BULK_SIZE
+      val it = jsonList.grouped(bulkSize)
       val bulkBuffer = scala.collection.mutable.ListBuffer.empty[BulkRequest]
       while (it.hasNext) {
         val chunk = it.next()
