@@ -8,6 +8,8 @@ import org.kibanaLoadTest.simulation.BaseSimulation
 class DemoJourney extends BaseSimulation {
   val scenarioName = s"Demo journey ${appConfig.buildVersion}"
 
+  props.maxUsers = 220
+
   val scn: ScenarioBuilder = scenario(scenarioName)
     .exec(
       Login
