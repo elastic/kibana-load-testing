@@ -10,7 +10,7 @@ class AtOnceJourney extends BaseSimulation {
     s"Cloud  atOnce $module ${appConfig.buildVersion}"
   }
 
-  props.maxUsers = 100
+  props.maxUsers = 120
 
   val scnDiscover: ScenarioBuilder = scenario(scenarioName("discover"))
     .exec(loginStep.pause(props.loginPause))
