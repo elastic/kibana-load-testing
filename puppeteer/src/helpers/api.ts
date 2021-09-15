@@ -1,5 +1,5 @@
 
-import axios, { AxiosResponse } from 'axios'
+import axios, { AxiosResponse, AxiosError } from 'axios'
 import { Config } from '../types/config'
 import chalk from 'chalk'
 
@@ -7,10 +7,9 @@ async function post(url: string, body: string | null, headers: any, errorMsg?: s
     try {
         return await axios.post(url, body, headers)
     } catch (error) {
-        const { response } = error;
-        const { request, ...errorObject } = response; // take everything but 'request'
-        console.log(chalk.red(errorMsg));
-        console.log(errorObject);
+        const err = error as AxiosError
+        console.log(chalk.red(err?.message));
+        console.log(err?.response);
         throw Error();
     }
 }
