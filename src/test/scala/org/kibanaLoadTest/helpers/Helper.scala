@@ -218,7 +218,7 @@ object Helper {
 
   def moveResponseLogToResultsDir(): Unit = {
     val lastReportPath = getLastReportPath
-    val regexp = "[\\w|\\/\\-\\+]+response-\\d{14}.log"
+    val regexp = "[\\w|\\/\\-\\+\\.\\_\\@\\{\\}\\[\\]]+response-\\d{14}.log"
     val targetFiles = getTargetFiles
     targetFiles.foreach(p => println(p))
     val responseLogsPaths =
