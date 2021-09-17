@@ -15,6 +15,7 @@ import org.kibanaLoadTest.ESConfiguration
 import org.slf4j.{Logger, LoggerFactory}
 import io.circe.Json
 import org.elasticsearch.action.bulk.BulkRequest
+import org.elasticsearch.client.indices.CreateIndexRequest
 
 import java.io.IOException
 
@@ -24,7 +25,7 @@ class ESClient(config: ESConfiguration) {
   val BULK_SIZE =
     Option(System.getenv("INGEST_BULK_SIZE")).map(_.toInt).getOrElse(300)
 
-  def ingest(indexName: String, jsonList: List[Json]): Unit = {
+  def getClient(): RestHighLevelClient = {
     val credentialsProvider = new BasicCredentialsProvider
     credentialsProvider.setCredentials(
       AuthScope.ANY,
@@ -47,7 +48,11 @@ class ESClient(config: ESConfiguration) {
       )
 
     logger.info(s"Login to ES instance: ${config.host}")
-    val client = new RestHighLevelClient(builder)
+    new RestHighLevelClient(builder)
+  }
+
+  def ingest(indexName: String, jsonList: List[Json]): Unit = {
+    val client = getClient()
 
     try {
       logger.info(s"Ingesting to stats cluster: ${jsonList.size} docs")
@@ -81,6 +86,24 @@ class ESClient(config: ESConfiguration) {
       case e: IOException =>
         logger.error(
           s"Exception occurred during ingestion:\n ${e.toString}"
+        )
+    } finally {
+      logger.info("Closing connection")
+      client.close()
+    }
+  }
+
+  def createIndex(indexName: String, source: Json): Unit = {
+    val client = getClient()
+    val request = new CreateIndexRequest(indexName)
+    request.source(source.toString(), XContentType.JSON)
+    try {
+      val createIndexResponse =
+        client.indices().create(request, RequestOptions.DEFAULT);
+    } catch {
+      case e: IOException =>
+        logger.error(
+          s"Exception occurred during index creation:\n ${e.toString}"
         )
     } finally {
       logger.info("Closing connection")
