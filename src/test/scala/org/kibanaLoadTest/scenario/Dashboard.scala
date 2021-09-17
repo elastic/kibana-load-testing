@@ -53,8 +53,8 @@ object Dashboard {
         )
         .check(
           jsonPath(
-            "$.saved_objects[?(@.attributes.title=='[eCommerce] Revenue Dashboard')].references[?(@.type=='lens')].id"
-          ).findAll.saveAs("LensIds")
+            "$.saved_objects[?(@.attributes.title=='[eCommerce] Revenue Dashboard')].references[?(@.type=='lens')]"
+          ).findAll.transform(_.map(_.replaceAll("\"name(.+?),", ""))).saveAs("lensVector")
         )
     ).pause(1).exec(
       http("query index pattern")
@@ -94,16 +94,20 @@ object Dashboard {
             "searchAndMapString",
             session("searchAndMapVector").as[Seq[String]].mkString(",")
           )
-        )
-          .exec(
-            http("query visualizations")
-              .post("/api/saved_objects/_bulk_get")
-              .body(StringBody("[${vizListString}]"))
-              .asJson
-              .headers(headers)
-              .header("Referer", baseUrl + "/app/dashboards")
-              .check(status.is(200))
-          ).exec(
+        ).exec(session =>
+          //convert Vector -> String for search&map request
+          session.set(
+            "lensString",
+            session("lensVector").as[Seq[String]].mkString(",")
+          )).exec(
+          http("query visualizations")
+            .post("/api/saved_objects/_bulk_get")
+            .body(StringBody("[${vizListString}]"))
+            .asJson
+            .headers(headers)
+            .header("Referer", baseUrl + "/app/dashboards")
+            .check(status.is(200))
+        ).exec(
           http("query search & map")
             .post("/api/saved_objects/_bulk_get")
             .body(StringBody("[${searchAndMapString}]"))
@@ -111,15 +115,15 @@ object Dashboard {
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")
             .check(status.is(200))
-        ).foreach("${LensIds}", "lensId") {
-          exec(
-            http("saved_objects/resolve/lens/${lensId}")
-              .get("/api/saved_objects/resolve/lens/${lensId}")
-              .headers(headers).header("Referer", baseUrl + "/app/dashboards")
-              .check(status.is(200))
-          )
-        }
-          .exec(
+        ).exec(
+          http("dashboard: _bulk_resolve")
+          .post("/api/saved_objects/_bulk_resolve")
+          .body(StringBody("[${lensString}]"))
+          .asJson
+          .headers(headers)
+          .header("Referer", baseUrl + "/app/dashboards")
+          .check(status.is(200))
+        ).exec(
             http("query index pattern meta fields")
               .get("/api/index_patterns/_fields_for_wildcard")
               .queryParam("pattern", "kibana_sample_data_ecommerce")
