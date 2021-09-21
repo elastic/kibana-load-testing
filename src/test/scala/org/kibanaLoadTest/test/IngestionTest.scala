@@ -171,7 +171,7 @@ class IngestionTest {
     val docsArray = ESArchiver.readDataFromFile(dataFilePath)
 
     assertEquals(1, indexArray.length, "Indexes count is incorrect")
-    assertEquals(111396, docsArray.length, "Indexes count is incorrect")
+    assertEquals(111396, docsArray.length, "Docs count is incorrect")
   }
 
   @Test
