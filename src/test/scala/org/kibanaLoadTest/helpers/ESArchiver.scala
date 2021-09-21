@@ -1,21 +1,15 @@
 package org.kibanaLoadTest.helpers
 
 import io.circe.Json
-
 import java.io.{BufferedReader, FileInputStream, InputStreamReader}
 import scala.collection.mutable.ArrayBuffer
 import io.circe.parser._
 import io.circe.syntax.EncoderOps
-
 import java.util.zip.GZIPInputStream
 
-case class IndexProps(name: String, source: Json)
-
-case class Index(name: String, source: Json)
 case class Doc(_type: String, index: String, source: Json)
 
 object ESArchiver {
-
   def parseFile(
       filePath: String,
       encoding: String = "UTF-8"
@@ -60,7 +54,6 @@ object ESArchiver {
     } else {
       throw new RuntimeException(s"Unknown ${_type} type")
     }
-
     Doc(_type, index, source)
   }
 
@@ -70,20 +63,5 @@ object ESArchiver {
   ): ArrayBuffer[Doc] = {
     val jsonArray = parseFile(filePath, encoding)
     jsonArray.map(json => convertToDoc(json))
-  }
-
-  def parseJson(inputObj: Json): IndexProps = {
-
-    val itemType = inputObj.hcursor.get[String]("type").getOrElse(null)
-    if (itemType == "index") {
-      val indexSource = inputObj.hcursor.get[Json]("value").getOrElse(null)
-      val indexName =
-        inputObj.hcursor.downField("value").get[String]("index").getOrElse(null)
-      if ((indexName != null) && (indexSource != null)) {
-        val source =
-          indexSource.withObject(jsonObj => jsonObj.remove("index").asJson)
-        IndexProps(indexName, source)
-      } else throw new RuntimeException("index naming or source is null")
-    } else null
   }
 }
