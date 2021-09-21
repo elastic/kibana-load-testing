@@ -1,12 +1,10 @@
 package org.kibanaLoadTest.test
 
-import io.circe.syntax.EncoderOps
-import io.circe.{Decoder, Json}
 import org.junit.jupiter.api.Assertions.{assertEquals, assertThrows, assertTrue}
 import org.junit.jupiter.api.Test
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.Helper.{generateUUID, getTargetPath}
-import org.kibanaLoadTest.helpers.{ESArchiver, Helper, Version}
+import org.kibanaLoadTest.helpers.{Helper, Version}
 
 import java.io.File
 import java.util.Calendar
@@ -141,32 +139,5 @@ class HelpersTest {
   def generateUUIDTest(): Unit = {
     val uuid = generateUUID
     assertTrue(uuid.matches("[a-zA-Z0-9-]+"))
-  }
-
-  @Test
-  def parseFileIntoJsonArrayTest(): Unit = {
-    val filePath = getClass.getResource("/test/mappings.json").getPath
-    val jsonArray = ESArchiver.parseFileIntoJsonArray(filePath)
-    assertTrue(jsonArray.filter(i => i.isNull).length == 0)
-
-    val item = jsonArray(0)
-    val itemType = item.hcursor.get[String]("type")
-    if (itemType == "index") {
-      val indexMapping = item.hcursor.get[Json]("value").getOrElse(null)
-      val indexName =
-        item.hcursor.downField("value").get[String]("index").getOrElse(null)
-      if ((indexName != null) && (indexMapping != null)) {
-        return
-      }
-    }
-
-    val res = valueJson.getOrElse(null)
-    val res1 = res.withObject(obj => obj.remove("index").asJson)
-
-    //print(res)
-    print(res1)
-
-//    val baz2: Decoder.Result[Double] =
-//      cursor.("values").get[Double]("baz")
   }
 }

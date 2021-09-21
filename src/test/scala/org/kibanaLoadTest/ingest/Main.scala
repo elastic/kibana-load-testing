@@ -96,8 +96,8 @@ object Main {
         })
         .toList
 
-      esClient.ingest(GLOBAL_STATS_INDEX, List(combinedStatsJson))
-      esClient.ingest(DATA_INDEX, requestJsonList)
+      esClient.Instance.bulk(GLOBAL_STATS_INDEX, List(combinedStatsJson))
+      esClient.Instance.bulk(DATA_INDEX, requestJsonList)
 
       val concurrentUsersJsonList = concurrentUsers.map(stat => {
         val gson = new Gson
@@ -105,7 +105,9 @@ object Main {
         json.deepMerge(metaJson)
       })
 
-      esClient.ingest(USERS_INDEX, concurrentUsersJsonList)
+      esClient.Instance.bulk(USERS_INDEX, concurrentUsersJsonList)
     })
+
+    esClient.Instance.closeConnection()
   }
 }

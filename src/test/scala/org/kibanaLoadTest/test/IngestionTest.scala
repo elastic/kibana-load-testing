@@ -10,7 +10,13 @@ import org.junit.jupiter.api.Assertions.{assertEquals, assertTrue}
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import org.kibanaLoadTest.ESConfiguration
-import org.kibanaLoadTest.helpers.{ESClient, Helper, LogParser, ResponseParser}
+import org.kibanaLoadTest.helpers.{
+  ESArchiver,
+  ESClient,
+  Helper,
+  LogParser,
+  ResponseParser
+}
 import org.kibanaLoadTest.ingest.Main.USERS_INDEX
 
 import scala.collection.parallel.CollectionConverters.IterableIsParallelizable
@@ -125,7 +131,7 @@ class IngestionTest {
         combinedRequestJson
       })
       .toList
-    esClient.ingest(DATA_INDEX, requestJsonList)
+    esClient.Instance.bulk(DATA_INDEX, requestJsonList)
 
     val concurrentUsersJsonList = concurrentUsers.map(stat => {
       val gson = new Gson
@@ -133,7 +139,7 @@ class IngestionTest {
       json.deepMerge(metaJson)
     })
 
-    esClient.ingest(USERS_INDEX, concurrentUsersJsonList)
+    esClient.Instance.bulk(USERS_INDEX, concurrentUsersJsonList)
   }
 
   @Test
@@ -153,5 +159,55 @@ class IngestionTest {
 
     val tempFile = new File(filepath)
     assertTrue(tempFile.exists, s"FIle $filepath does not exist")
+  }
+
+  @Test
+  def ESArchiverParseTest(): Unit = {
+    val mappingsFilePath =
+      getClass.getResource("/test/es_archive/mappings.json").getPath
+    val dataFilePath =
+      getClass.getResource("/test/es_archive/data.json.gz").getPath
+    val indexArray = ESArchiver.readDataFromFile(mappingsFilePath)
+    val docsArray = ESArchiver.readDataFromFile(dataFilePath)
+
+    assertEquals(1, indexArray.length, "Indexes count is incorrect")
+    assertEquals(111396, docsArray.length, "Indexes count is incorrect")
+  }
+
+  @Test
+  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
+  def ESArchiverIngestTest(): Unit = {
+    val mappingsFilePath =
+      getClass.getResource("/test/es_archive/mappings.json").getPath
+    val dataFilePath =
+      getClass.getResource("/test/es_archive/data.json.gz").getPath
+    val indexArray = ESArchiver.readDataFromFile(mappingsFilePath)
+    val docsArray = ESArchiver.readDataFromFile(dataFilePath)
+
+    val host = System.getenv("HOST_FROM_VAULT")
+    val username = System.getenv("USER_FROM_VAULT")
+    val password = System.getenv("PASS_FROM_VAULT")
+
+    val esConfig = new ESConfiguration(
+      ConfigFactory.load
+        .withValue("host", ConfigValueFactory.fromAnyRef(host))
+        .withValue("username", ConfigValueFactory.fromAnyRef(username))
+        .withValue("password", ConfigValueFactory.fromAnyRef(password))
+    )
+
+    val client = new ESClient(esConfig)
+
+    indexArray.foreach(item => {
+      client.Instance.createIndex(item.index + "6", item.source)
+      println(s"${item.index} index was created")
+    })
+
+    client.Instance.bulk(
+      indexArray(0).index,
+      docsArray.map(doc => doc.source).toList,
+      chunkSize = 1000
+    )
+
+    client.Instance.closeConnection()
   }
 }
