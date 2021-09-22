@@ -1,10 +1,13 @@
 package org.kibanaLoadTest.helpers
 
+import io.circe.Json
 import org.apache.http.HttpHost
 import org.apache.http.auth.{AuthScope, UsernamePasswordCredentials}
 import org.apache.http.impl.client.BasicCredentialsProvider
 import org.apache.http.impl.nio.client.HttpAsyncClientBuilder
+import org.elasticsearch.action.bulk.BulkRequest
 import org.elasticsearch.action.index.IndexRequest
+import org.elasticsearch.client.indices.CreateIndexRequest
 import org.elasticsearch.client.{
   RequestOptions,
   RestClient,
@@ -13,18 +16,17 @@ import org.elasticsearch.client.{
 import org.elasticsearch.common.xcontent.XContentType
 import org.kibanaLoadTest.ESConfiguration
 import org.slf4j.{Logger, LoggerFactory}
-import io.circe.Json
-import org.elasticsearch.action.bulk.BulkRequest
 
 import java.io.IOException
 
-class ESClient(config: ESConfiguration) {
-  val logger: Logger = LoggerFactory.getLogger("ES_Client")
-  val BULK_SIZE_DEFAULT = 100
-  val BULK_SIZE =
-    Option(System.getenv("INGEST_BULK_SIZE")).map(_.toInt).getOrElse(300)
+case class Chunk(request: BulkRequest, size: Int)
 
-  def ingest(indexName: String, jsonList: List[Json]): Unit = {
+class ESClient(config: ESConfiguration) {
+
+  private var client: RestHighLevelClient = null
+  private val logger: Logger = LoggerFactory.getLogger("ES_Client")
+
+  private def createInstance(config: ESConfiguration): RestHighLevelClient = {
     val credentialsProvider = new BasicCredentialsProvider
     credentialsProvider.setCredentials(
       AuthScope.ANY,
@@ -47,44 +49,76 @@ class ESClient(config: ESConfiguration) {
       )
 
     logger.info(s"Login to ES instance: ${config.host}")
-    val client = new RestHighLevelClient(builder)
+    new RestHighLevelClient(builder)
+  }
 
-    try {
-      logger.info(s"Ingesting to stats cluster: ${jsonList.size} docs")
+  object Instance extends ESClient(config) {
+    private val BULK_SIZE_DEFAULT = 100
+    private val BULK_SIZE =
+      Option(System.getenv("INGEST_BULK_SIZE")).map(_.toInt).getOrElse(300)
+    client = createInstance(config)
 
-      val bulkSize =
-        if (indexName == "gatling-data") BULK_SIZE_DEFAULT else BULK_SIZE
-      val it = jsonList.grouped(bulkSize)
-      val bulkBuffer = scala.collection.mutable.ListBuffer.empty[BulkRequest]
-      while (it.hasNext) {
-        val chunk = it.next()
-        val bulkReq = new BulkRequest()
-        chunk.foreach(json => {
-          bulkReq.add(
-            new IndexRequest(indexName)
-              .source(json.toString(), XContentType.JSON)
-          )
-        })
-        bulkBuffer += bulkReq
-      }
+    def bulk(
+        indexName: String,
+        jsonList: List[Json],
+        chunkSize: Int = BULK_SIZE
+    ): Unit = {
+      try {
+        logger.info(s"Ingesting to stats cluster: ${jsonList.size} docs")
 
-      bulkBuffer.foreach(bulkReq => {
-        val bulkResponse = client.bulk(bulkReq, RequestOptions.DEFAULT)
-        bulkResponse.getTook.toString
-        logger.info(s"Bulk ingested within: ${bulkResponse.getTook.toString}")
-        if (bulkResponse.hasFailures) {
-          logger.error("Ingested with failures")
+        val bulkSize =
+          if (indexName == "gatling-data") BULK_SIZE_DEFAULT else chunkSize
+        val it = jsonList.grouped(bulkSize)
+        val bulkBuffer = scala.collection.mutable.ListBuffer.empty[Chunk]
+        while (it.hasNext) {
+          val chunk = it.next()
+          val bulkReq = new BulkRequest()
+          chunk.foreach(json => {
+            bulkReq.add(
+              new IndexRequest(indexName)
+                .source(json.toString(), XContentType.JSON)
+            )
+          })
+          bulkBuffer += Chunk(bulkReq, chunk.length)
         }
-      })
-      logger.info("Ingestion is completed")
-    } catch {
-      case e: IOException =>
-        logger.error(
-          s"Exception occurred during ingestion:\n ${e.toString}"
-        )
-    } finally {
-      logger.info("Closing connection")
-      client.close()
+
+        bulkBuffer.foreach(chunk => {
+          val bulkResponse = client.bulk(chunk.request, RequestOptions.DEFAULT)
+          bulkResponse.getTook.toString
+          logger.info(
+            s"Bulk size=${chunk.size} ingested within: ${bulkResponse.getTook.toString}"
+          )
+          if (bulkResponse.hasFailures) {
+            logger.error("Ingested with failures")
+          }
+        })
+        logger.info("Ingestion is completed")
+      } catch {
+        case e: IOException =>
+          logger.error(
+            s"Exception occurred during ingestion:\n ${e.toString}"
+          )
+      }
+    }
+
+    def createIndex(indexName: String, source: Json): Unit = {
+      val request = new CreateIndexRequest(indexName)
+      request.source(source.toString(), XContentType.JSON)
+      try {
+        client.indices().create(request, RequestOptions.DEFAULT)
+      } catch {
+        case e: IOException =>
+          logger.error(
+            s"Exception occurred during index creation:\n ${e.toString}"
+          )
+      }
+    }
+
+    def closeConnection(): Unit = {
+      if (client != null) {
+        logger.info("Closing connection")
+        client.close()
+      }
     }
   }
 }
