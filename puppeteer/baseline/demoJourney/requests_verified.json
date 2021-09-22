@@ -18,9 +18,15 @@
         "GET /internal/global_search/searchable_types 200 - ok",
         "GET /internal/security/me 200 - ok",
         "GET /api/alerts/list_alert_types 200 - ok",
+<<<<<<< HEAD
         "GET /internal/security/session 200 - changed order",
         "GET /internal/spaces/_active_space 200 - changed order",
         "GET /api/index_patterns/has_user_index_pattern 200 - ok",
+=======
+        "GET /api/index_patterns/has_user_index_pattern 200 - ok",
+        "GET /internal/security/session 200 - ok",
+        "GET /internal/spaces/_active_space 200 - ok",
+>>>>>>> f19e31c ([discover] add _bulk_resolve call (#170))
         "POST /internal/global_search/find 200 - ok"
     ],
     "/app/discover": [
@@ -40,7 +46,12 @@
         "GET /api/saved_objects/_find?fields=title&fields=type&fields=typeMeta&per_page=10000&type=index-pattern 200 - ok",
         "GET /api/index_patterns/has_user_index_pattern 200 - ok",
         "POST /api/kibana/settings 200 - ok",
+<<<<<<< HEAD
         "POST /api/saved_objects/_bulk_resolve 200 - ok",
+=======
+        "POST /api/saved_objects/_bulk_resolve 200 - new request",
+        "POST /api/saved_objects/_bulk_get 200 - not found",
+>>>>>>> f19e31c ([discover] add _bulk_resolve call (#170))
         "GET /api/index_patterns/_fields_for_wildcard?pattern=kibana_sample_data_ecommerce&meta_fields=_source&meta_fields=_id&meta_fields=_type&meta_fields=_index&meta_fields=_score 200 - ok",
         "POST /internal/global_search/find 200 - ok",
         "POST /internal/bsearch 200 - ok",
@@ -66,18 +77,29 @@
         "GET /internal/spaces/_active_space 200 - ok",
         "GET /api/saved_objects/_find?fields=title&fields=type&fields=typeMeta&per_page=10000&type=index-pattern 200 - ok",
         "POST /api/saved_objects/_bulk_get 200 - ok",
+<<<<<<< HEAD
         "POST /internal/global_search/find 200 - ok",
         "POST /api/saved_objects/_bulk_get 200 - ok",
         "POST /api/saved_objects/_bulk_resolve 200 - ok",
         "POST /api/saved_objects/_bulk_get 200 - changed order",
         "POST /api/saved_objects/_bulk_resolve 200 - new request",
         "GET /api/index_patterns/_fields_for_wildcard?pattern=kibana_sample_data_ecommerce&meta_fields=_source&meta_fields=_id&meta_fields=_type&meta_fields=_index&meta_fields=_score 200 - ok",
+=======
+        "POST /internal/global_search/find 200 - changed order",
+        "POST /api/saved_objects/_bulk_get 200 - ok",
+        "POST /api/saved_objects/_bulk_resolve 200 - ok",
+        "GET /api/index_patterns/_fields_for_wildcard?pattern=kibana_sample_data_ecommerce&meta_fields=_source&meta_fields=_id&meta_fields=_type&meta_fields=_index&meta_fields=_score 200 - changed order",
+        "POST /api/saved_objects/_bulk_get 200 - ok",
+>>>>>>> f19e31c ([discover] add _bulk_resolve call (#170))
         "POST /api/metrics/vis/data 200 - ok",
         "POST /api/metrics/vis/data 200 - ok",
         "POST /internal/bsearch 200 - ok",
         "POST /internal/bsearch 200 - ok",
         "POST /internal/bsearch 200 - ok",
+<<<<<<< HEAD
         "POST /internal/bsearch 200 - ok",
+=======
+>>>>>>> f19e31c ([discover] add _bulk_resolve call (#170))
         "POST /internal/bsearch 200 - ok"
     ],
     "/app/canvas": [
@@ -93,20 +115,33 @@
         "GET /internal/global_search/searchable_types 200 - ok",
         "GET /internal/security/session 200 - ok",
         "GET /api/alerts/list_alert_types 200 - ok",
+<<<<<<< HEAD
         "GET /api/canvas/fns 200 - changed order",
         "GET /internal/spaces/_active_space 200 - ok",
+=======
+        "GET /internal/spaces/_active_space 200 - changed order",
+        "GET /api/canvas/fns 200 - ok",
+>>>>>>> f19e31c ([discover] add _bulk_resolve call (#170))
         "GET /api/canvas/fns 200 - ok",
         "GET /api/canvas/workpad/find?perPage=10000&name= 200 - ok",
         "POST /internal/global_search/find 200 - ok",
         "GET /api/canvas/workpad/workpad-e08b9bdb-ec14-4339-94c4-063bddfd610e 200 - ok",
         "POST /api/timelion/run 200 - ok",
         "POST /internal/bsearch 200 - ok",
+<<<<<<< HEAD
         "POST /api/timelion/run 200 - ok",
         "POST /api/canvas/fns 200 - ok",
         "POST /api/timelion/run 200 - ok",
         "POST /api/canvas/fns 200 - ok",
         "POST /internal/bsearch 200 - ok",
         "POST /api/timelion/run 200 - ok",
+=======
+        "POST /api/timelion/run 200 - changed order",
+        "POST /api/canvas/fns 200 - ok",
+        "POST /api/canvas/fns 200 - ok",
+        "POST /internal/bsearch 200 - ok",
+        "POST /api/timelion/run 200 - changed order",
+>>>>>>> f19e31c ([discover] add _bulk_resolve call (#170))
         "POST /api/canvas/fns 200 - ok",
         "POST /api/canvas/fns 200 - ok"
     ]

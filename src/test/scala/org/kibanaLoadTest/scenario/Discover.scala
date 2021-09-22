@@ -83,11 +83,27 @@ object Discover {
           .headers(defaultHeaders)
           .asJson
           .check(status.is(200))
+          .check(
+            jsonPath(
+              "$.saved_objects[?(@.attributes.title=='kibana_sample_data_ecommerce')].id"
+            ).saveAs("indexPatternId")
+          )
       )
       .pause(1)
       .exec(
         http("home: has_user_index_pattern")
           .get("/api/index_patterns/has_user_index_pattern")
+          .headers(defaultHeaders)
+          .check(status.is(200))
+      )
+      .exec(
+        http("discover: _bulk_resolve")
+          .post("/api/saved_objects/_bulk_resolve")
+          .body(
+            StringBody(
+              "[{\"id\":\"${indexPatternId}\",\"type\":\"index-pattern\"}]"
+            )
+          )
           .headers(defaultHeaders)
           .check(status.is(200))
       )
