@@ -116,7 +116,7 @@ object Dashboard {
             .header("Referer", baseUrl + "/app/dashboards")
             .check(status.is(200))
         ).exec(
-          http("dashboard: _bulk_resolve")
+          http("bulk_resolve: lens")
           .post("/api/saved_objects/_bulk_resolve")
           .body(StringBody("[${lensString}]"))
           .asJson
@@ -124,6 +124,18 @@ object Dashboard {
           .header("Referer", baseUrl + "/app/dashboards")
           .check(status.is(200))
         ).exec(
+          http("bulk_resolve: index pattern")
+            .post("/api/saved_objects/_bulk_resolve")
+            .body(
+              StringBody(
+                "[{\"id\":\"${indexPatternId}\",\"type\":\"index-pattern\"}]"
+              )
+            )
+            .headers(headers)
+            .header("Referer", baseUrl + "/app/dashboards")
+            .check(status.is(200))
+        )
+          .exec(
             http("query index pattern meta fields")
               .get("/api/index_patterns/_fields_for_wildcard")
               .queryParam("pattern", "kibana_sample_data_ecommerce")
