@@ -32,7 +32,7 @@ class AtOnceJourney extends BaseSimulation {
         scnDashboard
           .inject(atOnceUsers(props.maxUsers), nothingFor(props.scnPause))
           // Canvas load should be less extensive
-          .andThen(scnCanvas.inject(atOnceUsers(props.maxUsers - 150)))
+          .andThen(scnCanvas.inject(atOnceUsers(props.maxUsers - 200)))
       )
   ).protocols(httpProtocol).maxDuration(props.simulationTimeout)
 
