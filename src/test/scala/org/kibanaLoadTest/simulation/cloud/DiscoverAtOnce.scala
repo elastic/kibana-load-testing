@@ -18,7 +18,7 @@ class DiscoverAtOnce extends BaseSimulation {
     s"Cloud discover atOnce $module ${appConfig.buildVersion}"
   }
 
-  props.maxUsers = 400
+  props.maxUsers = 350
 
   val scnDiscover1: ScenarioBuilder = scenario(scenarioName("discover query 1"))
     .exec(loginStep.pause(props.loginPause))

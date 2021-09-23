@@ -10,7 +10,7 @@ class AtOnceJourney extends BaseSimulation {
     s"Cloud  atOnce $module ${appConfig.buildVersion}"
   }
 
-  props.maxUsers = 200
+  props.maxUsers = 250
   props.scnPause = 60
 
   val scnDiscover: ScenarioBuilder = scenario(scenarioName("discover"))
@@ -31,7 +31,8 @@ class AtOnceJourney extends BaseSimulation {
       .andThen(
         scnDashboard
           .inject(atOnceUsers(props.maxUsers), nothingFor(props.scnPause))
-          .andThen(scnCanvas.inject(atOnceUsers(props.maxUsers)))
+          // Canvas load should be less extensive
+          .andThen(scnCanvas.inject(atOnceUsers(props.maxUsers - 100)))
       )
   ).protocols(httpProtocol).maxDuration(props.simulationTimeout)
 
