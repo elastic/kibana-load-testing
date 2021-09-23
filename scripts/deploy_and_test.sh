@@ -44,7 +44,7 @@ for version in "${version_array[@]}"; do
       echo "Running simulation $j $i-time..."
       mvn gatling:test -q -DdeploymentId="${deploymentId}" -Dgatling.simulationClass=org.kibanaLoadTest.simulation.$j
       # wait a minute between scenarios
-      sleep 1m
+      sleep 2m
     done
   done
 
