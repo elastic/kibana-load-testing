@@ -77,10 +77,6 @@
         "POST /internal/bsearch 200",
         "POST /internal/bsearch 200",
         "POST /internal/bsearch 200",
-<<<<<<< HEAD
-        "POST /internal/bsearch 200",
-=======
->>>>>>> f19e31c ([discover] add _bulk_resolve call (#170))
         "POST /internal/bsearch 200"
     ],
     "/app/canvas": [
