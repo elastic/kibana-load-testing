@@ -49,6 +49,7 @@ class KibanaConfiguration {
       throw new RuntimeException(
         "Incorrect configuration - required values:\n" +
           "'host.kibana' should be a valid Kibana host with protocol & port, e.g. 'http://localhost:5620'\n" +
+          "'host.es' should be a valid ElasticSearch host with protocol & port, e.g. 'http://localhost:9220'\n" +
           "'app.version' should be a Stack version, e.g. '7.8.1'\n" +
           "'security.on' should be false for OSS, otherwise true\n" +
           "'auth.username' and 'auth.password' should be valid credentials"
