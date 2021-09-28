@@ -40,14 +40,21 @@ object SimulationHelper {
       cloudClient.deleteDeployment(deployment.id)
       throw new RuntimeException("Stop due to failed deployment...")
     }
-    val host = cloudClient.getPublicUrls(deployment.id)
+    val hosts = cloudClient.getPublicUrls(deployment.id)
     val cloudConfig = ConfigFactory
       .load()
       .withValue(
         "deploymentId",
         ConfigValueFactory.fromAnyRef(deployment.id)
       )
-      .withValue("host.kibana", ConfigValueFactory.fromAnyRef(host))
+      .withValue(
+        "host.kibana",
+        ConfigValueFactory.fromAnyRef(hosts.get("kibanaUrl").get)
+      )
+      .withValue(
+        "host.es",
+        ConfigValueFactory.fromAnyRef(hosts.get("esUrl").get)
+      )
       .withValue(
         "host.version",
         ConfigValueFactory.fromAnyRef(version.get)
