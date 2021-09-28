@@ -345,10 +345,26 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
       .toMap
   }
 
-  def getKibanaUrl(deploymentId: String): String = {
+  def getPublicUrls(deploymentId: String): Map[String, String] = {
+    val jsonString = getDeploymentStateInfo(deploymentId)
+    Map(
+      "kibana" -> jsonString.extract[String](
+        Symbol("resources") / Symbol("kibana") / element(0) / Symbol(
+          "info"
+        ) / Symbol("metadata") / Symbol("service_url")
+      ),
+      "es" -> jsonString.extract[String](
+        Symbol("resources") / Symbol("elasticsearch") / element(0) / Symbol(
+          "info"
+        ) / Symbol("metadata") / Symbol("service_url")
+      )
+    )
+  }
+
+  def getESUrl(deploymentId: String): String = {
     val jsonString = getDeploymentStateInfo(deploymentId)
     jsonString.extract[String](
-      Symbol("resources") / Symbol("kibana") / element(0) / Symbol(
+      Symbol("resources") / Symbol("elasticsearch") / element(0) / Symbol(
         "info"
       ) / Symbol("metadata") / Symbol("service_url")
     )

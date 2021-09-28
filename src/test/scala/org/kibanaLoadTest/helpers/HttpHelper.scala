@@ -1,11 +1,23 @@
 package org.kibanaLoadTest.helpers
 
+import io.circe.Json
+import io.circe.parser.parse
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.http.protocol.HttpProtocolBuilder
-import org.apache.http.client.methods.{HttpDelete, HttpGet, HttpPost}
+import org.apache.http.auth.{AuthScope, UsernamePasswordCredentials}
+import org.apache.http.client.methods.{
+  CloseableHttpResponse,
+  HttpDelete,
+  HttpGet,
+  HttpPost
+}
 import org.apache.http.entity.StringEntity
-import org.apache.http.impl.client.{CloseableHttpClient, HttpClientBuilder}
+import org.apache.http.impl.client.{
+  BasicCredentialsProvider,
+  CloseableHttpClient,
+  HttpClientBuilder
+}
 import org.apache.http.util.EntityUtils
 import org.kibanaLoadTest.KibanaConfiguration
 import org.slf4j.{Logger, LoggerFactory}
@@ -126,6 +138,30 @@ class HttpHelper(appConfig: KibanaConfiguration) {
     }
 
     responseBody
+  }
+
+  def getElasticSearchData: Json = {
+    var jsonString = ""
+    var httpClient: CloseableHttpClient = null
+    var response: CloseableHttpResponse = null
+    val request = new HttpGet(appConfig.esUrl)
+    val provider = new BasicCredentialsProvider
+    provider.setCredentials(
+      AuthScope.ANY,
+      new UsernamePasswordCredentials(appConfig.username, appConfig.password)
+    )
+
+    try {
+      httpClient =
+        HttpClientBuilder.create.setDefaultCredentialsProvider(provider).build
+      response = httpClient.execute(request)
+      jsonString = EntityUtils.toString(response.getEntity)
+    } finally {
+      if (response != null) response.close()
+      if (httpClient != null) httpClient.close()
+    }
+
+    parse(jsonString).getOrElse(Json.Null)
   }
 
   def getDefaultHeaders: Map[String, String] = {
