@@ -45,8 +45,8 @@ object Create {
       "username" -> deployment.username,
       "password" -> deployment.password,
       "version" -> version.get,
-      "baseUrl" -> hosts.get("kibana"),
-      "esUrl" -> hosts.get("es"),
+      "baseUrl" -> hosts.get("kibana").get,
+      "esUrl" -> hosts.get("es").get,
       // do not delete deployment after simulation run
       "deleteDeploymentOnFinish" -> "false"
     )

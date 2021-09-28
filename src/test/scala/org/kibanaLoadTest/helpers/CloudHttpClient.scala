@@ -361,15 +361,6 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
     )
   }
 
-  def getESUrl(deploymentId: String): String = {
-    val jsonString = getDeploymentStateInfo(deploymentId)
-    jsonString.extract[String](
-      Symbol("resources") / Symbol("elasticsearch") / element(0) / Symbol(
-        "info"
-      ) / Symbol("metadata") / Symbol("service_url")
-    )
-  }
-
   def waitForClusterToStart(
       info: DeploymentInfo,
       fn: DeploymentInfo => Map[String, String] = getInstanceStatus,
