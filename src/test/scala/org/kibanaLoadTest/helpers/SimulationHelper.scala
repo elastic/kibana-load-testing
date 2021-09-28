@@ -89,7 +89,11 @@ object SimulationHelper {
         "deleteDeploymentOnFinish",
         ConfigValueFactory.fromAnyRef(meta("deleteDeploymentOnFinish"))
       )
-      .withValue("host.kibana", ConfigValueFactory.fromAnyRef(meta("host")))
+      .withValue(
+        "host.kibana",
+        ConfigValueFactory.fromAnyRef(meta("baseUrl"))
+      )
+      .withValue("host.es", ConfigValueFactory.fromAnyRef(meta("esUrl")))
       .withValue(
         "host.version",
         ConfigValueFactory.fromAnyRef(version.get)
