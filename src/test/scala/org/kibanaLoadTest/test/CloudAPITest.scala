@@ -23,8 +23,11 @@ class CloudAPITest {
     val deployment = cloudClient.createDeployment(payload)
     assertNotNull(deployment.id, "Deployment id is not defined")
     cloudClient.waitForClusterToStart(deployment)
-    val host = cloudClient.getKibanaUrl(deployment.id)
-    assertTrue(host.startsWith("https://"), "Kibana Url is incorrect")
+    val hosts = cloudClient.getPublicUrls(deployment.id)
+    assertTrue(
+      hosts.get("kibanaUrl").get.startsWith("https://"),
+      "Kibana Url is incorrect"
+    )
     cloudClient.deleteDeployment(deployment.id)
   }
 

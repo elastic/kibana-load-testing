@@ -1,5 +1,6 @@
 deploymentId=asdkjqwr9cuw4j23k
-baseUrl=http://localhost:5620
+kibanaUrl=http://localhost:5620
+esUrl=http://localhost:9220
 version=8.0.0
 branch=
 buildNumber=59211

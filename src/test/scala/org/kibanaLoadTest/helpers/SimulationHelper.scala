@@ -40,16 +40,23 @@ object SimulationHelper {
       cloudClient.deleteDeployment(deployment.id)
       throw new RuntimeException("Stop due to failed deployment...")
     }
-    val host = cloudClient.getKibanaUrl(deployment.id)
+    val hosts = cloudClient.getPublicUrls(deployment.id)
     val cloudConfig = ConfigFactory
       .load()
       .withValue(
         "deploymentId",
         ConfigValueFactory.fromAnyRef(deployment.id)
       )
-      .withValue("app.host", ConfigValueFactory.fromAnyRef(host))
       .withValue(
-        "app.version",
+        "host.kibana",
+        ConfigValueFactory.fromAnyRef(hosts.get("kibanaUrl").get)
+      )
+      .withValue(
+        "host.es",
+        ConfigValueFactory.fromAnyRef(hosts.get("esUrl").get)
+      )
+      .withValue(
+        "host.version",
         ConfigValueFactory.fromAnyRef(version.get)
       )
       .withValue("security.on", ConfigValueFactory.fromAnyRef(true))
@@ -89,9 +96,13 @@ object SimulationHelper {
         "deleteDeploymentOnFinish",
         ConfigValueFactory.fromAnyRef(meta("deleteDeploymentOnFinish"))
       )
-      .withValue("app.host", ConfigValueFactory.fromAnyRef(meta("host")))
       .withValue(
-        "app.version",
+        "host.kibana",
+        ConfigValueFactory.fromAnyRef(meta("baseUrl"))
+      )
+      .withValue("host.es", ConfigValueFactory.fromAnyRef(meta("esUrl")))
+      .withValue(
+        "host.version",
         ConfigValueFactory.fromAnyRef(version.get)
       )
       .withValue("security.on", ConfigValueFactory.fromAnyRef(true))
@@ -121,11 +132,16 @@ object SimulationHelper {
                          else ""),
       "isCloudDeployment" -> config.deploymentId.isDefined,
       "baseUrl" -> config.baseUrl,
+      "esUrl" -> config.esUrl,
       "buildHash" -> config.buildHash,
       "buildNumber" -> config.buildNumber,
       "version" -> config.version,
       "isSnapshotBuild" -> config.isSnapshotBuild,
-      "maxUsers" -> users
+      "maxUsers" -> users,
+      "esVersion" -> config.esVersion,
+      "esBuildHash" -> config.esBuildHash,
+      "esBuildDate" -> config.esBuildDate,
+      "esLuceneVersion" -> config.esLuceneVersion
     )
     val meta = deployMeta.++(getCIMeta)
     Helper.writeMapToFile(meta, lastRunFilePath)
