@@ -30,7 +30,7 @@ object Create {
       version.get,
       deployConfig
     )
-    var deployment = cloudClient.createDeployment(payload)
+    val deployment = cloudClient.createDeployment(payload)
     val isReady = cloudClient.waitForClusterToStart(deployment)
     // delete deployment if it was not finished successfully
     if (!isReady) {
@@ -38,14 +38,15 @@ object Create {
       throw new RuntimeException("Stop due to failed deployment...")
     }
 
-    val host = cloudClient.getKibanaUrl(deployment.id)
+    val hosts = cloudClient.getPublicUrls(deployment.id)
 
     val metadata = Map(
       "deploymentId" -> deployment.id,
       "username" -> deployment.username,
       "password" -> deployment.password,
       "version" -> version.get,
-      "host" -> host,
+      "baseUrl" -> hosts.get("kibana").get,
+      "esUrl" -> hosts.get("es").get,
       // do not delete deployment after simulation run
       "deleteDeploymentOnFinish" -> "false"
     )

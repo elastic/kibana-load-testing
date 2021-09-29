@@ -14,6 +14,7 @@ class KibanaConfiguration {
 
   val logger: Logger = LoggerFactory.getLogger("KibanaConfiguration")
   var baseUrl = ""
+  var esUrl = ""
   var version = ""
   var buildVersion = ""
   var isSecurityEnabled = false
@@ -28,19 +29,27 @@ class KibanaConfiguration {
   var isSnapshotBuild = false
   var deleteDeploymentOnFinish = true
 
+  // ES data
+  var esVersion = ""
+  var esBuildHash = ""
+  var esBuildDate = ""
+  var esLuceneVersion = ""
+
   def this(config: Config) = {
     this()
     // validate config
     if (
-      !config.hasPathOrNull("app.host")
-      || !config.hasPathOrNull("app.version")
+      !config.hasPathOrNull("host.kibana")
+      || !config.hasPathOrNull("host.es")
+      || !config.hasPathOrNull("host.version")
       || !config.hasPathOrNull("security.on")
       || !config.hasPathOrNull("auth.username")
       || !config.hasPathOrNull("auth.password")
     ) {
       throw new RuntimeException(
         "Incorrect configuration - required values:\n" +
-          "'app.host' should be a valid Kibana host with protocol & port, e.g. 'http://localhost:5620'\n" +
+          "'host.kibana' should be a valid Kibana host with protocol & port, e.g. 'http://localhost:5620'\n" +
+          "'host.es' should be a valid ElasticSearch host with protocol & port, e.g. 'http://localhost:9220'\n" +
           "'app.version' should be a Stack version, e.g. '7.8.1'\n" +
           "'security.on' should be false for OSS, otherwise true\n" +
           "'auth.username' and 'auth.password' should be valid credentials"
@@ -48,10 +57,14 @@ class KibanaConfiguration {
     }
     // read required values
     this.baseUrl = Helper.validateUrl(
-      config.getString("app.host"),
-      s"'app.host' should be a valid Kibana URL"
+      config.getString("host.kibana"),
+      s"'host.kibana' should be a valid Kibana URL"
     )
-    this.buildVersion = config.getString("app.version")
+    this.esUrl = Helper.validateUrl(
+      config.getString("host.es"),
+      s"'host.es' should be a valid ES URL"
+    )
+    this.buildVersion = config.getString("host.version")
     this.version = new Version(this.buildVersion).version
     this.isSecurityEnabled = config.getBoolean("security.on")
     this.username = config.getString("auth.username")
@@ -87,7 +100,9 @@ class KibanaConfiguration {
 
   def syncWithInstance(): KibanaConfiguration = {
     logger.info(s"Getting Kibana status info")
-    val response = new HttpHelper(this).getStatus
+    val httpClient = new HttpHelper(this)
+    val response = httpClient.getStatus
+
     this.buildHash =
       response.extract[String](Symbol("version") / Symbol("build_hash"))
     this.buildNumber =
@@ -107,6 +122,13 @@ class KibanaConfiguration {
         "Kibana version mismatch: instance " + this.buildVersion + " vs config " + configBuildVersion
       )
     }
+
+    val esMetaJson = httpClient.getElasticSearchData
+    val version = esMetaJson.hcursor.downField("version")
+    this.esVersion = version.get[String]("number").getOrElse(null)
+    this.esBuildHash = version.get[String]("build_hash").getOrElse(null)
+    this.esBuildDate = version.get[String]("build_date").getOrElse(null)
+    this.esLuceneVersion = version.get[String]("lucene_version").getOrElse(null)
 
     this
   }

@@ -14,10 +14,11 @@ Kibana CI has [dedicated jobs](docs/KIBANA_CI.md) to run performance testing for
 <b>Important</b>: Run Kibana without base path or add a static one to your kibana.yml like `server.basePath: "/xfh"` before start.
 - Update Kibana configuration in /resources/config/local.conf file
 ```
-app {
-  host = "http://localhost:5620" //base url
-  // host = "http://localhost:5620/xhf" if you start Kibana with static base path
-  version = "8.0.0" //version
+host {
+  kibana = "http://localhost:5620" // Kibana base url
+  // "http://localhost:5620/xhf" if you start Kibana with static base path
+  es = "http://localhost:9220" // ElasticSearch base url
+  version = "8.0.0" // Stack version
 }
 
 security {
@@ -41,8 +42,9 @@ mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.branch.
 - Create Elastic Cloud deployment
 - Add a new configuration file, e.g. `config/cloud-7.10.0.conf`
 ```
-app {
-  host = "https://str.us-central1.gcp.foundit.no:9243" //base url
+host {
+  kibana = "https://kibana.us-central1.gcp.cloud.io:9243"
+  es = "https://es.us-central1.gcp.cloud.io:9243"
   version = "7.10.0"
 }
 

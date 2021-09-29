@@ -81,7 +81,8 @@ class HelpersTest {
         "branch" -> "",
         "deploymentId" -> "asdkjqwr9cuw4j23k",
         "version" -> "8.0.0",
-        "baseUrl" -> "http://localhost:5620",
+        "kibanaUrl" -> "http://localhost:5620",
+        "esUrl" -> "http://localhost:9220",
         "buildNumber" -> "59211"
       ),
       data
