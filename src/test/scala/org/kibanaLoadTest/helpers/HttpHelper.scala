@@ -13,6 +13,7 @@ import org.apache.http.client.methods.{
   HttpPost
 }
 import org.apache.http.entity.StringEntity
+import org.apache.http.entity.mime.MultipartEntityBuilder
 import org.apache.http.impl.client.{
   BasicCredentialsProvider,
   CloseableHttpClient,
@@ -21,6 +22,8 @@ import org.apache.http.impl.client.{
 import org.apache.http.util.EntityUtils
 import org.kibanaLoadTest.KibanaConfiguration
 import org.slf4j.{Logger, LoggerFactory}
+
+import java.io.File
 
 class HttpHelper(appConfig: KibanaConfiguration) {
   val loginHeaders = Map(
@@ -120,7 +123,38 @@ class HttpHelper(appConfig: KibanaConfiguration) {
     }
   }
 
+  def importSavedObjects(filePath: String): String = {
+    logger.info(s"Importing saved objects from '$filePath'")
+    val file = new File(filePath)
+    val httpClient = HttpClientBuilder.create.build
+    this.loginIfNeeded(httpClient)
+    val importRequest = new HttpPost(
+      appConfig.baseUrl + "/api/saved_objects/_import?createNewCopies=true"
+    )
+    importRequest.addHeader("Connection", "keep-alive")
+    importRequest.addHeader("kbn-version", appConfig.buildVersion)
+    val builder = MultipartEntityBuilder.create
+    builder.addBinaryBody("file", file)
+    val multipart = builder.build()
+    importRequest.setEntity(multipart)
+    var responseBody = ""
+    var response: CloseableHttpResponse = null
+    try {
+      response = httpClient.execute(importRequest)
+      responseBody = EntityUtils.toString(response.getEntity)
+    } catch {
+      case _: Throwable =>
+        logger.error("Exception occurred during saved objects import")
+    } finally {
+      if (response != null) response.close()
+      httpClient.close()
+    }
+
+    responseBody
+  }
+
   def getStatus: String = {
+    logger.info("Kibana status call")
     var responseBody = ""
     val httpClient = HttpClientBuilder.create.build
     this.loginIfNeeded(httpClient)
@@ -141,6 +175,7 @@ class HttpHelper(appConfig: KibanaConfiguration) {
   }
 
   def getElasticSearchData: Json = {
+    logger.info("ES status call")
     var jsonString = ""
     var httpClient: CloseableHttpClient = null
     var response: CloseableHttpResponse = null
