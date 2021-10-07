@@ -62,428 +62,1637 @@
         ],
         "rows": [
           [
-            1597536000000,
-            0,
-            "q:* > sum(taxless_total_price)",
-            2569,
-            0.98,
-            2517.62
-          ],
-          [
-            1598140800000,
-            0,
-            "q:* > sum(taxless_total_price)",
-            2569,
-            1.02,
-            2620.38
-          ],
-          [
-            1598745600000,
-            0,
-            "q:* > sum(taxless_total_price)",
-            2569,
-            1,
-            2569
-          ],
-          [
-            1599350400000,
-            0,
-            "q:* > sum(taxless_total_price)",
-            2569,
-            1.09,
-            2800.21
-          ],
-          [
-            1599955200000,
-            0,
-            "q:* > sum(taxless_total_price)",
-            2569,
-            1.07,
-            2748.83
-          ],
-          [
-            1600560000000,
-            0,
-            "q:* > sum(taxless_total_price)",
-            2569,
-            1.04,
-            2671.76
-          ],
-          [
-            1601164800000,
-            0,
-            "q:* > sum(taxless_total_price)",
-            2569,
-            0.98,
-            2517.62
-          ],
-          [
             1601769600000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.03,
-            2646.07
+            2975,
+            0.96,
+            2856
           ],
           [
             1602374400000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.91,
-            2337.79
+            2975,
+            1.03,
+            3064.25
           ],
           [
             1602979200000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.06,
-            2723.14
+            2975,
+            1.1,
+            3272.5
           ],
           [
             1603584000000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.04,
-            2671.76
+            2975,
+            1.09,
+            3242.75
           ],
           [
             1604188800000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.06,
-            2723.14
+            2975,
+            1.04,
+            3094
           ],
           [
             1604793600000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.95,
-            2440.55
+            2975,
+            1.02,
+            3034.5
           ],
           [
             1605398400000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1,
-            2569
+            2975,
+            1.1,
+            3272.5
           ],
           [
             1606003200000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.91,
-            2337.79
+            2975,
+            1.03,
+            3064.25
           ],
           [
             1606608000000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.99,
-            2543.31
+            2975,
+            0.95,
+            2826.25
           ],
           [
             1607212800000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.05,
-            2697.45
+            2975,
+            0.93,
+            2766.75
           ],
           [
             1607817600000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.08,
-            2774.52
+            2975,
+            0.97,
+            2885.75
           ],
           [
             1608422400000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.96,
-            2466.24
+            2975,
+            1.09,
+            3242.75
           ],
           [
             1609027200000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.95,
-            2440.55
+            2975,
+            1.1,
+            3272.5
           ],
           [
             1609632000000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.07,
-            2748.83
+            2975,
+            0.95,
+            2826.25
           ],
           [
             1610236800000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.09,
-            2800.21
+            2975,
+            0.95,
+            2826.25
           ],
           [
             1610841600000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1,
-            2569
+            2975,
+            0.93,
+            2766.75
           ],
           [
             1611446400000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.03,
-            2646.07
+            2975,
+            0.93,
+            2766.75
           ],
           [
             1612051200000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.91,
-            2337.79
+            2975,
+            1.02,
+            3034.5
           ],
           [
             1612656000000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.97,
-            2491.93
+            2975,
+            0.93,
+            2766.75
           ],
           [
             1613260800000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.98,
-            2517.62
+            2975,
+            0.97,
+            2885.75
           ],
           [
             1613865600000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.95,
-            2440.55
+            2975,
+            1.07,
+            3183.25
           ],
           [
             1614470400000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.03,
-            2646.07
+            2975,
+            0.91,
+            2707.25
           ],
           [
             1615075200000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.93,
-            2389.17
+            2975,
+            1.05,
+            3123.75
           ],
           [
             1615680000000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.96,
-            2466.24
+            2975,
+            0.98,
+            2915.5
           ],
           [
             1616284800000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.96,
-            2466.24
+            2975,
+            0.97,
+            2885.75
           ],
           [
             1616889600000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
+            2975,
             1.02,
-            2620.38
+            3034.5
           ],
           [
             1617494400000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.91,
-            2337.79
+            2975,
+            0.97,
+            2885.75
           ],
           [
             1618099200000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.02,
-            2620.38
+            2975,
+            1.05,
+            3123.75
           ],
           [
             1618704000000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.95,
-            2440.55
+            2975,
+            0.96,
+            2856
           ],
           [
             1619308800000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.97,
-            2491.93
+            2975,
+            1.07,
+            3183.25
           ],
           [
             1619913600000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.98,
-            2517.62
+            2975,
+            0.94,
+            2796.5
           ],
           [
             1620518400000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.09,
-            2800.21
+            2975,
+            0.92,
+            2737
           ],
           [
             1621123200000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.09,
-            2800.21
+            2975,
+            1.06,
+            3153.5
           ],
           [
             1621728000000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.99,
-            2543.31
+            2975,
+            1.07,
+            3183.25
           ],
           [
             1622332800000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.02,
-            2620.38
+            2975,
+            1,
+            2975
           ],
           [
             1622937600000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.04,
-            2671.76
+            2975,
+            1.03,
+            3064.25
           ],
           [
             1623542400000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1,
-            2569
+            2975,
+            0.91,
+            2707.25
           ],
           [
             1624147200000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.04,
-            2671.76
+            2975,
+            1.06,
+            3153.5
           ],
           [
             1624752000000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.05,
-            2697.45
+            2975,
+            1.02,
+            3034.5
           ],
           [
             1625356800000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.02,
-            2620.38
+            2975,
+            0.96,
+            2856
           ],
           [
             1625961600000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.08,
-            2774.52
+            2975,
+            1.06,
+            3153.5
           ],
           [
             1626566400000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.96,
-            2466.24
+            2975,
+            0.98,
+            2915.5
           ],
           [
             1627171200000,
             0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            0.97,
-            2491.93
+            2975,
+            1.03,
+            3064.25
           ],
           [
             1627776000000,
-            41456,
+            0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1.05,
-            2697.45
+            2975,
+            1.08,
+            3213
           ],
           [
             1628380800000,
-            79449,
+            0,
             "q:* > sum(taxless_total_price)",
-            2569,
-            1,
-            2569
+            2975,
+            0.97,
+            2885.75
           ],
           [
             1628985600000,
-            15228,
+            0,
             "q:* > sum(taxless_total_price)",
-            2569,
+            2975,
+            0.9,
+            2677.5
+          ],
+          [
+            1629590400000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.96,
+            2856
+          ],
+          [
+            1630195200000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.99,
+            2945.25
+          ],
+          [
+            1630800000000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.03,
+            3064.25
+          ],
+          [
+            1631404800000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.1,
+            3272.5
+          ],
+          [
+            1632009600000,
+            41456,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1,
+            2975
+          ],
+          [
+            1632614400000,
+            79449,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.99,
+            2945.25
+          ],
+          [
+            1633219200000,
+            36767,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.92,
+            2737
+          ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "color": "category",
+        "size": "percentage"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "category",
+            "name": "category",
+            "meta": {
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
+            }
+          },
+          {
+            "id": "count",
+            "name": "count",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "total",
+            "name": "total",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            "Other",
+            6465,
+            7409,
+            87.26
+          ],
+          [
+            "Men's Shoes",
+            944,
+            7409,
+            12.74
+          ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "color": "category",
+        "size": "percentage"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "category",
+            "name": "category",
+            "meta": {
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
+            }
+          },
+          {
+            "id": "count",
+            "name": "count",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "total",
+            "name": "total",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            "Men's Accessories",
+            572,
+            7409,
+            7.72
+          ],
+          [
+            "Other",
+            6837,
+            7409,
+            92.28
+          ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "color": "category",
+        "size": "percentage"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "category",
+            "name": "category",
+            "meta": {
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
+            }
+          },
+          {
+            "id": "count",
+            "name": "count",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "total",
+            "name": "total",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            "Other",
+            6273,
+            7409,
+            84.67
+          ],
+          [
+            "Women's Shoes",
+            1136,
+            7409,
+            15.33
+          ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "color": "category",
+        "size": "percentage"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "category",
+            "name": "category",
+            "meta": {
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
+            }
+          },
+          {
+            "id": "count",
+            "name": "count",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "total",
+            "name": "total",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            "Other",
+            5385,
+            7409,
+            72.68
+          ],
+          [
+            "Men's Clothing",
+            2024,
+            7409,
+            27.32
+          ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "color": "category",
+        "size": "percentage"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "category",
+            "name": "category",
+            "meta": {
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
+            }
+          },
+          {
+            "id": "count",
+            "name": "count",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "total",
+            "name": "total",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            "Other",
+            5506,
+            7409,
+            74.32
+          ],
+          [
+            "Women's Clothing",
+            1903,
+            7409,
+            25.68
+          ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "color": "category",
+        "size": "percentage"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "category",
+            "name": "category",
+            "meta": {
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
+            }
+          },
+          {
+            "id": "count",
+            "name": "count",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "total",
+            "name": "total",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            "Other",
+            6579,
+            7409,
+            88.8
+          ],
+          [
+            "Women's Accessories",
+            830,
+            7409,
+            11.2
+          ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "color": "category",
+        "size": "percentage"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "category",
+            "name": "category",
+            "meta": {
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
+            }
+          },
+          {
+            "id": "count",
+            "name": "count",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "total",
+            "name": "total",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            "Other",
+            5385,
+            7409,
+            72.68
+          ],
+          [
+            "Men's Clothing",
+            2024,
+            7409,
+            27.32
+          ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "color": "category",
+        "size": "percentage"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "category",
+            "name": "category",
+            "meta": {
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
+            }
+          },
+          {
+            "id": "count",
+            "name": "count",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "total",
+            "name": "total",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            "Men's Accessories",
+            572,
+            7409,
+            7.72
+          ],
+          [
+            "Other",
+            6837,
+            7409,
+            92.28
+          ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "color": "category",
+        "size": "percentage"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "category",
+            "name": "category",
+            "meta": {
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
+            }
+          },
+          {
+            "id": "count",
+            "name": "count",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "total",
+            "name": "total",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            "Other",
+            6579,
+            7409,
+            88.8
+          ],
+          [
+            "Women's Accessories",
+            830,
+            7409,
+            11.2
+          ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "color": "category",
+        "size": "percentage"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "category",
+            "name": "category",
+            "meta": {
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
+            }
+          },
+          {
+            "id": "count",
+            "name": "count",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "total",
+            "name": "total",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            "Other",
+            5506,
+            7409,
+            74.32
+          ],
+          [
+            "Women's Clothing",
+            1903,
+            7409,
+            25.68
+          ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "color": "category",
+        "size": "percentage"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "category",
+            "name": "category",
+            "meta": {
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
+            }
+          },
+          {
+            "id": "count",
+            "name": "count",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "total",
+            "name": "total",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            "Other",
+            6465,
+            7409,
+            87.26
+          ],
+          [
+            "Men's Shoes",
+            944,
+            7409,
+            12.74
+          ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "color": "category",
+        "size": "percentage"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "category",
+            "name": "category",
+            "meta": {
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
+            }
+          },
+          {
+            "id": "count",
+            "name": "count",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "total",
+            "name": "total",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            "Other",
+            6273,
+            7409,
+            84.67
+          ],
+          [
+            "Women's Shoes",
+            1136,
+            7409,
+            15.33
+          ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "x": "@timestamp",
+        "y": "final"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "@timestamp",
+            "name": "@timestamp",
+            "meta": {
+              "type": "date"
+            }
+          },
+          {
+            "id": "value",
+            "name": "value",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          },
+          {
+            "id": "label",
+            "name": "label",
+            "meta": {
+              "type": "string"
+            }
+          },
+          {
+            "id": "mean",
+            "name": "mean",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "rnd",
+            "name": "rnd",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          },
+          {
+            "id": "final",
+            "name": "final",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            1601769600000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.98,
+            2915.5
+          ],
+          [
+            1602374400000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.99,
+            2945.25
+          ],
+          [
+            1602979200000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.02,
+            3034.5
+          ],
+          [
+            1603584000000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
             0.97,
-            2491.93
+            2885.75
+          ],
+          [
+            1604188800000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.95,
+            2826.25
+          ],
+          [
+            1604793600000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.06,
+            3153.5
+          ],
+          [
+            1605398400000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.09,
+            3242.75
+          ],
+          [
+            1606003200000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.95,
+            2826.25
+          ],
+          [
+            1606608000000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.94,
+            2796.5
+          ],
+          [
+            1607212800000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.96,
+            2856
+          ],
+          [
+            1607817600000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.94,
+            2796.5
+          ],
+          [
+            1608422400000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.03,
+            3064.25
+          ],
+          [
+            1609027200000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.96,
+            2856
+          ],
+          [
+            1609632000000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.03,
+            3064.25
+          ],
+          [
+            1610236800000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.94,
+            2796.5
+          ],
+          [
+            1610841600000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.04,
+            3094
+          ],
+          [
+            1611446400000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.02,
+            3034.5
+          ],
+          [
+            1612051200000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.97,
+            2885.75
+          ],
+          [
+            1612656000000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.99,
+            2945.25
+          ],
+          [
+            1613260800000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.03,
+            3064.25
+          ],
+          [
+            1613865600000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.01,
+            3004.75
+          ],
+          [
+            1614470400000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.98,
+            2915.5
+          ],
+          [
+            1615075200000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.94,
+            2796.5
+          ],
+          [
+            1615680000000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.03,
+            3064.25
+          ],
+          [
+            1616284800000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.02,
+            3034.5
+          ],
+          [
+            1616889600000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.07,
+            3183.25
+          ],
+          [
+            1617494400000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.04,
+            3094
+          ],
+          [
+            1618099200000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.92,
+            2737
+          ],
+          [
+            1618704000000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.08,
+            3213
+          ],
+          [
+            1619308800000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.96,
+            2856
+          ],
+          [
+            1619913600000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.96,
+            2856
+          ],
+          [
+            1620518400000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.98,
+            2915.5
+          ],
+          [
+            1621123200000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1,
+            2975
+          ],
+          [
+            1621728000000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.01,
+            3004.75
+          ],
+          [
+            1622332800000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.94,
+            2796.5
+          ],
+          [
+            1622937600000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.97,
+            2885.75
+          ],
+          [
+            1623542400000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.02,
+            3034.5
+          ],
+          [
+            1624147200000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.92,
+            2737
+          ],
+          [
+            1624752000000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.08,
+            3213
+          ],
+          [
+            1625356800000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.05,
+            3123.75
+          ],
+          [
+            1625961600000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.93,
+            2766.75
+          ],
+          [
+            1626566400000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.94,
+            2796.5
+          ],
+          [
+            1627171200000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1,
+            2975
+          ],
+          [
+            1627776000000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.03,
+            3064.25
+          ],
+          [
+            1628380800000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.95,
+            2826.25
+          ],
+          [
+            1628985600000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.94,
+            2796.5
+          ],
+          [
+            1629590400000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.94,
+            2796.5
+          ],
+          [
+            1630195200000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.99,
+            2945.25
+          ],
+          [
+            1630800000000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.04,
+            3094
+          ],
+          [
+            1631404800000,
+            0,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.04,
+            3094
+          ],
+          [
+            1632009600000,
+            41456,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            1.01,
+            3004.75
+          ],
+          [
+            1632614400000,
+            79449,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.97,
+            2885.75
+          ],
+          [
+            1633219200000,
+            36767,
+            "q:* > sum(taxless_total_price)",
+            2975,
+            0.98,
+            2915.5
           ]
         ],
         "type": "datatable"

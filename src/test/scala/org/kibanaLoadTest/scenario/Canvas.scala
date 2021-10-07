@@ -42,18 +42,18 @@ object Canvas {
           .set("currentTime", Helper.getDate(Calendar.DAY_OF_MONTH, 0))
       )
       .exec(
-        http("canvas: load workpad")
-          .get("/api/canvas/workpad/${workpadId}")
+        http("canvas: workpad/resolve")
+          .get("/api/canvas/workpad/resolve/${workpadId}")
           .headers(headersWithXsrf)
           .check(status.is(200))
       )
+      .pause(1)
       .exec(session =>
         session
           .set("startTime", session("currentTime").as[String])
           .set("endTime", session("currentTime").as[String])
           .set("interval", "1w")
       )
-      .pause(1)
       .exec(
         http("canvas: run query 1")
           .post("/api/timelion/run")
@@ -62,6 +62,14 @@ object Canvas {
           .headers(headersWithXsrf)
           .check(status.is(200))
       )
+      .pause(1)
+      .exec(
+        http("canvas: workpad/resolve")
+          .get("/api/canvas/workpad/resolve/${workpadId}")
+          .headers(headersWithXsrf)
+          .check(status.is(200))
+      )
+      .pause(1)
       .exec(
         http("canvas: bsearch 1")
           .post("/internal/bsearch")
@@ -71,6 +79,25 @@ object Canvas {
           .header("Referer", baseUrl + "/app/canvas")
           .check(status.is(200))
       )
+      .pause(1)
+      .exec(
+        http("canvas: run query 2")
+          .post("/api/timelion/run")
+          .body(ElFileBody("data/canvas/timelion.json"))
+          .asJson
+          .headers(headersWithXsrf)
+          .check(status.is(200))
+      )
+      .pause(1)
+      .exec(
+        http("canvas: workpad-structures")
+          .put("/api/canvas/workpad-structures/${workpadId}")
+          .body(ElFileBody("data/canvas/workpad-structures.json"))
+          .asJson
+          .headers(headersWithXsrf)
+          .check(status.is(200))
+      )
+      .pause(1)
       .exec(
         http("canvas: fns 1")
           .post("/api/canvas/fns")
@@ -87,7 +114,16 @@ object Canvas {
           .set("interval", "1d")
       )
       .exec(
-        http("canvas: run query 2")
+        http("canvas: bsearch 2")
+          .post("/internal/bsearch")
+          .body(ElFileBody("data/canvas/bsearch2.json"))
+          .asJson
+          .headers(defaultHeaders)
+          .check(status.is(200))
+      )
+      .pause(1)
+      .exec(
+        http("canvas: run query 3")
           .post("/api/timelion/run")
           .body(ElFileBody("data/canvas/timelion.json"))
           .asJson
@@ -110,23 +146,16 @@ object Canvas {
           .headers(defaultHeaders)
           .check(status.is(200))
       )
-      .exec(
-        http("canvas: bsearch 2")
-          .post("/internal/bsearch")
-          .body(ElFileBody("data/canvas/bsearch2.json"))
-          .asJson
-          .headers(defaultHeaders)
-          .check(status.is(200))
-      )
       .pause(1)
       .exec(
-        http("canvas: run query 3")
+        http("canvas: run query 4")
           .post("/api/timelion/run")
           .body(ElFileBody("data/canvas/timelion.json"))
           .asJson
           .headers(headersWithXsrf)
           .check(status.is(200))
       )
+      .pause(1)
       .exec(
         http("canvas: fns 4")
           .post("/api/canvas/fns")
@@ -139,6 +168,31 @@ object Canvas {
         http("canvas: fns 5")
           .post("/api/canvas/fns")
           .body(ElFileBody("data/canvas/fns5.json"))
+          .asJson
+          .headers(defaultHeaders)
+          .check(status.is(200))
+      )
+      .pause(1)
+      .exec(
+        http("canvas: run query 5")
+          .post("/api/timelion/run")
+          .body(ElFileBody("data/canvas/timelion.json"))
+          .asJson
+          .headers(headersWithXsrf)
+          .check(status.is(200))
+      )
+      .exec(
+        http("canvas: fns 6")
+          .post("/api/canvas/fns")
+          .body(ElFileBody("data/canvas/fns6.json"))
+          .asJson
+          .headers(defaultHeaders)
+          .check(status.is(200))
+      )
+      .exec(
+        http("canvas: fns 7")
+          .post("/api/canvas/fns")
+          .body(ElFileBody("data/canvas/fns7.json"))
           .asJson
           .headers(defaultHeaders)
           .check(status.is(200))
