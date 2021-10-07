@@ -225,16 +225,16 @@
         ],
         "rows": [
           [
-            "Other",
-            5506,
+            "Men's Clothing",
+            2024,
             7409,
-            74.32
+            27.32
           ],
           [
-            "Women's Clothing",
-            1903,
+            "Other",
+            5385,
             7409,
-            25.68
+            72.68
           ]
         ],
         "type": "datatable"
@@ -345,16 +345,16 @@
         ],
         "rows": [
           [
-            "Men's Clothing",
-            2024,
+            "Other",
+            5506,
             7409,
-            27.32
+            74.32
           ],
           [
-            "Other",
-            5385,
+            "Women's Clothing",
+            1903,
             7409,
-            72.68
+            25.68
           ]
         ],
         "type": "datatable"
