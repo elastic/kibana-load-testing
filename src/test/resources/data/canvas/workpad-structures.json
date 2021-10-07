@@ -1,0 +1,1068 @@
+{
+  "css": ".canvasPage {\n\n}",
+  "variables": [],
+  "id": "workpad-e08b9bdb-ec14-4339-94c4-063bddfd610e",
+  "name": "[eCommerce] Revenue Tracking",
+  "width": 1080,
+  "height": 720,
+  "page": 0,
+  "pages": [
+    {
+      "id": "page-21cffafb-9eda-47f9-b35a-67a92e605abe",
+      "style": {
+        "background": "#fff"
+      },
+      "elements": [
+        {
+          "id": "element-3a220f56-0729-4464-b4fd-7975a8396d24",
+          "position": {
+            "left": 641,
+            "top": 97,
+            "width": 175,
+            "height": 510,
+            "angle": 0
+          },
+          "expression": "essql \n  query=\"select COUNT(*) as total_count, SUM(CASE WHEN customer_gender='MALE' THEN 1 else 0 END) as male_count from kibana_sample_data_ecommerce\"\n| math \"male_count / total_count\"\n| revealImage origin=\"bottom\" image={asset \"asset-aaa14d64-2c1c-47f2-95c0-21306ee18cba\"} emptyImage={asset \"asset-960c8c6e-da72-412d-9d04-34a98cdb5760\"}"
+        },
+        {
+          "id": "element-4a3fef74-5d8c-4bbe-8f3f-fe55afdd4b60",
+          "position": {
+            "left": 627.5,
+            "top": 82.5,
+            "width": 197,
+            "height": 521,
+            "angle": 0
+          },
+          "expression": "image mode=\"contain\" dataurl={asset \"asset-8ae4b612-43a3-4846-8f0d-abb9785e95c3\"}"
+        },
+        {
+          "id": "element-fb2761a1-df28-411a-8614-dbee0f437cfe",
+          "position": {
+            "left": 446,
+            "top": 93,
+            "width": 238,
+            "height": 520,
+            "angle": 0
+          },
+          "expression": "essql \n  query=\"select COUNT(*) as total_count, SUM(CASE WHEN customer_gender='FEMALE' THEN 1 else 0 END) as female_count from kibana_sample_data_ecommerce\"\n| math \"female_count / total_count\"\n| revealImage origin=\"bottom\" image={asset \"asset-2f64bd10-953d-4163-90e9-a55e9ca4c52a\"} emptyImage={asset \"asset-3a26727a-b756-44be-a82c-273dd85bda09\"}",
+          "filter": null
+        },
+        {
+          "id": "element-46b2f8df-f7db-4502-9cd0-b33c1c70b8b1",
+          "position": {
+            "left": 275,
+            "top": 306,
+            "width": 105,
+            "height": 102,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Women's Clothing\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 2)\"}\n| pointseries color=\"category\" size=\"percentage\"\n| pie hole=\"65\" labels=false seriesStyle={seriesStyle label=\"Women's Clothing\" color=\"#eb6c66\"}\n  seriesStyle={seriesStyle label=\"Other\" color=\"#ede9e7\"}"
+        },
+        {
+          "id": "element-eaa7f9a9-54ca-4c7c-9d27-62312d92a264",
+          "position": {
+            "left": 275,
+            "top": 157,
+            "width": 105,
+            "height": 102,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Women's Accessories\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 2)\"}\n| pointseries color=\"category\" size=\"percentage\"\n| pie hole=\"65\" labels=false seriesStyle={seriesStyle label=\"Women's Accessories\" color=\"#eb6c66\"}\n  seriesStyle={seriesStyle label=\"Other\" color=\"#ede9e7\"}"
+        },
+        {
+          "id": "element-58dfc1e8-a470-447f-8107-62bebe955475",
+          "position": {
+            "left": 275,
+            "top": 450,
+            "width": 106,
+            "height": 102,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Women's Shoes\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 2)\"}\n| pointseries color=\"category\" size=\"percentage\"\n| pie hole=\"65\" labels=false seriesStyle={seriesStyle label=\"Women's Shoes\" color=\"#eb6c66\"}\n  seriesStyle={seriesStyle label=\"Other\" color=\"#ede9e7\"}"
+        },
+        {
+          "id": "element-c0a5f8d9-f52f-4e0f-a8a4-08c1b7984bb2",
+          "position": {
+            "left": 893.5,
+            "top": 157,
+            "width": 105,
+            "height": 102,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Men's Accessories\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 2)\"}\n| pointseries color=\"category\" size=\"percentage\"\n| pie hole=\"65\" labels=false seriesStyle={seriesStyle label=\"Men's Accessories\" color=\"#f8bd4a\"}\n  seriesStyle={seriesStyle label=\"Other\" color=\"#ede9e7\"}"
+        },
+        {
+          "id": "element-060eb797-c583-4c8f-b0e1-3ab9b58c4cf5",
+          "position": {
+            "left": 894,
+            "top": 305,
+            "width": 105,
+            "height": 102,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Men's Clothing\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 2)\"}\n| pointseries color=\"category\" size=\"percentage\"\n| pie hole=\"65\" labels=false seriesStyle={seriesStyle label=\"Men's Clothing\" color=\"#f8bd4a\"}\n  seriesStyle={seriesStyle label=\"Other\" color=\"#ede9e7\"}"
+        },
+        {
+          "id": "element-8f811cd0-e4b2-48b3-a96f-b8384179bbfb",
+          "position": {
+            "left": 894,
+            "top": 451,
+            "width": 105,
+            "height": 102,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Men's Shoes\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 2)\"}\n| pointseries color=\"category\" size=\"percentage\"\n| pie hole=\"65\" labels=false seriesStyle={seriesStyle label=\"Men's Shoes\" color=\"#f8bd4a\"}\n  seriesStyle={seriesStyle label=\"Other\" color=\"#ede9e7\"}"
+        },
+        {
+          "id": "element-c0595f68-81c5-43e7-9ecf-808e8cfe48c0",
+          "position": {
+            "left": 298,
+            "top": 517,
+            "width": 93,
+            "height": 44,
+            "angle": 0
+          },
+          "expression": "image mode=\"contain\" dataurl={asset \"asset-66a89124-fc39-4109-8acd-e1ac7f382e04\"}\n| render"
+        },
+        {
+          "id": "element-0a14f255-6445-4860-b41d-d1c0b7ca9c36",
+          "position": {
+            "left": 890,
+            "top": 516,
+            "width": 102,
+            "height": 54,
+            "angle": 0
+          },
+          "expression": "image mode=\"contain\" dataurl={asset \"asset-4acbecf1-e514-4e3b-bce4-61920335941e\"}\n| render"
+        },
+        {
+          "id": "element-6aeefa4f-6b4f-4a6c-99ff-2cca052f5be6",
+          "position": {
+            "top": 291,
+            "left": 960,
+            "height": 121,
+            "width": 95,
+            "angle": 12.8
+          },
+          "expression": "image mode=\"contain\" dataurl={asset \"asset-ae290f99-dd16-41a4-8191-7dd7be154be6\"}\n| render"
+        },
+        {
+          "id": "element-68d9cb72-7a0e-4cac-996a-0ec8356f0df8",
+          "position": {
+            "left": 245,
+            "top": 291,
+            "width": 62,
+            "height": 139,
+            "angle": -1
+          },
+          "expression": "image mode=\"contain\" dataurl={asset \"asset-565cd264-9196-4ebd-9d6e-f413f1db734d\"}\n| render"
+        },
+        {
+          "id": "element-9bac6c19-517c-46e6-8d71-9273910366d1",
+          "position": {
+            "left": 322,
+            "top": 230,
+            "width": 60,
+            "height": 27,
+            "angle": 10
+          },
+          "expression": "image mode=\"contain\" dataurl={asset \"asset-6222f3e0-1dab-4aa9-a06c-63d7732cc5f4\"}\n| render"
+        },
+        {
+          "id": "element-a58f99d3-8ea4-474e-9aba-e7ed3e91a178",
+          "position": {
+            "left": 892,
+            "top": 235,
+            "width": 64,
+            "height": 24,
+            "angle": 7
+          },
+          "expression": "image mode=\"contain\" dataurl={asset \"asset-f8ac482e-0c7a-4cac-8bcf-6f4f55300081\"}\n| render"
+        },
+        {
+          "id": "element-84dec4fd-ee5d-49c0-9600-41b951033e09",
+          "position": {
+            "left": 394,
+            "top": 393.0200895724113,
+            "width": 94,
+            "height": 56,
+            "angle": 0
+          },
+          "expression": "essql \n  query=\"select COUNT(*) as total_count, SUM(CASE WHEN customer_gender='FEMALE' THEN 1 else 0 END) as female_count from kibana_sample_data_ecommerce\"\n| math \"round(100 * female_count / total_count)\"\n| markdown {context} \"%\" \n  font={font family=\"Avenir\" size=48 align=\"center\" color=\"#eb6c66\" weight=\"normal\" underline=false italic=false}"
+        },
+        {
+          "id": "element-9e0b6230-2bc9-4995-8207-043e3063faeb",
+          "position": {
+            "left": 794,
+            "top": 369,
+            "width": 94,
+            "height": 56,
+            "angle": 0
+          },
+          "expression": "essql \n  query=\"select COUNT(*) as total_count, SUM(CASE WHEN customer_gender='MALE' THEN 1 else 0 END) as male_count from kibana_sample_data_ecommerce\"\n| math \"round(100 * male_count / total_count)\"\n| markdown {context} \"%\" \n  font={font family=\"Avenir\" size=48 align=\"center\" color=\"#f8bd4a\" weight=\"normal\" underline=false italic=false}"
+        },
+        {
+          "id": "element-2185edff-ac50-4162-b583-3bfd6469e925",
+          "position": {
+            "left": -3,
+            "top": -1,
+            "width": 214,
+            "height": 721,
+            "angle": 0
+          },
+          "expression": "markdown \"\"\n| render containerStyle={containerStyle backgroundColor=\"#ede9e7\"}"
+        },
+        {
+          "id": "element-71b63f54-0961-4ed2-a85d-45584b48a631",
+          "position": {
+            "left": 8,
+            "top": 35,
+            "width": 122,
+            "height": 29,
+            "angle": 0
+          },
+          "expression": "markdown \"TOTAL SALES\" \n  font={font family=\"'Avenir', Helvetica, Arial, sans-serif\" size=18 align=\"left\" color=\"#777\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-61fdb4ce-5dea-4699-b958-6c40e2a2b61a",
+          "position": {
+            "left": 398,
+            "top": 381.5200895724113,
+            "width": 78,
+            "height": 23,
+            "angle": 0
+          },
+          "expression": "markdown \"WOMEN\" \n  font={font family=\"Avenir\" size=18 align=\"left\" color=\"#999\" weight=\"normal\" underline=false italic=false}"
+        },
+        {
+          "id": "element-157ab7a7-e3ef-477f-8c97-84c67f7ab28e",
+          "position": {
+            "left": 840,
+            "top": 352,
+            "width": 46,
+            "height": 23,
+            "angle": 0
+          },
+          "expression": "markdown \"MEN\" \n  font={font family=\"Avenir\" size=18 align=\"left\" color=\"#999\" weight=\"normal\" underline=false italic=false}\n| render"
+        },
+        {
+          "id": "element-bfa6f8bc-c083-4817-a682-91eb50fc214d",
+          "position": {
+            "left": 299,
+            "top": 344,
+            "width": 60,
+            "height": 34,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Women's Clothing\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 0)\"}\n| filterrows {getCell \"category\" | any {eq \"Women's Clothing\"}}\n| markdown {getCell \"percentage\"} \"%\" \n  font={font family=\"Avenir\" size=24 align=\"center\" color=\"#000\" weight=\"normal\" underline=false italic=false}"
+        },
+        {
+          "id": "element-73e918d2-14d0-4ed6-9cfe-204ad4eaff24",
+          "position": {
+            "left": 300,
+            "top": 488,
+            "width": 59,
+            "height": 30,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Women's Shoes\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 0)\"}\n| filterrows {getCell \"category\" | any {eq \"Women's Shoes\"}}\n| markdown {getCell \"percentage\"} \"%\" \n  font={font family=\"Avenir\" size=24 align=\"center\" color=\"#000\" weight=\"normal\" underline=false italic=false}"
+        },
+        {
+          "id": "element-d9dd8a8e-3af7-4e59-9115-3fd13c312d39",
+          "position": {
+            "left": 297,
+            "top": 194,
+            "width": 62,
+            "height": 37,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Women's Accessories\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 0)\"}\n| filterrows {getCell \"category\" | any {eq \"Women's Accessories\"}}\n| markdown {getCell \"percentage\"} \"%\" \n  font={font family=\"Avenir\" size=24 align=\"center\" color=\"#000\" weight=\"normal\" underline=false italic=false}"
+        },
+        {
+          "id": "element-af25bb55-818c-4c69-b2ae-45245af131e6",
+          "position": {
+            "left": 923,
+            "top": 194,
+            "width": 51,
+            "height": 34,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Men's Accessories\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 0)\"}\n| filterrows {getCell \"category\" | any {eq \"Men's Accessories\"}}\n| markdown {getCell \"percentage\"} \"%\" \n  font={font family=\"Avenir\" size=24 align=\"center\" color=\"#000\" weight=\"normal\" underline=false italic=false}"
+        },
+        {
+          "id": "element-9e02f39b-14b2-42a4-ae32-a4c292ece6ba",
+          "position": {
+            "left": 924,
+            "top": 343,
+            "width": 50,
+            "height": 33,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Men's Clothing\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 0)\"}\n| filterrows {getCell \"category\" | any {eq \"Men's Clothing\"}}\n| markdown {getCell \"percentage\"} \"%\" \n  font={font family=\"Avenir\" size=24 align=\"center\" color=\"#000\" weight=\"normal\" underline=false italic=false}"
+        },
+        {
+          "id": "element-b5f950b0-bb0f-462d-a92f-35bc3f1f4c39",
+          "position": {
+            "left": 921,
+            "top": 489,
+            "width": 50,
+            "height": 33,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Men's Shoes\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 0)\"}\n| filterrows {getCell \"category\" | any {eq \"Men's Shoes\"}}\n| markdown {getCell \"percentage\"} \"%\" \n  font={font family=\"Avenir\" size=24 align=\"center\" color=\"#000\" weight=\"normal\" underline=false italic=false}"
+        },
+        {
+          "id": "element-a4d410df-83b8-40dc-987f-e2c1380874a6",
+          "position": {
+            "left": -135.50000000000006,
+            "top": 330.5,
+            "width": 500,
+            "height": 217,
+            "angle": 90
+          },
+          "expression": "timelion \n  \".es(index=kibana_sample_data_ecommerce, metric=sum:taxless_total_price, timefield=order_date)\" interval=\"1d\" \n  from={essql \"SELECT order_date as min FROM kibana_sample_data_ecommerce order by order_date limit 1\" | getCell \"min\"} \n  to={essql \"SELECT order_date as max FROM kibana_sample_data_ecommerce order by order_date DESC limit 1\" | getCell \"max\"}\n| pointseries x=\"@timestamp\" y=\"value\"\n| plot yaxis=false defaultStyle={seriesStyle points=\"0\" bars=\"50000000\" lines=\"0\" color=\"#62bb96\"} font={font size=12 family=\"Avenir\" color=\"#999\" align=\"left\"}",
+          "filter": null
+        },
+        {
+          "id": "element-ccbb192a-725b-4479-a34b-9d70b0fa1a8a",
+          "position": {
+            "left": 441,
+            "top": 93,
+            "width": 242,
+            "height": 520,
+            "angle": 0
+          },
+          "expression": "image mode=\"contain\" dataurl={asset \"asset-93e415d8-82c6-47d4-8c55-e38df329b88b\"}"
+        },
+        {
+          "id": "element-18fc190c-e46a-408b-a220-8e1745eb77e6",
+          "position": {
+            "left": 394,
+            "top": 451,
+            "width": 115,
+            "height": 2,
+            "angle": 0
+          },
+          "expression": "markdown \"\"\n| render containerStyle={containerStyle backgroundColor=\"#000000\"}",
+          "filter": null
+        },
+        {
+          "id": "element-1eb4fcd1-f8dd-4bd9-98a6-c5cbd4bcc8dc",
+          "position": {
+            "left": 767,
+            "top": 431,
+            "width": 119,
+            "height": 2,
+            "angle": 0
+          },
+          "expression": "markdown \"\"\n| render containerStyle={containerStyle backgroundColor=\"#000000\"}",
+          "filter": null
+        },
+        {
+          "id": "element-2f976ef1-abc7-4bd2-82cb-cc114431eaea",
+          "position": {
+            "left": 744.5,
+            "top": 410,
+            "width": 35,
+            "height": 50,
+            "angle": 0
+          },
+          "expression": "markdown \"## &#x25CB;\" \n  font={font family=\"'Open Sans', Helvetica, Arial, sans-serif\" size=14 align=\"center\" color=\"#000000\" weight=\"normal\" underline=false italic=false}\n| render containerStyle={containerStyle}"
+        },
+        {
+          "id": "element-532638f8-758e-4cf4-86f0-c4d896e4477d",
+          "position": {
+            "left": 497,
+            "top": 429.4483902138134,
+            "width": 35,
+            "height": 50,
+            "angle": 0
+          },
+          "expression": "markdown \"## &#x25CB;\" \n  font={font family=\"'Open Sans', Helvetica, Arial, sans-serif\" size=14 align=\"center\" color=\"#000000\" weight=\"normal\" underline=false italic=false}\n| render containerStyle={containerStyle}",
+          "filter": null
+        },
+        {
+          "id": "element-62bf98c1-bd0c-40dd-ae44-abbcc50c0ae1",
+          "position": {
+            "left": -47,
+            "top": 410,
+            "width": 477,
+            "height": 63,
+            "angle": 90
+          },
+          "expression": "timelion \n  \".es(index=kibana_sample_data_ecommerce, metric=sum:taxless_total_price, timefield=order_date)\" interval=\"1w\"\n| mapColumn \"value\" fn={math \"round(value,0)\"}\n| staticColumn \"mean\" value={math \"round(mean(value),0)\"}\n| mapColumn \"mean\" \"as\" \"rnd\" fn={math \"round(random(0.9,1.1),2)\"}\n| mapColumn \"value\" \"as\" \"final\" fn={math \"round(multiply(rnd,mean),2)\"}\n| pointseries x=\"@timestamp\" y=\"final\"\n| plot xaxis=false yaxis=false defaultStyle={seriesStyle points=\"0\" bars=\"0\" lines=\"3\" color=\"#eb6c66\"}\n| render containerStyle={containerStyle opacity=\"0.5\"}",
+          "filter": null
+        },
+        {
+          "id": "element-e1b5a809-aed3-42e0-8806-46b0e462a9d4",
+          "position": {
+            "left": 488,
+            "top": 661,
+            "width": 279,
+            "height": 38,
+            "angle": 0
+          },
+          "expression": "markdown \"REVENUE BY CATEGORY\" \n  font={font family=\"'Avenir', Helvetica, Arial, sans-serif\" size=24 align=\"left\" color=\"#999\" weight=\"normal\" underline=false italic=false}",
+          "filter": null
+        },
+        {
+          "id": "element-50ea8d53-383d-4582-9497-0692a81d9df8",
+          "position": {
+            "left": -7,
+            "top": 673,
+            "width": 219,
+            "height": 22,
+            "angle": 0
+          },
+          "expression": "markdown \"REVENUE BY DAY\" \n  font={font family=\"'Avenir', Helvetica, Arial, sans-serif\" size=14 align=\"center\" color=\"#62bb96\" weight=\"normal\" underline=false italic=false}",
+          "filter": null
+        },
+        {
+          "id": "element-de932ce1-1c99-448b-bfb4-a98f91add877",
+          "position": {
+            "left": -7,
+            "top": 689,
+            "width": 219,
+            "height": 22,
+            "angle": 0
+          },
+          "expression": "markdown \"SALES PREDICTION\" \n  font={font family=\"'Avenir', Helvetica, Arial, sans-serif\" size=10 align=\"center\" color=\"#eb6c66\" weight=\"normal\" underline=false italic=false}",
+          "filter": null
+        },
+        {
+          "id": "element-f5f539dd-1abe-42a9-bb2a-1d2a07ff108c",
+          "position": {
+            "left": 286,
+            "top": 263,
+            "width": 76,
+            "height": 16,
+            "angle": 0
+          },
+          "expression": "markdown \"ACCESSORIES\" \n  font={font family=\"'Avenir', Helvetica, Arial, sans-serif\" size=10 align=\"center\" color=\"#999\" weight=\"normal\" underline=false italic=false}",
+          "filter": null
+        },
+        {
+          "id": "element-1eb8a1d1-beff-4d42-8b82-cddc28075bb0",
+          "position": {
+            "left": 911,
+            "top": 262,
+            "width": 76,
+            "height": 16,
+            "angle": 0
+          },
+          "expression": "markdown \"ACCESSORIES\" \n  font={font family=\"'Avenir', Helvetica, Arial, sans-serif\" size=10 align=\"center\" color=\"#999\" weight=\"normal\" underline=false italic=false}",
+          "filter": null
+        },
+        {
+          "id": "element-d36fd045-500a-494c-8d1f-281c03a9720d",
+          "position": {
+            "left": 909,
+            "top": 409,
+            "width": 76,
+            "height": 16,
+            "angle": 0
+          },
+          "expression": "markdown \"CLOTHING\" \n  font={font family=\"'Avenir', Helvetica, Arial, sans-serif\" size=10 align=\"center\" color=\"#999\" weight=\"normal\" underline=false italic=false}",
+          "filter": null
+        },
+        {
+          "id": "element-3388ba84-9109-4f1e-bb3b-8e7e4247b99e",
+          "position": {
+            "left": 291,
+            "top": 411,
+            "width": 76,
+            "height": 16,
+            "angle": 0
+          },
+          "expression": "markdown \"CLOTHING\" \n  font={font family=\"'Avenir', Helvetica, Arial, sans-serif\" size=10 align=\"center\" color=\"#999\" weight=\"normal\" underline=false italic=false}",
+          "filter": null
+        },
+        {
+          "id": "element-4fe5f99e-ffea-4d21-9718-dbfbbd161a64",
+          "position": {
+            "left": 910,
+            "top": 570,
+            "width": 76,
+            "height": 16,
+            "angle": 0
+          },
+          "expression": "markdown \"SHOES\" \n  font={font family=\"'Avenir', Helvetica, Arial, sans-serif\" size=10 align=\"center\" color=\"#999\" weight=\"normal\" underline=false italic=false}",
+          "filter": null
+        },
+        {
+          "id": "element-a6b5a208-6a75-42ad-8a1c-aa50359ecd44",
+          "position": {
+            "left": 293,
+            "top": 562,
+            "width": 76,
+            "height": 16,
+            "angle": 0
+          },
+          "expression": "markdown \"SHOES\" \n  font={font family=\"'Avenir', Helvetica, Arial, sans-serif\" size=10 align=\"center\" color=\"#999\" weight=\"normal\" underline=false italic=false}",
+          "filter": null
+        },
+        {
+          "id": "element-45310e03-f6dd-4283-aa04-8d27a4501665",
+          "position": {
+            "left": 5.999999999999915,
+            "top": 76.5,
+            "width": 201.00000000000009,
+            "height": 68.5,
+            "angle": 0
+          },
+          "expression": "essql \n  query=\"SELECT sum(taxless_total_price) AS sum_total_price FROM \\\"kibana_sample_data_ecommerce\\\"\"\n| math \"sum_total_price\"\n| formatNumber \"$0a\"\n| metric \n  metricFont={font family=\"'Avenir', Helvetica, Arial, sans-serif\" size=72 align=\"left\" color=\"#000000\" weight=\"normal\" underline=false italic=false}\n| render"
+        }
+      ],
+      "groups": []
+    },
+    {
+      "id": "page-f704531f-3a72-4f29-a199-7e00d0c1ffef",
+      "style": {
+        "background": "#FAF0DD"
+      },
+      "elements": [
+        {
+          "id": "element-2c7e18fa-480f-4e3b-b4df-f649687229c6",
+          "position": {
+            "left": 788,
+            "top": 112.12093494719988,
+            "width": 204,
+            "height": 202,
+            "angle": 0
+          },
+          "expression": "essql \n  query=\"select COUNT(*) as total_count, SUM(CASE WHEN customer_gender='MALE' THEN 1 else 0 END) as male_count from kibana_sample_data_ecommerce\"\n| math \"male_count / total_count\"\n| revealImage origin=\"bottom\" image={asset \"asset-803ec373-2608-4f6f-8cf9-0dbb2f6437ce\"} emptyImage={asset \"asset-18070a2a-cd01-410a-ba89-a4505e2fbc5b\"}"
+        },
+        {
+          "id": "element-2379c3ca-2c31-4948-8412-d14115500efc",
+          "position": {
+            "left": 788,
+            "top": 369.6303606465582,
+            "width": 204,
+            "height": 202,
+            "angle": 0
+          },
+          "expression": "essql \n  query=\"select COUNT(*) as total_count, SUM(CASE WHEN customer_gender='FEMALE' THEN 1 else 0 END) as female_count from kibana_sample_data_ecommerce\"\n| math \"female_count / total_count\"\n| revealImage origin=\"bottom\" image={asset \"asset-e644a484-4097-40b9-a08e-7250ba963059\"} emptyImage={asset \"asset-7e4f7119-b2d8-4527-9bd8-887cb25974e7\"}"
+        },
+        {
+          "id": "element-3f52813f-7d0e-4ec7-9aad-c731b670d88d",
+          "position": {
+            "left": -69,
+            "top": 400.19203602130153,
+            "width": 388,
+            "height": 141,
+            "angle": 90
+          },
+          "expression": "timelion \n  \".es(index=kibana_sample_data_ecommerce, metric=sum:taxless_total_price, timefield=order_date)\" interval=\"1d\" \n  from={essql \"SELECT order_date as min FROM kibana_sample_data_ecommerce order by order_date limit 1\" | getCell \"min\"} \n  to={essql \"SELECT order_date as max FROM kibana_sample_data_ecommerce order by order_date DESC limit 1\" | getCell \"max\"}\n| pointseries x=\"@timestamp\" y=\"value\"\n| plot yaxis=false defaultStyle={seriesStyle points=\"0\" bars=\"50000000\" lines=\"0\" color=\"#00A89C\"} \n  font={font family=\"gilroy extrabold, Avenir\" size=16 align=\"left\" color=\"#F05A24\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-dc86d147-0611-4ce8-9b0b-e95fc6f8ab80",
+          "position": {
+            "left": 244,
+            "top": 138,
+            "width": 157,
+            "height": 145,
+            "angle": -45
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Men's Accessories\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 2)\"}\n| pointseries color=\"category\" size=\"percentage\"\n| pie hole=\"85\" labels=false seriesStyle={seriesStyle label=\"Men's Accessories\" color=\"#00A89C\"}\n  seriesStyle={seriesStyle label=\"Other\" color=\"#CBCBCB\"}"
+        },
+        {
+          "id": "element-29967798-174d-4109-b229-e776b0a4bf8c",
+          "position": {
+            "left": 425.5,
+            "top": 138,
+            "width": 157,
+            "height": 145,
+            "angle": -99
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category ORDER BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Men's Clothing\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 2)\"}\n| sort \"category\"\n| pointseries color=\"category\" size=\"percentage\"\n| pie hole=\"85\" labels=false seriesStyle={seriesStyle label=\"Men's Clothing\" color=\"#00A89C\"}\n  seriesStyle={seriesStyle label=\"Other\" color=\"#CBCBCB\"}"
+        },
+        {
+          "id": "element-abaa4e35-cfc0-4171-8c34-0914cea35082",
+          "position": {
+            "left": 610,
+            "top": 136,
+            "width": 157,
+            "height": 145,
+            "angle": -56
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Men's Shoes\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 2)\"}\n| pointseries color=\"category\" size=\"percentage\"\n| pie hole=\"85\" labels=false seriesStyle={seriesStyle label=\"Men's Shoes\" color=\"#00A89C\"}\n  seriesStyle={seriesStyle label=\"Other\" color=\"#CBCBCB\"}"
+        },
+        {
+          "id": "element-20da5d5d-2b29-4888-a304-a14377d727ec",
+          "position": {
+            "left": 245,
+            "top": 383,
+            "width": 157,
+            "height": 145,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Women's Accessories\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 2)\"}\n| pointseries color=\"category\" size=\"percentage\"\n| pie hole=\"85\" labels=false palette={palette \"#CBCBCB\" \"#F05A24\" gradient=false} seriesStyle={seriesStyle label=\"Women's Accessories\" color=\"#F05A24\"}\n  seriesStyle={seriesStyle label=\"Other\" color=\"#CBCBCB\"}"
+        },
+        {
+          "id": "element-9dd99310-e0a6-4ab7-b049-c7ea63180b4e",
+          "position": {
+            "left": 429,
+            "top": 380,
+            "width": 157,
+            "height": 145,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Women's Clothing\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 2)\"}\n| pointseries color=\"category\" size=\"percentage\"\n| pie hole=\"85\" labels=false seriesStyle={seriesStyle label=\"Women's Clothing\" color=\"#F05A24\"}\n  seriesStyle={seriesStyle label=\"Other\" color=\"#CBCBCB\"}"
+        },
+        {
+          "id": "element-715b318d-fe6d-42b2-abea-b238b0daa8c7",
+          "position": {
+            "left": 610,
+            "top": 384,
+            "width": 157,
+            "height": 145,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Women's Shoes\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 2)\"}\n| pointseries color=\"category\" size=\"percentage\"\n| pie hole=\"85\" labels=false seriesStyle={seriesStyle label=\"Women's Shoes\" color=\"#F05A24\"}\n  seriesStyle={seriesStyle label=\"Other\" color=\"#CBCBCB\"}"
+        },
+        {
+          "id": "element-9c27c6d0-b9d9-4adb-a5f3-abb7a3403977",
+          "position": {
+            "left": 239,
+            "top": 157,
+            "width": 172,
+            "height": 102,
+            "angle": 0
+          },
+          "expression": "image mode=\"contain\" dataurl={asset \"asset-e79711e8-d9da-45e1-a234-9efe226a444d\"}\n| render"
+        },
+        {
+          "id": "element-c9b7f707-f27c-44cc-b9f1-e7b693c66702",
+          "position": {
+            "left": 463,
+            "top": 165,
+            "width": 85,
+            "height": 86,
+            "angle": 0
+          },
+          "expression": "image mode=\"contain\" dataurl={asset \"asset-9493e336-1b11-4e61-bad2-716c46194550\"}\n| render"
+        },
+        {
+          "id": "element-8bcb4071-0012-46da-9316-524c06bb673a",
+          "position": {
+            "left": 648,
+            "top": 165,
+            "width": 85,
+            "height": 86,
+            "angle": 0
+          },
+          "expression": "image mode=\"contain\" dataurl={asset \"asset-23f2bfe9-e58c-4a56-98c6-fad59eecdf74\"}\n| render"
+        },
+        {
+          "id": "element-3532c81f-a341-4d23-90b6-68912c04ee46",
+          "position": {
+            "left": 1016,
+            "top": 391,
+            "width": 78,
+            "height": 29,
+            "angle": 0
+          },
+          "expression": "markdown \"W\" \n  font={font family=\"gilroy extrabold, Avenir\" size=24 align=\"left\" color=\"#F05A24\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-2673d24b-2706-4ffe-a38b-5736c3bc616c",
+          "position": {
+            "left": 1018,
+            "top": 420,
+            "width": 78,
+            "height": 29,
+            "angle": 0
+          },
+          "expression": "markdown \"O\" \n  font={font family=\"gilroy extrabold, Avenir\" size=24 align=\"left\" color=\"#F05A24\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-5d2b6fe8-34a9-49bc-8229-4e1c2b8029e1",
+          "position": {
+            "left": 1018,
+            "top": 446,
+            "width": 78,
+            "height": 29,
+            "angle": 0
+          },
+          "expression": "markdown \"M\" \n  font={font family=\"gilroy extrabold, Avenir\" size=24 align=\"left\" color=\"#F05A24\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-b67e44c0-afe0-4f15-b521-af0759348dc6",
+          "position": {
+            "left": 1020,
+            "top": 475,
+            "width": 78,
+            "height": 29,
+            "angle": 0
+          },
+          "expression": "markdown \"E\" \n  font={font family=\"gilroy extrabold, Avenir\" size=24 align=\"left\" color=\"#F05A24\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-370b7910-dd0b-4257-90de-229d25bd6610",
+          "position": {
+            "left": 1019,
+            "top": 504,
+            "width": 78,
+            "height": 29,
+            "angle": 0
+          },
+          "expression": "markdown \"N\" \n  font={font family=\"gilroy extrabold, Avenir\" size=24 align=\"left\" color=\"#F05A24\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-cbdd2309-101d-4edc-874c-47c3e6c99df5",
+          "position": {
+            "left": 1018,
+            "top": 173,
+            "width": 78,
+            "height": 29,
+            "angle": 0
+          },
+          "expression": "markdown \"M\" \n  font={font family=\"gilroy extrabold, Avenir\" size=24 align=\"left\" color=\"#00A89C\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-7288cfda-673f-4741-bec2-4675bc4952ed",
+          "position": {
+            "left": 1020,
+            "top": 201,
+            "width": 78,
+            "height": 29,
+            "angle": 0
+          },
+          "expression": "markdown \"E\" \n  font={font family=\"gilroy extrabold, Avenir\" size=24 align=\"left\" color=\"#00A89C\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-e68822cc-f4b7-48a4-a8b2-86d84d8ddeb1",
+          "position": {
+            "left": 1019,
+            "top": 229,
+            "width": 78,
+            "height": 29,
+            "angle": 0
+          },
+          "expression": "markdown \"N\" \n  font={font family=\"gilroy extrabold, Avenir\" size=24 align=\"left\" color=\"#00A89C\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-f446c8e1-b65e-4a1f-8476-e80e437a31ec",
+          "position": {
+            "left": 240,
+            "top": 414,
+            "width": 169,
+            "height": 100,
+            "angle": 0
+          },
+          "expression": "image mode=\"contain\" dataurl={asset \"asset-86d05b5e-1a4b-4979-95e9-7071b9923470\"}\n| render"
+        },
+        {
+          "id": "element-5406c1e9-9626-413c-9eaa-a73ca1e10b8c",
+          "position": {
+            "left": 464,
+            "top": 414,
+            "width": 85,
+            "height": 86,
+            "angle": 0
+          },
+          "expression": "image mode=\"contain\" dataurl={asset \"asset-fdfc9cc7-2c6a-44fe-b9be-c4ff115c92c1\"}\n| render"
+        },
+        {
+          "id": "element-d3fe9442-583b-4acb-a700-3935adb4316c",
+          "position": {
+            "left": 654,
+            "top": 419,
+            "width": 74,
+            "height": 76,
+            "angle": 0
+          },
+          "expression": "image mode=\"contain\" dataurl={asset \"asset-58ae3445-4001-45e7-9603-19ec8d41e64e\"}\n| render"
+        },
+        {
+          "id": "element-28ffc136-8702-4cfc-9643-9825dfd7a6a3",
+          "position": {
+            "left": 48,
+            "top": 247,
+            "width": 118,
+            "height": 22,
+            "angle": 0
+          },
+          "expression": "markdown \"P R O G R E S S\" \n  font={font family=\"gilroy extrabold, Avenir\" size=12 align=\"center\" color=\"#F05A24\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-c6b853cc-72a3-4110-b40b-359ecb7b1af6",
+          "position": {
+            "left": 92,
+            "top": 268,
+            "width": 27,
+            "height": 4,
+            "angle": 0
+          },
+          "expression": "markdown \"\"\n| render containerStyle={containerStyle backgroundColor=\"#F05A24\"}"
+        },
+        {
+          "id": "element-692a539e-0c3b-4e8d-bc3e-3cf84ddd53c7",
+          "position": {
+            "left": 90,
+            "top": 98,
+            "width": 27,
+            "height": 4,
+            "angle": 0
+          },
+          "expression": "markdown \"\"\n| render containerStyle={containerStyle backgroundColor=\"#F05A24\"}"
+        },
+        {
+          "id": "element-99bed359-ef39-403d-bcb3-81cf8d1f6c62",
+          "position": {
+            "left": 44,
+            "top": 77,
+            "width": 118,
+            "height": 22,
+            "angle": 0
+          },
+          "expression": "markdown \"T O T A L\" \n  font={font family=\"gilroy extrabold, Avenir\" size=12 align=\"center\" color=\"#F05A24\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-8d72d271-b12e-41af-a18b-795490cf7f38",
+          "position": {
+            "left": 276,
+            "top": 290,
+            "width": 93,
+            "height": 40,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Men's Accessories\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 0)\"}\n| filterrows {getCell \"category\" | any {eq \"Men's Accessories\"}}\n| markdown {getCell \"percentage\"} \n  font={font family=\"nexa bold, Avenir\" size=36 align=\"center\" color=\"#00A89C\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-cc17144e-096c-47b1-85dc-047724cc095e",
+          "position": {
+            "left": 465,
+            "top": 291,
+            "width": 78,
+            "height": 40,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Men's Clothing\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 0)\"}\n| filterrows {getCell \"category\" | any {eq \"Men's Clothing\"}}\n| markdown {getCell \"percentage\"} \n  font={font family=\"nexa bold, Avenir\" size=36 align=\"center\" color=\"#00A89C\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-f38ee1d6-4fd7-4ff9-b304-84663f60fab2",
+          "position": {
+            "left": 651,
+            "top": 290,
+            "width": 76,
+            "height": 40,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Men's Shoes\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 0)\"}\n| filterrows {getCell \"category\" | any {eq \"Men's Shoes\"}}\n| markdown {getCell \"percentage\"} \n  font={font family=\"nexa bold, Avenir\" size=36 align=\"center\" color=\"#00A89C\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-0b0b1c4a-0acf-40e3-a3f0-3128bd59f45c",
+          "position": {
+            "left": 340,
+            "top": 293,
+            "width": 47,
+            "height": 29,
+            "angle": 0
+          },
+          "expression": "markdown \"%\" \n  font={font family=\"nexa extrabold, Avenir\" size=24 align=\"left\" color=\"#00A89C\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-3efcd68f-7fca-4ad3-aa13-737260ec5436",
+          "position": {
+            "left": 525,
+            "top": 293,
+            "width": 47,
+            "height": 29,
+            "angle": 0
+          },
+          "expression": "markdown \"%\" \n  font={font family=\"nexa extrabold, Avenir\" size=24 align=\"left\" color=\"#00A89C\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-a617cb84-6e50-47c3-bb95-ea67df89d117",
+          "position": {
+            "left": 710,
+            "top": 292,
+            "width": 47,
+            "height": 29,
+            "angle": 0
+          },
+          "expression": "markdown \"%\" \n  font={font family=\"nexa extrabold, Avenir\" size=24 align=\"left\" color=\"#00A89C\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-5426b988-29d6-40aa-b0a2-40a4a0729ef0",
+          "position": {
+            "left": 277,
+            "top": 540,
+            "width": 93,
+            "height": 40,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Women's Accessories\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 0)\"}\n| filterrows {getCell \"category\" | any {eq \"Women's Accessories\"}}\n| markdown {getCell \"percentage\"} \"\" \n  font={font family=\"nexa bold, Avenir\" size=36 align=\"center\" color=\"#F05A24\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-c1579899-59fc-4960-9bf0-1187b3535593",
+          "position": {
+            "left": 461,
+            "top": 541,
+            "width": 93,
+            "height": 40,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Women's Clothing\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 0)\"}\n| filterrows {getCell \"category\" | any {eq \"Women's Clothing\"}}\n| markdown {getCell \"percentage\"} \n  font={font family=\"nexa bold, Avenir\" size=36 align=\"center\" color=\"#F05A24\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-31df9407-2156-408d-b9d4-54e32adfdc2b",
+          "position": {
+            "left": 644,
+            "top": 541,
+            "width": 93,
+            "height": 40,
+            "angle": 0
+          },
+          "expression": "essql \n  \"SELECT category, COUNT(category) AS count FROM \\\"kibana_sample_data_ecommerce\\\" GROUP BY category\"\n| mapColumn \"category\" \n  fn={if {getCell \"category\" | eq \"Women's Shoes\"} then={getCell \"category\"} else=\"Other\"}\n| ply by=\"category\" fn={math \"sum(count)\" | as \"count\"}\n| staticColumn \"total\" value={math \"sum(count)\"}\n| mapColumn \"percentage\" fn={math \"round(count/total * 100, 0)\"}\n| filterrows {getCell \"category\" | any {eq \"Women's Shoes\"}}\n| markdown {getCell \"percentage\"} \n  font={font family=\"nexa bold, Avenir\" size=36 align=\"center\" color=\"#F05A24\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-d82b37e0-2f8e-48cb-8a85-d3d22b019499",
+          "position": {
+            "left": 343,
+            "top": 543,
+            "width": 45,
+            "height": 29,
+            "angle": 0
+          },
+          "expression": "markdown \"%\" \n  font={font family=\"nexa extrabold, Avenir\" size=24 align=\"left\" color=\"#F05A24\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-ae570ea8-06b8-4ffa-a2f1-b7281481779f",
+          "position": {
+            "left": 528,
+            "top": 543,
+            "width": 45,
+            "height": 29,
+            "angle": 0
+          },
+          "expression": "markdown \"%\" \n  font={font family=\"nexa extrabold, Avenir\" size=24 align=\"left\" color=\"#F05A24\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-81dd855d-d4fa-4c1c-a72f-6c6ab5b100cf",
+          "position": {
+            "left": 711,
+            "top": 543,
+            "width": 45,
+            "height": 29,
+            "angle": 0
+          },
+          "expression": "markdown \"%\" \n  font={font family=\"nexa extrabold, Avenir\" size=24 align=\"left\" color=\"#F05A24\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-b8f13a87-b781-42d5-a663-5dbd4f645d6d",
+          "position": {
+            "left": 837,
+            "top": 468,
+            "width": 91,
+            "height": 63,
+            "angle": 0
+          },
+          "expression": "essql \n  query=\"select COUNT(*) as total_count, SUM(CASE WHEN customer_gender='FEMALE' THEN 1 else 0 END) as female_count from kibana_sample_data_ecommerce\"\n| math \"round(100 * female_count / total_count)\"\n| markdown {context} \n  font={font family=\"nexa bold, Avenir\" size=48 align=\"center\" color=\"#F05A24\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-86b06b67-893e-4555-ad38-7fba9ea3153b",
+          "position": {
+            "left": 837,
+            "top": 215,
+            "width": 90,
+            "height": 72,
+            "angle": 0
+          },
+          "expression": "essql \n  query=\"select COUNT(*) as total_count, SUM(CASE WHEN customer_gender='MALE' THEN 1 else 0 END) as male_count from kibana_sample_data_ecommerce\"\n| math \"round(100 * male_count / total_count)\"\n| markdown {context} \n  font={font family=\"nexa bold, Avenir\" size=48 align=\"center\" color=\"#00A89C\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-507337d9-6e0e-4752-8770-6ebe88e9b3da",
+          "position": {
+            "left": 913,
+            "top": 220,
+            "width": 44,
+            "height": 42,
+            "angle": 0
+          },
+          "expression": "markdown \"%\" \n  font={font family=\"nexa extrabold, Avenir\" size=36 align=\"left\" color=\"#00A89C\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-19f6b029-a6ef-426e-aa07-8f91ef846a95",
+          "position": {
+            "left": 914,
+            "top": 475,
+            "width": 44,
+            "height": 42,
+            "angle": 0
+          },
+          "expression": "markdown \"%\" \n  font={font family=\"nexa extrabold, Avenir\" size=36 align=\"left\" color=\"#F05A24\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-8ef60cfc-3823-42b6-9651-75a07b8e412d",
+          "position": {
+            "left": 19,
+            "top": 124,
+            "width": 44,
+            "height": 42,
+            "angle": 0
+          },
+          "expression": "markdown \"$\" \n  font={font family=\"nexa bold, Avenir\" size=36 align=\"left\" color=\"#00A89C\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-3dfda897-cc59-4bf6-ad3d-38f00bd8814b",
+          "position": {
+            "left": 362,
+            "top": 606,
+            "width": 378,
+            "height": 92,
+            "angle": 0
+          },
+          "expression": "markdown \"ACME Inc.\" \n  font={font family=\"gilroy extrabold, Avenir\" size=72 align=\"center\" color=\"#CDCDCD\" weight=\"bold\" underline=false italic=false}"
+        },
+        {
+          "id": "element-b336534a-6604-41be-b34a-109d631dcdb2",
+          "position": {
+            "left": 27.25,
+            "top": 133.03796394394163,
+            "width": 195.5,
+            "height": 80.08297100325825,
+            "angle": 0
+          },
+          "expression": "essql \n  query=\"SELECT sum(taxless_total_price) AS sum_total_price FROM \\\"kibana_sample_data_ecommerce\\\"\"\n| math \"sum_total_price\"\n| formatNumber \"0a\"\n| metric \n  metricFont={font family=\"nexa bold, Avenir\" size=72 align=\"center\" color=\"#00A89C\" weight=\"bold\" underline=false italic=false}\n| render"
+        }
+      ],
+      "groups": []
+    }
+  ],
+  "colors": [
+    "#37988d",
+    "#c19628",
+    "#b83c6f",
+    "#3f9939",
+    "#1785b0",
+    "#ca5f35",
+    "#45bdb0",
+    "#f2bc33",
+    "#e74b8b",
+    "#4fbf48",
+    "#1ea6dc",
+    "#fd7643",
+    "#72cec3",
+    "#f5cc5d",
+    "#ec77a8",
+    "#7acf74",
+    "#4cbce4",
+    "#fd986f",
+    "#a1ded7",
+    "#f8dd91",
+    "#f2a4c5",
+    "#a6dfa2",
+    "#86d2ed",
+    "#fdba9f",
+    "#000000",
+    "#444444",
+    "#777777",
+    "#BBBBBB",
+    "#FFFFFF",
+    "rgba(255,255,255,0)"
+  ],
+  "@timestamp": "${startTime}",
+  "@created": "${startTime}"
+}
