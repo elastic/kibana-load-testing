@@ -44,12 +44,13 @@ object Dashboard {
         )
         .check(
           jsonPath(
-            "$.saved_objects[?(@.attributes.title=='[eCommerce] Revenue Dashboard')].references[?(@.type=='map' || @.type=='search')]"
-          ).findAll
-            .transform(
-              _.map(_.replaceAll("\"name(.+?),", ""))
-            ) //remove name attribute
-            .saveAs("searchAndMapVector")
+            "$.saved_objects[?(@.attributes.title=='[eCommerce] Revenue Dashboard')].references[?(@.type=='map')]"
+          ).findAll.transform(_.map(_.replaceAll("\"name(.+?),", ""))).saveAs("mapVector")
+        )
+        .check(
+          jsonPath(
+            "$.saved_objects[?(@.attributes.title=='[eCommerce] Revenue Dashboard')].references[?(@.type=='search')]"
+          ).findAll.transform(_.map(_.replaceAll("\"name(.+?),", ""))).saveAs("searchVector")
         )
         .check(
           jsonPath(
@@ -89,10 +90,16 @@ object Dashboard {
             session("vizVector").as[Seq[String]].mkString(",")
           )
         ).exec(session =>
-          //convert Vector -> String for search&map request
+          //convert Vector -> String for search request
           session.set(
-            "searchAndMapString",
-            session("searchAndMapVector").as[Seq[String]].mkString(",")
+            "searchString",
+            session("searchVector").as[Seq[String]].mkString(",")
+          )
+        ).exec(session =>
+          //convert Vector -> String for map request
+          session.set(
+            "mapString",
+            session("mapVector").as[Seq[String]].mkString(",")
           )
         ).exec(session =>
           //convert Vector -> String for search&map request
@@ -101,16 +108,24 @@ object Dashboard {
             session("lensVector").as[Seq[String]].mkString(",")
           )).exec(
           http("query visualizations")
-            .post("/api/saved_objects/_bulk_get")
+            .post("/api/saved_objects/_bulk_resolve")
             .body(StringBody("[${vizListString}]"))
             .asJson
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")
             .check(status.is(200))
         ).exec(
-          http("query search & map")
+          http("bulk_get: search")
             .post("/api/saved_objects/_bulk_get")
-            .body(StringBody("[${searchAndMapString}]"))
+            .body(StringBody("[${searchString}]"))
+            .asJson
+            .headers(headers)
+            .header("Referer", baseUrl + "/app/dashboards")
+            .check(status.is(200))
+        ).exec(
+          http("bulk_resolve: map")
+            .post("/api/saved_objects/_bulk_resolve")
+            .body(StringBody("[${mapString}]"))
             .asJson
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")

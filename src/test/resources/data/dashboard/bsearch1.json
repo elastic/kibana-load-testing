@@ -5,31 +5,32 @@
         "params": {
           "index": "kibana_sample_data_ecommerce",
           "body": {
-            "size": 0,
-            "aggs": {
-              "maxAgg": {
-                "max": {
-                  "field": "total_quantity"
-                }
-              },
-              "minAgg": {
-                "min": {
-                  "field": "total_quantity"
+            "version": true,
+            "size": 500,
+            "sort": [
+              {
+                "order_date": {
+                  "order": "desc",
+                  "unmapped_type": "boolean"
                 }
               }
-            },
+            ],
             "fields": [
               {
+                "field": "*",
+                "include_unmapped": "true"
+              },
+              {
                 "field": "customer_birth_date",
-                "format": "date_time"
+                "format": "strict_date_optional_time"
               },
               {
                 "field": "order_date",
-                "format": "date_time"
+                "format": "strict_date_optional_time"
               },
               {
                 "field": "products.created_on",
-                "format": "date_time"
+                "format": "strict_date_optional_time"
               }
             ],
             "script_fields": {},
@@ -37,9 +38,7 @@
               "*"
             ],
             "runtime_mappings": {},
-            "_source": {
-              "excludes": []
-            },
+            "_source": false,
             "query": {
               "bool": {
                 "must": [],
@@ -47,9 +46,9 @@
                   {
                     "range": {
                       "order_date": {
+                        "format": "strict_date_optional_time",
                         "gte": "${startTime}",
-                        "lte": "${endTime}",
-                        "format": "strict_date_optional_time"
+                        "lte": "${endTime}"
                       }
                     }
                   }
@@ -57,13 +56,42 @@
                 "should": [],
                 "must_not": []
               }
+            },
+            "highlight": {
+              "pre_tags": [
+                "@kibana-highlighted-field@"
+              ],
+              "post_tags": [
+                "@/kibana-highlighted-field@"
+              ],
+              "fields": {
+                "*": {}
+              },
+              "fragment_size": 2147483647
             }
           },
-          "preference": 1629202930306
+          "preference": 1633954652367
         }
       },
       "options": {
-        "strategy": "ese"
+        "sessionId": "${sessionId}",
+        "isRestore": false,
+        "strategy": "ese",
+        "isStored": false,
+        "executionContext": {
+          "type": "search",
+          "name": "discover",
+          "id": "3ba638e0-b894-11e8-a6d9-e546fe2bba5f",
+          "description": "[eCommerce] Orders",
+          "url": "/app/discover#/view/3ba638e0-b894-11e8-a6d9-e546fe2bba5f",
+          "parent": {
+            "type": "application",
+            "name": "dashboard",
+            "id": "722b74f0-b882-11e8-a6d9-e546fe2bba5f",
+            "description": "[eCommerce] Revenue Dashboard",
+            "url": "/view/722b74f0-b882-11e8-a6d9-e546fe2bba5f"
+          }
+        }
       }
     },
     {
@@ -71,147 +99,32 @@
         "params": {
           "index": "kibana_sample_data_ecommerce",
           "body": {
-            "timeout": "1000ms",
-            "terminate_after": 100000,
             "size": 0,
             "aggs": {
-              "termsAgg": {
-                "terms": {
-                  "order": {
-                    "_count": "desc"
+              "gridSplit": {
+                "geotile_grid": {
+                  "bounds": {
+                    "top_left": [
+                      -90,
+                      66.51326
+                    ],
+                    "bottom_right": [
+                      45,
+                      0
+                    ]
                   },
-                  "field": "manufacturer.keyword"
-                }
-              }
-            },
-            "fields": [
-              {
-                "field": "customer_birth_date",
-                "format": "date_time"
-              },
-              {
-                "field": "order_date",
-                "format": "date_time"
-              },
-              {
-                "field": "products.created_on",
-                "format": "date_time"
-              }
-            ],
-            "script_fields": {},
-            "stored_fields": [
-              "*"
-            ],
-            "runtime_mappings": {},
-            "_source": {
-              "excludes": []
-            },
-            "query": {
-              "bool": {
-                "must": [],
-                "filter": [
-                  {
-                    "range": {
-                      "order_date": {
-                        "gte": "${startTime}",
-                        "lte": "${endTime}",
-                        "format": "strict_date_optional_time"
-                      }
-                    }
-                  }
-                ],
-                "should": [],
-                "must_not": []
-              }
-            }
-          },
-          "preference": 1629202930306
-        }
-      },
-      "options": {
-        "strategy": "ese"
-      }
-    },
-    {
-      "request": {
-        "params": {
-          "index": "kibana_sample_data_ecommerce",
-          "body": {
-            "timeout": "1000ms",
-            "terminate_after": 100000,
-            "size": 0,
-            "aggs": {
-              "termsAgg": {
-                "terms": {
-                  "order": {
-                    "_count": "desc"
-                  },
-                  "field": "category.keyword"
-                }
-              }
-            },
-            "fields": [
-              {
-                "field": "customer_birth_date",
-                "format": "date_time"
-              },
-              {
-                "field": "order_date",
-                "format": "date_time"
-              },
-              {
-                "field": "products.created_on",
-                "format": "date_time"
-              }
-            ],
-            "script_fields": {},
-            "stored_fields": [
-              "*"
-            ],
-            "runtime_mappings": {},
-            "_source": {
-              "excludes": []
-            },
-            "query": {
-              "bool": {
-                "must": [],
-                "filter": [
-                  {
-                    "range": {
-                      "order_date": {
-                        "gte": "${startTime}",
-                        "lte": "${endTime}",
-                        "format": "strict_date_optional_time"
-                      }
-                    }
-                  }
-                ],
-                "should": [],
-                "must_not": []
-              }
-            }
-          },
-          "preference": 1629202930306
-        }
-      },
-      "options": {
-        "strategy": "ese"
-      }
-    },
-    {
-      "request": {
-        "params": {
-          "index": "kibana_sample_data_ecommerce",
-          "body": {
-            "aggs": {
-              "0": {
-                "date_histogram": {
-                  "field": "order_date",
-                  "calendar_interval": "1d",
-                  "time_zone": "Africa/Abidjan"
+                  "field": "geoip.location",
+                  "precision": 5,
+                  "size": 65535,
+                  "shard_size": 65535
                 },
                 "aggs": {
-                  "1": {
+                  "gridCentroid": {
+                    "geo_centroid": {
+                      "field": "geoip.location"
+                    }
+                  },
+                  "sum_of_taxful_total_price": {
                     "sum": {
                       "field": "taxful_total_price"
                     }
@@ -219,282 +132,6 @@
                 }
               }
             },
-            "size": 0,
-            "fields": [
-              {
-                "field": "customer_birth_date",
-                "format": "date_time"
-              },
-              {
-                "field": "order_date",
-                "format": "date_time"
-              },
-              {
-                "field": "products.created_on",
-                "format": "date_time"
-              }
-            ],
-            "script_fields": {},
-            "stored_fields": [
-              "*"
-            ],
-            "runtime_mappings": {},
-            "_source": {
-              "excludes": []
-            },
-            "query": {
-              "bool": {
-                "must": [],
-                "filter": [
-                  {
-                    "range": {
-                      "order_date": {
-                        "gte": "${startTime}",
-                        "lte": "${endTime}",
-                        "format": "strict_date_optional_time"
-                      }
-                    }
-                  }
-                ],
-                "should": [],
-                "must_not": []
-              }
-            }
-          },
-          "preference": 1629202930306
-        }
-      },
-      "options": {
-        "sessionId": "${sessionId}",
-        "isRestore": false,
-        "strategy": "ese",
-        "isStored": false,
-        "executionContext": {
-          "type": "lens",
-          "name": "lnsXY",
-          "id": "7077b79f-2a99-4fcb-bbd4-456982843278",
-          "description": "% of target revenue ($$10k)",
-          "url": "/app/lens#/edit/c762b7a0-f5ea-11eb-a78e-83aac3c38a60",
-          "parent": {
-            "type": "application",
-            "name": "dashboard",
-            "id": "722b74f0-b882-11e8-a6d9-e546fe2bba5f",
-            "description": "[eCommerce] Revenue Dashboard",
-            "url": "/view/722b74f0-b882-11e8-a6d9-e546fe2bba5f"
-          }
-        }
-      }
-    },
-    {
-      "request": {
-        "params": {
-          "index": "kibana_sample_data_ecommerce",
-          "body": {
-            "aggs": {
-              "0": {
-                "sum": {
-                  "field": "taxful_total_price"
-                }
-              }
-            },
-            "size": 0,
-            "fields": [
-              {
-                "field": "customer_birth_date",
-                "format": "date_time"
-              },
-              {
-                "field": "order_date",
-                "format": "date_time"
-              },
-              {
-                "field": "products.created_on",
-                "format": "date_time"
-              }
-            ],
-            "script_fields": {},
-            "stored_fields": [
-              "*"
-            ],
-            "runtime_mappings": {},
-            "_source": {
-              "excludes": []
-            },
-            "query": {
-              "bool": {
-                "must": [],
-                "filter": [
-                  {
-                    "range": {
-                      "order_date": {
-                        "gte": "${startTime}",
-                        "lte": "${endTime}",
-                        "format": "strict_date_optional_time"
-                      }
-                    }
-                  }
-                ],
-                "should": [],
-                "must_not": []
-              }
-            }
-          },
-          "preference": 1629202930306
-        }
-      },
-      "options": {
-        "sessionId": "${sessionId}",
-        "isRestore": false,
-        "strategy": "ese",
-        "isStored": false,
-        "executionContext": {
-          "type": "lens",
-          "name": "lnsMetric",
-          "id": "19a3c101-ad2e-4421-a71b-a4734ec1f03e",
-          "description": "Sum of revenue",
-          "url": "/app/lens#/edit/ce02e260-f5ea-11eb-a78e-83aac3c38a60",
-          "parent": {
-            "type": "application",
-            "name": "dashboard",
-            "id": "722b74f0-b882-11e8-a6d9-e546fe2bba5f",
-            "description": "[eCommerce] Revenue Dashboard",
-            "url": "/view/722b74f0-b882-11e8-a6d9-e546fe2bba5f"
-          }
-        }
-      }
-    },
-    {
-      "request": {
-        "params": {
-          "index": "kibana_sample_data_ecommerce",
-          "body": {
-            "aggs": {
-              "0": {
-                "percentiles": {
-                  "field": "taxful_total_price",
-                  "percents": [
-                    50
-                  ]
-                }
-              }
-            },
-            "size": 0,
-            "fields": [
-              {
-                "field": "customer_birth_date",
-                "format": "date_time"
-              },
-              {
-                "field": "order_date",
-                "format": "date_time"
-              },
-              {
-                "field": "products.created_on",
-                "format": "date_time"
-              }
-            ],
-            "script_fields": {},
-            "stored_fields": [
-              "*"
-            ],
-            "runtime_mappings": {},
-            "_source": {
-              "excludes": []
-            },
-            "query": {
-              "bool": {
-                "must": [],
-                "filter": [
-                  {
-                    "range": {
-                      "order_date": {
-                        "gte": "${startTime}",
-                        "lte": "${endTime}",
-                        "format": "strict_date_optional_time"
-                      }
-                    }
-                  }
-                ],
-                "should": [],
-                "must_not": []
-              }
-            }
-          },
-          "preference": 1629202930306
-        }
-      },
-      "options": {
-        "sessionId": "${sessionId}",
-        "isRestore": false,
-        "strategy": "ese",
-        "isStored": false,
-        "executionContext": {
-          "type": "lens",
-          "name": "lnsMetric",
-          "id": "491469e7-7d24-4216-aeb3-bca00e5c8c1b",
-          "description": "Median spending",
-          "url": "/app/lens#/edit/d5f90030-f5ea-11eb-a78e-83aac3c38a60",
-          "parent": {
-            "type": "application",
-            "name": "dashboard",
-            "id": "722b74f0-b882-11e8-a6d9-e546fe2bba5f",
-            "description": "[eCommerce] Revenue Dashboard",
-            "url": "/view/722b74f0-b882-11e8-a6d9-e546fe2bba5f"
-          }
-        }
-      }
-    },
-    {
-      "request": {
-        "params": {
-          "index": "kibana_sample_data_ecommerce",
-          "body": {
-            "aggs": {
-              "time_offset_split": {
-                "filters": {
-                  "filters": {
-                    "0": {
-                      "range": {
-                        "order_date": {
-                          "gte": "${startTime}",
-                          "lte": "${endTime}"
-                        }
-                      }
-                    },
-                    "604800000": {
-                      "range": {
-                        "order_date": {
-                          "gte": "${7dBeforeTime}",
-                          "lte": "${startTime}"
-                        }
-                      }
-                    }
-                  }
-                },
-                "aggs": {
-                  "0": {
-                    "date_histogram": {
-                      "field": "order_date",
-                      "calendar_interval": "1d",
-                      "time_zone": "Africa/Abidjan"
-                    },
-                    "aggs": {
-                      "1": {
-                        "sum": {
-                          "field": "products.quantity"
-                        }
-                      },
-                      "2": {
-                        "sum": {
-                          "field": "products.quantity"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "size": 0,
             "fields": [
               {
                 "field": "customer_birth_date",
@@ -523,205 +160,35 @@
                 "filter": [
                   {
                     "bool": {
-                      "should": [
+                      "must": [
                         {
-                          "bool": {
-                            "filter": [
-                              {
-                                "range": {
-                                  "order_date": {
-                                    "gte": "${startTime}",
-                                    "lte": "${endTime}"
-                                  }
-                                }
-                              }
-                            ]
+                          "exists": {
+                            "field": "geoip.location"
                           }
                         },
                         {
-                          "bool": {
-                            "filter": [
-                              {
-                                "range": {
-                                  "order_date": {
-                                    "gte": "${7dBeforeTime}",
-                                    "lte": "${startTime}"
-                                  }
-                                }
-                              }
-                            ]
+                          "geo_bounding_box": {
+                            "geoip.location": {
+                              "top_left": [
+                                -90,
+                                66.51326
+                              ],
+                              "bottom_right": [
+                                56.25,
+                                -11.1784
+                              ]
+                            }
                           }
                         }
-                      ],
-                      "minimum_should_match": 1
+                      ]
                     }
-                  }
-                ],
-                "should": [],
-                "must_not": []
-              }
-            }
-          },
-          "preference": 1629202930306
-        }
-      },
-      "options": {
-        "sessionId": "${sessionId}",
-        "isRestore": false,
-        "strategy": "ese",
-        "isStored": false,
-        "executionContext": {
-          "type": "lens",
-          "name": "lnsXY",
-          "id": "a1b03eb9-a36b-4e12-aa1b-bb29b5d6c4ef",
-          "description": "Transactions per day",
-          "url": "/app/lens#/edit/dde978b0-f5ea-11eb-a78e-83aac3c38a60",
-          "parent": {
-            "type": "application",
-            "name": "dashboard",
-            "id": "722b74f0-b882-11e8-a6d9-e546fe2bba5f",
-            "description": "[eCommerce] Revenue Dashboard",
-            "url": "/view/722b74f0-b882-11e8-a6d9-e546fe2bba5f"
-          }
-        }
-      }
-    },
-    {
-      "request": {
-        "params": {
-          "index": "kibana_sample_data_ecommerce",
-          "body": {
-            "aggs": {
-              "0": {
-                "avg": {
-                  "field": "total_quantity"
-                }
-              }
-            },
-            "size": 0,
-            "fields": [
-              {
-                "field": "customer_birth_date",
-                "format": "date_time"
-              },
-              {
-                "field": "order_date",
-                "format": "date_time"
-              },
-              {
-                "field": "products.created_on",
-                "format": "date_time"
-              }
-            ],
-            "script_fields": {},
-            "stored_fields": [
-              "*"
-            ],
-            "runtime_mappings": {},
-            "_source": {
-              "excludes": []
-            },
-            "query": {
-              "bool": {
-                "must": [],
-                "filter": [
-                  {
-                    "range": {
-                      "order_date": {
-                        "gte": "${startTime}",
-                        "lte": "${endTime}",
-                        "format": "strict_date_optional_time"
-                      }
-                    }
-                  }
-                ],
-                "should": [],
-                "must_not": []
-              }
-            }
-          },
-          "preference": 1629202930306
-        }
-      },
-      "options": {
-        "sessionId": "${sessionId}",
-        "isRestore": false,
-        "strategy": "ese",
-        "isStored": false,
-        "executionContext": {
-          "type": "lens",
-          "name": "lnsMetric",
-          "id": "da51079b-952f-43dc-96e6-6f9415a3708b",
-          "description": "Avg. items sold",
-          "url": "/app/lens#/edit/e3902840-f5ea-11eb-a78e-83aac3c38a60",
-          "parent": {
-            "type": "application",
-            "name": "dashboard",
-            "id": "722b74f0-b882-11e8-a6d9-e546fe2bba5f",
-            "description": "[eCommerce] Revenue Dashboard",
-            "url": "/view/722b74f0-b882-11e8-a6d9-e546fe2bba5f"
-          }
-        }
-      }
-    },
-    {
-      "request": {
-        "params": {
-          "index": "kibana_sample_data_ecommerce",
-          "body": {
-            "aggs": {
-              "0": {
-                "terms": {
-                  "field": "category.keyword",
-                  "order": {
-                    "_count": "desc"
                   },
-                  "size": 10
-                },
-                "aggs": {
-                  "1": {
-                    "date_histogram": {
-                      "field": "order_date",
-                      "calendar_interval": "1d",
-                      "time_zone": "Africa/Abidjan"
-                    }
-                  }
-                }
-              }
-            },
-            "size": 0,
-            "fields": [
-              {
-                "field": "customer_birth_date",
-                "format": "date_time"
-              },
-              {
-                "field": "order_date",
-                "format": "date_time"
-              },
-              {
-                "field": "products.created_on",
-                "format": "date_time"
-              }
-            ],
-            "script_fields": {},
-            "stored_fields": [
-              "*"
-            ],
-            "runtime_mappings": {},
-            "_source": {
-              "excludes": []
-            },
-            "query": {
-              "bool": {
-                "must": [],
-                "filter": [
                   {
                     "range": {
                       "order_date": {
+                        "format": "strict_date_optional_time",
                         "gte": "${startTime}",
-                        "lte": "${endTime}",
-                        "format": "strict_date_optional_time"
+                        "lte": "${endTime}"
                       }
                     }
                   }
@@ -731,344 +198,16 @@
               }
             }
           },
-          "preference": 1629202930306
+          "track_total_hits": false,
+          "preference": 1633954652367
         }
       },
       "options": {
         "sessionId": "${sessionId}",
         "isRestore": false,
+        "legacyHitsTotal": false,
         "strategy": "ese",
-        "isStored": false,
-        "executionContext": {
-          "type": "lens",
-          "name": "lnsXY",
-          "id": "64fd5dcf-30c5-4f5a-a78c-70b1fbf87e5b",
-          "description": "Breakdown by category",
-          "url": "/app/lens#/edit/eddf7850-f5ea-11eb-a78e-83aac3c38a60",
-          "parent": {
-            "type": "application",
-            "name": "dashboard",
-            "id": "722b74f0-b882-11e8-a6d9-e546fe2bba5f",
-            "description": "[eCommerce] Revenue Dashboard",
-            "url": "/view/722b74f0-b882-11e8-a6d9-e546fe2bba5f"
-          }
-        }
-      }
-    },
-    {
-      "request": {
-        "params": {
-          "index": "kibana_sample_data_ecommerce",
-          "body": {
-            "aggs": {
-              "time_offset_split": {
-                "filters": {
-                  "filters": {
-                    "0": {
-                      "range": {
-                        "order_date": {
-                          "gte": "${startTime}",
-                          "lte": "${endTime}"
-                        }
-                      }
-                    },
-                    "604800000": {
-                      "range": {
-                        "order_date": {
-                          "gte": "${7dBeforeTime}",
-                          "lte": "${startTime}"
-                        }
-                      }
-                    }
-                  }
-                },
-                "aggs": {
-                  "0": {
-                    "date_histogram": {
-                      "field": "order_date",
-                      "calendar_interval": "1d",
-                      "time_zone": "Africa/Abidjan"
-                    },
-                    "aggs": {
-                      "1": {
-                        "sum": {
-                          "field": "taxful_total_price"
-                        }
-                      },
-                      "2": {
-                        "sum": {
-                          "field": "taxful_total_price"
-                        }
-                      },
-                      "3": {
-                        "sum": {
-                          "field": "taxful_total_price"
-                        }
-                      },
-                      "4": {
-                        "sum": {
-                          "field": "taxful_total_price"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "size": 0,
-            "fields": [
-              {
-                "field": "customer_birth_date",
-                "format": "date_time"
-              },
-              {
-                "field": "order_date",
-                "format": "date_time"
-              },
-              {
-                "field": "products.created_on",
-                "format": "date_time"
-              }
-            ],
-            "script_fields": {},
-            "stored_fields": [
-              "*"
-            ],
-            "runtime_mappings": {},
-            "_source": {
-              "excludes": []
-            },
-            "query": {
-              "bool": {
-                "must": [],
-                "filter": [
-                  {
-                    "bool": {
-                      "should": [
-                        {
-                          "bool": {
-                            "filter": [
-                              {
-                                "range": {
-                                  "order_date": {
-                                    "gte": "${startTime}",
-                                    "lte": "${endTime}"
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                        },
-                        {
-                          "bool": {
-                            "filter": [
-                              {
-                                "range": {
-                                  "order_date": {
-                                    "gte": "${7dBeforeTime}",
-                                    "lte": "${startTime}"
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                        }
-                      ],
-                      "minimum_should_match": 1
-                    }
-                  }
-                ],
-                "should": [],
-                "must_not": []
-              }
-            }
-          },
-          "preference": 1629202930306
-        }
-      },
-      "options": {
-        "sessionId": "${sessionId}",
-        "isRestore": false,
-        "strategy": "ese",
-        "isStored": false,
-        "executionContext": {
-          "type": "lens",
-          "name": "lnsDatatable",
-          "id": "bd330ede-2eef-4e2a-8100-22a21abf5038",
-          "description": "Daily comparison",
-          "url": "/app/lens#/edit/ff6a21b0-f5ea-11eb-a78e-83aac3c38a60",
-          "parent": {
-            "type": "application",
-            "name": "dashboard",
-            "id": "722b74f0-b882-11e8-a6d9-e546fe2bba5f",
-            "description": "[eCommerce] Revenue Dashboard",
-            "url": "/view/722b74f0-b882-11e8-a6d9-e546fe2bba5f"
-          }
-        }
-      }
-    },
-    {
-      "request": {
-        "params": {
-          "index": "kibana_sample_data_ecommerce",
-          "body": {
-            "aggs": {
-              "0": {
-                "terms": {
-                  "field": "products.product_name.keyword",
-                  "order": {
-                    "_count": "desc"
-                  },
-                  "size": 5
-                }
-              }
-            },
-            "size": 0,
-            "fields": [
-              {
-                "field": "customer_birth_date",
-                "format": "date_time"
-              },
-              {
-                "field": "order_date",
-                "format": "date_time"
-              },
-              {
-                "field": "products.created_on",
-                "format": "date_time"
-              }
-            ],
-            "script_fields": {},
-            "stored_fields": [
-              "*"
-            ],
-            "runtime_mappings": {},
-            "_source": {
-              "excludes": []
-            },
-            "query": {
-              "bool": {
-                "must": [],
-                "filter": [
-                  {
-                    "range": {
-                      "order_date": {
-                        "gte": "${startTime}",
-                        "lte": "${endTime}",
-                        "format": "strict_date_optional_time"
-                      }
-                    }
-                  }
-                ],
-                "should": [],
-                "must_not": []
-              }
-            }
-          },
-          "preference": 1629202930306
-        }
-      },
-      "options": {
-        "sessionId": "${sessionId}",
-        "isRestore": false,
-        "strategy": "ese",
-        "isStored": false,
-        "executionContext": {
-          "type": "lens",
-          "name": "lnsXY",
-          "id": "b897d4be-cf83-46fb-a111-c7fbec9ef403",
-          "description": "Top products this week",
-          "url": "/app/lens#/edit/03071e90-f5eb-11eb-a78e-83aac3c38a60",
-          "parent": {
-            "type": "application",
-            "name": "dashboard",
-            "id": "722b74f0-b882-11e8-a6d9-e546fe2bba5f",
-            "description": "[eCommerce] Revenue Dashboard",
-            "url": "/view/722b74f0-b882-11e8-a6d9-e546fe2bba5f"
-          }
-        }
-      }
-    },
-    {
-      "request": {
-        "params": {
-          "index": "kibana_sample_data_ecommerce",
-          "body": {
-            "aggs": {
-              "0": {
-                "terms": {
-                  "field": "products.product_name.keyword",
-                  "order": {
-                    "_count": "desc"
-                  },
-                  "size": 5
-                }
-              }
-            },
-            "size": 0,
-            "fields": [
-              {
-                "field": "customer_birth_date",
-                "format": "date_time"
-              },
-              {
-                "field": "order_date",
-                "format": "date_time"
-              },
-              {
-                "field": "products.created_on",
-                "format": "date_time"
-              }
-            ],
-            "script_fields": {},
-            "stored_fields": [
-              "*"
-            ],
-            "runtime_mappings": {},
-            "_source": {
-              "excludes": []
-            },
-            "query": {
-              "bool": {
-                "must": [],
-                "filter": [
-                  {
-                    "range": {
-                      "order_date": {
-                        "gte": "${7dBeforeTime}",
-                        "lte": "${startTime}",
-                        "format": "strict_date_optional_time"
-                      }
-                    }
-                  }
-                ],
-                "should": [],
-                "must_not": []
-              }
-            }
-          },
-          "preference": 1629202930306
-        }
-      },
-      "options": {
-        "sessionId": "${sessionId}",
-        "isRestore": false,
-        "strategy": "ese",
-        "isStored": false,
-        "executionContext": {
-          "type": "lens",
-          "name": "lnsXY",
-          "id": "e0f68f93-30f2-4da7-889a-6cd128a68d3f",
-          "description": "Top products last week",
-          "url": "/app/lens#/edit/06379e00-f5eb-11eb-a78e-83aac3c38a60",
-          "parent": {
-            "type": "application",
-            "name": "dashboard",
-            "id": "722b74f0-b882-11e8-a6d9-e546fe2bba5f",
-            "description": "[eCommerce] Revenue Dashboard",
-            "url": "/view/722b74f0-b882-11e8-a6d9-e546fe2bba5f"
-          }
-        }
+        "isStored": false
       }
     }
   ]
