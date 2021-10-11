@@ -2,75 +2,7 @@
   "batch": [
     {
       "request": {
-        "params": {
-          "index": "kibana_sample_data_ecommerce",
-          "body": {
-            "size": 0,
-            "aggs": {
-              "join": {
-                "terms": {
-                  "size": 65535,
-                  "field": "geoip.country_iso_code"
-                },
-                "aggs": {}
-              }
-            },
-            "fields": [
-              {
-                "field": "customer_birth_date",
-                "format": "date_time"
-              },
-              {
-                "field": "order_date",
-                "format": "date_time"
-              },
-              {
-                "field": "products.created_on",
-                "format": "date_time"
-              }
-            ],
-            "script_fields": {},
-            "stored_fields": [
-              "*"
-            ],
-            "runtime_mappings": {},
-            "_source": {
-              "excludes": []
-            },
-            "query": {
-              "bool": {
-                "must": [],
-                "filter": [
-                  {
-                    "range": {
-                      "order_date": {
-                        "gte": "${startTime}",
-                        "lte": "${endTime}",
-                        "format": "strict_date_optional_time"
-                      }
-                    }
-                  }
-                ],
-                "should": [],
-                "must_not": []
-              }
-            }
-          },
-          "track_total_hits": false,
-          "preference": 1629202930306
-        }
-      },
-      "options": {
-        "sessionId": "${sessionId}",
-        "isRestore": false,
-        "legacyHitsTotal": false,
-        "strategy": "ese",
-        "isStored": false
-      }
-    },
-    {
-      "request": {
-        "id": "Fm42VXhGbkRXUXNtcXY5aVFUSElCTUEbRzB3NHEyMjdRNmVfY05iMmZ2Q1JQdzo4OTYz",
+        "id": "FkZtdEVvTEZrVEpDWnBHUmJTVWNjT1EcTFFURnlpS0VUdTJGQU5yUEdnX29lZzoxMTEyMA==",
         "params": {
           "index": "kibana_sample_data_ecommerce",
           "body": {
@@ -115,9 +47,9 @@
                   {
                     "range": {
                       "order_date": {
+                        "format": "strict_date_optional_time",
                         "gte": "${startTime}",
-                        "lte": "${endTime}",
-                        "format": "strict_date_optional_time"
+                        "lte": "${endTime}"
                       }
                     }
                   }
@@ -139,7 +71,7 @@
               "fragment_size": 2147483647
             }
           },
-          "preference": 1629202930306
+          "preference": 1633954652367
         }
       },
       "options": {
