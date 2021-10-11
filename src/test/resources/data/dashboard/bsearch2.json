@@ -7,35 +7,12 @@
           "body": {
             "size": 0,
             "aggs": {
-              "gridSplit": {
-                "geotile_grid": {
-                  "bounds": {
-                    "top_left": [
-                      -90,
-                      66.51326
-                    ],
-                    "bottom_right": [
-                      45,
-                      0
-                    ]
-                  },
-                  "field": "geoip.location",
-                  "precision": 5,
+              "join": {
+                "terms": {
                   "size": 65535,
-                  "shard_size": 65535
+                  "field": "geoip.region_name"
                 },
-                "aggs": {
-                  "gridCentroid": {
-                    "geo_centroid": {
-                      "field": "geoip.location"
-                    }
-                  },
-                  "sum_of_taxful_total_price": {
-                    "sum": {
-                      "field": "taxful_total_price"
-                    }
-                  }
-                }
+                "aggs": {}
               }
             },
             "fields": [
@@ -65,36 +42,11 @@
                 "must": [],
                 "filter": [
                   {
-                    "bool": {
-                      "must": [
-                        {
-                          "exists": {
-                            "field": "geoip.location"
-                          }
-                        },
-                        {
-                          "geo_bounding_box": {
-                            "geoip.location": {
-                              "top_left": [
-                                -90,
-                                66.51326
-                              ],
-                              "bottom_right": [
-                                56.25,
-                                -11.1784
-                              ]
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  },
-                  {
                     "range": {
                       "order_date": {
+                        "format": "strict_date_optional_time",
                         "gte": "${startTime}",
-                        "lte": "${endTime}",
-                        "format": "strict_date_optional_time"
+                        "lte": "${endTime}"
                       }
                     }
                   }
@@ -105,7 +57,7 @@
             }
           },
           "track_total_hits": false,
-          "preference": 1629202930306
+          "preference": 1633954652367
         }
       },
       "options": {
@@ -114,100 +66,6 @@
         "legacyHitsTotal": false,
         "strategy": "ese",
         "isStored": false
-      }
-    },
-    {
-      "request": {
-        "params": {
-          "index": "kibana_sample_data_ecommerce",
-          "body": {
-            "version": true,
-            "size": 500,
-            "sort": [
-              {
-                "order_date": {
-                  "order": "desc",
-                  "unmapped_type": "boolean"
-                }
-              }
-            ],
-            "fields": [
-              {
-                "field": "*",
-                "include_unmapped": "true"
-              },
-              {
-                "field": "customer_birth_date",
-                "format": "strict_date_optional_time"
-              },
-              {
-                "field": "order_date",
-                "format": "strict_date_optional_time"
-              },
-              {
-                "field": "products.created_on",
-                "format": "strict_date_optional_time"
-              }
-            ],
-            "script_fields": {},
-            "stored_fields": [
-              "*"
-            ],
-            "runtime_mappings": {},
-            "_source": false,
-            "query": {
-              "bool": {
-                "must": [],
-                "filter": [
-                  {
-                    "range": {
-                      "order_date": {
-                        "gte": "${startTime}",
-                        "lte": "${endTime}",
-                        "format": "strict_date_optional_time"
-                      }
-                    }
-                  }
-                ],
-                "should": [],
-                "must_not": []
-              }
-            },
-            "highlight": {
-              "pre_tags": [
-                "@kibana-highlighted-field@"
-              ],
-              "post_tags": [
-                "@/kibana-highlighted-field@"
-              ],
-              "fields": {
-                "*": {}
-              },
-              "fragment_size": 2147483647
-            }
-          },
-          "preference": 1629202930306
-        }
-      },
-      "options": {
-        "sessionId": "${sessionId}",
-        "isRestore": false,
-        "strategy": "ese",
-        "isStored": false,
-        "executionContext": {
-          "type": "search",
-          "name": "discover",
-          "id": "3ba638e0-b894-11e8-a6d9-e546fe2bba5f",
-          "description": "[eCommerce] Orders",
-          "url": "/app/discover#/view/3ba638e0-b894-11e8-a6d9-e546fe2bba5f",
-          "parent": {
-            "type": "application",
-            "name": "dashboard",
-            "id": "722b74f0-b882-11e8-a6d9-e546fe2bba5f",
-            "description": "[eCommerce] Revenue Dashboard",
-            "url": "/view/722b74f0-b882-11e8-a6d9-e546fe2bba5f"
-          }
-        }
       }
     }
   ]
