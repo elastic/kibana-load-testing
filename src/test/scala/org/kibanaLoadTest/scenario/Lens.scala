@@ -61,6 +61,7 @@ object Lens {
       .exec(
         http("bsearch")
           .post("/internal/bsearch")
+          .queryParam("compress", "true")
           .headers(headers)
           .header("Referer", baseUrl + "/app/lens")
           .body(ElFileBody(s"data/lens/$id/bsearch.json"))
