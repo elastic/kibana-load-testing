@@ -198,6 +198,7 @@ object Dashboard {
           }).pause(2).exec(
             http("query bsearch ${index}")
               .post("/internal/bsearch")
+              .queryParam("compress", "true")
               .body(StringBody("${payloadString}"))
               .asJson
               .headers(headers)
