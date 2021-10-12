@@ -24,6 +24,7 @@ object Canvas {
     exec(
       http("canvas: fns")
         .get("/api/canvas/fns")
+        .queryParam("compress", "true")
         .headers(defaultHeaders)
         .check(status.is(200))
     ).exec(
@@ -73,6 +74,7 @@ object Canvas {
       .exec(
         http("canvas: bsearch 1")
           .post("/internal/bsearch")
+          .queryParam("compress", "true")
           .body(ElFileBody("data/canvas/bsearch1.json"))
           .asJson
           .headers(defaultHeaders)
@@ -101,6 +103,7 @@ object Canvas {
       .exec(
         http("canvas: fns 1")
           .post("/api/canvas/fns")
+          .queryParam("compress", "true")
           .body(ElFileBody("data/canvas/fns1.json"))
           .asJson
           .headers(defaultHeaders)
@@ -116,6 +119,7 @@ object Canvas {
       .exec(
         http("canvas: bsearch 2")
           .post("/internal/bsearch")
+          .queryParam("compress", "true")
           .body(ElFileBody("data/canvas/bsearch2.json"))
           .asJson
           .headers(defaultHeaders)
@@ -133,6 +137,7 @@ object Canvas {
       .exec(
         http("canvas: fns 2")
           .post("/api/canvas/fns")
+          .queryParam("compress", "true")
           .body(ElFileBody("data/canvas/fns2.json"))
           .asJson
           .headers(defaultHeaders)
@@ -141,6 +146,7 @@ object Canvas {
       .exec(
         http("canvas: fns 3")
           .post("/api/canvas/fns")
+          .queryParam("compress", "true")
           .body(ElFileBody("data/canvas/fns3.json"))
           .asJson
           .headers(defaultHeaders)
@@ -159,6 +165,7 @@ object Canvas {
       .exec(
         http("canvas: fns 4")
           .post("/api/canvas/fns")
+          .queryParam("compress", "true")
           .body(ElFileBody("data/canvas/fns4.json"))
           .asJson
           .headers(defaultHeaders)
@@ -167,6 +174,7 @@ object Canvas {
       .exec(
         http("canvas: fns 5")
           .post("/api/canvas/fns")
+          .queryParam("compress", "true")
           .body(ElFileBody("data/canvas/fns5.json"))
           .asJson
           .headers(defaultHeaders)
@@ -184,6 +192,7 @@ object Canvas {
       .exec(
         http("canvas: fns 6")
           .post("/api/canvas/fns")
+          .queryParam("compress", "true")
           .body(ElFileBody("data/canvas/fns6.json"))
           .asJson
           .headers(defaultHeaders)
@@ -192,6 +201,7 @@ object Canvas {
       .exec(
         http("canvas: fns 7")
           .post("/api/canvas/fns")
+          .queryParam("compress", "true")
           .body(ElFileBody("data/canvas/fns7.json"))
           .asJson
           .headers(defaultHeaders)

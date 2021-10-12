@@ -50,6 +50,7 @@ object Visualize {
         exec(
           http("bsearch")
             .post("/internal/bsearch")
+            .queryParam("compress", "true")
             .headers(headers)
             .header("Referer", baseUrl + "/app/visualize")
             .body(ElFileBody(queryJson))
