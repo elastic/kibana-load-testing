@@ -4,9 +4,9 @@ import { resolve } from 'path';
 export function compareWithBaseline(scenario: string, actualSequence: Map<string, string[]>) {
     console.log(`${scenario} scenario: comparing recorded requestes with baseline:`);
     const repeatableCalls = [
-        'POST /internal/bsearch 200',
+        'POST /internal/bsearch?compress=true 200',
         'POST /api/saved_objects/_bulk_get 200',
-        'POST /api/canvas/fns 200'
+        'POST /api/canvas/fns?compress=true 200'
     ];
     let isUpdateRequired = false;
     let baselinePath = resolve(__dirname, '..', '..', 'baseline', scenario, 'requests.json');
