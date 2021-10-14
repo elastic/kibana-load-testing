@@ -36,7 +36,6 @@ object Discover {
     ).exec(
         http(s"Discover query $name")
           .post("/internal/bsearch")
-          .queryParam("compress", "true")
           .headers(defaultHeaders)
           .body(ElFileBody("data/discover/bsearch.json"))
           .asJson
@@ -54,7 +53,6 @@ object Discover {
         exec(
           http(s"Discover query (fetch by id) $name")
             .post("/internal/bsearch")
-            .queryParam("compress", "true")
             .headers(defaultHeaders)
             .body(ElFileBody("data/discover/bsearchRequestId.json"))
             .asJson
