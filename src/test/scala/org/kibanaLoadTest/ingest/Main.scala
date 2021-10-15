@@ -1,25 +1,13 @@
 package org.kibanaLoadTest.ingest
 
-import com.google.gson.Gson
-
 import java.io.File
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
 import org.kibanaLoadTest.ESConfiguration
-import org.kibanaLoadTest.helpers.{
-  ESClient,
-  GatlingStats,
-  Helper,
-  LogParser,
-  ResponseParser
-}
+import org.kibanaLoadTest.helpers.{ESClient, Helper}
 import org.kibanaLoadTest.helpers.Helper.getReportFolderPaths
 import org.slf4j.{Logger, LoggerFactory}
-import io.circe._
-import io.circe.parser._
 
 import java.nio.file.{Files, Paths}
-import scala.collection.parallel.CollectionConverters.MutableIterableIsParallelizable
-import scala.io.Source
 
 object Main {
   val logger: Logger = LoggerFactory.getLogger("ingest:Main")
@@ -74,7 +62,7 @@ object Main {
           }
         })
 
-      val (requestJsonArray, concurrentUsersJsonArray, combinedStatsJson) =
+      val (requestsArray, concurrentUsersArray, combinedStatsArray) =
         Helper.prepareDocsForIngestion(
           statsFilePath,
           simLogFilePath,
@@ -82,9 +70,9 @@ object Main {
           testRunFilePath
         )
 
-      esClient.Instance.bulk(GLOBAL_STATS_INDEX, Array(combinedStatsJson))
-      esClient.Instance.bulk(DATA_INDEX, requestJsonArray)
-      esClient.Instance.bulk(USERS_INDEX, concurrentUsersJsonArray)
+      esClient.Instance.bulk(GLOBAL_STATS_INDEX, combinedStatsArray)
+      esClient.Instance.bulk(DATA_INDEX, requestsArray)
+      esClient.Instance.bulk(USERS_INDEX, concurrentUsersArray)
 
       i += 1
     }

@@ -17,6 +17,9 @@ import org.kibanaLoadTest.helpers.{
 }
 import org.kibanaLoadTest.ingest.Main.{
   GLOBAL_STATS_INDEX,
+  SIMULATION_LOG_FILENAME,
+  RESPONSE_LOG_FILENAME,
+  GLOBAL_STATS_FILENAME,
   TEST_RUN_FILENAME,
   USERS_INDEX,
   logger
@@ -106,16 +109,19 @@ class IngestionTest {
     val testPath =
       Helper.getTargetPath + File.separator + "test-classes" + File.separator + "test" + File.separator
     val simLogFilePath: String = new File(
-      testPath +
+      testPath + SIMULATION_LOG_FILENAME
     ).getAbsolutePath
     val testRunFilePath: String = new File(
       testPath + TEST_RUN_FILENAME
     ).getAbsolutePath
     val responseFilePath: String = new File(
-      testPath + "response.log"
+      testPath + RESPONSE_LOG_FILENAME
+    ).getAbsolutePath
+    val statsFilePath: String = new File(
+      testPath + GLOBAL_STATS_FILENAME
     ).getAbsolutePath
 
-    val (requestJsonArray, concurrentUsersJsonArray, combinedStatsJson) =
+    val (requestsArray, concurrentUsersArray, combinedStatsArray) =
       Helper.prepareDocsForIngestion(
         statsFilePath,
         simLogFilePath,
@@ -123,9 +129,9 @@ class IngestionTest {
         testRunFilePath
       )
 
-    esClient.Instance.bulk(GLOBAL_STATS_INDEX, Array(combinedStatsJson))
-    esClient.Instance.bulk(DATA_INDEX, requestJsonArray)
-    esClient.Instance.bulk(USERS_INDEX, concurrentUsersJsonArray)
+    esClient.Instance.bulk(GLOBAL_STATS_INDEX, combinedStatsArray)
+    esClient.Instance.bulk(DATA_INDEX, requestsArray)
+    esClient.Instance.bulk(USERS_INDEX, concurrentUsersArray)
 
     esClient.Instance.closeConnection()
   }
