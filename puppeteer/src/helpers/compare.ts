@@ -6,6 +6,7 @@ export function compareWithBaseline(scenario: string, actualSequence: Map<string
     const repeatableCalls = [
         'POST /internal/bsearch?compress=true 200',
         'POST /api/saved_objects/_bulk_get 200',
+        'POST /api/saved_objects/_bulk_resolve 200',
         'POST /api/canvas/fns?compress=true 200'
     ];
     let isUpdateRequired = false;
