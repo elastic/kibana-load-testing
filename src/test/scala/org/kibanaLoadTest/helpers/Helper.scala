@@ -15,8 +15,9 @@ import io.circe.parser.parse
 import org.slf4j.{Logger, LoggerFactory}
 import spray.json.JsonParser
 import spray.json.JsonParser.ParsingException
-import scala.jdk.CollectionConverters._
+import scala.collection.parallel.CollectionConverters.MutableIterableIsParallelizable
 
+import scala.jdk.CollectionConverters._
 import scala.io.Source
 
 object Helper {
@@ -85,13 +86,13 @@ object Helper {
       .getAbsolutePath
   }
 
-  def getReportFolderPaths: List[String] = {
+  def getReportFolderPaths: Array[String] = {
     val dir: File = new File(getTargetPath + File.separator + "gatling")
     if (!dir.exists()) {
-      return List.empty
+      return Array.empty
     }
     val files: Array[File] = dir.listFiles
-    files.toList
+    files
       .filter(file => file.isDirectory)
       .map(file => file.getAbsolutePath)
   }
@@ -237,5 +238,60 @@ object Helper {
     )
     // delete all listed response-*.log files
     responseLogsPaths.foreach(p => Files.deleteIfExists(Paths.get(p)))
+  }
+
+  def prepareDocsForIngestion(
+      statsFilePath: String,
+      simLogFilePath: String,
+      responseFilePath: String,
+      testRunFilePath: String
+  ): (Array[Json], Array[Json], Array[Json]) = {
+    val statsJsonString =
+      GatlingStats.toJsonString(
+        Source.fromFile(statsFilePath).getLines().mkString
+      )
+    val statsJson = parse(statsJsonString).getOrElse(Json.Null)
+    val (requestsTimeline, concurrentUsers) =
+      LogParser.parseSimulationLog(simLogFilePath)
+    val responses = ResponseParser.getRequests(responseFilePath)
+
+    if (responses.length == requestsTimeline.length) {
+      val responseCount = responses.length
+      var j = 0
+      while (j < responseCount) {
+        responses(j) = responses(j).copy(
+          requestSendStartTime = requestsTimeline(j).requestSendStartTime,
+          responseReceiveEndTime = requestsTimeline(j).responseReceiveEndTime,
+          requestTime = requestsTimeline(j).requestTime
+        )
+        j += 1
+      }
+    } else {
+      logger.error(
+        s"Response count does not match timelineCount: '${responses.length}' vs '${requestsTimeline.length}'"
+      )
+    }
+
+    val metaJson = Helper.getMetaJson(testRunFilePath, simLogFilePath)
+    // final Json objects to ingest
+    val combinedStatsJson = statsJson.deepMerge(metaJson)
+    val requestJsonArray = responses.par
+      .map(response => {
+        val gson = new Gson
+        val responseJson = parse(gson.toJson(response)).getOrElse(Json.Null)
+        if (responseJson == Json.Null) {
+          logger.error(s"Failed to parse json: ${response.toString}")
+        }
+        responseJson.deepMerge(metaJson)
+      })
+      .toArray
+
+    val concurrentUsersJsonArray = concurrentUsers.map(stat => {
+      val gson = new Gson
+      val json = parse(gson.toJson(stat)).getOrElse(Json.Null)
+      json.deepMerge(metaJson)
+    })
+
+    (requestJsonArray, concurrentUsersJsonArray, Array(combinedStatsJson))
   }
 }

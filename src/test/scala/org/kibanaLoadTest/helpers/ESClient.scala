@@ -60,38 +60,44 @@ class ESClient(config: ESConfiguration) {
 
     def bulk(
         indexName: String,
-        jsonList: List[Json],
+        jsonArray: Array[Json],
         chunkSize: Int = BULK_SIZE
     ): Unit = {
       try {
-        logger.info(s"Ingesting to stats cluster: ${jsonList.size} docs")
-
+        logger.info(s"Ingesting to stats cluster: ${jsonArray.size} docs")
         val bulkSize =
           if (indexName == "gatling-data") BULK_SIZE_DEFAULT else chunkSize
-        val it = jsonList.grouped(bulkSize)
-        val bulkBuffer = scala.collection.mutable.ListBuffer.empty[Chunk]
+        val it = jsonArray.grouped(bulkSize)
+        val bulkBuffer = scala.collection.mutable.ArrayBuffer.empty[Chunk]
         while (it.hasNext) {
           val chunk = it.next()
           val bulkReq = new BulkRequest()
-          chunk.foreach(json => {
+          val chunkSize = chunk.length
+          var i = 0
+          while (i < chunkSize) {
             bulkReq.add(
               new IndexRequest(indexName)
-                .source(json.toString(), XContentType.JSON)
+                .source(chunk(i).toString(), XContentType.JSON)
             )
-          })
+            i += 1
+          }
           bulkBuffer += Chunk(bulkReq, chunk.length)
         }
 
-        bulkBuffer.foreach(chunk => {
-          val bulkResponse = client.bulk(chunk.request, RequestOptions.DEFAULT)
+        val bulkBufferSize = bulkBuffer.length
+        var j = 0
+        while (j < bulkBufferSize) {
+          val bulkResponse =
+            client.bulk(bulkBuffer(j).request, RequestOptions.DEFAULT)
           bulkResponse.getTook.toString
-          logger.info(
-            s"Bulk size=${chunk.size} ingested within: ${bulkResponse.getTook.toString}"
+          logger.debug(
+            s"Bulk size=${bulkBuffer(j).size} ingested within: ${bulkResponse.getTook.toString}"
           )
           if (bulkResponse.hasFailures) {
             logger.error("Ingested with failures")
           }
-        })
+          j += 1
+        }
         logger.info("Ingestion is completed")
       } catch {
         case e: IOException =>
