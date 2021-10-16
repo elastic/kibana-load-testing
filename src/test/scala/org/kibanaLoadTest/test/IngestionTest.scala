@@ -1,15 +1,13 @@
 package org.kibanaLoadTest.test
 
-import com.google.gson.Gson
-
 import java.io.File
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
 import io.circe.Json
-import io.circe.parser.parse
 import org.junit.jupiter.api.Assertions.{assertEquals, assertTrue}
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import org.kibanaLoadTest.ESConfiguration
+import org.kibanaLoadTest.helpers.Helper.getReportFolderPaths
 import org.kibanaLoadTest.helpers.{
   ESArchiver,
   ESClient,
@@ -17,9 +15,17 @@ import org.kibanaLoadTest.helpers.{
   LogParser,
   ResponseParser
 }
-import org.kibanaLoadTest.ingest.Main.USERS_INDEX
+import org.kibanaLoadTest.ingest.Main.{
+  GLOBAL_STATS_INDEX,
+  SIMULATION_LOG_FILENAME,
+  RESPONSE_LOG_FILENAME,
+  GLOBAL_STATS_FILENAME,
+  TEST_RUN_FILENAME,
+  USERS_INDEX,
+  logger
+}
 
-import scala.collection.parallel.CollectionConverters.IterableIsParallelizable
+import java.nio.file.{Files, Paths}
 
 class IngestionTest {
 
@@ -97,49 +103,37 @@ class IngestionTest {
     )
 
     val esClient = new ESClient(esConfig)
+    val reportFolders = getReportFolderPaths
+
+    logger.info(s"Found ${reportFolders.length} Gatling reports")
     val testPath =
       Helper.getTargetPath + File.separator + "test-classes" + File.separator + "test" + File.separator
     val simLogFilePath: String = new File(
-      testPath + "simulation.log"
+      testPath + SIMULATION_LOG_FILENAME
     ).getAbsolutePath
-    val lastRunFilePath: String = new File(
-      testPath + "lastRun.txt"
+    val testRunFilePath: String = new File(
+      testPath + TEST_RUN_FILENAME
     ).getAbsolutePath
     val responseFilePath: String = new File(
-      testPath + "response.log"
+      testPath + RESPONSE_LOG_FILENAME
     ).getAbsolutePath
-    val metaJson = Helper.getMetaJson(lastRunFilePath, simLogFilePath)
-    val (requestsTimeline, concurrentUsers) =
-      LogParser.parseSimulationLog(simLogFilePath)
-    val responses = ResponseParser.getRequests(responseFilePath)
-    for (i <- 0 to responses.length - 1) {
-      responses(i) = responses(i).copy(
-        requestSendStartTime = requestsTimeline(i).requestSendStartTime,
-        responseReceiveEndTime = requestsTimeline(i).responseReceiveEndTime,
-        requestTime = requestsTimeline(i).requestTime
+    val statsFilePath: String = new File(
+      testPath + GLOBAL_STATS_FILENAME
+    ).getAbsolutePath
+
+    val (requestsArray, concurrentUsersArray, combinedStatsArray) =
+      Helper.prepareDocsForIngestion(
+        statsFilePath,
+        simLogFilePath,
+        responseFilePath,
+        testRunFilePath
       )
-    }
 
-    val requestJsonList = responses.par
-      .map(request => {
-        val gson = new Gson
-        val requestJson = parse(gson.toJson(request)).getOrElse(Json.Null)
-        if (requestJson == Json.Null) {
-          println("failed to parse json")
-        }
-        val combinedRequestJson = requestJson.deepMerge(metaJson)
-        combinedRequestJson
-      })
-      .toList
-    esClient.Instance.bulk(DATA_INDEX, requestJsonList)
+    esClient.Instance.bulk(GLOBAL_STATS_INDEX, combinedStatsArray)
+    esClient.Instance.bulk(DATA_INDEX, requestsArray)
+    esClient.Instance.bulk(USERS_INDEX, concurrentUsersArray)
 
-    val concurrentUsersJsonList = concurrentUsers.map(stat => {
-      val gson = new Gson
-      val json = parse(gson.toJson(stat)).getOrElse(Json.Null)
-      json.deepMerge(metaJson)
-    })
-
-    esClient.Instance.bulk(USERS_INDEX, concurrentUsersJsonList)
+    esClient.Instance.closeConnection()
   }
 
   @Test
@@ -204,7 +198,7 @@ class IngestionTest {
 
     client.Instance.bulk(
       indexArray(0).index,
-      docsArray.map(doc => doc.source).toList,
+      docsArray.map(doc => doc.source).toArray[Json],
       chunkSize = 1000
     )
 

@@ -2,14 +2,14 @@ package org.kibanaLoadTest.helpers
 
 import java.io.{BufferedReader, FileInputStream, InputStreamReader}
 import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
+import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
 object LogParser {
 
   def parseSimulationLog(
       filePath: String
-  ): (List[Request], List[UsersCount]) = {
-    val requests = new ListBuffer[Request]()
+  ): (Array[Request], Array[UsersCount]) = {
+    val requests = new ArrayBuffer[Request]()
     val concurrentUsersMap = mutable.SortedMap[String, Number]()
     val fsStream = new FileInputStream(filePath)
     val br = new BufferedReader(new InputStreamReader(fsStream))
@@ -43,8 +43,10 @@ object LogParser {
     fsStream.close()
 
     (
-      requests.toList,
-      concurrentUsersMap.map { case (k, v) => UsersCount(k, v) }.toList
+      requests.toArray[Request],
+      concurrentUsersMap
+        .map { case (k, v) => UsersCount(k, v) }
+        .toArray[UsersCount]
     )
   }
 
