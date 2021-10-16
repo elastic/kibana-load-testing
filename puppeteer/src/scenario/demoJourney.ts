@@ -77,5 +77,5 @@ async function waitForChartToLoad(page: puppeteer.Page) {
     }
     await page.waitForSelector(dataTestSubj('loadingSpinner'), { hidden: true });
     await page.waitForFunction("document.querySelectorAll('[data-ech-render-complete=true]').length == 1");
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(10000);
 }
