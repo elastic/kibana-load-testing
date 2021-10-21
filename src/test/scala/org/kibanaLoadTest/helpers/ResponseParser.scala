@@ -97,6 +97,11 @@ object ResponseParser {
             .getOrElse("")
         }
 
+        if (status == "OK") {
+          responseHeaders = ""
+          responseBody = ""
+        }
+
         responseList += Response(
           userId,
           name,
