@@ -1,53 +1,47 @@
 import puppeteer from 'puppeteer';
 import { Config } from '../types/config'
-import { dataTestSubj } from '../puppeteer/helpers'
+import { dataTestSubj, navigate, loginIfNeeded } from '../puppeteer/helpers'
+import { PendingRequests } from '../puppeteer/pendingRequests'
 
 export async function run(options: Config, page: puppeteer.Page) {
-    await page.goto(options.baseUrl, {
-        waitUntil: 'networkidle0',
-    });
-
-    //login
-    const cloudLoginLocator = dataTestSubj('loginCard-basic/cloud-basic')
-    if (await page.$(cloudLoginLocator) !== null) {
-        await page.click(cloudLoginLocator);
-    }
-
-    await page.type(dataTestSubj('loginUsername'), options.username);
-    await page.type(dataTestSubj('loginPassword'), options.password);
-    await page.click(dataTestSubj('loginSubmit'));
-    await page.waitForNavigation({ waitUntil: 'networkidle0' });
-
+    // loading Kibana
+    await navigate(page, options.baseUrl);
+    await loginIfNeeded(options, page);
     // go to discover
+    let pendingXHR = new PendingRequests(page);
     await page.goto(options.baseUrl + `/app/discover`
         , {
             waitUntil: 'networkidle0',
         });
     await page.waitForSelector(dataTestSubj('loadingSpinner'), { hidden: true });
-
+    await pendingXHR.waitOnceForAllXhrFinished();
     // console.log('2nd query')
+    pendingXHR = new PendingRequests(page);
     await selectDatePicker({ num: '5', unit: 'd' }, page)
     await waitForChartToLoad(page);
-
+    await pendingXHR.waitOnceForAllXhrFinished();
     // console.log('3rd query')
+    pendingXHR = new PendingRequests(page);
     await selectDatePicker({ num: '30', unit: 'd' }, page)
     await waitForChartToLoad(page);
+    await pendingXHR.waitOnceForAllXhrFinished();
 
     // load dashboard
+    pendingXHR = new PendingRequests(page);
     await page.goto(options.baseUrl + '/app/dashboards#/view/722b74f0-b882-11e8-a6d9-e546fe2bba5f', {
         waitUntil: 'networkidle0',
     });
     await page.waitForFunction(`document.querySelectorAll('[data-test-subj="dashboardPanel"]').length == 15`);
-    await page.waitForTimeout(5000);
+    await pendingXHR.waitOnceForAllXhrFinished();
 
     // load canvas workpad
-    await page.goto(options.baseUrl + '/app/canvas#/', {
-        waitUntil: 'networkidle0',
-    });
+    await navigate(page, options.baseUrl + '/app/canvas#/');
+    pendingXHR = new PendingRequests(page);
     await page.goto(options.baseUrl + '/app/canvas#/workpad/workpad-e08b9bdb-ec14-4339-94c4-063bddfd610e', {
         waitUntil: 'networkidle0',
     });
-    await page.waitForTimeout(5000);
+    await page.waitForFunction(`document.querySelectorAll('[data-test-subj="canvasWorkpadPage"] [data-test-subj="canvasWorkpadPageElementContent"]').length == 25`);
+    await pendingXHR.waitOnceForAllXhrFinished();
 }
 
 async function selectDatePicker(value: { num: string, unit: string }, page: puppeteer.Page) {
@@ -77,5 +71,4 @@ async function waitForChartToLoad(page: puppeteer.Page) {
     }
     await page.waitForSelector(dataTestSubj('loadingSpinner'), { hidden: true });
     await page.waitForFunction("document.querySelectorAll('[data-ech-render-complete=true]').length == 1");
-    await page.waitForTimeout(10000);
 }
