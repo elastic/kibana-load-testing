@@ -44,7 +44,7 @@ process.on('unhandledRejection', error => {
             throw new Error(chalk.red(`Invalid 'version'=${config.version}, valid example: '7.12.1'`));
         }
 
-        const scenarios = ['demoJourney']
+        const scenarios = ['demoJourney', 'lensJourney', 'tsvbGaugeJourney', 'tsvbTimeSeriesJourney']
         await scenarioRunner(config, scenarios)
     } catch (err) {
         console.log(err);

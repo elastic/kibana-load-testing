@@ -86,6 +86,7 @@ export function compareWithBaseline(scenario: string, actualSequence: Map<string
         } else {
             arr.push(...actualUrls.map(el => `${el} - new request`))
             newOnes.set(path, actualUrls);
+            isUpdateRequired = true;
         }
         verifiedSequence.set(path, arr);
     });
