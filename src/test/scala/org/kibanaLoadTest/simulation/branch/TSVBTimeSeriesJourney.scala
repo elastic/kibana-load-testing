@@ -8,7 +8,7 @@ import org.kibanaLoadTest.simulation.BaseSimulation
 class TSVBTimeSeriesJourney extends BaseSimulation {
   val scenarioName = s"TimeSeries journey ${appConfig.buildVersion}"
 
-  props.maxUsers = 1200
+  props.maxUsers = 1500
 
   val scn: ScenarioBuilder = scenario(scenarioName)
     .exec(
