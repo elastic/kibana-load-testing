@@ -5,7 +5,7 @@ def loadPipeline
 pipeline {
     agent { label 'docker && tests-xxl' }
     parameters {
-        string(name: 'SIMULATION', defaultValue: 'DiscoverJourney,CanvasJourney,DashboardJourney,AtOnceJourney,DiscoverAtOnce,TSVBGaugeJourney,TSVBTimeSeriesJourney,LensJourney', description: 'Comma-separated simulation list')
+        string(name: 'SIMULATION', defaultValue: 'CanvasJourney,DiscoverJourney,DashboardJourney,AtOnceJourney,DiscoverAtOnce,TSVBGaugeJourney,TSVBTimeSeriesJourney,LensJourney,DemoJourney', description: 'Comma-separated simulation list')
     }
     options {
         timeout(time: 180, unit: 'MINUTES')

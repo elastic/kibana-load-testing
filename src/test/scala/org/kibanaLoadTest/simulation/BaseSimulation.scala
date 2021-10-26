@@ -98,9 +98,9 @@ class BaseSimulation extends Simulation {
     // saving deployment info to target/lastRun.txt"
     SimulationHelper.saveRunConfiguration(appConfig, props.maxUsers)
     // load sample data
-    // httpHelper.addSampleData("ecommerce")
+    httpHelper.addSampleData("ecommerce")
     // wait 30s for data ingestion to be completed
-    // Thread.sleep(30 * 1000)
+    Thread.sleep(30 * 1000)
   }
 
   after {
@@ -115,7 +115,7 @@ class BaseSimulation extends Simulation {
     } else {
       // remove sample data
       try {
-        // httpHelper.removeSampleData("ecommerce")
+        httpHelper.removeSampleData("ecommerce")
       } catch {
         case e: java.lang.RuntimeException =>
           println(s"Can't remove sample data\n ${e.printStackTrace()}")
