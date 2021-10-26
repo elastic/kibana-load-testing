@@ -3,194 +3,361 @@
     {
       "functionName": "pointseries",
       "args": {
-        "x": "@timestamp",
-        "y": "value"
+        "color": "category",
+        "size": "percentage"
       },
       "context": {
-        "type": "datatable",
-        "meta": {
-          "source": "timelion"
-        },
         "columns": [
           {
-            "id": "@timestamp",
-            "name": "@timestamp",
+            "id": "category",
+            "name": "category",
             "meta": {
-              "type": "date"
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
             }
           },
           {
-            "id": "value",
-            "name": "value",
+            "id": "count",
+            "name": "count",
             "meta": {
               "type": "number"
             }
           },
           {
-            "id": "label",
-            "name": "label",
+            "id": "total",
+            "name": "total",
             "meta": {
-              "type": "string"
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
             }
           }
         ],
         "rows": [
           [
-            1632355200000,
-            10578.53125,
-            "q:* > sum(taxless_total_price)"
+            "Men's Clothing",
+            2024,
+            7409,
+            27.32
           ],
           [
-            1632441600000,
-            10448,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1632528000000,
-            10283.484375,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1632614400000,
-            10145.5234375,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1632700800000,
-            12012.609375,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1632787200000,
-            11009.45703125,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1632873600000,
-            10720.59375,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1632960000000,
-            11185.3671875,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1633046400000,
-            13560.140625,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1633132800000,
-            9884.78125,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1633219200000,
-            11075.65625,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1633305600000,
-            10323.8515625,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1633392000000,
-            10369.546875,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1633478400000,
-            11711.890625,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1633564800000,
-            12612.6640625,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1633651200000,
-            10176.87890625,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1633737600000,
-            11480.33203125,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1633824000000,
-            11533.265625,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1633910400000,
-            10499.8125,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1633996800000,
-            12111.6875,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1634083200000,
-            10530.765625,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1634169600000,
-            11872.5625,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1634256000000,
-            12109.453125,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1634342400000,
-            11057.40625,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1634428800000,
-            13095.609375,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1634515200000,
-            12574.015625,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1634601600000,
-            11188.1875,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1634688000000,
-            12117.65625,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1634774400000,
-            11558.25,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1634860800000,
-            11921.1171875,
-            "q:* > sum(taxless_total_price)"
-          ],
-          [
-            1634947200000,
-            11135.03125,
-            "q:* > sum(taxless_total_price)"
+            "Other",
+            5385,
+            7409,
+            72.68
           ]
-        ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "color": "category",
+        "size": "percentage"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "category",
+            "name": "category",
+            "meta": {
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
+            }
+          },
+          {
+            "id": "count",
+            "name": "count",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "total",
+            "name": "total",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            "Other",
+            5506,
+            7409,
+            74.32
+          ],
+          [
+            "Women's Clothing",
+            1903,
+            7409,
+            25.68
+          ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "color": "category",
+        "size": "percentage"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "category",
+            "name": "category",
+            "meta": {
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
+            }
+          },
+          {
+            "id": "count",
+            "name": "count",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "total",
+            "name": "total",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            "Men's Accessories",
+            572,
+            7409,
+            7.72
+          ],
+          [
+            "Other",
+            6837,
+            7409,
+            92.28
+          ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "color": "category",
+        "size": "percentage"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "category",
+            "name": "category",
+            "meta": {
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
+            }
+          },
+          {
+            "id": "count",
+            "name": "count",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "total",
+            "name": "total",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            "Other",
+            6273,
+            7409,
+            84.67
+          ],
+          [
+            "Women's Shoes",
+            1136,
+            7409,
+            15.33
+          ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "color": "category",
+        "size": "percentage"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "category",
+            "name": "category",
+            "meta": {
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
+            }
+          },
+          {
+            "id": "count",
+            "name": "count",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "total",
+            "name": "total",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            "Other",
+            6579,
+            7409,
+            88.8
+          ],
+          [
+            "Women's Accessories",
+            830,
+            7409,
+            11.2
+          ]
+        ],
+        "type": "datatable"
+      }
+    },
+    {
+      "functionName": "pointseries",
+      "args": {
+        "color": "category",
+        "size": "percentage"
+      },
+      "context": {
+        "columns": [
+          {
+            "id": "category",
+            "name": "category",
+            "meta": {
+              "type": "string",
+              "params": {
+                "id": "string"
+              }
+            }
+          },
+          {
+            "id": "count",
+            "name": "count",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "total",
+            "name": "total",
+            "meta": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "percentage",
+            "name": "percentage",
+            "meta": {
+              "type": "number",
+              "params": {
+                "id": "number"
+              }
+            }
+          }
+        ],
+        "rows": [
+          [
+            "Other",
+            6465,
+            7409,
+            87.26
+          ],
+          [
+            "Men's Shoes",
+            944,
+            7409,
+            12.74
+          ]
+        ],
+        "type": "datatable"
       }
     }
   ]

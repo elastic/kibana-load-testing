@@ -5,7 +5,7 @@ def loadPipeline
 pipeline {
     agent { label 'docker && tests-xxl' }
     parameters {
-        string(name: 'SIMULATION', defaultValue: 'branch.DemoJourney,branch.AtOnceJourney,branch.DiscoverAtOnce,branch.TSVBGaugeJourney,branch.TSVBTimeSeriesJourney,branch.LensJourney', description: 'Comma-separated simulation list')
+        string(name: 'SIMULATION', defaultValue: 'DiscoverJourney,CanvasJourney,DashboardJourney,AtOnceJourney,DiscoverAtOnce,TSVBGaugeJourney,TSVBTimeSeriesJourney,LensJourney', description: 'Comma-separated simulation list')
     }
     options {
         timeout(time: 180, unit: 'MINUTES')
@@ -52,7 +52,7 @@ pipeline {
                                 sh """
                                 export HOME=${env.WORKSPACE}
                                 export KIBANA_BRANCH=${env.KIBANA_BRANCH}
-                                ./kibana-load-testing/scripts/build_and_test.sh -s '${params.SIMULATION}'
+                                ./kibana-load-testing/scripts/build_and_test.sh -s 'branch.${params.SIMULATION}'
                                 """
                             }
                         }
