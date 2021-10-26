@@ -52,7 +52,7 @@ pipeline {
                                 sh """
                                 export HOME=${env.WORKSPACE}
                                 export KIBANA_BRANCH=${env.KIBANA_BRANCH}
-                                ./kibana-load-testing/scripts/build_and_test.sh -s 'branch.${params.SIMULATION}'
+                                ./kibana-load-testing/scripts/build_and_test.sh -s '${params.SIMULATION}'
                                 """
                             }
                         }
