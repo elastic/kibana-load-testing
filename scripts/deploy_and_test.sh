@@ -42,7 +42,7 @@ for version in "${version_array[@]}"; do
   for i in $(seq "$test_runs_number"); do
     for j in "${sim_array[@]}"; do
       echo "Running simulation $j $i-time..."
-      mvn gatling:test -q -DdeploymentId="${deploymentId}" -Dgatling.simulationClass=org.kibanaLoadTest.simulation.$j
+      mvn gatling:test -q -DdeploymentId="${deploymentId}" -Dgatling.simulationClass=org.kibanaLoadTest.simulation.cloud.$j
       # wait a minute between scenarios
       sleep 2m
     done
