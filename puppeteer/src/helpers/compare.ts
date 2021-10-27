@@ -8,8 +8,8 @@ export function compareWithBaseline(scenario: string, actualSequence: Map<string
         'POST /api/saved_objects/_bulk_get 200',
         'POST /api/saved_objects/_bulk_resolve 200',
         'POST /api/canvas/fns?compress=true 200',
-        'GET /api/canvas/workpad/resolve/workpad-e08b9bdb-ec14-4339-94c4-063bddfd610e', // https://github.com/elastic/kibana/issues/114340
-        'POST /internal/global_search/find'
+        'GET /api/canvas/workpad/resolve/workpad-e08b9bdb-ec14-4339-94c4-063bddfd610e 200', // https://github.com/elastic/kibana/issues/114340
+        'POST /internal/global_search/find 200'
     ];
     let isUpdateRequired = false;
     let baselinePath = resolve(__dirname, '..', '..', 'baseline', scenario, 'requests.json');
