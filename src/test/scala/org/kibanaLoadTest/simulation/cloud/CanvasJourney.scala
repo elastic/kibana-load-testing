@@ -6,7 +6,7 @@ import org.kibanaLoadTest.scenario.{Canvas, Login}
 import org.kibanaLoadTest.simulation.BaseSimulation
 
 class CanvasJourney extends BaseSimulation {
-  val scenarioName = s"Canvas journey ${appConfig.buildVersion}"
+  val scenarioName = s"Cloud canvas journey ${appConfig.buildVersion}"
 
   props.maxUsers = 400
 
