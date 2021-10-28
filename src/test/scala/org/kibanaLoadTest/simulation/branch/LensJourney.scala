@@ -6,7 +6,7 @@ import org.kibanaLoadTest.scenario.{Lens, Login}
 import org.kibanaLoadTest.simulation.BaseSimulation
 
 class LensJourney extends BaseSimulation {
-  val scenarioName = s"Lens journey ${appConfig.buildVersion}"
+  val scenarioName = s"Branch lens journey ${appConfig.buildVersion}"
 
   props.maxUsers = 1500
 

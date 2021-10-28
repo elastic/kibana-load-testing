@@ -15,7 +15,7 @@ import java.util.Calendar
 
 class DiscoverAtOnce extends BaseSimulation {
   def scenarioName(module: String): String = {
-    s"Local discover atOnce $module ${appConfig.buildVersion}"
+    s"Branch discover atOnce $module ${appConfig.buildVersion}"
   }
 
   props.maxUsers = 500

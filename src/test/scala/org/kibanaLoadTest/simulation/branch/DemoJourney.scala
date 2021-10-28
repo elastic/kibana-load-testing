@@ -6,7 +6,7 @@ import org.kibanaLoadTest.scenario.{Canvas, Dashboard, Discover, Login, Home}
 import org.kibanaLoadTest.simulation.BaseSimulation
 
 class DemoJourney extends BaseSimulation {
-  val scenarioName = s"Demo journey ${appConfig.buildVersion}"
+  val scenarioName = s"Branch demo journey ${appConfig.buildVersion}"
 
   props.maxUsers = 800
 
