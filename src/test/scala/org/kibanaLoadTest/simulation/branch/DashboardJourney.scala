@@ -2,13 +2,13 @@ package org.kibanaLoadTest.simulation.branch
 
 import io.gatling.core.Predef._
 import io.gatling.core.structure.ScenarioBuilder
-import org.kibanaLoadTest.scenario.{Login, Visualize}
+import org.kibanaLoadTest.scenario.{Dashboard, Login}
 import org.kibanaLoadTest.simulation.BaseSimulation
 
-class TSVBGaugeJourney extends BaseSimulation {
-  val scenarioName = s"Gauge journey ${appConfig.buildVersion}"
+class DashboardJourney extends BaseSimulation {
+  val scenarioName = s"Dashboard journey ${appConfig.buildVersion}"
 
-  props.maxUsers = 1500
+  props.maxUsers = 1300
 
   val scn: ScenarioBuilder = scenario(scenarioName)
     .exec(
@@ -20,17 +20,7 @@ class TSVBGaugeJourney extends BaseSimulation {
         )
         .pause(5)
     )
-    .exec(
-      Visualize
-        .load(
-          "tsvb",
-          "b80e6540-b891-11e8-a6d9-e546fe2bba5f",
-          "data/visualize/gauge_sold_per_day.json",
-          appConfig.baseUrl,
-          defaultHeaders
-        )
-        .pause(5)
-    )
+    .exec(Dashboard.load(appConfig.baseUrl, defaultHeaders).pause(10))
 
   setUp(
     scn
