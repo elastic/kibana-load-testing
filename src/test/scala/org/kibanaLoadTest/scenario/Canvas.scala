@@ -24,7 +24,6 @@ object Canvas {
     exec(
       http("canvas: fns")
         .get("/api/canvas/fns")
-        .queryParam("compress", "true")
         .headers(defaultHeaders)
         .check(status.is(200))
     ).exec(
@@ -65,13 +64,6 @@ object Canvas {
       )
       .pause(1)
       .exec(
-        http("canvas: workpad/resolve")
-          .get("/api/canvas/workpad/resolve/${workpadId}")
-          .headers(headersWithXsrf)
-          .check(status.is(200))
-      )
-      .pause(1)
-      .exec(
         http("canvas: bsearch 1")
           .post("/internal/bsearch")
           .queryParam("compress", "true")
@@ -86,15 +78,6 @@ object Canvas {
         http("canvas: run query 2")
           .post("/api/timelion/run")
           .body(ElFileBody("data/canvas/timelion.json"))
-          .asJson
-          .headers(headersWithXsrf)
-          .check(status.is(200))
-      )
-      .pause(1)
-      .exec(
-        http("canvas: workpad-structures")
-          .put("/api/canvas/workpad-structures/${workpadId}")
-          .body(ElFileBody("data/canvas/workpad-structures.json"))
           .asJson
           .headers(headersWithXsrf)
           .check(status.is(200))
@@ -148,61 +131,6 @@ object Canvas {
           .post("/api/canvas/fns")
           .queryParam("compress", "true")
           .body(ElFileBody("data/canvas/fns3.json"))
-          .asJson
-          .headers(defaultHeaders)
-          .check(status.is(200))
-      )
-      .pause(1)
-      .exec(
-        http("canvas: run query 4")
-          .post("/api/timelion/run")
-          .body(ElFileBody("data/canvas/timelion.json"))
-          .asJson
-          .headers(headersWithXsrf)
-          .check(status.is(200))
-      )
-      .pause(1)
-      .exec(
-        http("canvas: fns 4")
-          .post("/api/canvas/fns")
-          .queryParam("compress", "true")
-          .body(ElFileBody("data/canvas/fns4.json"))
-          .asJson
-          .headers(defaultHeaders)
-          .check(status.is(200))
-      )
-      .exec(
-        http("canvas: fns 5")
-          .post("/api/canvas/fns")
-          .queryParam("compress", "true")
-          .body(ElFileBody("data/canvas/fns5.json"))
-          .asJson
-          .headers(defaultHeaders)
-          .check(status.is(200))
-      )
-      .pause(1)
-      .exec(
-        http("canvas: run query 5")
-          .post("/api/timelion/run")
-          .body(ElFileBody("data/canvas/timelion.json"))
-          .asJson
-          .headers(headersWithXsrf)
-          .check(status.is(200))
-      )
-      .exec(
-        http("canvas: fns 6")
-          .post("/api/canvas/fns")
-          .queryParam("compress", "true")
-          .body(ElFileBody("data/canvas/fns6.json"))
-          .asJson
-          .headers(defaultHeaders)
-          .check(status.is(200))
-      )
-      .exec(
-        http("canvas: fns 7")
-          .post("/api/canvas/fns")
-          .queryParam("compress", "true")
-          .body(ElFileBody("data/canvas/fns7.json"))
           .asJson
           .headers(defaultHeaders)
           .check(status.is(200))

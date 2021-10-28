@@ -1,4 +1,4 @@
-package org.kibanaLoadTest.simulation.branch
+package org.kibanaLoadTest.simulation.cloud
 
 import io.gatling.core.Predef._
 import io.gatling.core.structure.ScenarioBuilder
@@ -8,7 +8,7 @@ import org.kibanaLoadTest.simulation.BaseSimulation
 class TSVBGaugeJourney extends BaseSimulation {
   val scenarioName = s"Gauge journey ${appConfig.buildVersion}"
 
-  props.maxUsers = 1500
+  props.maxUsers = 600
 
   val scn: ScenarioBuilder = scenario(scenarioName)
     .exec(
@@ -35,7 +35,7 @@ class TSVBGaugeJourney extends BaseSimulation {
   setUp(
     scn
       .inject(
-        constantConcurrentUsers(20) during (1 * 60), // 1
+        constantConcurrentUsers(20) during (3 * 60), // 1
         rampConcurrentUsers(20) to props.maxUsers during (3 * 60) // 2
       )
       .protocols(httpProtocol)

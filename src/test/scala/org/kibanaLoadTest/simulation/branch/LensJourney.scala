@@ -8,7 +8,7 @@ import org.kibanaLoadTest.simulation.BaseSimulation
 class LensJourney extends BaseSimulation {
   val scenarioName = s"Lens journey ${appConfig.buildVersion}"
 
-  props.maxUsers = 1200
+  props.maxUsers = 1500
 
   val scn: ScenarioBuilder = scenario(scenarioName)
     .exec(
@@ -33,7 +33,7 @@ class LensJourney extends BaseSimulation {
   setUp(
     scn
       .inject(
-        constantConcurrentUsers(20) during (3 * 60), // 1
+        constantConcurrentUsers(20) during (1 * 60), // 1
         rampConcurrentUsers(20) to props.maxUsers during (3 * 60) // 2
       )
       .protocols(httpProtocol)

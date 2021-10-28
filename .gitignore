@@ -44,3 +44,6 @@ java_pid*.hprof
 puppeteer/node_modules
 puppeteer/output
 puppeteer/.vscode
+
+.bsp/
+project/
