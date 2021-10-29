@@ -8,7 +8,7 @@ import org.kibanaLoadTest.simulation.BaseSimulation
 class DiscoverJourney extends BaseSimulation {
   val scenarioName = s"Cloud discover journey ${appConfig.buildVersion}"
 
-  props.maxUsers = 400
+  props.maxUsers = 300
 
   val scn: ScenarioBuilder = scenario(scenarioName)
     .exec(
