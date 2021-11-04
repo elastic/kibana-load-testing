@@ -6,6 +6,7 @@ pipeline {
     agent { label 'docker && tests-xxl' }
     parameters {
         string(name: 'SIMULATION', defaultValue: 'CanvasJourney,DiscoverJourney,DashboardJourney,AtOnceJourney,DiscoverAtOnce,TSVBGaugeJourney,TSVBTimeSeriesJourney,LensJourney,DemoJourney', description: 'Comma-separated simulation list')
+        string(name: 'GITHUB_KIBANA_BRANCH', defaultValue: '7.16', description: 'The Git branch specifier to build (branch, tag, commit hash, etc)')
     }
     options {
         timeout(time: 180, unit: 'MINUTES')
