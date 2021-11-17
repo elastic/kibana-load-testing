@@ -87,7 +87,7 @@ nohup ./metricbeat > metricbeat.log 2>&1 &
 popd
 
 echo " -> Running gatling load testing"
-IFS=',' read -ra sim_array <<< "${simulation}"
+IFS=',' read -ra sim_array <<< "${simulations}"
 for i in "${sim_array[@]}"; do
   export GATLING_SIMULATIONS="$i"
   node scripts/functional_tests \
