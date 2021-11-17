@@ -93,7 +93,7 @@ for i in "${sim_array[@]}"; do
   node scripts/functional_tests \
     --kibana-install-dir "$KIBANA_INSTALL_DIR" \
     --config test/load/config.ts;
-fi
+done
 
 echo " -> Simulations run is finished"
 
