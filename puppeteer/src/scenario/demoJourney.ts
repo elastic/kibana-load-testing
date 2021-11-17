@@ -14,6 +14,10 @@ export async function run(options: Config, page: puppeteer.Page) {
             waitUntil: 'networkidle0',
         });
     await page.waitForSelector(dataTestSubj('loadingSpinner'), { hidden: true });
+    await page.click(dataTestSubj('indexPattern-switch-link'));
+    await page.waitForSelector(dataTestSubj('indexPattern-switcher'));
+    await page.click('li[title="kibana_sample_data_ecommerce"]');
+    await page.waitForSelector(dataTestSubj('loadingSpinner'), { hidden: true });
     await pendingXHR.waitOnceForAllXhrFinished();
     // console.log('2nd query')
     pendingXHR = new PendingRequests(page);
