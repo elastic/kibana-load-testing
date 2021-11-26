@@ -1,0 +1,11 @@
+{
+    "branch.CanvasJourney": "",
+    "branch.DiscoverJourney": "",
+    "branch.DashboardJourney": "",
+    "branch.AtOnceJourney": "",
+    "branch.DiscoverAtOnce": "",
+    "branch.TSVBGaugeJourney": "tsvbGaugeJourney",
+    "branch.TSVBTimeSeriesJourney": "tsvbTimeSeriesJourney",
+    "branch.LensJourney": "lensJourney",
+    "branch.DemoJourney": "demoJourney"
+}
