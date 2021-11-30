@@ -22,8 +22,8 @@ object Visualize {
         .set("preference", System.currentTimeMillis())
         .set("sessionId", Helper.generateUUID)
     ).exec(
-        http("saved_objects/_bulk_get")
-          .post("/api/saved_objects/_bulk_get")
+        http("saved_objects/_bulk_resolve")
+          .post("/api/saved_objects/_bulk_resolve")
           .headers(headers)
           .header("Referer", baseUrl + "/app/visualize")
           .body(

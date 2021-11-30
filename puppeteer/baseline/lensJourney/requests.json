@@ -15,9 +15,9 @@
         "GET /internal/security/me 200",
         "POST /api/saved_objects/_bulk_get 200",
         "GET /internal/security/me 200",
+        "GET /api/index_patterns/has_user_index_pattern 200",
         "GET /internal/security/session 200",
-        "GET /internal/spaces/_active_space 200",
-        "GET /api/index_patterns/has_user_index_pattern 200"
+        "GET /internal/spaces/_active_space 200"
     ],
     "/app/lens": [
         "POST /api/core/capabilities 200",
