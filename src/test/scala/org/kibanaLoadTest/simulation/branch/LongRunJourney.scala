@@ -8,7 +8,7 @@ import org.kibanaLoadTest.simulation.BaseSimulation
 class LongRunJourney extends BaseSimulation {
   val scenarioName = s"Long run journey ${appConfig.buildVersion}"
 
-  props.maxUsers = 100
+  props.maxUsers = 200
 
   val scn: ScenarioBuilder = scenario(scenarioName)
     .exec(
@@ -30,7 +30,7 @@ class LongRunJourney extends BaseSimulation {
       .inject(
         constantConcurrentUsers(20) during (1 * 60), // 1
         rampConcurrentUsers(20) to props.maxUsers during (1 * 60), // 2
-        constantConcurrentUsers(props.maxUsers) during (10 * 60) // 3
+        constantConcurrentUsers(props.maxUsers) during (15 * 60) // 3
       )
       .protocols(httpProtocol)
   ).maxDuration(props.simulationTimeout * 2)
