@@ -21,7 +21,7 @@ object Lens {
         .set("preference", System.currentTimeMillis())
         .set("sessionId", Helper.generateUUID)
     ).exec(
-        http("saved_objects/_bulk_resolve")
+        http("bulk_resolve: lens")
           .post("/api/saved_objects/_bulk_resolve")
           .headers(headers)
           .header("Referer", baseUrl + "/app/lens")
@@ -31,10 +31,23 @@ object Lens {
           .check(status.is(200))
           .check(
             jsonPath(
-              "$.saved_objects[?(@.id=='${vizId}')].references[?(@.name=='indexpattern-datasource-current-indexpattern')].id"
+              "$..saved_object.references[?(@.name=='indexpattern-datasource-current-indexpattern')].id"
             ).find
               .saveAs("indexPatternId")
           )
+      )
+      .pause(1)
+      .exec(
+        http("bulk_resolve: index-pattern")
+          .post("/api/saved_objects/_bulk_resolve")
+          .headers(headers)
+          .header("Referer", baseUrl + "/app/lens")
+          .body(
+            StringBody(
+              "[{\"id\":\"${indexPatternId}\",\"type\":\"index-pattern\"}]"
+            )
+          )
+          .check(status.is(200))
       )
       .pause(1)
       .exec(
