@@ -30,7 +30,7 @@ class LongRunJourney extends BaseSimulation {
       .inject(
         constantConcurrentUsers(20) during (1 * 60), // 1
         rampConcurrentUsers(20) to props.maxUsers during (1 * 60), // 2
-        constantConcurrentUsers(props.maxUsers) during (15 * 60) // 3
+        constantConcurrentUsers(props.maxUsers) during (20 * 60) // 3
       )
       .protocols(httpProtocol)
   ).maxDuration(props.simulationTimeout * 2)
