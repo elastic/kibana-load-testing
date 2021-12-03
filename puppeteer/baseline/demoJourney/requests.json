@@ -17,9 +17,9 @@
         "GET /api/fleet/check-permissions 200",
         "POST /api/saved_objects/_bulk_get 200",
         "GET /internal/security/me 200",
+        "GET /api/index_patterns/has_user_index_pattern 200",
         "GET /internal/security/session 200",
-        "GET /internal/spaces/_active_space 200",
-        "GET /api/index_patterns/has_user_index_pattern 200"
+        "GET /internal/spaces/_active_space 200"
     ],
     "/app/discover": [
         "POST /api/core/capabilities 200",
@@ -41,7 +41,6 @@
         "POST /internal/bsearch?compress=true 200",
         "POST /internal/bsearch?compress=true 200",
         "POST /internal/bsearch?compress=true 200",
-        "POST /internal/bsearch?compress=true 200",
         "POST /internal/bsearch?compress=true 200"
     ],
     "/app/dashboards": [
@@ -51,6 +50,7 @@
         "GET /internal/security/me 200",
         "GET /api/saved_objects_tagging/tags 200",
         "GET /internal/security/me 200",
+        "GET /api/fleet/check-permissions 200",
         "GET /api/licensing/info 200",
         "POST /api/saved_objects/_bulk_get 200",
         "GET /internal/security/session 200",
@@ -67,6 +67,8 @@
         "POST /internal/bsearch?compress=true 200",
         "POST /internal/bsearch?compress=true 200",
         "POST /internal/bsearch?compress=true 200",
+        "POST /internal/bsearch?compress=true 200",
+        "POST /internal/bsearch?compress=true 200",
         "POST /internal/bsearch?compress=true 200"
     ],
     "/app/canvas": [
@@ -74,9 +76,9 @@
         "POST /internal/licensing/feature_usage/register 200",
         "GET /api/banners/info 200",
         "GET /internal/security/me 200",
-        "GET /api/fleet/check-permissions 200",
         "GET /api/saved_objects_tagging/tags 200",
         "GET /internal/security/me 200",
+        "GET /api/fleet/check-permissions 200",
         "GET /api/licensing/info 200",
         "POST /api/saved_objects/_bulk_get 200",
         "GET /internal/security/session 200",
@@ -86,8 +88,10 @@
         "GET /api/canvas/workpad/find?perPage=10000&name= 200",
         "GET /api/canvas/workpad/resolve/workpad-e08b9bdb-ec14-4339-94c4-063bddfd610e 200",
         "POST /api/timelion/run 200",
+        "GET /api/canvas/workpad/resolve/workpad-e08b9bdb-ec14-4339-94c4-063bddfd610e 200",
         "POST /internal/bsearch?compress=true 200",
         "POST /api/timelion/run 200",
+        "POST /api/canvas/fns?compress=true 200",
         "POST /api/canvas/fns?compress=true 200",
         "POST /internal/bsearch?compress=true 200",
         "POST /api/timelion/run 200",
