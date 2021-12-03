@@ -2,7 +2,7 @@
     "/login?next=%2F": [
         "POST /api/core/capabilities?useDefaultCapabilities=true 200",
         "GET /api/banners/info 200",
-        "GET /api/fleet/check-permissions 200",
+        "GET /api/fleet/check-permissions 401",
         "GET /api/licensing/info 401",
         "GET /internal/security/login_state 200",
         "POST /internal/security/login 200"
