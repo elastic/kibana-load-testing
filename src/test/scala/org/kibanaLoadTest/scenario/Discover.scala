@@ -117,6 +117,7 @@ object Discover {
             .queryParam("meta_fields", "_type")
             .queryParam("meta_fields", "_index")
             .queryParam("meta_fields", "_score")
+            .queryParam("allow_no_index", "true")
             .headers(defaultHeaders)
             .asJson
             .check(status.is(200))

@@ -22,8 +22,8 @@ object Visualize {
         .set("preference", System.currentTimeMillis())
         .set("sessionId", Helper.generateUUID)
     ).exec(
-        http("saved_objects/_bulk_get")
-          .post("/api/saved_objects/_bulk_get")
+        http("bulk_resolve: visualization")
+          .post("/api/saved_objects/_bulk_resolve")
           .headers(headers)
           .header("Referer", baseUrl + "/app/visualize")
           .body(
@@ -31,9 +31,36 @@ object Visualize {
           )
           .check(status.is(200))
           .check(
-            jsonPath("$.saved_objects[0].references[0].id").find
+            jsonPath("$..references[0].id").find
               .saveAs("indexPatternId")
           )
+      )
+      .pause(1)
+      .exec(
+        http("bulk_resolve: index-pattern")
+          .post("/api/saved_objects/_bulk_resolve")
+          .headers(headers)
+          .header("Referer", baseUrl + "/app/visualize")
+          .body(
+            StringBody(
+              "[{\"id\":\"${indexPatternId}\",\"type\":\"index-pattern\"}]"
+            )
+          )
+          .check(status.is(200))
+      )
+      .pause(1)
+      .exec(
+        http("query index pattern meta fields")
+          .get("/api/index_patterns/_fields_for_wildcard")
+          .queryParam("pattern", "kibana_sample_data_ecommerce")
+          .queryParam("meta_fields", "_source")
+          .queryParam("meta_fields", "_id")
+          .queryParam("meta_fields", "_type")
+          .queryParam("meta_fields", "_index")
+          .queryParam("meta_fields", "_score")
+          .headers(headers)
+          .header("Referer", baseUrl + "/app/visualize")
+          .check(status.is(200))
       )
       .pause(1)
       .doIfOrElse(vizType == "tsvb") {
