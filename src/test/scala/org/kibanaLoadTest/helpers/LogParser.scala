@@ -2,19 +2,23 @@ package org.kibanaLoadTest.helpers
 
 import java.io.{BufferedReader, FileInputStream, InputStreamReader}
 import scala.collection.mutable
-import scala.collection.mutable.{ArrayBuffer, ListBuffer}
+import scala.collection.mutable.ArrayBuffer
+
+case class Users(count: Int, avgSessionTime: Long)
 
 object LogParser {
 
   def parseSimulationLog(
       filePath: String
-  ): (Array[Request], Array[UsersCount]) = {
+  ): (Array[Request], Array[UsersCount], Users) = {
     val requests = new ArrayBuffer[Request]()
     val concurrentUsersMap = mutable.SortedMap[String, Number]()
     val fsStream = new FileInputStream(filePath)
     val br = new BufferedReader(new InputStreamReader(fsStream))
     var strLine = br.readLine
-    var usersCount = 0
+    var concurrentUsersCount = 0
+    var totalUsersCount: Int = 0
+    var sessionsTime: Long = 0
     while (strLine != null) {
       /* collect only lines starting with REQUEST */
       // [REQUEST	10		login	1601482441483	1601482441868	OK	]
@@ -32,11 +36,20 @@ object LogParser {
       } else if (strLine.startsWith("USER")) {
         val statePattern = "START|END".r
         val state: String = statePattern.findFirstIn(strLine).get
-        usersCount = if (state == "START") usersCount + 1 else usersCount - 1
+        concurrentUsersCount =
+          if (state == "START") concurrentUsersCount + 1
+          else concurrentUsersCount - 1
         val timeStampEndPattern = "\\d{13,}$".r
         val timestamp: String =
           timeStampEndPattern.findFirstIn(strLine).getOrElse("")
-        concurrentUsersMap += (timestamp -> usersCount)
+        concurrentUsersMap += (timestamp -> concurrentUsersCount)
+        // collect total users & total user session time
+        if (state == "START") {
+          totalUsersCount = totalUsersCount + 1
+          sessionsTime = sessionsTime - timestamp.toLong
+        } else {
+          sessionsTime = sessionsTime + timestamp.toLong
+        }
       }
       strLine = br.readLine
     }
@@ -46,7 +59,8 @@ object LogParser {
       requests.toArray[Request],
       concurrentUsersMap
         .map { case (k, v) => UsersCount(k, v) }
-        .toArray[UsersCount]
+        .toArray[UsersCount],
+      Users(totalUsersCount, sessionsTime / totalUsersCount)
     )
   }
 
