@@ -18,7 +18,8 @@ object LogParser {
     var strLine = br.readLine
     var concurrentUsersCount = 0
     var totalUsersCount: Int = 0
-    var sessionsTime: Long = 0
+    val startTimeArr = new ArrayBuffer[Long]
+    val endTimeArr = new ArrayBuffer[Long]
     while (strLine != null) {
       /* collect only lines starting with REQUEST */
       // [REQUEST	10		login	1601482441483	1601482441868	OK	]
@@ -46,9 +47,9 @@ object LogParser {
         // collect total users & total user session time
         if (state == "START") {
           totalUsersCount = totalUsersCount + 1
-          sessionsTime = sessionsTime - timestamp.toLong
+          startTimeArr += timestamp.toLong
         } else {
-          sessionsTime = sessionsTime + timestamp.toLong
+          endTimeArr += timestamp.toLong
         }
       }
       strLine = br.readLine
@@ -60,7 +61,12 @@ object LogParser {
       concurrentUsersMap
         .map { case (k, v) => UsersCount(k, v) }
         .toArray[UsersCount],
-      Users(totalUsersCount, sessionsTime / totalUsersCount)
+      Users(
+        totalUsersCount,
+        (endTimeArr.sum - startTimeArr
+          .take(endTimeArr.length)
+          .sum) / totalUsersCount
+      )
     )
   }
 
