@@ -251,7 +251,7 @@ object Helper {
         Source.fromFile(statsFilePath).getLines().mkString
       )
     val statsJson = parse(statsJsonString).getOrElse(Json.Null)
-    val (requestsTimeline, concurrentUsers) =
+    val (requestsTimeline, concurrentUsers, usersStats) =
       LogParser.parseSimulationLog(simLogFilePath)
     val responses = ResponseParser.getRequests(responseFilePath)
 
@@ -273,8 +273,16 @@ object Helper {
     }
 
     val metaJson = Helper.getMetaJson(testRunFilePath, simLogFilePath)
+    val usersStatsJsonString: String = s"""
+      {
+      "totalUsersCount": ${usersStats.count},
+      "avgUserSessionTime": ${usersStats.avgSessionTime}
+      }
+    """
     // final Json objects to ingest
-    val combinedStatsJson = statsJson.deepMerge(metaJson)
+    val combinedStatsJson = statsJson
+      .deepMerge(metaJson)
+      .deepMerge(parse(usersStatsJsonString).getOrElse(Json.Null))
     val requestJsonArray = responses.par
       .map(response => {
         val gson = new Gson

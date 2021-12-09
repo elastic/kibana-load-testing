@@ -41,7 +41,7 @@ class IngestionTest {
         + File.separator + "test" + File.separator
         + "simulation.log"
     ).getAbsolutePath
-    val (requestsTimeline, concurrentUsers) =
+    val (requestsTimeline, concurrentUsers, usersStats) =
       LogParser.parseSimulationLog(logFilePath)
     assertEquals(
       expRequestRecordCount,
