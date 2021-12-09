@@ -275,7 +275,7 @@ object Helper {
     val metaJson = Helper.getMetaJson(testRunFilePath, simLogFilePath)
     val usersStatsJsonString: String = s"""
       {
-      "usersCountTotal": ${usersStats.count},
+      "totalUsersCount": ${usersStats.count},
       "avgUserSessionTime": ${usersStats.avgSessionTime}
       }
     """
