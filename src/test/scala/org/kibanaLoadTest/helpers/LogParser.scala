@@ -65,7 +65,7 @@ object LogParser {
         totalUsersCount,
         (endTimeArr.sum - startTimeArr
           .take(endTimeArr.length)
-          .sum) / totalUsersCount
+          .sum) / endTimeArr.length
       )
     )
   }
