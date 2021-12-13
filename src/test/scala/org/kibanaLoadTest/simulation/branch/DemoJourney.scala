@@ -8,7 +8,7 @@ import org.kibanaLoadTest.simulation.BaseSimulation
 class DemoJourney extends BaseSimulation {
   val scenarioName = s"Branch demo journey ${appConfig.buildVersion}"
 
-  props.maxUsers = 800
+  props.maxUsers = 400
 
   val scn: ScenarioBuilder = scenario(scenarioName)
     .exec(
