@@ -13,7 +13,7 @@ import org.kibanaLoadTest.simulation.BaseSimulation
 class CanvasJourney extends BaseSimulation {
   val scenarioName = s"Branch canvas journey ${appConfig.buildVersion}"
 
-  props.maxUsers = 300
+  props.maxUsers = 200
 
   val scn: ScenarioBuilder = scenario(scenarioName)
     .exec(
