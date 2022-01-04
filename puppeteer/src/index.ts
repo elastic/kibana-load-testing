@@ -8,6 +8,9 @@ import fs from 'fs'
 import { resolve } from 'path';
 import { Config } from './types/config'
 
+const debugConfigPath = './config_debug.json';
+const debugSimulation = 'branch.DemoJourney';
+
 process.on('unhandledRejection', error => {
     console.log(error);
 });
@@ -15,7 +18,12 @@ process.on('unhandledRejection', error => {
 (async function run() {
     try {
         let runConfig: Config;
-        const argv = await yargs
+        let simulation: string;
+        if (process.env.NODE_ENV === "debug") {
+            runConfig = JSON.parse(fs.readFileSync(resolve(debugConfigPath), 'utf8'));
+            simulation = debugSimulation
+        } else {
+            const argv = await yargs
             .version(false)
             .usage("Usage: --baseUrl http://localhost:5620 --username elastic --password changeme --version 8.0.0")
             .option("config", { alias: "config", describe: "Config file path", type: "string", demandOption: false })
@@ -27,7 +35,9 @@ process.on('unhandledRejection', error => {
             .option("scenarioCheck", { alias: "scenarioCheck", describe: "Check scenario up-to-date", type: "boolean", demandOption: false })
             .option("headless", { alias: "headless", describe: "Run browser headless", type: "boolean", demandOption: false })
             .argv;
-            const { config, simulation, baseUrl, username, password, version, scenarioCheck, headless } = argv
+            const { config, baseUrl, username, password, version, scenarioCheck, headless } = argv
+            simulation = argv.simulation
+
             if (config && fs.existsSync(resolve(config))) {
                 runConfig = JSON.parse(fs.readFileSync(resolve(config), 'utf8'));
                 if (baseUrl) {
@@ -59,6 +69,7 @@ process.on('unhandledRejection', error => {
                     runConfig = { baseUrl, username, password, version, scenarioCheck, headless }
                 } else throw new Error("missing arguments")
             }
+        }
 
         if (!isWebUri(runConfig.baseUrl)) {
             throw new Error(chalk.red(`Invalid 'baseUrl'=${runConfig.baseUrl}, valid example: 'http://localhost:5620'`));
