@@ -52,11 +52,11 @@ async function selectDatePicker(value: { num: string, unit: string }, page: pupp
     await page.waitForFunction(`document.querySelector('[data-test-subj="superDatePickerToggleQuickMenuButton"]') && document.querySelector('[data-test-subj="superDatePickerToggleQuickMenuButton"]').clientHeight != 0`);
     await page.click(dataTestSubj('superDatePickerShowDatesButton'));
     await page.waitForFunction(`document.querySelector('[data-test-subj="superDatePickerstartDatePopoverButton"]') && document.querySelector('[data-test-subj="superDatePickerstartDatePopoverButton"]').clientHeight != 0`);
-    await page.click(dataTestSubj('superDatePickerstartDatePopoverButton'));
     const input = await page.$(`[data-test-subj="superDatePickerRelativeDateInputNumber"]`);
     await input?.click({ clickCount: 3 });
     await page.keyboard.press('Backspace');
     await page.type(dataTestSubj('superDatePickerRelativeDateInputNumber'), value.num);
+    await page.waitForSelector(dataTestSubj('superDatePickerRelativeDateInputUnitSelector'));
     await page.select(dataTestSubj('superDatePickerRelativeDateInputUnitSelector'), value.unit);
     await page.click(dataTestSubj('superDatePickerstartDatePopoverButton'));
 
