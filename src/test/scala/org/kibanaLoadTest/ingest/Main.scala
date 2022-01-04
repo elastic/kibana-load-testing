@@ -8,6 +8,7 @@ import org.kibanaLoadTest.helpers.Helper.getReportFolderPaths
 import org.slf4j.{Logger, LoggerFactory}
 
 import java.nio.file.{Files, Paths}
+import scala.sys.exit
 
 object Main {
   val logger: Logger = LoggerFactory.getLogger("ingest:Main")
@@ -26,15 +27,20 @@ object Main {
     val username = System.getenv("USER_FROM_VAULT")
     val password = System.getenv("PASS_FROM_VAULT")
 
+    val reportFolders = getReportFolderPaths
+
+    if (reportFolders.isEmpty) {
+      logger.warn(s"0 reports found, stopping the process")
+      exit(0)
+    }
+
     val esConfig = new ESConfiguration(
       ConfigFactory.load
         .withValue("host", ConfigValueFactory.fromAnyRef(host))
         .withValue("username", ConfigValueFactory.fromAnyRef(username))
         .withValue("password", ConfigValueFactory.fromAnyRef(password))
     )
-
     val esClient = new ESClient(esConfig)
-    val reportFolders = getReportFolderPaths
 
     logger.info(s"Found ${reportFolders.length} Gatling reports")
     var i = 0

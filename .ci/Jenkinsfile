@@ -71,23 +71,13 @@ pipeline {
                                         ./kibana-load-testing/scripts/archive_results.sh                            
                                     """
                                     loadPipeline.uploadGatlingReport()
+                                    if (params.INGEST_RESULTS.toBoolean()) {
+                                        sh '''./kibana-load-testing/scripts/ingest_results.sh'''
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                success {
-                  script {
-                      if (params.INGEST_RESULTS.toBoolean()) {
-                          withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'host', variable_name: 'HOST_FROM_VAULT') {
-                              withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
-                                  withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
-                                      sh '''./kibana-load-testing/scripts/ingest_results.sh'''
-                                  }
-                              }
-                          }
-                      }
-                  }
                 }
             }
         }
