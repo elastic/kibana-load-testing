@@ -57,7 +57,7 @@ class HttpHelper(appConfig: KibanaConfiguration) {
 
       if (statusCode != appConfig.loginStatusCode) {
         throw new RuntimeException(
-          s"Login to Kibana failed with code ${statusCode}: $response"
+          s"Login to Kibana failed with code $statusCode: $response"
         )
       }
     }
@@ -220,7 +220,7 @@ class HttpHelper(appConfig: KibanaConfiguration) {
     http
       .baseUrl(appConfig.baseUrl)
       .inferHtmlResources(
-        BlackList(
+        DenyList(
           """.*\.js""",
           """.*\.css""",
           """.*\.gif""",
@@ -232,8 +232,7 @@ class HttpHelper(appConfig: KibanaConfiguration) {
           """.*\.(t|o)tf""",
           """.*\.png""",
           """.*detectportal\.firefox\.com.*"""
-        ),
-        WhiteList()
+        )
       )
       .acceptHeader(
         "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
