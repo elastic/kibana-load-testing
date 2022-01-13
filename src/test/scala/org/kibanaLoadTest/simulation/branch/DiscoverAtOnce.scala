@@ -18,7 +18,7 @@ class DiscoverAtOnce extends BaseSimulation {
     s"Branch discover atOnce $module ${appConfig.buildVersion}"
   }
 
-  props.maxUsers = 500
+  props.maxUsers = 300
 
   val scnDiscover1: ScenarioBuilder = scenario(scenarioName("discover query 1"))
     .exec(loginStep.pause(props.loginPause))
