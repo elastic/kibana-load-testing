@@ -96,6 +96,7 @@ popd
 
 export ELASTIC_APM_ACTIVE=true
 export ELASTIC_APM_MAX_QUEUE_SIZE=2048
+export ELASTIC_APM_CAPTURE_SPAN_STACK_TRACES=false
 
 echo " -> Running gatling load testing"
 IFS=',' read -ra sim_array <<< "${simulations}"
