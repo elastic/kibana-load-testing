@@ -94,6 +94,8 @@ nohup ./metricbeat > metricbeat.log 2>&1 &
 echo $! > mb_pid.txt
 popd
 
+export ELASTIC_APM_ACTIVE=true
+
 echo " -> Running gatling load testing"
 IFS=',' read -ra sim_array <<< "${simulations}"
 for i in "${sim_array[@]}"; do
