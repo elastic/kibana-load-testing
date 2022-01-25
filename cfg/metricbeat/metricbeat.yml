@@ -184,3 +184,4 @@ processors:
 # This allows to enable 6.7 migration aliases
 #migration.6_to_7.enabled: truefields.build: :
 logging.to_stderr: True
+monitoring.override_cluster_uuid: Dima-s-awesome-cluster
