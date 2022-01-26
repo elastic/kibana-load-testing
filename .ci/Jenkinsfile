@@ -3,7 +3,7 @@ library 'kibana-pipeline-library'
 def loadPipeline
 
 pipeline {
-    agent { label 'docker && tests-xxl' }
+    agent { label 'docker && metal' }
     parameters {
         string(name: 'SIMULATION', defaultValue: 'CanvasJourney,DiscoverJourney,DashboardJourney,AtOnceJourney,DiscoverAtOnce,TSVBGaugeJourney,TSVBTimeSeriesJourney,LensJourney,DemoJourney', description: 'Comma-separated simulation list')
         string(name: 'GITHUB_KIBANA_BRANCH', defaultValue: 'main', description: 'The Git branch specifier to build (branch, tag, commit hash, etc)')
