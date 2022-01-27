@@ -22,42 +22,49 @@ if [[ ! "$TASK_QUEUE_PROCESS_ID" ]]; then
     ./test/scripts/jenkins_xpack_build_plugins.sh
 fi
 
-echo " -> Configure Metricbeat monitoring"
-# Configure Metricbeat monitoring for Kibana and ElasticSearch, ingest monitoring data into Kibana Stats cluster
-# Getting the URL
-TOP="$(curl -L http://snapshots.elastic.co/latest/master.json)"
-MB_BUILD=$(echo $TOP | sed 's/.*"version" : "\(.*\)", "build_id.*/\1/')
-echo $MB_BUILD
-MB_BUILD_ID=$(echo $TOP | sed 's/.*"build_id" : "\(.*\)", "manifest_url.*/\1/')
+if [ -d "$KIBANA_DIR/metricbeat-install" ]; then
+  echo "Metricbeat already exists"
+else
+  echo " -> Configure Metricbeat monitoring"
+  # Configure Metricbeat monitoring for Kibana and ElasticSearch, ingest monitoring data into Kibana Stats cluster
+  # Getting the URL
+  TOP="$(curl -L http://snapshots.elastic.co/latest/master.json)"
+  MB_BUILD=$(echo $TOP | sed 's/.*"version" : "\(.*\)", "build_id.*/\1/')
+  echo $MB_BUILD
+  MB_BUILD_ID=$(echo $TOP | sed 's/.*"build_id" : "\(.*\)", "manifest_url.*/\1/')
 
-URL=https://snapshots.elastic.co/${MB_BUILD_ID}/downloads/beats/metricbeat/metricbeat-${MB_BUILD}-linux-x86_64.tar.gz
-URL=https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.11.0-linux-x86_64.tar.gz
-echo $URL
-# Downloading the Metricbeat package
-while [ 1 ]; do
-    wget -q --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0 --continue --no-check-certificate --tries=3 $URL
-    if [ $? = 0 ]; then break; fi; # check return value, break if successful (0)
-    sleep 1s;
-done;
+  URL=https://snapshots.elastic.co/${MB_BUILD_ID}/downloads/beats/metricbeat/metricbeat-${MB_BUILD}-linux-x86_64.tar.gz
+  URL=https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.11.0-linux-x86_64.tar.gz
+  echo $URL
+  # Downloading the Metricbeat package
+  while [ 1 ]; do
+      wget -q --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0 --continue --no-check-certificate --tries=3 $URL
+      if [ $? = 0 ]; then break; fi; # check return value, break if successful (0)
+      sleep 1s;
+  done;
 
-# Install Metricbeat
-echo "untar metricbeat and config"
-#tar -xzf metricbeat-${MB_BUILD}-linux-x86_64.tar.gz
-tar -xzf metricbeat-7.11.0-linux-x86_64.tar.gz
-#mv metricbeat-${MB_BUILD}-linux-x86_64 metricbeat-install
-mv metricbeat-7.11.0-linux-x86_64 metricbeat-install
+  # Install Metricbeat
+  echo "untar metricbeat and config"
+  #tar -xzf metricbeat-${MB_BUILD}-linux-x86_64.tar.gz
+  tar -xzf metricbeat-7.11.0-linux-x86_64.tar.gz
+  #mv metricbeat-${MB_BUILD}-linux-x86_64 metricbeat-install
+  mv metricbeat-7.11.0-linux-x86_64 metricbeat-install
 
-# Configure Metricbeat
-echo " -> Changing metricbeat config"
+  # Configure Metricbeat
+  echo " -> Changing metricbeat config"
+  pushd ../kibana-load-testing
+  cp cfg/metricbeat/elasticsearch-xpack.yml $KIBANA_DIR/metricbeat-install/modules.d/elasticsearch-xpack.yml
+  cp cfg/metricbeat/kibana-xpack.yml $KIBANA_DIR/metricbeat-install/modules.d/kibana-xpack.yml
+  echo "fields.build: ${BUILD_ID}" >> cfg/metricbeat/metricbeat.yml
+  echo "path.config: ${KIBANA_DIR}/metricbeat-install" >> cfg/metricbeat/metricbeat.yml
+  echo "cloud.auth: ${USER_FROM_VAULT}:${PASS_FROM_VAULT}" >> cfg/metricbeat/metricbeat.yml
+  cp cfg/metricbeat/metricbeat.yml $KIBANA_DIR/metricbeat-install/metricbeat.yml
+  # Disable system monitoring: enabled for now to have more data
+  #mv $KIBANA_DIR/metricbeat-install/modules.d/system.yml $KIBANA_DIR/metricbeat-install/modules.d/system.yml.disabled
+  popd
+fi
+
 pushd ../kibana-load-testing
-cp cfg/metricbeat/elasticsearch-xpack.yml $KIBANA_DIR/metricbeat-install/modules.d/elasticsearch-xpack.yml
-cp cfg/metricbeat/kibana-xpack.yml $KIBANA_DIR/metricbeat-install/modules.d/kibana-xpack.yml
-echo "fields.build: ${BUILD_ID}" >> cfg/metricbeat/metricbeat.yml
-echo "path.config: ${KIBANA_DIR}/metricbeat-install" >> cfg/metricbeat/metricbeat.yml
-echo "cloud.auth: ${USER_FROM_VAULT}:${PASS_FROM_VAULT}" >> cfg/metricbeat/metricbeat.yml
-cp cfg/metricbeat/metricbeat.yml $KIBANA_DIR/metricbeat-install/metricbeat.yml
-# Disable system monitoring: enabled for now to have more data
-#mv $KIBANA_DIR/metricbeat-install/modules.d/system.yml $KIBANA_DIR/metricbeat-install/modules.d/system.yml.disabled
 echo " -> Building puppeteer project"
 cd puppeteer
 yarn install && yarn build
@@ -84,6 +91,7 @@ source test/scripts/jenkins_test_setup_xpack.sh
 echo " -> Starting metricbeat"
 pushd $KIBANA_DIR/metricbeat-install
 nohup ./metricbeat > metricbeat.log 2>&1 &
+echo $! > mb_pid.txt
 popd
 
 echo " -> Running gatling load testing"
@@ -97,6 +105,12 @@ done
 
 echo " -> Simulations run is finished"
 
+#Close metricbeat at the end of simulations
+echo " -> Stopping metricbeat"
+pushd $KIBANA_DIR/metricbeat-install
+kill -9 `cat mb_pid.txt`
+rm mb_pid.txt
+popd
 # Show output of Metricbeat. Disabled. Enable for debug purposes
 #echo "output of metricbeat.log"
 #cat $KIBANA_DIR/metricbeat-install/metricbeat.log
