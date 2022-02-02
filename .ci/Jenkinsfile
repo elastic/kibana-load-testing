@@ -53,7 +53,7 @@ pipeline {
                                 sh """
                                 export HOME=${env.WORKSPACE}
                                 export KIBANA_BRANCH=${env.KIBANA_BRANCH}
-                                #./kibana-load-testing/scripts/build_and_test.sh -s '${params.SIMULATION}'
+                                ./kibana-load-testing/scripts/build_and_test.sh -s '${params.SIMULATION}'
                                 """
                             }
                         }
@@ -68,7 +68,7 @@ pipeline {
                                 withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
                                     sh """
                                         export HOME=${env.WORKSPACE}
-                                        #./kibana-load-testing/scripts/archive_results.sh
+                                        ./kibana-load-testing/scripts/archive_results.sh
                                     """
                                     loadPipeline.uploadGatlingReport()
                                     if (params.INGEST_RESULTS.toBoolean()) {
