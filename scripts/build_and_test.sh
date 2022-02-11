@@ -95,7 +95,6 @@ echo $! > mb_pid.txt
 popd
 
 export ELASTIC_APM_ACTIVE=true
-#export ELASTIC_APM_MAX_QUEUE_SIZE=20480
 
 echo " -> Running gatling load testing"
 IFS=',' read -ra sim_array <<< "${simulations}"
