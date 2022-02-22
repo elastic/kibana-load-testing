@@ -13,7 +13,7 @@ import org.elasticsearch.client.{
   RestClient,
   RestHighLevelClient
 }
-import org.elasticsearch.common.xcontent.XContentType
+import org.elasticsearch.xcontent.XContentType
 import org.kibanaLoadTest.ESConfiguration
 import org.slf4j.{Logger, LoggerFactory}
 

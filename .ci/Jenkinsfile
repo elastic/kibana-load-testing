@@ -3,9 +3,9 @@ library 'kibana-pipeline-library'
 def loadPipeline
 
 pipeline {
-    agent { label 'docker && tests-xxl' }
+    agent { label 'benchmarks' }
     parameters {
-        string(name: 'SIMULATION', defaultValue: 'CanvasJourney,DiscoverJourney,DashboardJourney,AtOnceJourney,DiscoverAtOnce,TSVBGaugeJourney,TSVBTimeSeriesJourney,LensJourney,DemoJourney', description: 'Comma-separated simulation list')
+        string(name: 'SIMULATION', defaultValue: 'CanvasJourney,DiscoverJourney,LensJourney', description: 'Comma-separated simulation list')
         string(name: 'GITHUB_KIBANA_BRANCH', defaultValue: 'main', description: 'The Git branch specifier to build (branch, tag, commit hash, etc)')
     }
     options {
@@ -39,11 +39,15 @@ pipeline {
                     $class: 'GitSCM',
                     branches: [[name: "${env.KIBANA_BRANCH}"]],
                     doGenerateSubmoduleConfigurations: false,
-                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'kibana']],
+                    extensions: [
+                        [$class: 'RelativeTargetDirectory', relativeTargetDir: 'kibana'],
+                        [$class: 'CloneOption', depth: 20, noTags: true, shallow: true]
+                    ],
                     submoduleCfg: [],
                     userRemoteConfigs: [[
                         credentialsId: 'f6c7695a-671e-4f4f-a331-acdce44ff9ba',
                         url: "git@github.com:${env.KIBANA_REPO_NAME}",
+                        refspec: '+refs/heads/main:refs/remotes/origin/main'
                     ]],
                 ])
                 script {
@@ -67,13 +71,14 @@ pipeline {
                             withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'username', variable_name: 'USER_FROM_VAULT') {
                                 withVaultSecret(secret: 'secret/kibana-issues/prod/coverage/elasticsearch', secret_field: 'password', variable_name: 'PASS_FROM_VAULT') {
                                     sh """
-                                        export HOME=${env.WORKSPACE}   
-                                        ./kibana-load-testing/scripts/archive_results.sh                            
+                                        export HOME=${env.WORKSPACE}
+                                        ./kibana-load-testing/scripts/archive_results.sh
                                     """
                                     loadPipeline.uploadGatlingReport()
                                     if (params.INGEST_RESULTS.toBoolean()) {
                                         sh '''./kibana-load-testing/scripts/ingest_results.sh'''
                                     }
+                                    deleteDir()
                                 }
                             }
                         }

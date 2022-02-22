@@ -76,7 +76,7 @@ setup.kibana:
 # `setup.kibana.host` options.
 # You can find the `cloud.id` in the Elastic Cloud web UI.
 cloud.id: kibana-code-coverage:ZXVyb3BlLXdlc3QxLmdjcC5jbG91ZC5lcy5pbyQxNDJmZWEyZDMwNDc0ODZlOTI1ZWI4YjIyMzU1OWNhZSRhNmIxMTgzZmQwZmI0ODZkYmRlMGU0YjYyODA0M2NmNA==
-
+output.elasticsearch.pipeline: cluster_uuid_pipeline
 # The cloud.auth setting overwrites the `output.elasticsearch.username` and
 # `output.elasticsearch.password` settings. The format is `<user>:<pass>`.
 #cloud.auth: beats_ingester:changeme   - replaced with Vault
@@ -184,3 +184,4 @@ processors:
 # This allows to enable 6.7 migration aliases
 #migration.6_to_7.enabled: truefields.build: :
 logging.to_stderr: True
+monitoring.override_cluster_uuid: Dima-s-awesome-cluster
