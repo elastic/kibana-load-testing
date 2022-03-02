@@ -10,6 +10,8 @@ done
 
 echo "Simulation classes: $simulations";
 
+sudo /usr/local/sbin/drop-caches
+
 cd kibana || exit
 echo "Prepare environment"
 ./src/dev/ci_setup/setup.sh
@@ -103,6 +105,7 @@ for i in "${sim_array[@]}"; do
   node scripts/functional_tests \
     --kibana-install-dir "$KIBANA_INSTALL_DIR" \
     --config test/load/config.ts;
+  sudo /usr/local/sbin/drop-caches
 done
 
 echo " -> Simulations run is finished"
