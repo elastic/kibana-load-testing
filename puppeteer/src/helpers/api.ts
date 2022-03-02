@@ -30,15 +30,18 @@ export async function loadSampleData(options: Config) {
         { headers: defaultHeaders },
         'Failed to login'
     )
-    const cookie = (authResponse?.headers['set-cookie'][0] as string).split(';')[0]
-    const headers = { ...defaultHeaders, cookie }
-    const ingestResponse = await post(
-        options.baseUrl + '/api/sample_data/ecommerce',
-        null,
-        { headers },
-        'Failed to load sample data'
-    )
-    if (ingestResponse.status != 200) {
-        throw Error(chalk.red(`Failed to load sample data: '${ingestResponse.statusText}'`))
-    }
+    const setCookieHeaders = authResponse.headers['set-cookie'];
+    if (setCookieHeaders) {
+        const cookie = setCookieHeaders[0].toString().split(';')[0];
+        const headers = { ...defaultHeaders, cookie };
+        const ingestResponse = await post(
+            options.baseUrl + '/api/sample_data/ecommerce',
+            null,
+            { headers },
+            'Failed to load sample data'
+        )
+        if (ingestResponse.status != 200) {
+            throw Error(chalk.red(`Failed to load sample data: '${ingestResponse.statusText}'`));
+        }
+    } else throw Error(chalk.red(`Failed to auth in Kibana, can't read 'set-cookie'`))
 }
