@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { scenarioRunner } from './runner';
-import yargs = require("yargs");
+import yargs from 'yargs';
 import { isWebUri } from 'valid-url'
 import chalk from 'chalk'
 import fs from 'fs'
