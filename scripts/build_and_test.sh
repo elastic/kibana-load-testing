@@ -99,6 +99,8 @@ export ELASTIC_APM_ACTIVE=true
 echo " -> Running gatling load testing"
 IFS=',' read -ra sim_array <<< "${simulations}"
 for i in "${sim_array[@]}"; do
+  echo "Running sudo /usr/local/sbin/drop-caches";
+  sudo /usr/local/sbin/drop-caches
   export GATLING_SIMULATIONS="$i"
   node scripts/functional_tests \
     --kibana-install-dir "$KIBANA_INSTALL_DIR" \
