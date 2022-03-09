@@ -82,7 +82,7 @@ pipeline {
                                             }
                                         } catch (err) {
                                             echo err.getMessage()
-                                            currentStage.result='FAILURE'
+                                            currentBuild.result = 'FAILURE'
                                         } finally {
                                             deleteDir()
                                         }
