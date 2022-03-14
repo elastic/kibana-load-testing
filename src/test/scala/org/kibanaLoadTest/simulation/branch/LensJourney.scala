@@ -2,15 +2,12 @@ package org.kibanaLoadTest.simulation.branch
 
 import io.gatling.core.Predef._
 import io.gatling.core.structure.ScenarioBuilder
-import io.gatling.http.Predef.{http, status}
 import org.kibanaLoadTest.scenario.{Lens, Login}
 import org.kibanaLoadTest.simulation.BaseSimulation
-import io.gatling.http.Predef._
 
 class LensJourney extends BaseSimulation {
-  val scenarioName = s"Branch lens journey ${appConfig.buildVersion}"
-
-  props.maxUsers = 200
+  val scenarioName = "LensJourney"
+  props.maxUsers = 500
 
   val steps = exec(
     Login

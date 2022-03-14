@@ -90,7 +90,7 @@ class ESClient(config: ESConfiguration) {
           val bulkResponse =
             client.bulk(bulkBuffer(j).request, RequestOptions.DEFAULT)
           bulkResponse.getTook.toString
-          logger.debug(
+          logger.info(
             s"Bulk size=${bulkBuffer(j).size} ingested within: ${bulkResponse.getTook.toString}"
           )
           if (bulkResponse.hasFailures) {

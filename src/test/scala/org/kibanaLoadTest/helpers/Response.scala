@@ -3,6 +3,7 @@ package org.kibanaLoadTest.helpers
 case class Response(
     userId: String,
     name: String,
+    simulation: String,
     status: String,
     method: String,
     url: String,
@@ -28,6 +29,7 @@ object Response {
   def apply(
       userId: String,
       name: String,
+      simulation: String,
       status: String,
       method: String,
       url: String,
@@ -43,6 +45,7 @@ object Response {
     Response(
       userId,
       name,
+      simulation,
       status,
       method,
       url,
