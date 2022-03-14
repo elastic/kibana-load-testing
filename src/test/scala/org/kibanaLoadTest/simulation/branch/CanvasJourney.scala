@@ -12,7 +12,7 @@ import org.kibanaLoadTest.simulation.BaseSimulation
 
 class CanvasJourney extends BaseSimulation {
   val scenarioName = "CanvasJourney"
-  props.maxUsers = 100
+  props.maxUsers = 200
 
   val steps = exec(
     Login
@@ -37,7 +37,7 @@ class CanvasJourney extends BaseSimulation {
       .andThen(
         scn
           .inject(
-            constantConcurrentUsers(props.maxUsers) during (3 * 60)
+            constantConcurrentUsers(props.maxUsers) during (4 * 60)
           )
           .protocols(httpProtocol)
       )

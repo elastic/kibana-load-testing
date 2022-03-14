@@ -33,7 +33,7 @@ class DiscoverJourney extends BaseSimulation {
       .andThen(
         scn
           .inject(
-            constantConcurrentUsers(props.maxUsers) during (3 * 60)
+            constantConcurrentUsers(props.maxUsers) during (4 * 60)
           )
           .protocols(httpProtocol)
       )
