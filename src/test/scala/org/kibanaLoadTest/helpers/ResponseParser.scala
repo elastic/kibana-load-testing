@@ -13,6 +13,7 @@ object ResponseParser {
   private val REQUEST_BODY_REGEXP = "(?<=content=).*(?=\\})".r
   private val RESPONSE_BODY_REGEXP = "(?<=body:).*".r
   private val RESPONSE_STATUS_CODE_REGEXP = "\\d{3}".r
+  private val SESSION_REGEXP = "(?<=Session\\().*(?=\\))".r
   private val STATUS_REGEXP = "OK|KO".r
   private val STATUS_MESSAGE_REGEXP = "(?:OK|KO).*$"
   private val ERROR_MESSAGE_REGEXP = "(?<=KO).*".r
@@ -51,7 +52,9 @@ object ResponseParser {
           sessionValue = sessionValue + strLine.trim
           strLine = br.readLine
         }
-        val userId = sessionValue.split(",")(1)
+        val session = SESSION_REGEXP.findFirstIn(sessionValue).getOrElse("")
+        val simulation = session.split(",")(0)
+        val userId = session.split(",")(1)
         strLine = br.readLine
         // HTTP request:
         val requestStr = br.readLine()
@@ -105,6 +108,7 @@ object ResponseParser {
         responseList += Response(
           userId,
           name,
+          simulation,
           status,
           method,
           url,

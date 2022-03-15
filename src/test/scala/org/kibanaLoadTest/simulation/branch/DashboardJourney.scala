@@ -6,28 +6,35 @@ import org.kibanaLoadTest.scenario.{Dashboard, Login}
 import org.kibanaLoadTest.simulation.BaseSimulation
 
 class DashboardJourney extends BaseSimulation {
-  val scenarioName = s"Branch dashboard journey ${appConfig.buildVersion}"
+  val scenarioName = s"DashboardJourney"
+  props.maxUsers = 500
 
-  props.maxUsers = 700
+  val steps = exec(
+    Login
+      .doLogin(
+        appConfig.isSecurityEnabled,
+        appConfig.loginPayload,
+        appConfig.loginStatusCode
+      )
+      .pause(5)
+  ).exec(Dashboard.load(appConfig.baseUrl, defaultHeaders).pause(10))
 
-  val scn: ScenarioBuilder = scenario(scenarioName)
-    .exec(
-      Login
-        .doLogin(
-          appConfig.isSecurityEnabled,
-          appConfig.loginPayload,
-          appConfig.loginStatusCode
-        )
-        .pause(5)
-    )
-    .exec(Dashboard.load(appConfig.baseUrl, defaultHeaders).pause(10))
+  val warmupScn: ScenarioBuilder = scenario("warmup").exec(steps)
+  val scn: ScenarioBuilder = scenario(scenarioName).exec(steps)
 
   setUp(
-    scn
+    warmupScn
       .inject(
-        constantConcurrentUsers(20) during (1 * 60), // 1
-        rampConcurrentUsers(20) to props.maxUsers during (3 * 60) // 2
+        constantConcurrentUsers(20) during (1 * 30),
+        rampConcurrentUsers(20) to props.maxUsers during (2 * 60)
       )
       .protocols(httpProtocol)
+      .andThen(
+        scn
+          .inject(
+            constantConcurrentUsers(props.maxUsers) during (4 * 60)
+          )
+          .protocols(httpProtocol)
+      )
   ).maxDuration(props.simulationTimeout * 2)
 }

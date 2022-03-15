@@ -11,28 +11,35 @@ import org.kibanaLoadTest.scenario.{Canvas, Login}
 import org.kibanaLoadTest.simulation.BaseSimulation
 
 class CanvasJourney extends BaseSimulation {
-  val scenarioName = s"Branch canvas journey ${appConfig.buildVersion}"
+  val scenarioName = "CanvasJourney"
+  props.maxUsers = 200
 
-  props.maxUsers = 100
+  val steps = exec(
+    Login
+      .doLogin(
+        appConfig.isSecurityEnabled,
+        appConfig.loginPayload,
+        appConfig.loginStatusCode
+      )
+      .pause(5)
+  ).exec(Canvas.loadWorkpad(appConfig.baseUrl, defaultHeaders))
 
-  val scn: ScenarioBuilder = scenario(scenarioName)
-    .exec(
-      Login
-        .doLogin(
-          appConfig.isSecurityEnabled,
-          appConfig.loginPayload,
-          appConfig.loginStatusCode
-        )
-        .pause(5)
-    )
-    .exec(Canvas.loadWorkpad(appConfig.baseUrl, defaultHeaders))
+  val warmupScn: ScenarioBuilder = scenario("warmup").exec(steps)
+  val scn: ScenarioBuilder = scenario(scenarioName).exec(steps)
 
   setUp(
-    scn
+    warmupScn
       .inject(
-        constantConcurrentUsers(20) during (1 * 60), // 1
-        rampConcurrentUsers(20) to props.maxUsers during (3 * 60) // 2
+        constantConcurrentUsers(20) during (1 * 30),
+        rampConcurrentUsers(20) to props.maxUsers during (2 * 60)
       )
       .protocols(httpProtocol)
+      .andThen(
+        scn
+          .inject(
+            constantConcurrentUsers(props.maxUsers) during (4 * 60)
+          )
+          .protocols(httpProtocol)
+      )
   ).maxDuration(props.simulationTimeout * 2)
 }
