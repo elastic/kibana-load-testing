@@ -2,7 +2,7 @@ package org.kibanaLoadTest.test
 
 import spray.json.DefaultJsonProtocol.{BooleanJsonFormat, StringJsonFormat}
 import spray.json.lenses.JsonLenses._
-import org.junit.jupiter.api.Assertions.{assertEquals, assertTrue}
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import org.junit.jupiter.api.{BeforeAll, Test, TestInstance}

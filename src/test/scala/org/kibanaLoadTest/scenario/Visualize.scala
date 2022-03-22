@@ -74,16 +74,44 @@ object Visualize {
             .check(status.is(200))
         )
       } {
-        exec(
-          http("bsearch")
-            .post("/internal/bsearch")
-            .queryParam("compress", "true")
-            .headers(headers)
-            .header("Referer", baseUrl + "/app/visualize")
-            .body(ElFileBody(queryJson))
-            .asJson
-            .check(status.is(200))
-        )
+        group("bsearch") {
+          exec(session => session.set("bsearchCounter", 0))
+            .exec(
+              http("first call")
+                .post("/internal/bsearch")
+                .headers(headers)
+                .header("Referer", baseUrl + "/app/visualize")
+                .body(ElFileBody(queryJson))
+                .asJson
+                .check(status.is(200).saveAs("status"))
+                .check(jsonPath("$.result.isPartial").find.saveAs("isPartial"))
+                .check(jsonPath("$.result.id").find.saveAs("requestId"))
+            )
+            .exitHereIfFailed
+            // First response might be “partial”. Then we continue to fetch for the results
+            // using the requestId returned from the first response
+            .asLongAs(session =>
+              session("status").as[Int] == 200
+                && session("isPartial").as[Boolean] == true
+            ) {
+              exec(session =>
+                session
+                  .set("bsearchCounter", session("bsearchCounter").as[Int] + 1)
+              ).exec(
+                  http("extra call ${bsearchCounter}")
+                    .post("/internal/bsearch")
+                    .headers(headers)
+                    .header("Referer", baseUrl + "/app/visualize")
+                    .body(ElFileBody(queryJson.replaceAll("\\.", "_req.")))
+                    .asJson
+                    .check(status.is(200).saveAs("status"))
+                    .check(jsonPath("$..isPartial").saveAs("isPartial"))
+                )
+                .exitHereIfFailed
+                .pause(1)
+                .exec()
+            }
+        }
       }
   }
 }
