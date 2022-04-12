@@ -5,11 +5,24 @@ import yargs from 'yargs';
 import { isWebUri } from 'valid-url'
 import chalk from 'chalk'
 import fs from 'fs'
-import { resolve } from 'path';
+import { resolve, join } from 'path';
 import { Config } from './types/config'
 
 const debugConfigPath = './config_debug.json';
 const debugSimulation = 'branch.DemoJourney';
+
+const readKibanaVersion = () => {
+    const kibanaRootDirPath = process.env.KIBANA_DIR;
+    if (!kibanaRootDirPath) {
+        throw new Error(`'KIBANA_DIR' env var is not set`);
+    }
+    const packageJsonPath = join(kibanaRootDirPath, 'package.json');
+    if (!fs.existsSync(packageJsonPath)) {
+        throw new Error(`No 'package.json' found in ${kibanaRootDirPath}`);
+    }
+    const pkgJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+    return pkgJson.version as string
+}
 
 process.on('unhandledRejection', error => {
     console.log(error);
@@ -69,6 +82,15 @@ process.on('unhandledRejection', error => {
                     runConfig = { baseUrl, username, password, version, scenarioCheck, headless }
                 } else throw new Error("missing arguments")
             }
+        }
+
+        const pkgKibanaVersion = readKibanaVersion();
+
+        if (!runConfig.version.startsWith(pkgKibanaVersion)) {
+            console.error(`Kibana version mismatch: '${pkgKibanaVersion}' in package.json, ${runConfig.version} in cli`);
+            const usedVersion = runConfig.version.replace(/(7|8).\d{1,2}.\d/, pkgKibanaVersion);
+            console.log(`Using '${usedVersion}' as Kibana version`);
+            runConfig.version = usedVersion;
         }
 
         if (!isWebUri(runConfig.baseUrl)) {
