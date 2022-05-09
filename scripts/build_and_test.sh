@@ -86,6 +86,8 @@ cp -pR install/kibana/. $WORKSPACE/kibana-build/
 
 echo " -> Setup env for tests"
 source test/scripts/jenkins_test_setup_xpack.sh
+# back to $KIBANA_DIR
+cd $KIBANA_DIR
 
 ## Start Metricbeat
 #echo " -> Starting metricbeat"
@@ -104,7 +106,7 @@ for i in "${sim_array[@]}"; do
   export GATLING_SIMULATIONS="$i"
   node scripts/functional_tests \
     --kibana-install-dir "$KIBANA_INSTALL_DIR" \
-    --config test/load/config.ts;
+    --config x-pack/test/load/config.ts;
 done
 
 echo " -> Simulations run is finished"
