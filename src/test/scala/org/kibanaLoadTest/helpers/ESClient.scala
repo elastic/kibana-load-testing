@@ -75,8 +75,10 @@ class ESClient(config: ESConfiguration) {
           val chunkSize = chunk.length
           var i = 0
           while (i < chunkSize) {
+            val request = new IndexRequest(indexName)
+            request.opType("create")
             bulkReq.add(
-              new IndexRequest(indexName)
+              request
                 .source(chunk(i).toString(), XContentType.JSON)
             )
             i += 1
@@ -95,6 +97,12 @@ class ESClient(config: ESConfiguration) {
           )
           if (bulkResponse.hasFailures) {
             logger.error("Ingested with failures")
+            bulkResponse.forEach(x => {
+              if (x.isFailed) {
+                val failure = x.getFailure
+                logger.info(s"### Failure: ${failure}")
+              }
+            })
           }
           j += 1
         }
