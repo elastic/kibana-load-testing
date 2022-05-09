@@ -16,8 +16,8 @@
         "GET /api/saved_objects_tagging/tags 200",
         "POST /api/saved_objects/_bulk_get 200",
         "GET /internal/security/session 200",
-        "GET /api/index_patterns/has_user_index_pattern 200",
-        "GET /internal/spaces/_active_space 200"
+        "GET /internal/spaces/_active_space 200",
+        "GET /api/index_patterns/has_user_index_pattern 200"
     ],
     "/app/lens": [
         "GET /internal/security/me 200",
@@ -36,6 +36,7 @@
         "POST /api/kibana/settings 200",
         "POST /api/saved_objects/_bulk_resolve 200",
         "GET /api/index_patterns/_fields_for_wildcard?pattern=kibana_sample_data_ecommerce&meta_fields=_source&meta_fields=_id&meta_fields=_type&meta_fields=_index&meta_fields=_score 200",
+        "POST /api/saved_query/_find 200",
         "POST /api/saved_objects/_bulk_resolve 200",
         "POST /api/lens/existing_fields/ff959d40-b880-11e8-a6d9-e546fe2bba5f 200",
         "POST /internal/bsearch?compress=true 200"

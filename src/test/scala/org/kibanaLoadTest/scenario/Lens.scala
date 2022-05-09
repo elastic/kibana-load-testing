@@ -63,6 +63,15 @@ object Lens {
           .header("Referer", baseUrl + "/app/lens")
           .check(status.is(200))
       )
+      .pause(1)
+      exec(
+        http("search saved query")
+          .post("/api/saved_query/_find")
+          .headers(headers)
+          .header("Referer", baseUrl + "/app/lens")
+          .body(ElFileBody(s"data/lens/$id/_find.json"))
+          .check(status.is(200))
+      )
       .exec(
         http("lens/existing_fields")
           .post("/api/lens/existing_fields/${indexPatternId}")
