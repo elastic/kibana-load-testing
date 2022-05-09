@@ -6,7 +6,10 @@ import org.apache.http.auth.{AuthScope, UsernamePasswordCredentials}
 import org.apache.http.impl.client.BasicCredentialsProvider
 import org.apache.http.impl.nio.client.HttpAsyncClientBuilder
 import org.elasticsearch.action.bulk.BulkRequest
+import org.elasticsearch.action.bulk.BulkResponse
 import org.elasticsearch.action.index.IndexRequest
+import org.elasticsearch.action.support.WriteRequest.RefreshPolicy
+import org.elasticsearch.client.core.CountRequest
 import org.elasticsearch.client.indices.CreateIndexRequest
 import org.elasticsearch.client.{RequestOptions, RestClient, RestHighLevelClient}
 import org.elasticsearch.xcontent.XContentType
@@ -59,7 +62,8 @@ class ESClient(config: ESConfiguration) {
     def bulk(
         indexName: String,
         jsonArray: Array[Json],
-        chunkSize: Int = BULK_SIZE
+        chunkSize: Int = BULK_SIZE,
+        immediate: Boolean = false
     ): Unit = {
       try {
         logger.info(s"Ingesting to '$indexName' index: ${jsonArray.length} docs")
@@ -71,6 +75,7 @@ class ESClient(config: ESConfiguration) {
         while (it.hasNext) {
           val chunk = it.next()
           val bulkReq = new BulkRequest()
+          if (immediate) bulkReq.setRefreshPolicy(RefreshPolicy.IMMEDIATE)
           val chunkSize = chunk.length
           var i = 0
           while (i < chunkSize) {
@@ -93,12 +98,7 @@ class ESClient(config: ESConfiguration) {
           bulkResponse.getTook.toString
           if (bulkResponse.hasFailures) {
             logger.error("Ingested with failures")
-            bulkResponse.forEach(x => {
-              if (x.isFailed) {
-                val failure = x.getFailure
-                logger.info(s"### Failure: $failure")
-              }
-            })
+            logFailures(bulkResponse)
           }
           j += 1
         }
@@ -132,5 +132,13 @@ class ESClient(config: ESConfiguration) {
         logger.info("Closing connection")
         client.close()
       }
+
+    def count(indexName: String): Long =
+      client.count(new CountRequest(indexName), RequestOptions.DEFAULT).getCount
+
+
+    def logFailures(res: BulkResponse): Unit =
+      res.forEach(x => if (x.isFailed) logger.info(s"### Failure: ${x.getFailure}"))
+
   }
 }
