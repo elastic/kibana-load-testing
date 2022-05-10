@@ -103,8 +103,8 @@ class ESClient(config: ESConfiguration) {
           j += 1
         }
         val diff = Math.abs(new Date().getTime - startTime.getTime)
-        val sec = TimeUnit.MILLISECONDS.toSeconds(diff)
         val min = TimeUnit.MILLISECONDS.toMinutes(diff)
+        val sec = TimeUnit.MILLISECONDS.toSeconds(diff - min * 60 * 1000)
         logger.info(s"Ingestion is completed. Took: $min minutes $sec seconds")
       } catch {
         case e: IOException =>
