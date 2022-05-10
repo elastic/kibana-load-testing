@@ -64,7 +64,7 @@ object Lens {
           .check(status.is(200))
       )
       .pause(1)
-      exec(
+      .exec(
         http("search saved query")
           .post("/api/saved_query/_find")
           .headers(headers)
@@ -72,6 +72,7 @@ object Lens {
           .body(ElFileBody(s"data/lens/$id/_find.json"))
           .check(status.is(200))
       )
+      .pause(1)
       .exec(
         http("lens/existing_fields")
           .post("/api/lens/existing_fields/${indexPatternId}")
