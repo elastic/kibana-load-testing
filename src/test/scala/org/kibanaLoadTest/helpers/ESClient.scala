@@ -8,16 +8,14 @@ import org.apache.http.impl.nio.client.HttpAsyncClientBuilder
 import org.elasticsearch.action.bulk.BulkRequest
 import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.client.indices.CreateIndexRequest
-import org.elasticsearch.client.{
-  RequestOptions,
-  RestClient,
-  RestHighLevelClient
-}
+import org.elasticsearch.client.{RequestOptions, RestClient, RestHighLevelClient}
 import org.elasticsearch.xcontent.XContentType
 import org.kibanaLoadTest.ESConfiguration
 import org.slf4j.{Logger, LoggerFactory}
 
 import java.io.IOException
+import java.util.Date
+import java.util.concurrent.TimeUnit
 
 case class Chunk(request: BulkRequest, size: Int)
 
@@ -64,7 +62,8 @@ class ESClient(config: ESConfiguration) {
         chunkSize: Int = BULK_SIZE
     ): Unit = {
       try {
-        logger.info(s"Ingesting to stats cluster: ${jsonArray.size} docs")
+        logger.info(s"Ingesting to '$indexName' index: ${jsonArray.length} docs")
+        val startTime = new Date()
         val bulkSize =
           if (indexName == "gatling-data") BULK_SIZE_DEFAULT else chunkSize
         val it = jsonArray.grouped(bulkSize)
@@ -92,21 +91,21 @@ class ESClient(config: ESConfiguration) {
           val bulkResponse =
             client.bulk(bulkBuffer(j).request, RequestOptions.DEFAULT)
           bulkResponse.getTook.toString
-          logger.info(
-            s"Bulk size=${bulkBuffer(j).size} ingested within: ${bulkResponse.getTook.toString}"
-          )
           if (bulkResponse.hasFailures) {
             logger.error("Ingested with failures")
             bulkResponse.forEach(x => {
               if (x.isFailed) {
                 val failure = x.getFailure
-                logger.info(s"### Failure: ${failure}")
+                logger.info(s"### Failure: $failure")
               }
             })
           }
           j += 1
         }
-        logger.info("Ingestion is completed")
+        val diff = Math.abs(new Date().getTime - startTime.getTime)
+        val min = TimeUnit.MILLISECONDS.toMinutes(diff)
+        val sec = TimeUnit.MILLISECONDS.toSeconds(diff - min * 60 * 1000)
+        logger.info(s"Ingestion is completed. Took: $min minutes $sec seconds")
       } catch {
         case e: IOException =>
           logger.error(
@@ -128,11 +127,10 @@ class ESClient(config: ESConfiguration) {
       }
     }
 
-    def closeConnection(): Unit = {
+    def closeConnection(): Unit =
       if (client != null) {
         logger.info("Closing connection")
         client.close()
       }
-    }
   }
 }
