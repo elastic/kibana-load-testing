@@ -10,12 +10,12 @@ done
 
 echo "Simulation classes: $simulations";
 
-cd kibana || exit
+cd kibana-load-testing || exit
 
 n=0
 until [ "$n" -ge 3 ]
 do
-   ./build_kibana_and_plugins.sh && break  # retry up to 3 times
+   ./scripts/build_kibana_and_plugins.sh && break  # retry up to 3 times
    n=$((n+1))
    sleep 15
 done

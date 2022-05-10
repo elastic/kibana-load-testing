@@ -2,7 +2,7 @@
 
 echo "Env setup and build plugins"
 ./test/scripts/jenkins_xpack_build_plugins.sh
-
+cd $KIBANA_DIR
 export KBN_NP_PLUGINS_BUILT=true
 
 echo " -> Building and extracting default Kibana distributable for use in scalability testing"
