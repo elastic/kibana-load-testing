@@ -1,0 +1,14 @@
+env:
+  SLACK_NOTIFICATIONS_CHANNEL: "#kibana-qa"
+  SLACK_NOTIFICATIONS_ENABLED: "true"
+notify:
+  - slack:
+      channels:
+        - "#kibana-qa"
+steps:
+  - command: .buildkite/scripts/integration-test.sh
+    label: 'Integration Test'
+    agents:
+      queue: n2-2-spot
+    key: integration_test
+    timeout_in_minutes: 3

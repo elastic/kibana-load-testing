@@ -74,6 +74,9 @@ object Helper {
   def getTargetPath: String =
     Paths.get("target").toAbsolutePath.normalize.toString
 
+  def getSrcPath: String =
+    Paths.get("src").toAbsolutePath.normalize.toString
+
   def getLastReportPath: String = {
     val dir: File = new File(getTargetPath + File.separator + "gatling")
     if (!dir.exists()) {

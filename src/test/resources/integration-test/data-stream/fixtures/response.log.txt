@@ -1,0 +1,1854 @@
+11:41:09.840 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+login: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,1,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@44e5ed25, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@5b497c6e, Cookie -> sid=Fe26.2**9ee4910c5ad0e54b62e5a9bab08285dadb68b414aaf80ff63310819551b2c4a8*tvkRYKwOPWhRyksAdC6keA*L-tL_ZYpuE5fwXhFLlzfiC9OCPv9nP8OuRNCiRj1kOPx_4hPj5eCr7FwUiICpADWcp2G0qxTmmVHQPA7g0mjQdpvok_xMkjszY0ZWu847tlXAZFWKIRCzCTE49a6pLSqjhvUSndEFzIxpApQAbSIPIbrEPWBAeheVdqpIW26fvyGr1va9fuUhYHjXVxwAA7-AAP0ur5unCPe96q5y37hOQxXwt-L3soaYVA4MCmGRf2YZ5FYhfF9KuFDoGD3LjVZ**26086538fa1eb41ebff7a786345b412b532e4ac2e0ce98b085d86a88bdecbdda*e2h1MVxJdTpGwMw5THW4nCw9QQRz18WVB-Gjfv2fUbU, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**9ee4910c5ad0e54b62e5a9bab08285dadb68b414aaf80ff63310819551b2c4a8*tvkRYKwOPWhRyksAdC6keA*L-tL_ZYpuE5fwXhFLlzfiC9OCPv9nP8OuRNCiRj1kOPx_4hPj5eCr7FwUiICpADWcp2G0qxTmmVHQPA7g0mjQdpvok_xMkjszY0ZWu847tlXAZFWKIRCzCTE49a6pLSqjhvUSndEFzIxpApQAbSIPIbrEPWBAeheVdqpIW26fvyGr1va9fuUhYHjXVxwAA7-AAP0ur5unCPe96q5y37hOQxXwt-L3soaYVA4MCmGRf2YZ5FYhfF9KuFDoGD3LjVZ**26086538fa1eb41ebff7a786345b412b532e4ac2e0ce98b085d86a88bdecbdda*e2h1MVxJdTpGwMw5THW4nCw9QQRz18WVB-Gjfv2fUbU, path=/, HTTPOnly,true,false,1628588469812)))),OK,List(),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@488b50ec)
+=========================
+HTTP request:
+POST http://localhost:5620/internal/security/login
+headers:
+	kbn-xsrf: xsrf
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	accept-encoding: gzip, deflate
+	host: localhost:5620
+	content-type: application/json
+	content-length: 144
+body:StringChunksRequestBody{contentType='application/json', charset=UTF-8, content={"providerType":"basic","providerName":"basic","currentURL":"http://localhost:5620/login","params":{"username":"elastic","password":"changeme"}}}
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	content-type: application/json; charset=utf-8
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**9ee4910c5ad0e54b62e5a9bab08285dadb68b414aaf80ff63310819551b2c4a8*tvkRYKwOPWhRyksAdC6keA*L-tL_ZYpuE5fwXhFLlzfiC9OCPv9nP8OuRNCiRj1kOPx_4hPj5eCr7FwUiICpADWcp2G0qxTmmVHQPA7g0mjQdpvok_xMkjszY0ZWu847tlXAZFWKIRCzCTE49a6pLSqjhvUSndEFzIxpApQAbSIPIbrEPWBAeheVdqpIW26fvyGr1va9fuUhYHjXVxwAA7-AAP0ur5unCPe96q5y37hOQxXwt-L3soaYVA4MCmGRf2YZ5FYhfF9KuFDoGD3LjVZ**26086538fa1eb41ebff7a786345b412b532e4ac2e0ce98b085d86a88bdecbdda*e2h1MVxJdTpGwMw5THW4nCw9QQRz18WVB-Gjfv2fUbU; HttpOnly; Path=/
+	content-length: 16
+	Date: Tue, 10 Aug 2021 09:41:09 GMT
+	Connection: keep-alive
+	Keep-Alive: timeout=120
+
+body:
+{"location":"/"}
+<<<<<<<<<<<<<<<<<<<<<<<<<
+11:41:14.896 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+Load index patterns: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,1,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@44e5ed25, preference -> 1628588474859, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@5b497c6e, Cookie -> sid=Fe26.2**9ee4910c5ad0e54b62e5a9bab08285dadb68b414aaf80ff63310819551b2c4a8*tvkRYKwOPWhRyksAdC6keA*L-tL_ZYpuE5fwXhFLlzfiC9OCPv9nP8OuRNCiRj1kOPx_4hPj5eCr7FwUiICpADWcp2G0qxTmmVHQPA7g0mjQdpvok_xMkjszY0ZWu847tlXAZFWKIRCzCTE49a6pLSqjhvUSndEFzIxpApQAbSIPIbrEPWBAeheVdqpIW26fvyGr1va9fuUhYHjXVxwAA7-AAP0ur5unCPe96q5y37hOQxXwt-L3soaYVA4MCmGRf2YZ5FYhfF9KuFDoGD3LjVZ**26086538fa1eb41ebff7a786345b412b532e4ac2e0ce98b085d86a88bdecbdda*e2h1MVxJdTpGwMw5THW4nCw9QQRz18WVB-Gjfv2fUbU, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**fed0cfcd953a88717afe1941f7009d3ac4b84d440d63728cbfb4061c959c2c69*vEK5QomLiD8Ilko9VVeAog*iTGtuCt7bZfJyDPGZ5xQigAPxKCy1Jhczf74h36Sijg0lpDXic6zbYqmAgFQjR_4x3KR69SBHwyPOHjmE-265Lc9svkKINXGy0NiLaH-eQjjIKFMMYFtQQb6ijEE8KsUBPNyJbiNcfn2plpmCjm-oDSVUbPRQQRaUFefDPLmDi5zV6UarHXkcLAkbcE7xKH3EePsj8_kv7dYQRLEYuC6X3yhjy4RjcNB3dEO9ngHNSgRkv_cEcc1kvSCDTI-k0KQ**62240e9d1369a823c800300394c7d1c980cf56735f6c3872e5aa59087768e644*RE_gQKnYr2Shux9qUdzCSIUHsvTmx8Eu5Lo5bBdqIEM, path=/, HTTPOnly,true,false,1628588474894)))),OK,List(),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@488b50ec)
+=========================
+HTTP request:
+GET http://localhost:5620/api/saved_objects/_find?fields=title&per_page=10000&type=index-pattern
+headers:
+	kbn-version: 8.0.0
+	Referer: http://localhost:5620/app/discover
+	Sec-Fetch-Site: same-origin
+	Connection: keep-alive
+	Sec-Fetch-Mode: cors
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	Sec-Fetch-Dest: empty
+	Origin: http://localhost:5620
+	content-type: application/json
+	Accept: */*
+	Content-Type: application/json
+	accept-encoding: gzip, deflate
+	cookie: sid=Fe26.2**9ee4910c5ad0e54b62e5a9bab08285dadb68b414aaf80ff63310819551b2c4a8*tvkRYKwOPWhRyksAdC6keA*L-tL_ZYpuE5fwXhFLlzfiC9OCPv9nP8OuRNCiRj1kOPx_4hPj5eCr7FwUiICpADWcp2G0qxTmmVHQPA7g0mjQdpvok_xMkjszY0ZWu847tlXAZFWKIRCzCTE49a6pLSqjhvUSndEFzIxpApQAbSIPIbrEPWBAeheVdqpIW26fvyGr1va9fuUhYHjXVxwAA7-AAP0ur5unCPe96q5y37hOQxXwt-L3soaYVA4MCmGRf2YZ5FYhfF9KuFDoGD3LjVZ**26086538fa1eb41ebff7a786345b412b532e4ac2e0ce98b085d86a88bdecbdda*e2h1MVxJdTpGwMw5THW4nCw9QQRz18WVB-Gjfv2fUbU
+	host: localhost:5620
+cookies:
+	sid=Fe26.2**9ee4910c5ad0e54b62e5a9bab08285dadb68b414aaf80ff63310819551b2c4a8*tvkRYKwOPWhRyksAdC6keA*L-tL_ZYpuE5fwXhFLlzfiC9OCPv9nP8OuRNCiRj1kOPx_4hPj5eCr7FwUiICpADWcp2G0qxTmmVHQPA7g0mjQdpvok_xMkjszY0ZWu847tlXAZFWKIRCzCTE49a6pLSqjhvUSndEFzIxpApQAbSIPIbrEPWBAeheVdqpIW26fvyGr1va9fuUhYHjXVxwAA7-AAP0ur5unCPe96q5y37hOQxXwt-L3soaYVA4MCmGRf2YZ5FYhfF9KuFDoGD3LjVZ**26086538fa1eb41ebff7a786345b412b532e4ac2e0ce98b085d86a88bdecbdda*e2h1MVxJdTpGwMw5THW4nCw9QQRz18WVB-Gjfv2fUbU, path=/, HTTPOnly
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	content-type: application/json; charset=utf-8
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**fed0cfcd953a88717afe1941f7009d3ac4b84d440d63728cbfb4061c959c2c69*vEK5QomLiD8Ilko9VVeAog*iTGtuCt7bZfJyDPGZ5xQigAPxKCy1Jhczf74h36Sijg0lpDXic6zbYqmAgFQjR_4x3KR69SBHwyPOHjmE-265Lc9svkKINXGy0NiLaH-eQjjIKFMMYFtQQb6ijEE8KsUBPNyJbiNcfn2plpmCjm-oDSVUbPRQQRaUFefDPLmDi5zV6UarHXkcLAkbcE7xKH3EePsj8_kv7dYQRLEYuC6X3yhjy4RjcNB3dEO9ngHNSgRkv_cEcc1kvSCDTI-k0KQ**62240e9d1369a823c800300394c7d1c980cf56735f6c3872e5aa59087768e644*RE_gQKnYr2Shux9qUdzCSIUHsvTmx8Eu5Lo5bBdqIEM; HttpOnly; Path=/
+	content-length: 371
+	accept-ranges: bytes
+	Date: Tue, 10 Aug 2021 09:41:14 GMT
+	Connection: keep-alive
+	Keep-Alive: timeout=120
+
+body:
+{"page":1,"per_page":10000,"total":1,"saved_objects":[{"type":"index-pattern","id":"ff959d40-b880-11e8-a6d9-e546fe2bba5f","attributes":{"title":"kibana_sample_data_ecommerce"},"references":[],"migrationVersion":{"index-pattern":"7.11.0"},"coreMigrationVersion":"8.0.0","updated_at":"2021-08-10T09:40:37.926Z","version":"WzE0NywxXQ==","namespaces":["default"],"score":0}]}
+<<<<<<<<<<<<<<<<<<<<<<<<<
+11:41:14.961 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+Load index pattern fields: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,1,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, 5ec2b6a0-87ba-4a94-b613-847267160e1d -> 0, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@44e5ed25, preference -> 1628588474859, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@5b497c6e, Cookie -> sid=Fe26.2**9ee4910c5ad0e54b62e5a9bab08285dadb68b414aaf80ff63310819551b2c4a8*tvkRYKwOPWhRyksAdC6keA*L-tL_ZYpuE5fwXhFLlzfiC9OCPv9nP8OuRNCiRj1kOPx_4hPj5eCr7FwUiICpADWcp2G0qxTmmVHQPA7g0mjQdpvok_xMkjszY0ZWu847tlXAZFWKIRCzCTE49a6pLSqjhvUSndEFzIxpApQAbSIPIbrEPWBAeheVdqpIW26fvyGr1va9fuUhYHjXVxwAA7-AAP0ur5unCPe96q5y37hOQxXwt-L3soaYVA4MCmGRf2YZ5FYhfF9KuFDoGD3LjVZ**26086538fa1eb41ebff7a786345b412b532e4ac2e0ce98b085d86a88bdecbdda*e2h1MVxJdTpGwMw5THW4nCw9QQRz18WVB-Gjfv2fUbU, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**a41487829a087cd597b97ff89547132bc85e3bdd0a1ff9cf53dc69bea7681ed6*_sXNDx_pgsV8tFsxmO9YtA*qX0Y6pRdG7593thgspZwUA9OI0N-2BJkGaR8a37EreMjYg4ye85Gd_UHamgjvnvASys68L6qpl_KVlwC-MDiFWCU3_nVAyDMjjQv7__5fTRvhjIt2quZQzV07KXejig2AGTQ4Doln44MlOGiyMpk-6AQGs4p6vJK0FIraQ_OmLnkybcpS02BM0dUGntYy5ZPT0M4p0aq4TpEFcfGz5x7470GRUMxzS0sCXOiEfDfwRXS3llTxVOXzqrGk_Xr7JaH**a09ae930086e1045052114722cba018e59d21bc15a731ea38d331e2613598dfd*KkY3lKgFy59OHfkY8lGbs3iNeIUlZNXh5i1-YW80OIo, path=/, HTTPOnly,true,false,1628588474958)))),OK,List(TryMaxBlock(5ec2b6a0-87ba-4a94-b613-847267160e1d,io.gatling.core.action.InnerTryMax@7668dc2d,OK)),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@488b50ec)
+=========================
+HTTP request:
+GET http://localhost:5620/api/index_patterns/_fields_for_wildcard?pattern=kibana_sample_data_ecommerce&meta_fields=_source&meta_fields=_id&meta_fields=_type&meta_fields=_index&meta_fields=_score
+headers:
+	kbn-version: 8.0.0
+	Referer: http://localhost:5620/app/discover
+	Sec-Fetch-Site: same-origin
+	Connection: keep-alive
+	Sec-Fetch-Mode: cors
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	Sec-Fetch-Dest: empty
+	Origin: http://localhost:5620
+	content-type: application/json
+	Accept: */*
+	Content-Type: application/json
+	accept-encoding: gzip, deflate
+	cookie: sid=Fe26.2**fed0cfcd953a88717afe1941f7009d3ac4b84d440d63728cbfb4061c959c2c69*vEK5QomLiD8Ilko9VVeAog*iTGtuCt7bZfJyDPGZ5xQigAPxKCy1Jhczf74h36Sijg0lpDXic6zbYqmAgFQjR_4x3KR69SBHwyPOHjmE-265Lc9svkKINXGy0NiLaH-eQjjIKFMMYFtQQb6ijEE8KsUBPNyJbiNcfn2plpmCjm-oDSVUbPRQQRaUFefDPLmDi5zV6UarHXkcLAkbcE7xKH3EePsj8_kv7dYQRLEYuC6X3yhjy4RjcNB3dEO9ngHNSgRkv_cEcc1kvSCDTI-k0KQ**62240e9d1369a823c800300394c7d1c980cf56735f6c3872e5aa59087768e644*RE_gQKnYr2Shux9qUdzCSIUHsvTmx8Eu5Lo5bBdqIEM
+	host: localhost:5620
+cookies:
+	sid=Fe26.2**fed0cfcd953a88717afe1941f7009d3ac4b84d440d63728cbfb4061c959c2c69*vEK5QomLiD8Ilko9VVeAog*iTGtuCt7bZfJyDPGZ5xQigAPxKCy1Jhczf74h36Sijg0lpDXic6zbYqmAgFQjR_4x3KR69SBHwyPOHjmE-265Lc9svkKINXGy0NiLaH-eQjjIKFMMYFtQQb6ijEE8KsUBPNyJbiNcfn2plpmCjm-oDSVUbPRQQRaUFefDPLmDi5zV6UarHXkcLAkbcE7xKH3EePsj8_kv7dYQRLEYuC6X3yhjy4RjcNB3dEO9ngHNSgRkv_cEcc1kvSCDTI-k0KQ**62240e9d1369a823c800300394c7d1c980cf56735f6c3872e5aa59087768e644*RE_gQKnYr2Shux9qUdzCSIUHsvTmx8Eu5Lo5bBdqIEM, path=/, HTTPOnly
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	content-type: application/json; charset=utf-8
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**a41487829a087cd597b97ff89547132bc85e3bdd0a1ff9cf53dc69bea7681ed6*_sXNDx_pgsV8tFsxmO9YtA*qX0Y6pRdG7593thgspZwUA9OI0N-2BJkGaR8a37EreMjYg4ye85Gd_UHamgjvnvASys68L6qpl_KVlwC-MDiFWCU3_nVAyDMjjQv7__5fTRvhjIt2quZQzV07KXejig2AGTQ4Doln44MlOGiyMpk-6AQGs4p6vJK0FIraQ_OmLnkybcpS02BM0dUGntYy5ZPT0M4p0aq4TpEFcfGz5x7470GRUMxzS0sCXOiEfDfwRXS3llTxVOXzqrGk_Xr7JaH**a09ae930086e1045052114722cba018e59d21bc15a731ea38d331e2613598dfd*KkY3lKgFy59OHfkY8lGbs3iNeIUlZNXh5i1-YW80OIo; HttpOnly; Path=/
+	vary: accept-encoding
+	Date: Tue, 10 Aug 2021 09:41:14 GMT
+	Connection: keep-alive
+	Keep-Alive: timeout=120
+	Transfer-Encoding: chunked
+	content-encoding: gzip
+
+body:
+{"fields":[{"name":"_id","type":"string","esTypes":["_id"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"_index","type":"string","esTypes":["_index"],"searchable":true,"aggregatable":true,"readFromDocValues":false},{"name":"_score","type":"number","searchable":false,"aggregatable":false,"readFromDocValues":false},{"name":"_source","type":"_source","esTypes":["_source"],"searchable":false,"aggregatable":false,"readFromDocValues":false},{"name":"_type","type":"string","searchable":false,"aggregatable":false,"readFromDocValues":false},{"name":"category","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"category.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"category"}}},{"name":"currency","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"customer_birth_date","type":"date","esTypes":["date"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"customer_first_name","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"customer_first_name.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"customer_first_name"}}},{"name":"customer_full_name","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"customer_full_name.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"customer_full_name"}}},{"name":"customer_gender","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"customer_id","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"customer_last_name","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"customer_last_name.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"customer_last_name"}}},{"name":"customer_phone","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"day_of_week","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"day_of_week_i","type":"number","esTypes":["integer"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"email","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"event.dataset","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"geoip.city_name","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"geoip.continent_name","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"geoip.country_iso_code","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"geoip.location","type":"geo_point","esTypes":["geo_point"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"geoip.region_name","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"manufacturer","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"manufacturer.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"manufacturer"}}},{"name":"order_date","type":"date","esTypes":["date"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"order_id","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products._id","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"products._id.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"products._id"}}},{"name":"products.base_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.base_unit_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.category","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"products.category.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"products.category"}}},{"name":"products.created_on","type":"date","esTypes":["date"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.discount_amount","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.discount_percentage","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.manufacturer","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"products.manufacturer.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"products.manufacturer"}}},{"name":"products.min_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.product_id","type":"number","esTypes":["long"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.product_name","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"products.product_name.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"products.product_name"}}},{"name":"products.quantity","type":"number","esTypes":["integer"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.sku","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.tax_amount","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.taxful_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.taxless_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.unit_discount_amount","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"sku","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"taxful_total_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"taxless_total_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"total_quantity","type":"number","esTypes":["integer"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"total_unique_products","type":"number","esTypes":["integer"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"type","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"user","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true}]}
+<<<<<<<<<<<<<<<<<<<<<<<<<
+11:41:15.192 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+Discover query default: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,1,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, 5ec2b6a0-87ba-4a94-b613-847267160e1d -> 0, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@44e5ed25, preference -> 1628588474966, endTime -> 2021-08-10T11:40:34.802Z, status -> 200, sessionId -> b32817cb-bbae-433c-b9d9-e2051e2c5ac0, requestId -> FnZ5cDNzb3ZvUlJpQTVwVVE4c2RnLWcccnZRak03MmhURDYtenREdDBoNkNIQToxNjEwNA==, Cookie -> sid=Fe26.2**9ee4910c5ad0e54b62e5a9bab08285dadb68b414aaf80ff63310819551b2c4a8*tvkRYKwOPWhRyksAdC6keA*L-tL_ZYpuE5fwXhFLlzfiC9OCPv9nP8OuRNCiRj1kOPx_4hPj5eCr7FwUiICpADWcp2G0qxTmmVHQPA7g0mjQdpvok_xMkjszY0ZWu847tlXAZFWKIRCzCTE49a6pLSqjhvUSndEFzIxpApQAbSIPIbrEPWBAeheVdqpIW26fvyGr1va9fuUhYHjXVxwAA7-AAP0ur5unCPe96q5y37hOQxXwt-L3soaYVA4MCmGRf2YZ5FYhfF9KuFDoGD3LjVZ**26086538fa1eb41ebff7a786345b412b532e4ac2e0ce98b085d86a88bdecbdda*e2h1MVxJdTpGwMw5THW4nCw9QQRz18WVB-Gjfv2fUbU, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**b62398396a8a462bb2d33e4550db18effb05f7f90f383571de5908ddd938915a*UTblDuxjN8gebqm5ip4LWA*vD7tnYFomDnPWgp7CFkKNOLbptG5tYx59apyCwoX0eCLaWvexB4QdzpOIwEY8VLsXR5B3rY9VjuMGhqldJjvhqtn0W8QTtSg7thSrumSpU3yivHTcKyhs1c16KC28BFIk3_L9oamjMIWjDyFYahIn1ago-8EBUhtC2sgki5gZLdcPmcnrhx_GX4AHTYvF79H7Uu1-A46S-wpQ6kBjEq_Pcy6qPcpteWAB70ebNqzXDjlxm1o8HGZkUCG3bEVIGtu**35719afda4effbbd26b6703199d7afd55249a5a3c825c1936d7f94f82082e8f4*u0Gi9Gk5k3BQBkTx0kElpbf1y0Ps3bww_730iT0oqhI, path=/, HTTPOnly,true,false,1628588475146))), intervalName -> fixed_interval, isPartial -> false, startTime -> 2021-08-10T11:25:34.799Z, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@5b497c6e, intervalValue -> 30s),OK,List(TryMaxBlock(5ec2b6a0-87ba-4a94-b613-847267160e1d,io.gatling.core.action.InnerTryMax@7668dc2d,OK)),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@488b50ec)
+=========================
+HTTP request:
+POST http://localhost:5620/internal/bsearch
+headers:
+	kbn-version: 8.0.0
+	Referer: http://localhost:5620/app/discover
+	Sec-Fetch-Site: same-origin
+	Connection: keep-alive
+	Sec-Fetch-Mode: cors
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	Sec-Fetch-Dest: empty
+	Origin: http://localhost:5620
+	Accept: */*
+	accept-encoding: gzip, deflate
+	cookie: sid=Fe26.2**a41487829a087cd597b97ff89547132bc85e3bdd0a1ff9cf53dc69bea7681ed6*_sXNDx_pgsV8tFsxmO9YtA*qX0Y6pRdG7593thgspZwUA9OI0N-2BJkGaR8a37EreMjYg4ye85Gd_UHamgjvnvASys68L6qpl_KVlwC-MDiFWCU3_nVAyDMjjQv7__5fTRvhjIt2quZQzV07KXejig2AGTQ4Doln44MlOGiyMpk-6AQGs4p6vJK0FIraQ_OmLnkybcpS02BM0dUGntYy5ZPT0M4p0aq4TpEFcfGz5x7470GRUMxzS0sCXOiEfDfwRXS3llTxVOXzqrGk_Xr7JaH**a09ae930086e1045052114722cba018e59d21bc15a731ea38d331e2613598dfd*KkY3lKgFy59OHfkY8lGbs3iNeIUlZNXh5i1-YW80OIo
+	host: localhost:5620
+	content-type: application/json
+	content-length: 2661
+cookies:
+	sid=Fe26.2**a41487829a087cd597b97ff89547132bc85e3bdd0a1ff9cf53dc69bea7681ed6*_sXNDx_pgsV8tFsxmO9YtA*qX0Y6pRdG7593thgspZwUA9OI0N-2BJkGaR8a37EreMjYg4ye85Gd_UHamgjvnvASys68L6qpl_KVlwC-MDiFWCU3_nVAyDMjjQv7__5fTRvhjIt2quZQzV07KXejig2AGTQ4Doln44MlOGiyMpk-6AQGs4p6vJK0FIraQ_OmLnkybcpS02BM0dUGntYy5ZPT0M4p0aq4TpEFcfGz5x7470GRUMxzS0sCXOiEfDfwRXS3llTxVOXzqrGk_Xr7JaH**a09ae930086e1045052114722cba018e59d21bc15a731ea38d331e2613598dfd*KkY3lKgFy59OHfkY8lGbs3iNeIUlZNXh5i1-YW80OIo, path=/, HTTPOnly
+body:StringChunksRequestBody{contentType='application/json', charset=UTF-8, content={
+  "batch":[
+    {
+      "request":{
+        "params":{
+          "index":"kibana_sample_data_ecommerce",
+          "body":{
+            "size":500,
+            "sort":[
+              {
+                "order_date":{
+                  "order":"desc",
+                  "unmapped_type":"boolean"
+                }
+              }
+            ],
+            "version":true,
+            "fields":[
+              {
+                "field":"*",
+                "include_unmapped":"true"
+              },
+              {
+                "field":"customer_birth_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"order_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"products.created_on",
+                "format":"strict_date_optional_time"
+              }
+            ],
+            "aggs":{
+              "2":{
+                "date_histogram":{
+                  "field":"order_date",
+                  "fixed_interval":"30s",
+                  "time_zone":"Europe/Berlin",
+                  "min_doc_count":1
+                }
+              }
+            },
+            "script_fields":{
+
+            },
+            "stored_fields":[
+              "*"
+            ],
+            "runtime_mappings":{
+
+            },
+            "_source":false,
+            "query":{
+              "bool":{
+                "must":[
+
+                ],
+                "filter":[
+                  {
+                    "match_all":{
+
+                    }
+                  },
+                  {
+                    "range":{
+                      "order_date":{
+                        "gte":"2021-08-10T11:25:34.799Z",
+                        "lte":"2021-08-10T11:40:34.802Z",
+                        "format":"strict_date_optional_time"
+                      }
+                    }
+                  }
+                ],
+                "should":[
+
+                ],
+                "must_not":[
+
+                ]
+              }
+            },
+            "highlight":{
+              "pre_tags":[
+                "@kibana-highlighted-field@"
+              ],
+              "post_tags":[
+                "@/kibana-highlighted-field@"
+              ],
+              "fields":{
+                "*":{
+
+                }
+              },
+              "fragment_size":2147483647
+            }
+          },
+          "preference":"1628588474966"
+        }
+      },
+      "options":{
+        "sessionId":"b32817cb-bbae-433c-b9d9-e2051e2c5ac0",
+        "isRestore":false,
+        "strategy":"ese",
+        "isStored":false
+      }
+    }
+  ]
+}}
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	content-type: application/x-ndjson
+	connection: keep-alive
+	transfer-encoding: chunked
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**b62398396a8a462bb2d33e4550db18effb05f7f90f383571de5908ddd938915a*UTblDuxjN8gebqm5ip4LWA*vD7tnYFomDnPWgp7CFkKNOLbptG5tYx59apyCwoX0eCLaWvexB4QdzpOIwEY8VLsXR5B3rY9VjuMGhqldJjvhqtn0W8QTtSg7thSrumSpU3yivHTcKyhs1c16KC28BFIk3_L9oamjMIWjDyFYahIn1ago-8EBUhtC2sgki5gZLdcPmcnrhx_GX4AHTYvF79H7Uu1-A46S-wpQ6kBjEq_Pcy6qPcpteWAB70ebNqzXDjlxm1o8HGZkUCG3bEVIGtu**35719afda4effbbd26b6703199d7afd55249a5a3c825c1936d7f94f82082e8f4*u0Gi9Gk5k3BQBkTx0kElpbf1y0Ps3bww_730iT0oqhI; HttpOnly; Path=/
+	Date: Tue, 10 Aug 2021 09:41:14 GMT
+
+body:
+<<<BINARY CONTENT>>>
+<<<<<<<<<<<<<<<<<<<<<<<<<
+11:41:18.857 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+login: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,2,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@53eea39, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@403c64fa, Cookie -> sid=Fe26.2**ed9398d9ede9e2c02c7ba7b00b3f3942c1db1aa06efd85e5114dcd1ebe2f9624*P0VPOpP6WVXnUct6YWjLxg*X--OzInVF2D7CWUl4r_uiLfq-RPhua07SkT4kBetYYnU1Cf8qdbAsaeEQHnEqGwTuWgYCF0m94pwBJg_xeuY7t3pJTwsoNjFxkadKfOQPvNFiwG2alNNx6UOFfA4PozmhtrnpUItel99mMGYMOpP5pEZRd5O06l_zFkr_iRx1tGACxu_v6lIgWxyClC85mW343FFEhayUbD7ULWtZVTnySt-ph__dDp44yJaIkOZOVVujVPFCdeeDkfPKPj3-Q_2**50e8150adff15a22d924b4b5d9c761d948ed8646974dd24f81ff956ddb03012e*vtV2xOnNCqj4mB9_wCRTyadgdX-gQFq5Nmw6lVbTi8I, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**ed9398d9ede9e2c02c7ba7b00b3f3942c1db1aa06efd85e5114dcd1ebe2f9624*P0VPOpP6WVXnUct6YWjLxg*X--OzInVF2D7CWUl4r_uiLfq-RPhua07SkT4kBetYYnU1Cf8qdbAsaeEQHnEqGwTuWgYCF0m94pwBJg_xeuY7t3pJTwsoNjFxkadKfOQPvNFiwG2alNNx6UOFfA4PozmhtrnpUItel99mMGYMOpP5pEZRd5O06l_zFkr_iRx1tGACxu_v6lIgWxyClC85mW343FFEhayUbD7ULWtZVTnySt-ph__dDp44yJaIkOZOVVujVPFCdeeDkfPKPj3-Q_2**50e8150adff15a22d924b4b5d9c761d948ed8646974dd24f81ff956ddb03012e*vtV2xOnNCqj4mB9_wCRTyadgdX-gQFq5Nmw6lVbTi8I, path=/, HTTPOnly,true,false,1628588478855)))),OK,List(),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@18a645fd)
+=========================
+HTTP request:
+POST http://localhost:5620/internal/security/login
+headers:
+	kbn-xsrf: xsrf
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	accept-encoding: gzip, deflate
+	host: localhost:5620
+	content-type: application/json
+	content-length: 144
+body:StringChunksRequestBody{contentType='application/json', charset=UTF-8, content={"providerType":"basic","providerName":"basic","currentURL":"http://localhost:5620/login","params":{"username":"elastic","password":"changeme"}}}
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	content-type: application/json; charset=utf-8
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**ed9398d9ede9e2c02c7ba7b00b3f3942c1db1aa06efd85e5114dcd1ebe2f9624*P0VPOpP6WVXnUct6YWjLxg*X--OzInVF2D7CWUl4r_uiLfq-RPhua07SkT4kBetYYnU1Cf8qdbAsaeEQHnEqGwTuWgYCF0m94pwBJg_xeuY7t3pJTwsoNjFxkadKfOQPvNFiwG2alNNx6UOFfA4PozmhtrnpUItel99mMGYMOpP5pEZRd5O06l_zFkr_iRx1tGACxu_v6lIgWxyClC85mW343FFEhayUbD7ULWtZVTnySt-ph__dDp44yJaIkOZOVVujVPFCdeeDkfPKPj3-Q_2**50e8150adff15a22d924b4b5d9c761d948ed8646974dd24f81ff956ddb03012e*vtV2xOnNCqj4mB9_wCRTyadgdX-gQFq5Nmw6lVbTi8I; HttpOnly; Path=/
+	content-length: 16
+	Date: Tue, 10 Aug 2021 09:41:18 GMT
+	Connection: keep-alive
+	Keep-Alive: timeout=120
+
+body:
+{"location":"/"}
+<<<<<<<<<<<<<<<<<<<<<<<<<
+11:41:23.904 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+Load index patterns: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,2,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@53eea39, preference -> 1628588483878, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@403c64fa, Cookie -> sid=Fe26.2**ed9398d9ede9e2c02c7ba7b00b3f3942c1db1aa06efd85e5114dcd1ebe2f9624*P0VPOpP6WVXnUct6YWjLxg*X--OzInVF2D7CWUl4r_uiLfq-RPhua07SkT4kBetYYnU1Cf8qdbAsaeEQHnEqGwTuWgYCF0m94pwBJg_xeuY7t3pJTwsoNjFxkadKfOQPvNFiwG2alNNx6UOFfA4PozmhtrnpUItel99mMGYMOpP5pEZRd5O06l_zFkr_iRx1tGACxu_v6lIgWxyClC85mW343FFEhayUbD7ULWtZVTnySt-ph__dDp44yJaIkOZOVVujVPFCdeeDkfPKPj3-Q_2**50e8150adff15a22d924b4b5d9c761d948ed8646974dd24f81ff956ddb03012e*vtV2xOnNCqj4mB9_wCRTyadgdX-gQFq5Nmw6lVbTi8I, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**ad85d203fed9ee85d2c1a47f88fa2ae771c86f98312da2253a2ecaf4db734ce6*UKkRRlv8u050OWyMqBC7zQ*ry3gJeH4r3dHaxpXkhh5rhuJTVqYLSa2PC27XEUPRX6_lJ9f9wOpoyb_wQ8EmWM8aQvWYQ1ewKWJTVJcbrlW1_-qgqKIMSjdKHLwGdL6tP5kATUW0wLdBgGMFmUleg38b9BK0L8cijL5Dw9FWDDN8_diDN1k1dgn3uTiN79HOAaAQzoQxW634FfKL_KlvkJvLCFxsi6-_7ymJxUK46IyLNLcjEEp9Qy1qS38ifWlsQlBOC9sAyQktjxVubIbaUGW**90abf62fabe98652afe4234907a77cfdbfea94471177c5ae1d9517c29a0c29c4*daIE2zG_bndz7UEVMltbZirenJu3d4X_lFHfVyh_ZGw, path=/, HTTPOnly,true,false,1628588483902)))),OK,List(),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@18a645fd)
+=========================
+HTTP request:
+GET http://localhost:5620/api/saved_objects/_find?fields=title&per_page=10000&type=index-pattern
+headers:
+	kbn-version: 8.0.0
+	Referer: http://localhost:5620/app/discover
+	Sec-Fetch-Site: same-origin
+	Connection: keep-alive
+	Sec-Fetch-Mode: cors
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	Sec-Fetch-Dest: empty
+	Origin: http://localhost:5620
+	content-type: application/json
+	Accept: */*
+	Content-Type: application/json
+	accept-encoding: gzip, deflate
+	cookie: sid=Fe26.2**ed9398d9ede9e2c02c7ba7b00b3f3942c1db1aa06efd85e5114dcd1ebe2f9624*P0VPOpP6WVXnUct6YWjLxg*X--OzInVF2D7CWUl4r_uiLfq-RPhua07SkT4kBetYYnU1Cf8qdbAsaeEQHnEqGwTuWgYCF0m94pwBJg_xeuY7t3pJTwsoNjFxkadKfOQPvNFiwG2alNNx6UOFfA4PozmhtrnpUItel99mMGYMOpP5pEZRd5O06l_zFkr_iRx1tGACxu_v6lIgWxyClC85mW343FFEhayUbD7ULWtZVTnySt-ph__dDp44yJaIkOZOVVujVPFCdeeDkfPKPj3-Q_2**50e8150adff15a22d924b4b5d9c761d948ed8646974dd24f81ff956ddb03012e*vtV2xOnNCqj4mB9_wCRTyadgdX-gQFq5Nmw6lVbTi8I
+	host: localhost:5620
+cookies:
+	sid=Fe26.2**ed9398d9ede9e2c02c7ba7b00b3f3942c1db1aa06efd85e5114dcd1ebe2f9624*P0VPOpP6WVXnUct6YWjLxg*X--OzInVF2D7CWUl4r_uiLfq-RPhua07SkT4kBetYYnU1Cf8qdbAsaeEQHnEqGwTuWgYCF0m94pwBJg_xeuY7t3pJTwsoNjFxkadKfOQPvNFiwG2alNNx6UOFfA4PozmhtrnpUItel99mMGYMOpP5pEZRd5O06l_zFkr_iRx1tGACxu_v6lIgWxyClC85mW343FFEhayUbD7ULWtZVTnySt-ph__dDp44yJaIkOZOVVujVPFCdeeDkfPKPj3-Q_2**50e8150adff15a22d924b4b5d9c761d948ed8646974dd24f81ff956ddb03012e*vtV2xOnNCqj4mB9_wCRTyadgdX-gQFq5Nmw6lVbTi8I, path=/, HTTPOnly
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	content-type: application/json; charset=utf-8
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**ad85d203fed9ee85d2c1a47f88fa2ae771c86f98312da2253a2ecaf4db734ce6*UKkRRlv8u050OWyMqBC7zQ*ry3gJeH4r3dHaxpXkhh5rhuJTVqYLSa2PC27XEUPRX6_lJ9f9wOpoyb_wQ8EmWM8aQvWYQ1ewKWJTVJcbrlW1_-qgqKIMSjdKHLwGdL6tP5kATUW0wLdBgGMFmUleg38b9BK0L8cijL5Dw9FWDDN8_diDN1k1dgn3uTiN79HOAaAQzoQxW634FfKL_KlvkJvLCFxsi6-_7ymJxUK46IyLNLcjEEp9Qy1qS38ifWlsQlBOC9sAyQktjxVubIbaUGW**90abf62fabe98652afe4234907a77cfdbfea94471177c5ae1d9517c29a0c29c4*daIE2zG_bndz7UEVMltbZirenJu3d4X_lFHfVyh_ZGw; HttpOnly; Path=/
+	content-length: 371
+	accept-ranges: bytes
+	Date: Tue, 10 Aug 2021 09:41:23 GMT
+	Connection: keep-alive
+	Keep-Alive: timeout=120
+
+body:
+{"page":1,"per_page":10000,"total":1,"saved_objects":[{"type":"index-pattern","id":"ff959d40-b880-11e8-a6d9-e546fe2bba5f","attributes":{"title":"kibana_sample_data_ecommerce"},"references":[],"migrationVersion":{"index-pattern":"7.11.0"},"coreMigrationVersion":"8.0.0","updated_at":"2021-08-10T09:40:37.926Z","version":"WzE0NywxXQ==","namespaces":["default"],"score":0}]}
+<<<<<<<<<<<<<<<<<<<<<<<<<
+11:41:23.952 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+Load index pattern fields: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,2,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, 5ec2b6a0-87ba-4a94-b613-847267160e1d -> 0, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@53eea39, preference -> 1628588483878, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@403c64fa, Cookie -> sid=Fe26.2**ed9398d9ede9e2c02c7ba7b00b3f3942c1db1aa06efd85e5114dcd1ebe2f9624*P0VPOpP6WVXnUct6YWjLxg*X--OzInVF2D7CWUl4r_uiLfq-RPhua07SkT4kBetYYnU1Cf8qdbAsaeEQHnEqGwTuWgYCF0m94pwBJg_xeuY7t3pJTwsoNjFxkadKfOQPvNFiwG2alNNx6UOFfA4PozmhtrnpUItel99mMGYMOpP5pEZRd5O06l_zFkr_iRx1tGACxu_v6lIgWxyClC85mW343FFEhayUbD7ULWtZVTnySt-ph__dDp44yJaIkOZOVVujVPFCdeeDkfPKPj3-Q_2**50e8150adff15a22d924b4b5d9c761d948ed8646974dd24f81ff956ddb03012e*vtV2xOnNCqj4mB9_wCRTyadgdX-gQFq5Nmw6lVbTi8I, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**0a23c55dcab16b7cca92731d807816c9aa221cc30d034a325137a7e3e82596af*jtKnDBPhd175Kgahz-IJXg*O4Sc4nlt6tQkEIMJn--nBSEdJoBWIU1n4YMVL-LXapAKO1eREHCc45E5zc9UJPVTXfDFsUCQORk-zaGJ9qTQTBdT_Z5DUvOxXs0KtkGCTHme0jP9vy98VROgq0ZaQJaJ_tCw00fXnvPlwEZKwY8pPBpARIinYq2qIi6wT5-WzixUlnxDvJp87ZDh71ZFRh5kLEETr4SUVHmUkUdA7M2dBWDqbkB_V2IKBVsE62WbYmCinST8Z8lgKTt5E10Ycai1**f5d7f9128fa080fc456b58fe4358d62996b44571b8a287d4fc5faa161b624c23*SHYT_gldHEkGc0Eg4eYFGKIgrc4FN-HhlVXs6gZXnOA, path=/, HTTPOnly,true,false,1628588483950)))),OK,List(TryMaxBlock(5ec2b6a0-87ba-4a94-b613-847267160e1d,io.gatling.core.action.InnerTryMax@7668dc2d,OK)),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@18a645fd)
+=========================
+HTTP request:
+GET http://localhost:5620/api/index_patterns/_fields_for_wildcard?pattern=kibana_sample_data_ecommerce&meta_fields=_source&meta_fields=_id&meta_fields=_type&meta_fields=_index&meta_fields=_score
+headers:
+	kbn-version: 8.0.0
+	Referer: http://localhost:5620/app/discover
+	Sec-Fetch-Site: same-origin
+	Connection: keep-alive
+	Sec-Fetch-Mode: cors
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	Sec-Fetch-Dest: empty
+	Origin: http://localhost:5620
+	content-type: application/json
+	Accept: */*
+	Content-Type: application/json
+	accept-encoding: gzip, deflate
+	cookie: sid=Fe26.2**ad85d203fed9ee85d2c1a47f88fa2ae771c86f98312da2253a2ecaf4db734ce6*UKkRRlv8u050OWyMqBC7zQ*ry3gJeH4r3dHaxpXkhh5rhuJTVqYLSa2PC27XEUPRX6_lJ9f9wOpoyb_wQ8EmWM8aQvWYQ1ewKWJTVJcbrlW1_-qgqKIMSjdKHLwGdL6tP5kATUW0wLdBgGMFmUleg38b9BK0L8cijL5Dw9FWDDN8_diDN1k1dgn3uTiN79HOAaAQzoQxW634FfKL_KlvkJvLCFxsi6-_7ymJxUK46IyLNLcjEEp9Qy1qS38ifWlsQlBOC9sAyQktjxVubIbaUGW**90abf62fabe98652afe4234907a77cfdbfea94471177c5ae1d9517c29a0c29c4*daIE2zG_bndz7UEVMltbZirenJu3d4X_lFHfVyh_ZGw
+	host: localhost:5620
+cookies:
+	sid=Fe26.2**ad85d203fed9ee85d2c1a47f88fa2ae771c86f98312da2253a2ecaf4db734ce6*UKkRRlv8u050OWyMqBC7zQ*ry3gJeH4r3dHaxpXkhh5rhuJTVqYLSa2PC27XEUPRX6_lJ9f9wOpoyb_wQ8EmWM8aQvWYQ1ewKWJTVJcbrlW1_-qgqKIMSjdKHLwGdL6tP5kATUW0wLdBgGMFmUleg38b9BK0L8cijL5Dw9FWDDN8_diDN1k1dgn3uTiN79HOAaAQzoQxW634FfKL_KlvkJvLCFxsi6-_7ymJxUK46IyLNLcjEEp9Qy1qS38ifWlsQlBOC9sAyQktjxVubIbaUGW**90abf62fabe98652afe4234907a77cfdbfea94471177c5ae1d9517c29a0c29c4*daIE2zG_bndz7UEVMltbZirenJu3d4X_lFHfVyh_ZGw, path=/, HTTPOnly
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	content-type: application/json; charset=utf-8
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**0a23c55dcab16b7cca92731d807816c9aa221cc30d034a325137a7e3e82596af*jtKnDBPhd175Kgahz-IJXg*O4Sc4nlt6tQkEIMJn--nBSEdJoBWIU1n4YMVL-LXapAKO1eREHCc45E5zc9UJPVTXfDFsUCQORk-zaGJ9qTQTBdT_Z5DUvOxXs0KtkGCTHme0jP9vy98VROgq0ZaQJaJ_tCw00fXnvPlwEZKwY8pPBpARIinYq2qIi6wT5-WzixUlnxDvJp87ZDh71ZFRh5kLEETr4SUVHmUkUdA7M2dBWDqbkB_V2IKBVsE62WbYmCinST8Z8lgKTt5E10Ycai1**f5d7f9128fa080fc456b58fe4358d62996b44571b8a287d4fc5faa161b624c23*SHYT_gldHEkGc0Eg4eYFGKIgrc4FN-HhlVXs6gZXnOA; HttpOnly; Path=/
+	vary: accept-encoding
+	Date: Tue, 10 Aug 2021 09:41:23 GMT
+	Connection: keep-alive
+	Keep-Alive: timeout=120
+	Transfer-Encoding: chunked
+	content-encoding: gzip
+
+body:
+{"fields":[{"name":"_id","type":"string","esTypes":["_id"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"_index","type":"string","esTypes":["_index"],"searchable":true,"aggregatable":true,"readFromDocValues":false},{"name":"_score","type":"number","searchable":false,"aggregatable":false,"readFromDocValues":false},{"name":"_source","type":"_source","esTypes":["_source"],"searchable":false,"aggregatable":false,"readFromDocValues":false},{"name":"_type","type":"string","searchable":false,"aggregatable":false,"readFromDocValues":false},{"name":"category","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"category.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"category"}}},{"name":"currency","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"customer_birth_date","type":"date","esTypes":["date"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"customer_first_name","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"customer_first_name.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"customer_first_name"}}},{"name":"customer_full_name","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"customer_full_name.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"customer_full_name"}}},{"name":"customer_gender","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"customer_id","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"customer_last_name","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"customer_last_name.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"customer_last_name"}}},{"name":"customer_phone","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"day_of_week","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"day_of_week_i","type":"number","esTypes":["integer"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"email","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"event.dataset","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"geoip.city_name","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"geoip.continent_name","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"geoip.country_iso_code","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"geoip.location","type":"geo_point","esTypes":["geo_point"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"geoip.region_name","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"manufacturer","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"manufacturer.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"manufacturer"}}},{"name":"order_date","type":"date","esTypes":["date"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"order_id","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products._id","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"products._id.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"products._id"}}},{"name":"products.base_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.base_unit_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.category","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"products.category.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"products.category"}}},{"name":"products.created_on","type":"date","esTypes":["date"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.discount_amount","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.discount_percentage","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.manufacturer","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"products.manufacturer.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"products.manufacturer"}}},{"name":"products.min_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.product_id","type":"number","esTypes":["long"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.product_name","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"products.product_name.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"products.product_name"}}},{"name":"products.quantity","type":"number","esTypes":["integer"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.sku","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.tax_amount","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.taxful_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.taxless_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.unit_discount_amount","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"sku","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"taxful_total_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"taxless_total_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"total_quantity","type":"number","esTypes":["integer"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"total_unique_products","type":"number","esTypes":["integer"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"type","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"user","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true}]}
+<<<<<<<<<<<<<<<<<<<<<<<<<
+11:41:24.103 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+Discover query default: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,2,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, 5ec2b6a0-87ba-4a94-b613-847267160e1d -> 0, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@53eea39, preference -> 1628588483963, endTime -> 2021-08-10T11:40:34.802Z, status -> 200, sessionId -> d86bc124-6148-483b-a7c0-0bd3e0a112e1, requestId -> FkxFcXhjSUVfUkR1UndzNGZ4RWU0c0EccnZRak03MmhURDYtenREdDBoNkNIQToxNjMxMw==, Cookie -> sid=Fe26.2**ed9398d9ede9e2c02c7ba7b00b3f3942c1db1aa06efd85e5114dcd1ebe2f9624*P0VPOpP6WVXnUct6YWjLxg*X--OzInVF2D7CWUl4r_uiLfq-RPhua07SkT4kBetYYnU1Cf8qdbAsaeEQHnEqGwTuWgYCF0m94pwBJg_xeuY7t3pJTwsoNjFxkadKfOQPvNFiwG2alNNx6UOFfA4PozmhtrnpUItel99mMGYMOpP5pEZRd5O06l_zFkr_iRx1tGACxu_v6lIgWxyClC85mW343FFEhayUbD7ULWtZVTnySt-ph__dDp44yJaIkOZOVVujVPFCdeeDkfPKPj3-Q_2**50e8150adff15a22d924b4b5d9c761d948ed8646974dd24f81ff956ddb03012e*vtV2xOnNCqj4mB9_wCRTyadgdX-gQFq5Nmw6lVbTi8I, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**be5d277dfb06a9912cf743c0003c84846e698c5f67842d48a74230df4ff9c99e*cnSKoKQuYtCOo-MdmiQoNA*KF3_V24scwxTAGtIb7MFufNZQtU8NVdm8mPUGr1HfLkt9XNlSFaYkhYrfgfhjA-OfxXOySTjHW_Neehm8mhjOFq7niLUSBIKoRg6nV8NFOJszopaRGkON0IwE_1ZCIj8k5M-PYnT9h1PFH8RV6J8RuQo-mOAa9bgzlY6fth8pqK3LQAF75BMXMADQMxH0DHy8fzVl7rSkbB46RuAer0FGfhRJWHykim4Y6sWz7irkVgH57KUkqXqFVf64sV4nUWE**782adb393fa93d1b6c6a7e86cbbddfcbc4b3832ee1148272ac96f83ad3f28c56*ka4_GXkiyhrBU-GzpWZlh_K9P-lBvnnJ9_2DJeCCfoM, path=/, HTTPOnly,true,false,1628588484099))), intervalName -> fixed_interval, isPartial -> false, startTime -> 2021-08-10T11:25:34.799Z, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@403c64fa, intervalValue -> 30s),OK,List(TryMaxBlock(5ec2b6a0-87ba-4a94-b613-847267160e1d,io.gatling.core.action.InnerTryMax@7668dc2d,OK)),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@18a645fd)
+=========================
+HTTP request:
+POST http://localhost:5620/internal/bsearch
+headers:
+	kbn-version: 8.0.0
+	Referer: http://localhost:5620/app/discover
+	Sec-Fetch-Site: same-origin
+	Connection: keep-alive
+	Sec-Fetch-Mode: cors
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	Sec-Fetch-Dest: empty
+	Origin: http://localhost:5620
+	Accept: */*
+	accept-encoding: gzip, deflate
+	cookie: sid=Fe26.2**0a23c55dcab16b7cca92731d807816c9aa221cc30d034a325137a7e3e82596af*jtKnDBPhd175Kgahz-IJXg*O4Sc4nlt6tQkEIMJn--nBSEdJoBWIU1n4YMVL-LXapAKO1eREHCc45E5zc9UJPVTXfDFsUCQORk-zaGJ9qTQTBdT_Z5DUvOxXs0KtkGCTHme0jP9vy98VROgq0ZaQJaJ_tCw00fXnvPlwEZKwY8pPBpARIinYq2qIi6wT5-WzixUlnxDvJp87ZDh71ZFRh5kLEETr4SUVHmUkUdA7M2dBWDqbkB_V2IKBVsE62WbYmCinST8Z8lgKTt5E10Ycai1**f5d7f9128fa080fc456b58fe4358d62996b44571b8a287d4fc5faa161b624c23*SHYT_gldHEkGc0Eg4eYFGKIgrc4FN-HhlVXs6gZXnOA
+	host: localhost:5620
+	content-type: application/json
+	content-length: 2661
+cookies:
+	sid=Fe26.2**0a23c55dcab16b7cca92731d807816c9aa221cc30d034a325137a7e3e82596af*jtKnDBPhd175Kgahz-IJXg*O4Sc4nlt6tQkEIMJn--nBSEdJoBWIU1n4YMVL-LXapAKO1eREHCc45E5zc9UJPVTXfDFsUCQORk-zaGJ9qTQTBdT_Z5DUvOxXs0KtkGCTHme0jP9vy98VROgq0ZaQJaJ_tCw00fXnvPlwEZKwY8pPBpARIinYq2qIi6wT5-WzixUlnxDvJp87ZDh71ZFRh5kLEETr4SUVHmUkUdA7M2dBWDqbkB_V2IKBVsE62WbYmCinST8Z8lgKTt5E10Ycai1**f5d7f9128fa080fc456b58fe4358d62996b44571b8a287d4fc5faa161b624c23*SHYT_gldHEkGc0Eg4eYFGKIgrc4FN-HhlVXs6gZXnOA, path=/, HTTPOnly
+body:StringChunksRequestBody{contentType='application/json', charset=UTF-8, content={
+  "batch":[
+    {
+      "request":{
+        "params":{
+          "index":"kibana_sample_data_ecommerce",
+          "body":{
+            "size":500,
+            "sort":[
+              {
+                "order_date":{
+                  "order":"desc",
+                  "unmapped_type":"boolean"
+                }
+              }
+            ],
+            "version":true,
+            "fields":[
+              {
+                "field":"*",
+                "include_unmapped":"true"
+              },
+              {
+                "field":"customer_birth_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"order_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"products.created_on",
+                "format":"strict_date_optional_time"
+              }
+            ],
+            "aggs":{
+              "2":{
+                "date_histogram":{
+                  "field":"order_date",
+                  "fixed_interval":"30s",
+                  "time_zone":"Europe/Berlin",
+                  "min_doc_count":1
+                }
+              }
+            },
+            "script_fields":{
+
+            },
+            "stored_fields":[
+              "*"
+            ],
+            "runtime_mappings":{
+
+            },
+            "_source":false,
+            "query":{
+              "bool":{
+                "must":[
+
+                ],
+                "filter":[
+                  {
+                    "match_all":{
+
+                    }
+                  },
+                  {
+                    "range":{
+                      "order_date":{
+                        "gte":"2021-08-10T11:25:34.799Z",
+                        "lte":"2021-08-10T11:40:34.802Z",
+                        "format":"strict_date_optional_time"
+                      }
+                    }
+                  }
+                ],
+                "should":[
+
+                ],
+                "must_not":[
+
+                ]
+              }
+            },
+            "highlight":{
+              "pre_tags":[
+                "@kibana-highlighted-field@"
+              ],
+              "post_tags":[
+                "@/kibana-highlighted-field@"
+              ],
+              "fields":{
+                "*":{
+
+                }
+              },
+              "fragment_size":2147483647
+            }
+          },
+          "preference":"1628588483963"
+        }
+      },
+      "options":{
+        "sessionId":"d86bc124-6148-483b-a7c0-0bd3e0a112e1",
+        "isRestore":false,
+        "strategy":"ese",
+        "isStored":false
+      }
+    }
+  ]
+}}
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	content-type: application/x-ndjson
+	connection: keep-alive
+	transfer-encoding: chunked
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**be5d277dfb06a9912cf743c0003c84846e698c5f67842d48a74230df4ff9c99e*cnSKoKQuYtCOo-MdmiQoNA*KF3_V24scwxTAGtIb7MFufNZQtU8NVdm8mPUGr1HfLkt9XNlSFaYkhYrfgfhjA-OfxXOySTjHW_Neehm8mhjOFq7niLUSBIKoRg6nV8NFOJszopaRGkON0IwE_1ZCIj8k5M-PYnT9h1PFH8RV6J8RuQo-mOAa9bgzlY6fth8pqK3LQAF75BMXMADQMxH0DHy8fzVl7rSkbB46RuAer0FGfhRJWHykim4Y6sWz7irkVgH57KUkqXqFVf64sV4nUWE**782adb393fa93d1b6c6a7e86cbbddfcbc4b3832ee1148272ac96f83ad3f28c56*ka4_GXkiyhrBU-GzpWZlh_K9P-lBvnnJ9_2DJeCCfoM; HttpOnly; Path=/
+	Date: Tue, 10 Aug 2021 09:41:23 GMT
+
+body:
+<<<BINARY CONTENT>>>
+<<<<<<<<<<<<<<<<<<<<<<<<<
+11:41:25.567 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+Discover query 2: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,1,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@44e5ed25, preference -> 1628588485195, endTime -> 2021-08-10T11:40:34.942Z, status -> 200, sessionId -> f3b3815a-56d4-4819-b1c5-ff77f99309aa, requestId -> FmZfZmR1QUxjVHB1NUd4V2I5WHpMaFEccnZRak03MmhURDYtenREdDBoNkNIQToxNjM3Ng==, Cookie -> sid=Fe26.2**9ee4910c5ad0e54b62e5a9bab08285dadb68b414aaf80ff63310819551b2c4a8*tvkRYKwOPWhRyksAdC6keA*L-tL_ZYpuE5fwXhFLlzfiC9OCPv9nP8OuRNCiRj1kOPx_4hPj5eCr7FwUiICpADWcp2G0qxTmmVHQPA7g0mjQdpvok_xMkjszY0ZWu847tlXAZFWKIRCzCTE49a6pLSqjhvUSndEFzIxpApQAbSIPIbrEPWBAeheVdqpIW26fvyGr1va9fuUhYHjXVxwAA7-AAP0ur5unCPe96q5y37hOQxXwt-L3soaYVA4MCmGRf2YZ5FYhfF9KuFDoGD3LjVZ**26086538fa1eb41ebff7a786345b412b532e4ac2e0ce98b085d86a88bdecbdda*e2h1MVxJdTpGwMw5THW4nCw9QQRz18WVB-Gjfv2fUbU, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**5bbc8c497fd75a1b9a968fec167bd4823ea667b14e6c2e596039f87981ffccd5*E4mjGhf0A1CF5tq4SVseng*bDo92Y5IzlFfHVhUNsClwjYOyywYK06AAIlv-dnXd4QC7ARek4Gm1KoXjEV-VBMkTO8Gf8cU0XNJNdL-mjUUkGojJ1R5y2LRcWKoPWiHdZsCsxW5NOyJmlVmQmqFhXqUZIxzFd-JUvrERfHUwgbTXyUP-mSvpRt6Z2GO-EdK_I_MCskWa0SogRJ5jVO4XwLfsgTrvJ7aAfy7fXUTLNxDl4gk2yQ7VzgDnFpHFbDTQzAC8B_2k_XdmB2tMPTcmcU2**9c7c64cbe9208c6053c2b20b947d45ed09b7c689e0ee3affd3cd19aadcfc8546*gHh0xIGR2AOTvQflQUWIbBz5Ht1xH7U7b5v08e9gt-w, path=/, HTTPOnly,true,false,1628588485499))), intervalName -> fixed_interval, isPartial -> false, startTime -> 2021-08-05T11:40:34.942Z, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@5b497c6e, intervalValue -> 3h),OK,List(),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@488b50ec)
+=========================
+HTTP request:
+POST http://localhost:5620/internal/bsearch
+headers:
+	kbn-version: 8.0.0
+	Referer: http://localhost:5620/app/discover
+	Sec-Fetch-Site: same-origin
+	Connection: keep-alive
+	Sec-Fetch-Mode: cors
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	Sec-Fetch-Dest: empty
+	Origin: http://localhost:5620
+	Accept: */*
+	accept-encoding: gzip, deflate
+	cookie: sid=Fe26.2**b62398396a8a462bb2d33e4550db18effb05f7f90f383571de5908ddd938915a*UTblDuxjN8gebqm5ip4LWA*vD7tnYFomDnPWgp7CFkKNOLbptG5tYx59apyCwoX0eCLaWvexB4QdzpOIwEY8VLsXR5B3rY9VjuMGhqldJjvhqtn0W8QTtSg7thSrumSpU3yivHTcKyhs1c16KC28BFIk3_L9oamjMIWjDyFYahIn1ago-8EBUhtC2sgki5gZLdcPmcnrhx_GX4AHTYvF79H7Uu1-A46S-wpQ6kBjEq_Pcy6qPcpteWAB70ebNqzXDjlxm1o8HGZkUCG3bEVIGtu**35719afda4effbbd26b6703199d7afd55249a5a3c825c1936d7f94f82082e8f4*u0Gi9Gk5k3BQBkTx0kElpbf1y0Ps3bww_730iT0oqhI
+	host: localhost:5620
+	content-type: application/json
+	content-length: 2660
+cookies:
+	sid=Fe26.2**b62398396a8a462bb2d33e4550db18effb05f7f90f383571de5908ddd938915a*UTblDuxjN8gebqm5ip4LWA*vD7tnYFomDnPWgp7CFkKNOLbptG5tYx59apyCwoX0eCLaWvexB4QdzpOIwEY8VLsXR5B3rY9VjuMGhqldJjvhqtn0W8QTtSg7thSrumSpU3yivHTcKyhs1c16KC28BFIk3_L9oamjMIWjDyFYahIn1ago-8EBUhtC2sgki5gZLdcPmcnrhx_GX4AHTYvF79H7Uu1-A46S-wpQ6kBjEq_Pcy6qPcpteWAB70ebNqzXDjlxm1o8HGZkUCG3bEVIGtu**35719afda4effbbd26b6703199d7afd55249a5a3c825c1936d7f94f82082e8f4*u0Gi9Gk5k3BQBkTx0kElpbf1y0Ps3bww_730iT0oqhI, path=/, HTTPOnly
+body:StringChunksRequestBody{contentType='application/json', charset=UTF-8, content={
+  "batch":[
+    {
+      "request":{
+        "params":{
+          "index":"kibana_sample_data_ecommerce",
+          "body":{
+            "size":500,
+            "sort":[
+              {
+                "order_date":{
+                  "order":"desc",
+                  "unmapped_type":"boolean"
+                }
+              }
+            ],
+            "version":true,
+            "fields":[
+              {
+                "field":"*",
+                "include_unmapped":"true"
+              },
+              {
+                "field":"customer_birth_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"order_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"products.created_on",
+                "format":"strict_date_optional_time"
+              }
+            ],
+            "aggs":{
+              "2":{
+                "date_histogram":{
+                  "field":"order_date",
+                  "fixed_interval":"3h",
+                  "time_zone":"Europe/Berlin",
+                  "min_doc_count":1
+                }
+              }
+            },
+            "script_fields":{
+
+            },
+            "stored_fields":[
+              "*"
+            ],
+            "runtime_mappings":{
+
+            },
+            "_source":false,
+            "query":{
+              "bool":{
+                "must":[
+
+                ],
+                "filter":[
+                  {
+                    "match_all":{
+
+                    }
+                  },
+                  {
+                    "range":{
+                      "order_date":{
+                        "gte":"2021-08-05T11:40:34.942Z",
+                        "lte":"2021-08-10T11:40:34.942Z",
+                        "format":"strict_date_optional_time"
+                      }
+                    }
+                  }
+                ],
+                "should":[
+
+                ],
+                "must_not":[
+
+                ]
+              }
+            },
+            "highlight":{
+              "pre_tags":[
+                "@kibana-highlighted-field@"
+              ],
+              "post_tags":[
+                "@/kibana-highlighted-field@"
+              ],
+              "fields":{
+                "*":{
+
+                }
+              },
+              "fragment_size":2147483647
+            }
+          },
+          "preference":"1628588485195"
+        }
+      },
+      "options":{
+        "sessionId":"f3b3815a-56d4-4819-b1c5-ff77f99309aa",
+        "isRestore":false,
+        "strategy":"ese",
+        "isStored":false
+      }
+    }
+  ]
+}}
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	content-type: application/x-ndjson
+	connection: keep-alive
+	transfer-encoding: chunked
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**5bbc8c497fd75a1b9a968fec167bd4823ea667b14e6c2e596039f87981ffccd5*E4mjGhf0A1CF5tq4SVseng*bDo92Y5IzlFfHVhUNsClwjYOyywYK06AAIlv-dnXd4QC7ARek4Gm1KoXjEV-VBMkTO8Gf8cU0XNJNdL-mjUUkGojJ1R5y2LRcWKoPWiHdZsCsxW5NOyJmlVmQmqFhXqUZIxzFd-JUvrERfHUwgbTXyUP-mSvpRt6Z2GO-EdK_I_MCskWa0SogRJ5jVO4XwLfsgTrvJ7aAfy7fXUTLNxDl4gk2yQ7VzgDnFpHFbDTQzAC8B_2k_XdmB2tMPTcmcU2**9c7c64cbe9208c6053c2b20b947d45ed09b7c689e0ee3affd3cd19aadcfc8546*gHh0xIGR2AOTvQflQUWIbBz5Ht1xH7U7b5v08e9gt-w; HttpOnly; Path=/
+	Date: Tue, 10 Aug 2021 09:41:25 GMT
+
+body:
+<<<BINARY CONTENT>>>
+<<<<<<<<<<<<<<<<<<<<<<<<<
+11:41:28.894 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+login: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,3,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@d15321e, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@4817add8, Cookie -> sid=Fe26.2**eede6426b249284dc77a5dd72ab675ef1b9b4b2f9779ba4d8ce48d61b283dd84*yI7bc6mZptpdSnfAuyc75Q*bNAxo4rKo2z9smaNmS3Qf0z-riBMXezLxrQ7Bl92EuyLgRuQnBozj-0BFg3W53uTjXblyz7xGEKCsPuh60EU8ajuXEPTnquVz9unN1w1lI5A_0-ckiut4is3DKk-VHP1nudaFr1g-waW1D7KW3SCLc5QK5YmOREQVMBaH_-mhqvteOLeYkUoLc39t8O9vC1Ba2wEmzb6Wgh6XLvcUVtbKGoEeKt7PaoiPhzhfOl10y9wbwX8Z3YhU52BefXejqVy**33b1be9157532ccae827039ab171fe5f4fa7868ce8cb17809d1b5459f950b6e7*8Sceo9_BKUtMlGOFEG-YnZFgVY16KnmOttZna97FypM, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**eede6426b249284dc77a5dd72ab675ef1b9b4b2f9779ba4d8ce48d61b283dd84*yI7bc6mZptpdSnfAuyc75Q*bNAxo4rKo2z9smaNmS3Qf0z-riBMXezLxrQ7Bl92EuyLgRuQnBozj-0BFg3W53uTjXblyz7xGEKCsPuh60EU8ajuXEPTnquVz9unN1w1lI5A_0-ckiut4is3DKk-VHP1nudaFr1g-waW1D7KW3SCLc5QK5YmOREQVMBaH_-mhqvteOLeYkUoLc39t8O9vC1Ba2wEmzb6Wgh6XLvcUVtbKGoEeKt7PaoiPhzhfOl10y9wbwX8Z3YhU52BefXejqVy**33b1be9157532ccae827039ab171fe5f4fa7868ce8cb17809d1b5459f950b6e7*8Sceo9_BKUtMlGOFEG-YnZFgVY16KnmOttZna97FypM, path=/, HTTPOnly,true,false,1628588488892)))),OK,List(),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@6090f3ca)
+=========================
+HTTP request:
+POST http://localhost:5620/internal/security/login
+headers:
+	kbn-xsrf: xsrf
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	accept-encoding: gzip, deflate
+	host: localhost:5620
+	content-type: application/json
+	content-length: 144
+body:StringChunksRequestBody{contentType='application/json', charset=UTF-8, content={"providerType":"basic","providerName":"basic","currentURL":"http://localhost:5620/login","params":{"username":"elastic","password":"changeme"}}}
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	content-type: application/json; charset=utf-8
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**eede6426b249284dc77a5dd72ab675ef1b9b4b2f9779ba4d8ce48d61b283dd84*yI7bc6mZptpdSnfAuyc75Q*bNAxo4rKo2z9smaNmS3Qf0z-riBMXezLxrQ7Bl92EuyLgRuQnBozj-0BFg3W53uTjXblyz7xGEKCsPuh60EU8ajuXEPTnquVz9unN1w1lI5A_0-ckiut4is3DKk-VHP1nudaFr1g-waW1D7KW3SCLc5QK5YmOREQVMBaH_-mhqvteOLeYkUoLc39t8O9vC1Ba2wEmzb6Wgh6XLvcUVtbKGoEeKt7PaoiPhzhfOl10y9wbwX8Z3YhU52BefXejqVy**33b1be9157532ccae827039ab171fe5f4fa7868ce8cb17809d1b5459f950b6e7*8Sceo9_BKUtMlGOFEG-YnZFgVY16KnmOttZna97FypM; HttpOnly; Path=/
+	content-length: 16
+	Date: Tue, 10 Aug 2021 09:41:28 GMT
+	Connection: keep-alive
+	Keep-Alive: timeout=120
+
+body:
+{"location":"/"}
+<<<<<<<<<<<<<<<<<<<<<<<<<
+11:41:33.941 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+Load index patterns: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,3,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@d15321e, preference -> 1628588493916, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@4817add8, Cookie -> sid=Fe26.2**eede6426b249284dc77a5dd72ab675ef1b9b4b2f9779ba4d8ce48d61b283dd84*yI7bc6mZptpdSnfAuyc75Q*bNAxo4rKo2z9smaNmS3Qf0z-riBMXezLxrQ7Bl92EuyLgRuQnBozj-0BFg3W53uTjXblyz7xGEKCsPuh60EU8ajuXEPTnquVz9unN1w1lI5A_0-ckiut4is3DKk-VHP1nudaFr1g-waW1D7KW3SCLc5QK5YmOREQVMBaH_-mhqvteOLeYkUoLc39t8O9vC1Ba2wEmzb6Wgh6XLvcUVtbKGoEeKt7PaoiPhzhfOl10y9wbwX8Z3YhU52BefXejqVy**33b1be9157532ccae827039ab171fe5f4fa7868ce8cb17809d1b5459f950b6e7*8Sceo9_BKUtMlGOFEG-YnZFgVY16KnmOttZna97FypM, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**aa3d097c82e9287208fb22bde8f609a6e2c8ae796be31f9ea4477fa9c0458b76*f3tBy3m9IR_vSmKXFF3LPA*-9A6pgOLIhHxJfgv6BzwSrgcS_LBuXdlqYt-2CplRSGGbDhF_yz4HPRi7QCTi4A1HAwUP0Je5XCGBet1iHwum2byog11xXhq64rAOtSef6Rv-knSwhbx6IzodelR7pdA03Pb8dpt11DD_bK4V4dzX-31L6KrWedoris6qI8hGFW3vgQ46GqOBzoaU0Klyy-LO-V6vmqF4grZvq13tYxpuSvUn_SEsEoFHnnkt3a2hvyQPqkfzBM8-pEX17UOLFuj**00dc0000c7c4d325c7b1237f2a86da7dad8d4d4eef01d82bddabdb3b21721a30*lBq764QIjPIfZy2_RkWNkpnPLn9oksfWAgAQFgzV9ok, path=/, HTTPOnly,true,false,1628588493939)))),OK,List(),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@6090f3ca)
+=========================
+HTTP request:
+GET http://localhost:5620/api/saved_objects/_find?fields=title&per_page=10000&type=index-pattern
+headers:
+	kbn-version: 8.0.0
+	Referer: http://localhost:5620/app/discover
+	Sec-Fetch-Site: same-origin
+	Connection: keep-alive
+	Sec-Fetch-Mode: cors
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	Sec-Fetch-Dest: empty
+	Origin: http://localhost:5620
+	content-type: application/json
+	Accept: */*
+	Content-Type: application/json
+	accept-encoding: gzip, deflate
+	cookie: sid=Fe26.2**eede6426b249284dc77a5dd72ab675ef1b9b4b2f9779ba4d8ce48d61b283dd84*yI7bc6mZptpdSnfAuyc75Q*bNAxo4rKo2z9smaNmS3Qf0z-riBMXezLxrQ7Bl92EuyLgRuQnBozj-0BFg3W53uTjXblyz7xGEKCsPuh60EU8ajuXEPTnquVz9unN1w1lI5A_0-ckiut4is3DKk-VHP1nudaFr1g-waW1D7KW3SCLc5QK5YmOREQVMBaH_-mhqvteOLeYkUoLc39t8O9vC1Ba2wEmzb6Wgh6XLvcUVtbKGoEeKt7PaoiPhzhfOl10y9wbwX8Z3YhU52BefXejqVy**33b1be9157532ccae827039ab171fe5f4fa7868ce8cb17809d1b5459f950b6e7*8Sceo9_BKUtMlGOFEG-YnZFgVY16KnmOttZna97FypM
+	host: localhost:5620
+cookies:
+	sid=Fe26.2**eede6426b249284dc77a5dd72ab675ef1b9b4b2f9779ba4d8ce48d61b283dd84*yI7bc6mZptpdSnfAuyc75Q*bNAxo4rKo2z9smaNmS3Qf0z-riBMXezLxrQ7Bl92EuyLgRuQnBozj-0BFg3W53uTjXblyz7xGEKCsPuh60EU8ajuXEPTnquVz9unN1w1lI5A_0-ckiut4is3DKk-VHP1nudaFr1g-waW1D7KW3SCLc5QK5YmOREQVMBaH_-mhqvteOLeYkUoLc39t8O9vC1Ba2wEmzb6Wgh6XLvcUVtbKGoEeKt7PaoiPhzhfOl10y9wbwX8Z3YhU52BefXejqVy**33b1be9157532ccae827039ab171fe5f4fa7868ce8cb17809d1b5459f950b6e7*8Sceo9_BKUtMlGOFEG-YnZFgVY16KnmOttZna97FypM, path=/, HTTPOnly
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	content-type: application/json; charset=utf-8
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**aa3d097c82e9287208fb22bde8f609a6e2c8ae796be31f9ea4477fa9c0458b76*f3tBy3m9IR_vSmKXFF3LPA*-9A6pgOLIhHxJfgv6BzwSrgcS_LBuXdlqYt-2CplRSGGbDhF_yz4HPRi7QCTi4A1HAwUP0Je5XCGBet1iHwum2byog11xXhq64rAOtSef6Rv-knSwhbx6IzodelR7pdA03Pb8dpt11DD_bK4V4dzX-31L6KrWedoris6qI8hGFW3vgQ46GqOBzoaU0Klyy-LO-V6vmqF4grZvq13tYxpuSvUn_SEsEoFHnnkt3a2hvyQPqkfzBM8-pEX17UOLFuj**00dc0000c7c4d325c7b1237f2a86da7dad8d4d4eef01d82bddabdb3b21721a30*lBq764QIjPIfZy2_RkWNkpnPLn9oksfWAgAQFgzV9ok; HttpOnly; Path=/
+	content-length: 371
+	accept-ranges: bytes
+	Date: Tue, 10 Aug 2021 09:41:33 GMT
+	Connection: keep-alive
+	Keep-Alive: timeout=120
+
+body:
+{"page":1,"per_page":10000,"total":1,"saved_objects":[{"type":"index-pattern","id":"ff959d40-b880-11e8-a6d9-e546fe2bba5f","attributes":{"title":"kibana_sample_data_ecommerce"},"references":[],"migrationVersion":{"index-pattern":"7.11.0"},"coreMigrationVersion":"8.0.0","updated_at":"2021-08-10T09:40:37.926Z","version":"WzE0NywxXQ==","namespaces":["default"],"score":0}]}
+<<<<<<<<<<<<<<<<<<<<<<<<<
+11:41:33.985 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+Load index pattern fields: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,3,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, 5ec2b6a0-87ba-4a94-b613-847267160e1d -> 0, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@d15321e, preference -> 1628588493916, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@4817add8, Cookie -> sid=Fe26.2**eede6426b249284dc77a5dd72ab675ef1b9b4b2f9779ba4d8ce48d61b283dd84*yI7bc6mZptpdSnfAuyc75Q*bNAxo4rKo2z9smaNmS3Qf0z-riBMXezLxrQ7Bl92EuyLgRuQnBozj-0BFg3W53uTjXblyz7xGEKCsPuh60EU8ajuXEPTnquVz9unN1w1lI5A_0-ckiut4is3DKk-VHP1nudaFr1g-waW1D7KW3SCLc5QK5YmOREQVMBaH_-mhqvteOLeYkUoLc39t8O9vC1Ba2wEmzb6Wgh6XLvcUVtbKGoEeKt7PaoiPhzhfOl10y9wbwX8Z3YhU52BefXejqVy**33b1be9157532ccae827039ab171fe5f4fa7868ce8cb17809d1b5459f950b6e7*8Sceo9_BKUtMlGOFEG-YnZFgVY16KnmOttZna97FypM, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**d34ac6462097f2412340d45dc6b7dcd24dc96fbf68dd57b676b9e8e895f7a7b7*B0oA_hATL73lD6_oYfZP9Q*B-XW-Ow-sb0zu2BgA-hZYRfqe8hrgpmuBmDRrM_JPixLAADafWGbXJhU5-Kcg1bIsSaggY7dUup1uUL1eA0ciL6ckGyclptQs0jvRahRjDKsI7-yGopMzKiDpp6oaA0yRKFj60YUyyBuXuwYVENIvM9-apKLsUS2TTPGvaesctoXQngPXtSSCGHjqamEpxD5cu_jptJqfdesdnww4de_fp_gNmlRM2ORl1_GK6NkufnRS6x-0bt35aYeVG4s9een**9de17f8515affadbd3ebb60ca08d8b57c5d0c99e0631105988d267f8b6ac47b6*c8U8wRK7btAnc1JtBZmcW0UvA6FQLtDRnFh9WJZRtpI, path=/, HTTPOnly,true,false,1628588493983)))),OK,List(TryMaxBlock(5ec2b6a0-87ba-4a94-b613-847267160e1d,io.gatling.core.action.InnerTryMax@7668dc2d,OK)),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@6090f3ca)
+=========================
+HTTP request:
+GET http://localhost:5620/api/index_patterns/_fields_for_wildcard?pattern=kibana_sample_data_ecommerce&meta_fields=_source&meta_fields=_id&meta_fields=_type&meta_fields=_index&meta_fields=_score
+headers:
+	kbn-version: 8.0.0
+	Referer: http://localhost:5620/app/discover
+	Sec-Fetch-Site: same-origin
+	Connection: keep-alive
+	Sec-Fetch-Mode: cors
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	Sec-Fetch-Dest: empty
+	Origin: http://localhost:5620
+	content-type: application/json
+	Accept: */*
+	Content-Type: application/json
+	accept-encoding: gzip, deflate
+	cookie: sid=Fe26.2**aa3d097c82e9287208fb22bde8f609a6e2c8ae796be31f9ea4477fa9c0458b76*f3tBy3m9IR_vSmKXFF3LPA*-9A6pgOLIhHxJfgv6BzwSrgcS_LBuXdlqYt-2CplRSGGbDhF_yz4HPRi7QCTi4A1HAwUP0Je5XCGBet1iHwum2byog11xXhq64rAOtSef6Rv-knSwhbx6IzodelR7pdA03Pb8dpt11DD_bK4V4dzX-31L6KrWedoris6qI8hGFW3vgQ46GqOBzoaU0Klyy-LO-V6vmqF4grZvq13tYxpuSvUn_SEsEoFHnnkt3a2hvyQPqkfzBM8-pEX17UOLFuj**00dc0000c7c4d325c7b1237f2a86da7dad8d4d4eef01d82bddabdb3b21721a30*lBq764QIjPIfZy2_RkWNkpnPLn9oksfWAgAQFgzV9ok
+	host: localhost:5620
+cookies:
+	sid=Fe26.2**aa3d097c82e9287208fb22bde8f609a6e2c8ae796be31f9ea4477fa9c0458b76*f3tBy3m9IR_vSmKXFF3LPA*-9A6pgOLIhHxJfgv6BzwSrgcS_LBuXdlqYt-2CplRSGGbDhF_yz4HPRi7QCTi4A1HAwUP0Je5XCGBet1iHwum2byog11xXhq64rAOtSef6Rv-knSwhbx6IzodelR7pdA03Pb8dpt11DD_bK4V4dzX-31L6KrWedoris6qI8hGFW3vgQ46GqOBzoaU0Klyy-LO-V6vmqF4grZvq13tYxpuSvUn_SEsEoFHnnkt3a2hvyQPqkfzBM8-pEX17UOLFuj**00dc0000c7c4d325c7b1237f2a86da7dad8d4d4eef01d82bddabdb3b21721a30*lBq764QIjPIfZy2_RkWNkpnPLn9oksfWAgAQFgzV9ok, path=/, HTTPOnly
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	content-type: application/json; charset=utf-8
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**d34ac6462097f2412340d45dc6b7dcd24dc96fbf68dd57b676b9e8e895f7a7b7*B0oA_hATL73lD6_oYfZP9Q*B-XW-Ow-sb0zu2BgA-hZYRfqe8hrgpmuBmDRrM_JPixLAADafWGbXJhU5-Kcg1bIsSaggY7dUup1uUL1eA0ciL6ckGyclptQs0jvRahRjDKsI7-yGopMzKiDpp6oaA0yRKFj60YUyyBuXuwYVENIvM9-apKLsUS2TTPGvaesctoXQngPXtSSCGHjqamEpxD5cu_jptJqfdesdnww4de_fp_gNmlRM2ORl1_GK6NkufnRS6x-0bt35aYeVG4s9een**9de17f8515affadbd3ebb60ca08d8b57c5d0c99e0631105988d267f8b6ac47b6*c8U8wRK7btAnc1JtBZmcW0UvA6FQLtDRnFh9WJZRtpI; HttpOnly; Path=/
+	vary: accept-encoding
+	Date: Tue, 10 Aug 2021 09:41:33 GMT
+	Connection: keep-alive
+	Keep-Alive: timeout=120
+	Transfer-Encoding: chunked
+	content-encoding: gzip
+
+body:
+{"fields":[{"name":"_id","type":"string","esTypes":["_id"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"_index","type":"string","esTypes":["_index"],"searchable":true,"aggregatable":true,"readFromDocValues":false},{"name":"_score","type":"number","searchable":false,"aggregatable":false,"readFromDocValues":false},{"name":"_source","type":"_source","esTypes":["_source"],"searchable":false,"aggregatable":false,"readFromDocValues":false},{"name":"_type","type":"string","searchable":false,"aggregatable":false,"readFromDocValues":false},{"name":"category","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"category.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"category"}}},{"name":"currency","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"customer_birth_date","type":"date","esTypes":["date"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"customer_first_name","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"customer_first_name.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"customer_first_name"}}},{"name":"customer_full_name","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"customer_full_name.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"customer_full_name"}}},{"name":"customer_gender","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"customer_id","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"customer_last_name","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"customer_last_name.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"customer_last_name"}}},{"name":"customer_phone","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"day_of_week","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"day_of_week_i","type":"number","esTypes":["integer"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"email","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"event.dataset","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"geoip.city_name","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"geoip.continent_name","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"geoip.country_iso_code","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"geoip.location","type":"geo_point","esTypes":["geo_point"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"geoip.region_name","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"manufacturer","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"manufacturer.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"manufacturer"}}},{"name":"order_date","type":"date","esTypes":["date"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"order_id","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products._id","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"products._id.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"products._id"}}},{"name":"products.base_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.base_unit_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.category","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"products.category.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"products.category"}}},{"name":"products.created_on","type":"date","esTypes":["date"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.discount_amount","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.discount_percentage","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.manufacturer","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"products.manufacturer.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"products.manufacturer"}}},{"name":"products.min_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.product_id","type":"number","esTypes":["long"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.product_name","type":"string","esTypes":["text"],"searchable":true,"aggregatable":false,"readFromDocValues":false},{"name":"products.product_name.keyword","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true,"subType":{"multi":{"parent":"products.product_name"}}},{"name":"products.quantity","type":"number","esTypes":["integer"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.sku","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.tax_amount","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.taxful_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.taxless_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"products.unit_discount_amount","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"sku","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"taxful_total_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"taxless_total_price","type":"number","esTypes":["half_float"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"total_quantity","type":"number","esTypes":["integer"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"total_unique_products","type":"number","esTypes":["integer"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"type","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true},{"name":"user","type":"string","esTypes":["keyword"],"searchable":true,"aggregatable":true,"readFromDocValues":true}]}
+<<<<<<<<<<<<<<<<<<<<<<<<<
+11:41:34.198 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+Discover query default: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,3,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, 5ec2b6a0-87ba-4a94-b613-847267160e1d -> 0, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@d15321e, preference -> 1628588494000, endTime -> 2021-08-10T11:40:34.802Z, status -> 200, sessionId -> 584ead9c-782c-4dea-84b9-54c155fa7c90, requestId -> FlVWelFPRFN4VFZTNHZNa0hwaXVoamcccnZRak03MmhURDYtenREdDBoNkNIQToxNjUyOQ==, Cookie -> sid=Fe26.2**eede6426b249284dc77a5dd72ab675ef1b9b4b2f9779ba4d8ce48d61b283dd84*yI7bc6mZptpdSnfAuyc75Q*bNAxo4rKo2z9smaNmS3Qf0z-riBMXezLxrQ7Bl92EuyLgRuQnBozj-0BFg3W53uTjXblyz7xGEKCsPuh60EU8ajuXEPTnquVz9unN1w1lI5A_0-ckiut4is3DKk-VHP1nudaFr1g-waW1D7KW3SCLc5QK5YmOREQVMBaH_-mhqvteOLeYkUoLc39t8O9vC1Ba2wEmzb6Wgh6XLvcUVtbKGoEeKt7PaoiPhzhfOl10y9wbwX8Z3YhU52BefXejqVy**33b1be9157532ccae827039ab171fe5f4fa7868ce8cb17809d1b5459f950b6e7*8Sceo9_BKUtMlGOFEG-YnZFgVY16KnmOttZna97FypM, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**c3c3b32ff3cee0c0bfd04f4ce77d297ea119ce3b6f7b969d3a0edcfaa2888856*uUyDzLpgUfvKxaiMRL1Fpg*CkWYFfdZZAXkNLBy2jrLokEKuuU0z8FUchIIAB4vJqcb9La_KKxlyHEO2XdRJMS1NwYrbJ-YvoGvBDo3uM-y0QvueCAwDNHgT4EVBnsYb9KbafzAQl4V_VPPhbPuHoHw4XMyDfb1N8qZ_WJdkSL7mN_Z7paB3Hx545CKFaA7STGkn_pDaf7WVEuiwOTW6qzw80wY_Ye66wXPvFjxCTE25-nW2uVCJsJGeMwIMH-x9hDT5enYHdCS2VfvhRF_953i**14e6e3488af11276324ebdd18e5257966cb07642e9a33d7ea0d17c7a1e383386*7h4D2JwN248REjqy9HQwS9z6gxdGQo9gz-XOCOyY4co, path=/, HTTPOnly,true,false,1628588494196))), intervalName -> fixed_interval, isPartial -> false, startTime -> 2021-08-10T11:25:34.799Z, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@4817add8, intervalValue -> 30s),OK,List(TryMaxBlock(5ec2b6a0-87ba-4a94-b613-847267160e1d,io.gatling.core.action.InnerTryMax@7668dc2d,OK)),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@6090f3ca)
+=========================
+HTTP request:
+POST http://localhost:5620/internal/bsearch
+headers:
+	kbn-version: 8.0.0
+	Referer: http://localhost:5620/app/discover
+	Sec-Fetch-Site: same-origin
+	Connection: keep-alive
+	Sec-Fetch-Mode: cors
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	Sec-Fetch-Dest: empty
+	Origin: http://localhost:5620
+	Accept: */*
+	accept-encoding: gzip, deflate
+	cookie: sid=Fe26.2**d34ac6462097f2412340d45dc6b7dcd24dc96fbf68dd57b676b9e8e895f7a7b7*B0oA_hATL73lD6_oYfZP9Q*B-XW-Ow-sb0zu2BgA-hZYRfqe8hrgpmuBmDRrM_JPixLAADafWGbXJhU5-Kcg1bIsSaggY7dUup1uUL1eA0ciL6ckGyclptQs0jvRahRjDKsI7-yGopMzKiDpp6oaA0yRKFj60YUyyBuXuwYVENIvM9-apKLsUS2TTPGvaesctoXQngPXtSSCGHjqamEpxD5cu_jptJqfdesdnww4de_fp_gNmlRM2ORl1_GK6NkufnRS6x-0bt35aYeVG4s9een**9de17f8515affadbd3ebb60ca08d8b57c5d0c99e0631105988d267f8b6ac47b6*c8U8wRK7btAnc1JtBZmcW0UvA6FQLtDRnFh9WJZRtpI
+	host: localhost:5620
+	content-type: application/json
+	content-length: 2661
+cookies:
+	sid=Fe26.2**d34ac6462097f2412340d45dc6b7dcd24dc96fbf68dd57b676b9e8e895f7a7b7*B0oA_hATL73lD6_oYfZP9Q*B-XW-Ow-sb0zu2BgA-hZYRfqe8hrgpmuBmDRrM_JPixLAADafWGbXJhU5-Kcg1bIsSaggY7dUup1uUL1eA0ciL6ckGyclptQs0jvRahRjDKsI7-yGopMzKiDpp6oaA0yRKFj60YUyyBuXuwYVENIvM9-apKLsUS2TTPGvaesctoXQngPXtSSCGHjqamEpxD5cu_jptJqfdesdnww4de_fp_gNmlRM2ORl1_GK6NkufnRS6x-0bt35aYeVG4s9een**9de17f8515affadbd3ebb60ca08d8b57c5d0c99e0631105988d267f8b6ac47b6*c8U8wRK7btAnc1JtBZmcW0UvA6FQLtDRnFh9WJZRtpI, path=/, HTTPOnly
+body:StringChunksRequestBody{contentType='application/json', charset=UTF-8, content={
+  "batch":[
+    {
+      "request":{
+        "params":{
+          "index":"kibana_sample_data_ecommerce",
+          "body":{
+            "size":500,
+            "sort":[
+              {
+                "order_date":{
+                  "order":"desc",
+                  "unmapped_type":"boolean"
+                }
+              }
+            ],
+            "version":true,
+            "fields":[
+              {
+                "field":"*",
+                "include_unmapped":"true"
+              },
+              {
+                "field":"customer_birth_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"order_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"products.created_on",
+                "format":"strict_date_optional_time"
+              }
+            ],
+            "aggs":{
+              "2":{
+                "date_histogram":{
+                  "field":"order_date",
+                  "fixed_interval":"30s",
+                  "time_zone":"Europe/Berlin",
+                  "min_doc_count":1
+                }
+              }
+            },
+            "script_fields":{
+
+            },
+            "stored_fields":[
+              "*"
+            ],
+            "runtime_mappings":{
+
+            },
+            "_source":false,
+            "query":{
+              "bool":{
+                "must":[
+
+                ],
+                "filter":[
+                  {
+                    "match_all":{
+
+                    }
+                  },
+                  {
+                    "range":{
+                      "order_date":{
+                        "gte":"2021-08-10T11:25:34.799Z",
+                        "lte":"2021-08-10T11:40:34.802Z",
+                        "format":"strict_date_optional_time"
+                      }
+                    }
+                  }
+                ],
+                "should":[
+
+                ],
+                "must_not":[
+
+                ]
+              }
+            },
+            "highlight":{
+              "pre_tags":[
+                "@kibana-highlighted-field@"
+              ],
+              "post_tags":[
+                "@/kibana-highlighted-field@"
+              ],
+              "fields":{
+                "*":{
+
+                }
+              },
+              "fragment_size":2147483647
+            }
+          },
+          "preference":"1628588494000"
+        }
+      },
+      "options":{
+        "sessionId":"584ead9c-782c-4dea-84b9-54c155fa7c90",
+        "isRestore":false,
+        "strategy":"ese",
+        "isStored":false
+      }
+    }
+  ]
+}}
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	content-type: application/x-ndjson
+	connection: keep-alive
+	transfer-encoding: chunked
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**c3c3b32ff3cee0c0bfd04f4ce77d297ea119ce3b6f7b969d3a0edcfaa2888856*uUyDzLpgUfvKxaiMRL1Fpg*CkWYFfdZZAXkNLBy2jrLokEKuuU0z8FUchIIAB4vJqcb9La_KKxlyHEO2XdRJMS1NwYrbJ-YvoGvBDo3uM-y0QvueCAwDNHgT4EVBnsYb9KbafzAQl4V_VPPhbPuHoHw4XMyDfb1N8qZ_WJdkSL7mN_Z7paB3Hx545CKFaA7STGkn_pDaf7WVEuiwOTW6qzw80wY_Ye66wXPvFjxCTE25-nW2uVCJsJGeMwIMH-x9hDT5enYHdCS2VfvhRF_953i**14e6e3488af11276324ebdd18e5257966cb07642e9a33d7ea0d17c7a1e383386*7h4D2JwN248REjqy9HQwS9z6gxdGQo9gz-XOCOyY4co; HttpOnly; Path=/
+	Date: Tue, 10 Aug 2021 09:41:34 GMT
+
+body:
+<<<BINARY CONTENT>>>
+<<<<<<<<<<<<<<<<<<<<<<<<<
+11:41:34.476 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+Discover query 2: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,2,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@53eea39, preference -> 1628588494125, endTime -> 2021-08-10T11:40:34.942Z, status -> 200, sessionId -> f281e28a-e9c2-4c7f-8a94-8ce38f8b61a5, requestId -> Fnp4SWJ4emFVUUphNGZicmRYZ3ZDYWcccnZRak03MmhURDYtenREdDBoNkNIQToxNjU1MA==, Cookie -> sid=Fe26.2**ed9398d9ede9e2c02c7ba7b00b3f3942c1db1aa06efd85e5114dcd1ebe2f9624*P0VPOpP6WVXnUct6YWjLxg*X--OzInVF2D7CWUl4r_uiLfq-RPhua07SkT4kBetYYnU1Cf8qdbAsaeEQHnEqGwTuWgYCF0m94pwBJg_xeuY7t3pJTwsoNjFxkadKfOQPvNFiwG2alNNx6UOFfA4PozmhtrnpUItel99mMGYMOpP5pEZRd5O06l_zFkr_iRx1tGACxu_v6lIgWxyClC85mW343FFEhayUbD7ULWtZVTnySt-ph__dDp44yJaIkOZOVVujVPFCdeeDkfPKPj3-Q_2**50e8150adff15a22d924b4b5d9c761d948ed8646974dd24f81ff956ddb03012e*vtV2xOnNCqj4mB9_wCRTyadgdX-gQFq5Nmw6lVbTi8I, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**5788501b848d4ec11b9fa8b511d0f26196f780fa0aab182e0e682734a03f9602*CeRjqR71LpIgHXeRIYBGDg*ivcGuRCaSoQ3sxDVJ7ATYk8-LDVzL1pTsHwPUuhfTzLCHXkJroTsrFNASxdPyWb52aG7DVEIARL_a_GjvYmNsFqev-kcAj9cLmdqf8xeHWVnMGi0_CK7GT2Hr8qLN55Y9GniYRFU1S5_gZnj-H6IgKGrpAh0HBZXAFkmGP82ssYUUEHXLUBHR5ZJ-4SiMB0vv532JkirX_EIwxp8J800Z-s7KSuZr1DxamAiZooDlAP_RzbKOlriacNgr7CxCNgi**c626088d433cfd75c6c14add568d64493d00c4ee79d872aca0090431d049539b*nwKPhletT55A6_nToaB-tlRBqBImgEkyxtt5caFc_oE, path=/, HTTPOnly,true,false,1628588494449))), intervalName -> fixed_interval, isPartial -> false, startTime -> 2021-08-05T11:40:34.942Z, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@403c64fa, intervalValue -> 3h),OK,List(),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@18a645fd)
+=========================
+HTTP request:
+POST http://localhost:5620/internal/bsearch
+headers:
+	kbn-version: 8.0.0
+	Referer: http://localhost:5620/app/discover
+	Sec-Fetch-Site: same-origin
+	Connection: keep-alive
+	Sec-Fetch-Mode: cors
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	Sec-Fetch-Dest: empty
+	Origin: http://localhost:5620
+	Accept: */*
+	accept-encoding: gzip, deflate
+	cookie: sid=Fe26.2**be5d277dfb06a9912cf743c0003c84846e698c5f67842d48a74230df4ff9c99e*cnSKoKQuYtCOo-MdmiQoNA*KF3_V24scwxTAGtIb7MFufNZQtU8NVdm8mPUGr1HfLkt9XNlSFaYkhYrfgfhjA-OfxXOySTjHW_Neehm8mhjOFq7niLUSBIKoRg6nV8NFOJszopaRGkON0IwE_1ZCIj8k5M-PYnT9h1PFH8RV6J8RuQo-mOAa9bgzlY6fth8pqK3LQAF75BMXMADQMxH0DHy8fzVl7rSkbB46RuAer0FGfhRJWHykim4Y6sWz7irkVgH57KUkqXqFVf64sV4nUWE**782adb393fa93d1b6c6a7e86cbbddfcbc4b3832ee1148272ac96f83ad3f28c56*ka4_GXkiyhrBU-GzpWZlh_K9P-lBvnnJ9_2DJeCCfoM
+	host: localhost:5620
+	content-type: application/json
+	content-length: 2660
+cookies:
+	sid=Fe26.2**be5d277dfb06a9912cf743c0003c84846e698c5f67842d48a74230df4ff9c99e*cnSKoKQuYtCOo-MdmiQoNA*KF3_V24scwxTAGtIb7MFufNZQtU8NVdm8mPUGr1HfLkt9XNlSFaYkhYrfgfhjA-OfxXOySTjHW_Neehm8mhjOFq7niLUSBIKoRg6nV8NFOJszopaRGkON0IwE_1ZCIj8k5M-PYnT9h1PFH8RV6J8RuQo-mOAa9bgzlY6fth8pqK3LQAF75BMXMADQMxH0DHy8fzVl7rSkbB46RuAer0FGfhRJWHykim4Y6sWz7irkVgH57KUkqXqFVf64sV4nUWE**782adb393fa93d1b6c6a7e86cbbddfcbc4b3832ee1148272ac96f83ad3f28c56*ka4_GXkiyhrBU-GzpWZlh_K9P-lBvnnJ9_2DJeCCfoM, path=/, HTTPOnly
+body:StringChunksRequestBody{contentType='application/json', charset=UTF-8, content={
+  "batch":[
+    {
+      "request":{
+        "params":{
+          "index":"kibana_sample_data_ecommerce",
+          "body":{
+            "size":500,
+            "sort":[
+              {
+                "order_date":{
+                  "order":"desc",
+                  "unmapped_type":"boolean"
+                }
+              }
+            ],
+            "version":true,
+            "fields":[
+              {
+                "field":"*",
+                "include_unmapped":"true"
+              },
+              {
+                "field":"customer_birth_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"order_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"products.created_on",
+                "format":"strict_date_optional_time"
+              }
+            ],
+            "aggs":{
+              "2":{
+                "date_histogram":{
+                  "field":"order_date",
+                  "fixed_interval":"3h",
+                  "time_zone":"Europe/Berlin",
+                  "min_doc_count":1
+                }
+              }
+            },
+            "script_fields":{
+
+            },
+            "stored_fields":[
+              "*"
+            ],
+            "runtime_mappings":{
+
+            },
+            "_source":false,
+            "query":{
+              "bool":{
+                "must":[
+
+                ],
+                "filter":[
+                  {
+                    "match_all":{
+
+                    }
+                  },
+                  {
+                    "range":{
+                      "order_date":{
+                        "gte":"2021-08-05T11:40:34.942Z",
+                        "lte":"2021-08-10T11:40:34.942Z",
+                        "format":"strict_date_optional_time"
+                      }
+                    }
+                  }
+                ],
+                "should":[
+
+                ],
+                "must_not":[
+
+                ]
+              }
+            },
+            "highlight":{
+              "pre_tags":[
+                "@kibana-highlighted-field@"
+              ],
+              "post_tags":[
+                "@/kibana-highlighted-field@"
+              ],
+              "fields":{
+                "*":{
+
+                }
+              },
+              "fragment_size":2147483647
+            }
+          },
+          "preference":"1628588494125"
+        }
+      },
+      "options":{
+        "sessionId":"f281e28a-e9c2-4c7f-8a94-8ce38f8b61a5",
+        "isRestore":false,
+        "strategy":"ese",
+        "isStored":false
+      }
+    }
+  ]
+}}
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	content-type: application/x-ndjson
+	connection: keep-alive
+	transfer-encoding: chunked
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**5788501b848d4ec11b9fa8b511d0f26196f780fa0aab182e0e682734a03f9602*CeRjqR71LpIgHXeRIYBGDg*ivcGuRCaSoQ3sxDVJ7ATYk8-LDVzL1pTsHwPUuhfTzLCHXkJroTsrFNASxdPyWb52aG7DVEIARL_a_GjvYmNsFqev-kcAj9cLmdqf8xeHWVnMGi0_CK7GT2Hr8qLN55Y9GniYRFU1S5_gZnj-H6IgKGrpAh0HBZXAFkmGP82ssYUUEHXLUBHR5ZJ-4SiMB0vv532JkirX_EIwxp8J800Z-s7KSuZr1DxamAiZooDlAP_RzbKOlriacNgr7CxCNgi**c626088d433cfd75c6c14add568d64493d00c4ee79d872aca0090431d049539b*nwKPhletT55A6_nToaB-tlRBqBImgEkyxtt5caFc_oE; HttpOnly; Path=/
+	Date: Tue, 10 Aug 2021 09:41:34 GMT
+
+body:
+<<<BINARY CONTENT>>>
+<<<<<<<<<<<<<<<<<<<<<<<<<
+11:41:35.922 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+Discover query 3: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,1,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@44e5ed25, preference -> 1628588495571, endTime -> 2021-08-10T11:40:34.945Z, status -> 200, sessionId -> 030312c8-aa6a-451c-b9fb-0d1240781216, requestId -> FlVoVG53bjlkVHoySmRRYVI2WE9aTFEccnZRak03MmhURDYtenREdDBoNkNIQToxNjU5MQ==, Cookie -> sid=Fe26.2**9ee4910c5ad0e54b62e5a9bab08285dadb68b414aaf80ff63310819551b2c4a8*tvkRYKwOPWhRyksAdC6keA*L-tL_ZYpuE5fwXhFLlzfiC9OCPv9nP8OuRNCiRj1kOPx_4hPj5eCr7FwUiICpADWcp2G0qxTmmVHQPA7g0mjQdpvok_xMkjszY0ZWu847tlXAZFWKIRCzCTE49a6pLSqjhvUSndEFzIxpApQAbSIPIbrEPWBAeheVdqpIW26fvyGr1va9fuUhYHjXVxwAA7-AAP0ur5unCPe96q5y37hOQxXwt-L3soaYVA4MCmGRf2YZ5FYhfF9KuFDoGD3LjVZ**26086538fa1eb41ebff7a786345b412b532e4ac2e0ce98b085d86a88bdecbdda*e2h1MVxJdTpGwMw5THW4nCw9QQRz18WVB-Gjfv2fUbU, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**a2f01d536e4e374c81ed1086c22f917dca96be2031f73faf1a00f67dfc82ce83*adN1M4qZuse6bN1XhchmQQ*R8L2KA97t-nta2MdVNCLR3b74tz8QqHDaykWQEFqsu5XjfxNSVwKXxG2hkrUwpsTkpJjmICZJ7gm4PNi54lAQOdU8xKOkANA4hvh-QuSbgyw5n6D8pBiJ_KklyeurmkmBXIJ-0UqJ_bfUymRuUjjDTlqHoXypOwCJ4K0iUpngs_xkANFdGW9kQbH2XAyCR1nc_4RDw37ecUef5NUkxD2SBYyWB2nvCGMRA3EqHaNHG-B0IJ-KXwKupS68iIy7RNM**f99f10a90fec291caf31a8bf7475eae7ebfe47f710af339a7977c5b3e3aa8d60*zX5gt0lT9S5GW_TR34H1lFWUWCAR8spp6xwFKzaLAwo, path=/, HTTPOnly,true,false,1628588495896))), intervalName -> calendar_interval, isPartial -> false, startTime -> 2021-07-11T11:40:34.945Z, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@5b497c6e, intervalValue -> 1d),OK,List(),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@488b50ec)
+=========================
+HTTP request:
+POST http://localhost:5620/internal/bsearch
+headers:
+	kbn-version: 8.0.0
+	Referer: http://localhost:5620/app/discover
+	Sec-Fetch-Site: same-origin
+	Connection: keep-alive
+	Sec-Fetch-Mode: cors
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	Sec-Fetch-Dest: empty
+	Origin: http://localhost:5620
+	Accept: */*
+	accept-encoding: gzip, deflate
+	cookie: sid=Fe26.2**5bbc8c497fd75a1b9a968fec167bd4823ea667b14e6c2e596039f87981ffccd5*E4mjGhf0A1CF5tq4SVseng*bDo92Y5IzlFfHVhUNsClwjYOyywYK06AAIlv-dnXd4QC7ARek4Gm1KoXjEV-VBMkTO8Gf8cU0XNJNdL-mjUUkGojJ1R5y2LRcWKoPWiHdZsCsxW5NOyJmlVmQmqFhXqUZIxzFd-JUvrERfHUwgbTXyUP-mSvpRt6Z2GO-EdK_I_MCskWa0SogRJ5jVO4XwLfsgTrvJ7aAfy7fXUTLNxDl4gk2yQ7VzgDnFpHFbDTQzAC8B_2k_XdmB2tMPTcmcU2**9c7c64cbe9208c6053c2b20b947d45ed09b7c689e0ee3affd3cd19aadcfc8546*gHh0xIGR2AOTvQflQUWIbBz5Ht1xH7U7b5v08e9gt-w
+	host: localhost:5620
+	content-type: application/json
+	content-length: 2663
+cookies:
+	sid=Fe26.2**5bbc8c497fd75a1b9a968fec167bd4823ea667b14e6c2e596039f87981ffccd5*E4mjGhf0A1CF5tq4SVseng*bDo92Y5IzlFfHVhUNsClwjYOyywYK06AAIlv-dnXd4QC7ARek4Gm1KoXjEV-VBMkTO8Gf8cU0XNJNdL-mjUUkGojJ1R5y2LRcWKoPWiHdZsCsxW5NOyJmlVmQmqFhXqUZIxzFd-JUvrERfHUwgbTXyUP-mSvpRt6Z2GO-EdK_I_MCskWa0SogRJ5jVO4XwLfsgTrvJ7aAfy7fXUTLNxDl4gk2yQ7VzgDnFpHFbDTQzAC8B_2k_XdmB2tMPTcmcU2**9c7c64cbe9208c6053c2b20b947d45ed09b7c689e0ee3affd3cd19aadcfc8546*gHh0xIGR2AOTvQflQUWIbBz5Ht1xH7U7b5v08e9gt-w, path=/, HTTPOnly
+body:StringChunksRequestBody{contentType='application/json', charset=UTF-8, content={
+  "batch":[
+    {
+      "request":{
+        "params":{
+          "index":"kibana_sample_data_ecommerce",
+          "body":{
+            "size":500,
+            "sort":[
+              {
+                "order_date":{
+                  "order":"desc",
+                  "unmapped_type":"boolean"
+                }
+              }
+            ],
+            "version":true,
+            "fields":[
+              {
+                "field":"*",
+                "include_unmapped":"true"
+              },
+              {
+                "field":"customer_birth_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"order_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"products.created_on",
+                "format":"strict_date_optional_time"
+              }
+            ],
+            "aggs":{
+              "2":{
+                "date_histogram":{
+                  "field":"order_date",
+                  "calendar_interval":"1d",
+                  "time_zone":"Europe/Berlin",
+                  "min_doc_count":1
+                }
+              }
+            },
+            "script_fields":{
+
+            },
+            "stored_fields":[
+              "*"
+            ],
+            "runtime_mappings":{
+
+            },
+            "_source":false,
+            "query":{
+              "bool":{
+                "must":[
+
+                ],
+                "filter":[
+                  {
+                    "match_all":{
+
+                    }
+                  },
+                  {
+                    "range":{
+                      "order_date":{
+                        "gte":"2021-07-11T11:40:34.945Z",
+                        "lte":"2021-08-10T11:40:34.945Z",
+                        "format":"strict_date_optional_time"
+                      }
+                    }
+                  }
+                ],
+                "should":[
+
+                ],
+                "must_not":[
+
+                ]
+              }
+            },
+            "highlight":{
+              "pre_tags":[
+                "@kibana-highlighted-field@"
+              ],
+              "post_tags":[
+                "@/kibana-highlighted-field@"
+              ],
+              "fields":{
+                "*":{
+
+                }
+              },
+              "fragment_size":2147483647
+            }
+          },
+          "preference":"1628588495571"
+        }
+      },
+      "options":{
+        "sessionId":"030312c8-aa6a-451c-b9fb-0d1240781216",
+        "isRestore":false,
+        "strategy":"ese",
+        "isStored":false
+      }
+    }
+  ]
+}}
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	content-type: application/x-ndjson
+	connection: keep-alive
+	transfer-encoding: chunked
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**a2f01d536e4e374c81ed1086c22f917dca96be2031f73faf1a00f67dfc82ce83*adN1M4qZuse6bN1XhchmQQ*R8L2KA97t-nta2MdVNCLR3b74tz8QqHDaykWQEFqsu5XjfxNSVwKXxG2hkrUwpsTkpJjmICZJ7gm4PNi54lAQOdU8xKOkANA4hvh-QuSbgyw5n6D8pBiJ_KklyeurmkmBXIJ-0UqJ_bfUymRuUjjDTlqHoXypOwCJ4K0iUpngs_xkANFdGW9kQbH2XAyCR1nc_4RDw37ecUef5NUkxD2SBYyWB2nvCGMRA3EqHaNHG-B0IJ-KXwKupS68iIy7RNM**f99f10a90fec291caf31a8bf7475eae7ebfe47f710af339a7977c5b3e3aa8d60*zX5gt0lT9S5GW_TR34H1lFWUWCAR8spp6xwFKzaLAwo; HttpOnly; Path=/
+	Date: Tue, 10 Aug 2021 09:41:35 GMT
+
+body:
+<<<BINARY CONTENT>>>
+<<<<<<<<<<<<<<<<<<<<<<<<<
+11:41:44.558 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+Discover query 2: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,3,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@d15321e, preference -> 1628588504223, endTime -> 2021-08-10T11:40:34.942Z, status -> 200, sessionId -> cf348317-aa46-4c63-a390-7330eb4dcba0, requestId -> FmJSXzgxTVlIUkY2ZFRZM0YxZDFPMkEccnZRak03MmhURDYtenREdDBoNkNIQToxNjcyMQ==, Cookie -> sid=Fe26.2**eede6426b249284dc77a5dd72ab675ef1b9b4b2f9779ba4d8ce48d61b283dd84*yI7bc6mZptpdSnfAuyc75Q*bNAxo4rKo2z9smaNmS3Qf0z-riBMXezLxrQ7Bl92EuyLgRuQnBozj-0BFg3W53uTjXblyz7xGEKCsPuh60EU8ajuXEPTnquVz9unN1w1lI5A_0-ckiut4is3DKk-VHP1nudaFr1g-waW1D7KW3SCLc5QK5YmOREQVMBaH_-mhqvteOLeYkUoLc39t8O9vC1Ba2wEmzb6Wgh6XLvcUVtbKGoEeKt7PaoiPhzhfOl10y9wbwX8Z3YhU52BefXejqVy**33b1be9157532ccae827039ab171fe5f4fa7868ce8cb17809d1b5459f950b6e7*8Sceo9_BKUtMlGOFEG-YnZFgVY16KnmOttZna97FypM, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**647676ed1c93396acd71fafa32b926c987246b1820b9704599e7eebe423788c6*VmeNZ6zjeoumbCYN2Ult7w*_tHaJTjGfKA91BA1Yy3khvGqov4Sby5l_mDnxlPL5xyiI8o9N6kt5McCNVvZtPvhFIuGEh8zbSAWFT3PoHysBXyypv5OSibIY7vvcZA_-F6_z72tIQtQa5kPLF8fZihlgzlgUfmz6Bgaykfqck__0xg2FixDNNftNjnQjzX4pP2WjFPaJMVIDVVsCcSs32StIiTKDSljpwhZuwpRSu03VxVCA82UvDxZqVp18EncjwvHbOFE5iug0y0eCENrvI7o**62ed3305a92e73500dfc8e2b534d68f98b15ef4d41cf95fbc8199ef19c89963f*mW33F8CWu6SDAc7WtjTNpeK2_WPAYuUxr9J9nb4JspY, path=/, HTTPOnly,true,false,1628588504538))), intervalName -> fixed_interval, isPartial -> false, startTime -> 2021-08-05T11:40:34.942Z, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@4817add8, intervalValue -> 3h),OK,List(),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@6090f3ca)
+=========================
+HTTP request:
+POST http://localhost:5620/internal/bsearch
+headers:
+	kbn-version: 8.0.0
+	Referer: http://localhost:5620/app/discover
+	Sec-Fetch-Site: same-origin
+	Connection: keep-alive
+	Sec-Fetch-Mode: cors
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	Sec-Fetch-Dest: empty
+	Origin: http://localhost:5620
+	Accept: */*
+	accept-encoding: gzip, deflate
+	cookie: sid=Fe26.2**c3c3b32ff3cee0c0bfd04f4ce77d297ea119ce3b6f7b969d3a0edcfaa2888856*uUyDzLpgUfvKxaiMRL1Fpg*CkWYFfdZZAXkNLBy2jrLokEKuuU0z8FUchIIAB4vJqcb9La_KKxlyHEO2XdRJMS1NwYrbJ-YvoGvBDo3uM-y0QvueCAwDNHgT4EVBnsYb9KbafzAQl4V_VPPhbPuHoHw4XMyDfb1N8qZ_WJdkSL7mN_Z7paB3Hx545CKFaA7STGkn_pDaf7WVEuiwOTW6qzw80wY_Ye66wXPvFjxCTE25-nW2uVCJsJGeMwIMH-x9hDT5enYHdCS2VfvhRF_953i**14e6e3488af11276324ebdd18e5257966cb07642e9a33d7ea0d17c7a1e383386*7h4D2JwN248REjqy9HQwS9z6gxdGQo9gz-XOCOyY4co
+	host: localhost:5620
+	content-type: application/json
+	content-length: 2660
+cookies:
+	sid=Fe26.2**c3c3b32ff3cee0c0bfd04f4ce77d297ea119ce3b6f7b969d3a0edcfaa2888856*uUyDzLpgUfvKxaiMRL1Fpg*CkWYFfdZZAXkNLBy2jrLokEKuuU0z8FUchIIAB4vJqcb9La_KKxlyHEO2XdRJMS1NwYrbJ-YvoGvBDo3uM-y0QvueCAwDNHgT4EVBnsYb9KbafzAQl4V_VPPhbPuHoHw4XMyDfb1N8qZ_WJdkSL7mN_Z7paB3Hx545CKFaA7STGkn_pDaf7WVEuiwOTW6qzw80wY_Ye66wXPvFjxCTE25-nW2uVCJsJGeMwIMH-x9hDT5enYHdCS2VfvhRF_953i**14e6e3488af11276324ebdd18e5257966cb07642e9a33d7ea0d17c7a1e383386*7h4D2JwN248REjqy9HQwS9z6gxdGQo9gz-XOCOyY4co, path=/, HTTPOnly
+body:StringChunksRequestBody{contentType='application/json', charset=UTF-8, content={
+  "batch":[
+    {
+      "request":{
+        "params":{
+          "index":"kibana_sample_data_ecommerce",
+          "body":{
+            "size":500,
+            "sort":[
+              {
+                "order_date":{
+                  "order":"desc",
+                  "unmapped_type":"boolean"
+                }
+              }
+            ],
+            "version":true,
+            "fields":[
+              {
+                "field":"*",
+                "include_unmapped":"true"
+              },
+              {
+                "field":"customer_birth_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"order_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"products.created_on",
+                "format":"strict_date_optional_time"
+              }
+            ],
+            "aggs":{
+              "2":{
+                "date_histogram":{
+                  "field":"order_date",
+                  "fixed_interval":"3h",
+                  "time_zone":"Europe/Berlin",
+                  "min_doc_count":1
+                }
+              }
+            },
+            "script_fields":{
+
+            },
+            "stored_fields":[
+              "*"
+            ],
+            "runtime_mappings":{
+
+            },
+            "_source":false,
+            "query":{
+              "bool":{
+                "must":[
+
+                ],
+                "filter":[
+                  {
+                    "match_all":{
+
+                    }
+                  },
+                  {
+                    "range":{
+                      "order_date":{
+                        "gte":"2021-08-05T11:40:34.942Z",
+                        "lte":"2021-08-10T11:40:34.942Z",
+                        "format":"strict_date_optional_time"
+                      }
+                    }
+                  }
+                ],
+                "should":[
+
+                ],
+                "must_not":[
+
+                ]
+              }
+            },
+            "highlight":{
+              "pre_tags":[
+                "@kibana-highlighted-field@"
+              ],
+              "post_tags":[
+                "@/kibana-highlighted-field@"
+              ],
+              "fields":{
+                "*":{
+
+                }
+              },
+              "fragment_size":2147483647
+            }
+          },
+          "preference":"1628588504223"
+        }
+      },
+      "options":{
+        "sessionId":"cf348317-aa46-4c63-a390-7330eb4dcba0",
+        "isRestore":false,
+        "strategy":"ese",
+        "isStored":false
+      }
+    }
+  ]
+}}
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	content-type: application/x-ndjson
+	connection: keep-alive
+	transfer-encoding: chunked
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**647676ed1c93396acd71fafa32b926c987246b1820b9704599e7eebe423788c6*VmeNZ6zjeoumbCYN2Ult7w*_tHaJTjGfKA91BA1Yy3khvGqov4Sby5l_mDnxlPL5xyiI8o9N6kt5McCNVvZtPvhFIuGEh8zbSAWFT3PoHysBXyypv5OSibIY7vvcZA_-F6_z72tIQtQa5kPLF8fZihlgzlgUfmz6Bgaykfqck__0xg2FixDNNftNjnQjzX4pP2WjFPaJMVIDVVsCcSs32StIiTKDSljpwhZuwpRSu03VxVCA82UvDxZqVp18EncjwvHbOFE5iug0y0eCENrvI7o**62ed3305a92e73500dfc8e2b534d68f98b15ef4d41cf95fbc8199ef19c89963f*mW33F8CWu6SDAc7WtjTNpeK2_WPAYuUxr9J9nb4JspY; HttpOnly; Path=/
+	Date: Tue, 10 Aug 2021 09:41:44 GMT
+
+body:
+<<<BINARY CONTENT>>>
+<<<<<<<<<<<<<<<<<<<<<<<<<
+11:41:44.815 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+Discover query 3: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,2,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@53eea39, preference -> 1628588504477, endTime -> 2021-08-10T11:40:34.945Z, status -> 200, sessionId -> 606901cf-aacd-4cf0-85e8-cd2a742e27e9, requestId -> FkVjZ0xvZFYzUm1tczdCdHBXd0o3VlEccnZRak03MmhURDYtenREdDBoNkNIQToxNjc0MA==, Cookie -> sid=Fe26.2**ed9398d9ede9e2c02c7ba7b00b3f3942c1db1aa06efd85e5114dcd1ebe2f9624*P0VPOpP6WVXnUct6YWjLxg*X--OzInVF2D7CWUl4r_uiLfq-RPhua07SkT4kBetYYnU1Cf8qdbAsaeEQHnEqGwTuWgYCF0m94pwBJg_xeuY7t3pJTwsoNjFxkadKfOQPvNFiwG2alNNx6UOFfA4PozmhtrnpUItel99mMGYMOpP5pEZRd5O06l_zFkr_iRx1tGACxu_v6lIgWxyClC85mW343FFEhayUbD7ULWtZVTnySt-ph__dDp44yJaIkOZOVVujVPFCdeeDkfPKPj3-Q_2**50e8150adff15a22d924b4b5d9c761d948ed8646974dd24f81ff956ddb03012e*vtV2xOnNCqj4mB9_wCRTyadgdX-gQFq5Nmw6lVbTi8I, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**e97700484ce3f501c03e96363372921c91fd28e9f49fb32dcc7ea7aa5ed95f07*_pqJ9FobICMtle0gGH7Q5A*6Axc0EO_HkYAaZ7T4SeeOrasGnLi4dtMrpUMvofeioc6CM7P1B0TRmyOuOIJ48rgtdH2Y41cdtknq2kASHmbNkt24x2onI7uKFwCHBNrEpl9e3eInfIKT84ifaBW3kudxC-LFfgdvwDz_cubiB6M4rabO8povntsABvNGYe2Jdz88EZSdrT2YJGHPqLSmVEy2EY3k5tY2C3XFi-GUTipCiA9A53ElqXHf6uECjCBVd9loCi87eoA0g5rPljA4kfT**14c960b94eb81316f2f089a331fac317c638bc237023e833a48ebd593f0acd30*33j38zEFbOdTKX8FNK8cLtgRydOMPmg2L2FzAXAfpqU, path=/, HTTPOnly,true,false,1628588504795))), intervalName -> calendar_interval, isPartial -> false, startTime -> 2021-07-11T11:40:34.945Z, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@403c64fa, intervalValue -> 1d),OK,List(),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@18a645fd)
+=========================
+HTTP request:
+POST http://localhost:5620/internal/bsearch
+headers:
+	kbn-version: 8.0.0
+	Referer: http://localhost:5620/app/discover
+	Sec-Fetch-Site: same-origin
+	Connection: keep-alive
+	Sec-Fetch-Mode: cors
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	Sec-Fetch-Dest: empty
+	Origin: http://localhost:5620
+	Accept: */*
+	accept-encoding: gzip, deflate
+	cookie: sid=Fe26.2**5788501b848d4ec11b9fa8b511d0f26196f780fa0aab182e0e682734a03f9602*CeRjqR71LpIgHXeRIYBGDg*ivcGuRCaSoQ3sxDVJ7ATYk8-LDVzL1pTsHwPUuhfTzLCHXkJroTsrFNASxdPyWb52aG7DVEIARL_a_GjvYmNsFqev-kcAj9cLmdqf8xeHWVnMGi0_CK7GT2Hr8qLN55Y9GniYRFU1S5_gZnj-H6IgKGrpAh0HBZXAFkmGP82ssYUUEHXLUBHR5ZJ-4SiMB0vv532JkirX_EIwxp8J800Z-s7KSuZr1DxamAiZooDlAP_RzbKOlriacNgr7CxCNgi**c626088d433cfd75c6c14add568d64493d00c4ee79d872aca0090431d049539b*nwKPhletT55A6_nToaB-tlRBqBImgEkyxtt5caFc_oE
+	host: localhost:5620
+	content-type: application/json
+	content-length: 2663
+cookies:
+	sid=Fe26.2**5788501b848d4ec11b9fa8b511d0f26196f780fa0aab182e0e682734a03f9602*CeRjqR71LpIgHXeRIYBGDg*ivcGuRCaSoQ3sxDVJ7ATYk8-LDVzL1pTsHwPUuhfTzLCHXkJroTsrFNASxdPyWb52aG7DVEIARL_a_GjvYmNsFqev-kcAj9cLmdqf8xeHWVnMGi0_CK7GT2Hr8qLN55Y9GniYRFU1S5_gZnj-H6IgKGrpAh0HBZXAFkmGP82ssYUUEHXLUBHR5ZJ-4SiMB0vv532JkirX_EIwxp8J800Z-s7KSuZr1DxamAiZooDlAP_RzbKOlriacNgr7CxCNgi**c626088d433cfd75c6c14add568d64493d00c4ee79d872aca0090431d049539b*nwKPhletT55A6_nToaB-tlRBqBImgEkyxtt5caFc_oE, path=/, HTTPOnly
+body:StringChunksRequestBody{contentType='application/json', charset=UTF-8, content={
+  "batch":[
+    {
+      "request":{
+        "params":{
+          "index":"kibana_sample_data_ecommerce",
+          "body":{
+            "size":500,
+            "sort":[
+              {
+                "order_date":{
+                  "order":"desc",
+                  "unmapped_type":"boolean"
+                }
+              }
+            ],
+            "version":true,
+            "fields":[
+              {
+                "field":"*",
+                "include_unmapped":"true"
+              },
+              {
+                "field":"customer_birth_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"order_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"products.created_on",
+                "format":"strict_date_optional_time"
+              }
+            ],
+            "aggs":{
+              "2":{
+                "date_histogram":{
+                  "field":"order_date",
+                  "calendar_interval":"1d",
+                  "time_zone":"Europe/Berlin",
+                  "min_doc_count":1
+                }
+              }
+            },
+            "script_fields":{
+
+            },
+            "stored_fields":[
+              "*"
+            ],
+            "runtime_mappings":{
+
+            },
+            "_source":false,
+            "query":{
+              "bool":{
+                "must":[
+
+                ],
+                "filter":[
+                  {
+                    "match_all":{
+
+                    }
+                  },
+                  {
+                    "range":{
+                      "order_date":{
+                        "gte":"2021-07-11T11:40:34.945Z",
+                        "lte":"2021-08-10T11:40:34.945Z",
+                        "format":"strict_date_optional_time"
+                      }
+                    }
+                  }
+                ],
+                "should":[
+
+                ],
+                "must_not":[
+
+                ]
+              }
+            },
+            "highlight":{
+              "pre_tags":[
+                "@kibana-highlighted-field@"
+              ],
+              "post_tags":[
+                "@/kibana-highlighted-field@"
+              ],
+              "fields":{
+                "*":{
+
+                }
+              },
+              "fragment_size":2147483647
+            }
+          },
+          "preference":"1628588504477"
+        }
+      },
+      "options":{
+        "sessionId":"606901cf-aacd-4cf0-85e8-cd2a742e27e9",
+        "isRestore":false,
+        "strategy":"ese",
+        "isStored":false
+      }
+    }
+  ]
+}}
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	content-type: application/x-ndjson
+	connection: keep-alive
+	transfer-encoding: chunked
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**e97700484ce3f501c03e96363372921c91fd28e9f49fb32dcc7ea7aa5ed95f07*_pqJ9FobICMtle0gGH7Q5A*6Axc0EO_HkYAaZ7T4SeeOrasGnLi4dtMrpUMvofeioc6CM7P1B0TRmyOuOIJ48rgtdH2Y41cdtknq2kASHmbNkt24x2onI7uKFwCHBNrEpl9e3eInfIKT84ifaBW3kudxC-LFfgdvwDz_cubiB6M4rabO8povntsABvNGYe2Jdz88EZSdrT2YJGHPqLSmVEy2EY3k5tY2C3XFi-GUTipCiA9A53ElqXHf6uECjCBVd9loCi87eoA0g5rPljA4kfT**14c960b94eb81316f2f089a331fac317c638bc237023e833a48ebd593f0acd30*33j38zEFbOdTKX8FNK8cLtgRydOMPmg2L2FzAXAfpqU; HttpOnly; Path=/
+	Date: Tue, 10 Aug 2021 09:41:44 GMT
+
+body:
+<<<BINARY CONTENT>>>
+<<<<<<<<<<<<<<<<<<<<<<<<<
+11:41:54.994 [TRACE] i.g.h.e.r.DefaultStatsProcessor - 
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+Request:
+Discover query 3: OK 
+=========================
+Session:
+Session(Demo journey 8.0.0,3,HashMap(gatling.http.cache.baseUrl -> http://localhost:5620, gatling.http.cache.dns -> io.gatling.http.resolver.ShufflingNameResolver@d15321e, preference -> 1628588514560, endTime -> 2021-08-10T11:40:34.945Z, status -> 200, sessionId -> 68587311-567a-4ba5-8dd1-a59ebbc9fb4b, requestId -> FnVKdU5wTzVwVGlxTmwxRTFnR3FES0EccnZRak03MmhURDYtenREdDBoNkNIQToxNjkzNA==, Cookie -> sid=Fe26.2**eede6426b249284dc77a5dd72ab675ef1b9b4b2f9779ba4d8ce48d61b283dd84*yI7bc6mZptpdSnfAuyc75Q*bNAxo4rKo2z9smaNmS3Qf0z-riBMXezLxrQ7Bl92EuyLgRuQnBozj-0BFg3W53uTjXblyz7xGEKCsPuh60EU8ajuXEPTnquVz9unN1w1lI5A_0-ckiut4is3DKk-VHP1nudaFr1g-waW1D7KW3SCLc5QK5YmOREQVMBaH_-mhqvteOLeYkUoLc39t8O9vC1Ba2wEmzb6Wgh6XLvcUVtbKGoEeKt7PaoiPhzhfOl10y9wbwX8Z3YhU52BefXejqVy**33b1be9157532ccae827039ab171fe5f4fa7868ce8cb17809d1b5459f950b6e7*8Sceo9_BKUtMlGOFEG-YnZFgVY16KnmOttZna97FypM, gatling.http.cookies -> CookieJar(Map(CookieKey(sid,localhost,/) -> StoredCookie(sid=Fe26.2**2b3382836d24021ae7fbd81188fefd3c99159cb5f89069fd76912e084517e7f3*Te7UaBbJbkjLup73aGShsA*UPHwLKzP5CZeyRx7fVtNK6FINF9W83gPlRjldF8FiAZ4bqSwmX4P5ehO0B-XBqyyuYR-RGjaz-a4f1LGDV1NQKcpxjbDKigtZiTUliV4BKF5CEygMwPR-ZuVgsOQWtH9ejudfP1-hh8jvpZxSktshRjJtXjNGA59hzfltrQoMtI-iI-KyXvfc62XJYBb5Xu0384f0jRzw1f6dqcQa0XG02ZNjtg8ulUap_N-VxHKSz1EvnJMKAGiG5JHZCGTVsft**21a3f7449b3c88662741ae4bcf626782decb7dbf53787a925c2a65145d6448d3*NMhYMLOMYMrP3BU8uofCqtQu6LY1C2u1HaNw8EWJCYQ, path=/, HTTPOnly,true,false,1628588514968))), intervalName -> calendar_interval, isPartial -> false, startTime -> 2021-07-11T11:40:34.945Z, gatling.http.ssl.sslContexts -> io.gatling.http.util.SslContexts@4817add8, intervalValue -> 1d),OK,List(),io.gatling.core.protocol.ProtocolComponentsRegistry$$Lambda$618/0x00000008006ab840@71adb94a,io.netty.channel.nio.NioEventLoop@6090f3ca)
+=========================
+HTTP request:
+POST http://localhost:5620/internal/bsearch
+headers:
+	kbn-version: 8.0.0
+	Referer: http://localhost:5620/app/discover
+	Sec-Fetch-Site: same-origin
+	Connection: keep-alive
+	Sec-Fetch-Mode: cors
+	accept-language: en-GB,en-US;q=0.9,en;q=0.8
+	accept: application/json
+	user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+	Sec-Fetch-Dest: empty
+	Origin: http://localhost:5620
+	Accept: */*
+	accept-encoding: gzip, deflate
+	cookie: sid=Fe26.2**647676ed1c93396acd71fafa32b926c987246b1820b9704599e7eebe423788c6*VmeNZ6zjeoumbCYN2Ult7w*_tHaJTjGfKA91BA1Yy3khvGqov4Sby5l_mDnxlPL5xyiI8o9N6kt5McCNVvZtPvhFIuGEh8zbSAWFT3PoHysBXyypv5OSibIY7vvcZA_-F6_z72tIQtQa5kPLF8fZihlgzlgUfmz6Bgaykfqck__0xg2FixDNNftNjnQjzX4pP2WjFPaJMVIDVVsCcSs32StIiTKDSljpwhZuwpRSu03VxVCA82UvDxZqVp18EncjwvHbOFE5iug0y0eCENrvI7o**62ed3305a92e73500dfc8e2b534d68f98b15ef4d41cf95fbc8199ef19c89963f*mW33F8CWu6SDAc7WtjTNpeK2_WPAYuUxr9J9nb4JspY
+	host: localhost:5620
+	content-type: application/json
+	content-length: 2663
+cookies:
+	sid=Fe26.2**647676ed1c93396acd71fafa32b926c987246b1820b9704599e7eebe423788c6*VmeNZ6zjeoumbCYN2Ult7w*_tHaJTjGfKA91BA1Yy3khvGqov4Sby5l_mDnxlPL5xyiI8o9N6kt5McCNVvZtPvhFIuGEh8zbSAWFT3PoHysBXyypv5OSibIY7vvcZA_-F6_z72tIQtQa5kPLF8fZihlgzlgUfmz6Bgaykfqck__0xg2FixDNNftNjnQjzX4pP2WjFPaJMVIDVVsCcSs32StIiTKDSljpwhZuwpRSu03VxVCA82UvDxZqVp18EncjwvHbOFE5iug0y0eCENrvI7o**62ed3305a92e73500dfc8e2b534d68f98b15ef4d41cf95fbc8199ef19c89963f*mW33F8CWu6SDAc7WtjTNpeK2_WPAYuUxr9J9nb4JspY, path=/, HTTPOnly
+body:StringChunksRequestBody{contentType='application/json', charset=UTF-8, content={
+  "batch":[
+    {
+      "request":{
+        "params":{
+          "index":"kibana_sample_data_ecommerce",
+          "body":{
+            "size":500,
+            "sort":[
+              {
+                "order_date":{
+                  "order":"desc",
+                  "unmapped_type":"boolean"
+                }
+              }
+            ],
+            "version":true,
+            "fields":[
+              {
+                "field":"*",
+                "include_unmapped":"true"
+              },
+              {
+                "field":"customer_birth_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"order_date",
+                "format":"strict_date_optional_time"
+              },
+              {
+                "field":"products.created_on",
+                "format":"strict_date_optional_time"
+              }
+            ],
+            "aggs":{
+              "2":{
+                "date_histogram":{
+                  "field":"order_date",
+                  "calendar_interval":"1d",
+                  "time_zone":"Europe/Berlin",
+                  "min_doc_count":1
+                }
+              }
+            },
+            "script_fields":{
+
+            },
+            "stored_fields":[
+              "*"
+            ],
+            "runtime_mappings":{
+
+            },
+            "_source":false,
+            "query":{
+              "bool":{
+                "must":[
+
+                ],
+                "filter":[
+                  {
+                    "match_all":{
+
+                    }
+                  },
+                  {
+                    "range":{
+                      "order_date":{
+                        "gte":"2021-07-11T11:40:34.945Z",
+                        "lte":"2021-08-10T11:40:34.945Z",
+                        "format":"strict_date_optional_time"
+                      }
+                    }
+                  }
+                ],
+                "should":[
+
+                ],
+                "must_not":[
+
+                ]
+              }
+            },
+            "highlight":{
+              "pre_tags":[
+                "@kibana-highlighted-field@"
+              ],
+              "post_tags":[
+                "@/kibana-highlighted-field@"
+              ],
+              "fields":{
+                "*":{
+
+                }
+              },
+              "fragment_size":2147483647
+            }
+          },
+          "preference":"1628588514560"
+        }
+      },
+      "options":{
+        "sessionId":"68587311-567a-4ba5-8dd1-a59ebbc9fb4b",
+        "isRestore":false,
+        "strategy":"ese",
+        "isStored":false
+      }
+    }
+  ]
+}}
+=========================
+HTTP response:
+status:
+	200 OK
+headers:
+	content-type: application/x-ndjson
+	connection: keep-alive
+	transfer-encoding: chunked
+	x-content-type-options: nosniff
+	referrer-policy: no-referrer-when-downgrade
+	kbn-name: Dzmitrys-MBP.fritz.box
+	kbn-license-sig: b3ff6a3366ab04202641aa0b9d02664f33f7226bf550e568017003f0443ba7f2
+	cache-control: private, no-cache, no-store, must-revalidate
+	set-cookie: sid=Fe26.2**2b3382836d24021ae7fbd81188fefd3c99159cb5f89069fd76912e084517e7f3*Te7UaBbJbkjLup73aGShsA*UPHwLKzP5CZeyRx7fVtNK6FINF9W83gPlRjldF8FiAZ4bqSwmX4P5ehO0B-XBqyyuYR-RGjaz-a4f1LGDV1NQKcpxjbDKigtZiTUliV4BKF5CEygMwPR-ZuVgsOQWtH9ejudfP1-hh8jvpZxSktshRjJtXjNGA59hzfltrQoMtI-iI-KyXvfc62XJYBb5Xu0384f0jRzw1f6dqcQa0XG02ZNjtg8ulUap_N-VxHKSz1EvnJMKAGiG5JHZCGTVsft**21a3f7449b3c88662741ae4bcf626782decb7dbf53787a925c2a65145d6448d3*NMhYMLOMYMrP3BU8uofCqtQu6LY1C2u1HaNw8EWJCYQ; HttpOnly; Path=/
+	Date: Tue, 10 Aug 2021 09:41:54 GMT
+
+body:
+<<<BINARY CONTENT>>>
+<<<<<<<<<<<<<<<<<<<<<<<<<

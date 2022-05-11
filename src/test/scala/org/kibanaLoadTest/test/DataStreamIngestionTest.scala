@@ -14,27 +14,28 @@ import org.kibanaLoadTest.ingest.Main.RESPONSE_LOG_FILENAME
 import org.kibanaLoadTest.ingest.Main.SIMULATION_LOG_FILENAME
 import org.kibanaLoadTest.ingest.Main.TEST_RUN_FILENAME
 
+import java.io.File
+import java.nio.file.Paths
 import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
 
 class DataStreamIngestionTest {
 
-  val testPath = s"${Helper.getTargetPath}${File.separator}test-classes${File.separator}test${File.separator}"
-  val simLogFilePath: String = new File(testPath + SIMULATION_LOG_FILENAME).getAbsolutePath
-  val testRunFilePath: String = new File(testPath + TEST_RUN_FILENAME).getAbsolutePath
-  val responseFilePath: String = new File(testPath + RESPONSE_LOG_FILENAME).getAbsolutePath
-  val statsFilePath: String = new File(testPath + GLOBAL_STATS_FILENAME).getAbsolutePath
+  val simLogFilePath = new File(s"${fixturesPath()}/simulation.log.txt").getAbsolutePath
+  val testRunFilePath = new File(s"${fixturesPath()}/testRun.txt").getAbsolutePath
+  val responseFilePath = new File(s"${fixturesPath()}/response.log.txt").getAbsolutePath
+  val statsFilePath = new File(s"${fixturesPath()}/global_stats.json").getAbsolutePath
   val DEFAULT_INTEGRATION_TEST_DATA_STREAM = "integration-test-gatling-data"
 
   @Test
-  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
   def dataStreamBulkIngestTest(): Unit = {
+    showFrom()
     val client = new ESClient(config())
 
-    val (requestsArray, concurrentUsersArray, combinedStatsArray) =
+    val (requestsArray, _, _) =
       Helper.prepareDocsForIngestion(statsFilePath, simLogFilePath, responseFilePath, testRunFilePath)
-    logSome(0)(requestsArray)
+    logSome(1)(requestsArray)
 
     val writeData = writeAndAssert(client)(requestsArray)_
     dataStreamName() match {
@@ -52,6 +53,16 @@ class DataStreamIngestionTest {
     client.Instance.closeConnection()
   }
 
+  def fixturesPath() =
+    "%s/test/resources/integration-test/data-stream/fixtures"
+      .format(Helper.getSrcPath)
+
+  def showFrom() = {
+    val xs = simLogFilePath :: testRunFilePath :: responseFilePath :: statsFilePath :: Nil
+    println(s"\n### Ingesting from:")
+    xs foreach println
+    println
+  }
   def docsCount(client: ESClient)(indexName: String) =
     () => client.Instance.count(indexName)
 
@@ -61,8 +72,10 @@ class DataStreamIngestionTest {
   def dataStreamName():Try[String] =
     Try(System.getenv("DATA_STREAM_NAME"))
 
-  def logSome(x: Int)(xs: Array[Json]): Unit =
-    xs.take(x).foreach(x => println(s"### Item: ${x}"))
+  def logSome(x: Int)(xs: Array[Json]): Unit = {
+    println(s"### Logging [$x] record(s)")
+    xs.take(x) foreach println
+  }
 
   def config(): ESConfiguration = {
     val host = System.getenv("HOST_FROM_VAULT")
