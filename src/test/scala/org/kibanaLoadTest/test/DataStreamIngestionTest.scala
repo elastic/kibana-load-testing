@@ -5,20 +5,9 @@ import com.typesafe.config.ConfigFactory
 import com.typesafe.config.ConfigValueFactory
 import io.circe.Json
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import org.kibanaLoadTest.ESConfiguration
 import org.kibanaLoadTest.helpers.ESClient
 import org.kibanaLoadTest.helpers.Helper
-import org.kibanaLoadTest.ingest.Main.GLOBAL_STATS_FILENAME
-import org.kibanaLoadTest.ingest.Main.RESPONSE_LOG_FILENAME
-import org.kibanaLoadTest.ingest.Main.SIMULATION_LOG_FILENAME
-import org.kibanaLoadTest.ingest.Main.TEST_RUN_FILENAME
-
-import java.io.File
-import java.nio.file.Paths
-import scala.util.Failure
-import scala.util.Success
-import scala.util.Try
 
 class DataStreamIngestionTest {
 
@@ -38,10 +27,11 @@ class DataStreamIngestionTest {
     logSome(1)(requestsArray)
 
     val writeData = writeAndAssert(client)(requestsArray)_
-    dataStreamName() match {
-      case Success(x) => writeData(x)
-      case Failure(_) => writeData(DEFAULT_INTEGRATION_TEST_DATA_STREAM)
-    }
+    dataStreamName()
+      .fold(
+        _ => writeData(DEFAULT_INTEGRATION_TEST_DATA_STREAM),
+        writeData
+      )
   }
 
   def writeAndAssert(client: ESClient)(xs: Array[Json])(streamName: String): Unit = {
@@ -53,32 +43,35 @@ class DataStreamIngestionTest {
     client.Instance.closeConnection()
   }
 
-  def fixturesPath() =
+  def fixturesPath = () =>
     "%s/test/resources/integration-test/data-stream/fixtures"
       .format(Helper.getSrcPath)
 
-  def showFrom() = {
+  def showFrom: () => Unit = () => {
     val xs = simLogFilePath :: testRunFilePath :: responseFilePath :: statsFilePath :: Nil
     println(s"\n### Ingesting from:")
     xs foreach println
-    println
+    println()
   }
-  def docsCount(client: ESClient)(indexName: String) =
+
+  def docsCount = (client: ESClient) => (indexName: String) =>
     () => client.Instance.count(indexName)
 
-  def write(client: ESClient)(xs: Array[Json])(indexName: String): Unit =
+  def write = (client: ESClient) => (xs: Array[Json]) => (indexName: String) =>
     client.Instance.bulk(indexName, xs.take(10), 100, true)
 
-  def dataStreamName():Try[String] =
-    Try(System.getenv("DATA_STREAM_NAME"))
+  def dataStreamName(): Either[String, String] = {
+    val res = System.getenv("DATA_STREAM_NAME")
+    if (res == null) Left("DATA_STREAM_NAME not found") else Right(res)
+  }
 
-  def logSome(x: Int)(xs: Array[Json]): Unit = {
+  def logSome = (x: Int) => (xs: Array[Json]) => {
     println(s"### Logging [$x] record(s)")
     xs.take(x) foreach println
   }
 
-  def config(): ESConfiguration = {
-    val host = System.getenv("HOST_FROM_VAULT")
+  def config = () => {
+    val host = s"https://${System.getenv("HOST_FROM_VAULT")}"
     val username = System.getenv("USER_FROM_VAULT")
     val password = System.getenv("PASS_FROM_VAULT")
     new ESConfiguration(
@@ -88,5 +81,4 @@ class DataStreamIngestionTest {
         .withValue("password", ConfigValueFactory.fromAnyRef(password))
     )
   }
-
 }
