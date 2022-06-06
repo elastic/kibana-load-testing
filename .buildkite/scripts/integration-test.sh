@@ -7,4 +7,4 @@ export PASS_FROM_VAULT="$(retry 5 5 vault read -field=password secret/kibana-iss
 export HOST_FROM_VAULT="$(retry 5 5 vault read -field=host secret/kibana-issues/prod/coverage/elasticsearch)"
 export DATA_STREAM_NAME=integration-test-gatling-data
 
-./apache-maven-3.8.5/bin/mvn --no-transfer-progress -Dtest=DataStreamIngestionTest test
+./apache-maven-3.8.5/bin/mvn -Dtest=DataStreamIngestionTest test

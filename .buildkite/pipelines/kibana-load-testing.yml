@@ -11,4 +11,4 @@ steps:
     agents:
       queue: n2-2-spot
     key: integration_test
-    timeout_in_minutes: 3
+    timeout_in_minutes: 30
