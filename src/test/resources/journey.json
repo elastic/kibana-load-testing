@@ -1,0 +1,35 @@
+{
+  "name": "telemetry",
+  "scalabilitySetup": {
+    "warmup": {
+      "action": "constantConcurrentUsers",
+      "maxUserCount": 1,
+      "duration": 30
+    },
+    "test": {
+      "action": "rampConcurrentUsers",
+      "minUserCount": 1,
+      "maxUserCount": 1,
+      "duration": 30
+    },
+    "maxDuration": 60
+  },
+
+  "requests": [
+    {
+      "timestamp": 1656925429,
+      "path": "/api/telemetry/v2/clusters/_stats",
+      "method": "POST",
+      "body": "{ \"refreshCache\": true }",
+      "status": 200
+    },
+    {
+      "timestamp": 1656926429,
+      "path": "/api/telemetry/v2/clusters/_stats",
+      "method": "POST",
+      "body": "{ \"refreshCache\": true }",
+      "status": 200
+    }
+
+  ]
+}
