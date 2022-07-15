@@ -4,7 +4,7 @@ import spray.json.{DefaultJsonProtocol, JsNumber, JsValue, JsonFormat, deseriali
 
 import java.util.Date
 
-case class Request(timestamp: Date, path: String, method: String, body: String, status: Int)
+case class Request(timestamp: Date, path: String, method: String, headers: Map[String, String], body: String, status: Int)
 
 object DateJsonProtocol extends DefaultJsonProtocol {
   implicit object DateJsonFormat extends JsonFormat[Date] {
@@ -20,5 +20,5 @@ object DateJsonProtocol extends DefaultJsonProtocol {
 import org.kibanaLoadTest.simulation.branch.DateJsonProtocol._
 
 object RequestJsonProtocol extends DefaultJsonProtocol {
-  implicit val requestFormat = jsonFormat5(Request)
+  implicit val requestFormat = jsonFormat6(Request)
 }

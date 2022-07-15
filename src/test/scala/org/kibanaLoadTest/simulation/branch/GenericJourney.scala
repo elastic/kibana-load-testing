@@ -3,8 +3,9 @@ package org.kibanaLoadTest.simulation.branch
 import io.gatling.core.Predef.{exec, _}
 import io.gatling.core.structure.{PopulationBuilder, ScenarioBuilder}
 import io.gatling.http.Predef.{http, status, _}
-import org.kibanaLoadTest.scenario.Login
-import org.kibanaLoadTest.simulation.BaseSimulation
+import io.gatling.http.protocol.HttpProtocolBuilder
+import org.kibanaLoadTest.KibanaConfiguration
+import org.kibanaLoadTest.helpers.{Helper, HttpHelper}
 import org.kibanaLoadTest.simulation.branch.JourneyJsonProtocol._
 import spray.json._
 
@@ -12,30 +13,29 @@ import java.util.concurrent.TimeUnit
 import scala.io.Source._
 
 object ApiCall {
-  def execute(defaultHeaders: Map[String, String], request: org.kibanaLoadTest.simulation.branch.Request) = {
-    val headers = defaultHeaders
-    exec(
-      http(requestName = request.path)
-        .post(request.path)
-        .body(StringBody(request.body))
-        .headers(headers)
-        .check(status.is(request.status))
-    )
+  def execute(request: org.kibanaLoadTest.simulation.branch.Request) = {
+    request.method match {
+      case "POST" => exec(
+        http(requestName = request.path)
+          .post(request.path)
+          .body(StringBody(request.body))
+          .headers(request.headers)
+          .check(status.is(request.status))
+      )
+      case "GET" => exec(
+        http(requestName = request.path)
+          .get(request.path)
+          .headers(request.headers)
+          .check(status.is(request.status))
+      )
+      case _ => throw new IllegalArgumentException(s"Invalid method ${request.method}")
+    }
   }
 }
 
-class GenericJourney extends BaseSimulation {
+class GenericJourney extends Simulation {
   def scenarioForStage(journey: Journey, stageName: String): ScenarioBuilder = {
     var scn: ScenarioBuilder = scenario(s"${stageName} for ${journey.name}")
-      .exec(Login
-          .doLogin(
-            appConfig.isSecurityEnabled,
-            appConfig.loginPayload,
-            appConfig.loginStatusCode
-          )
-      )
-      // TODO: Why this pause?
-      .pause(5)
 
     var priorRequest: Option[org.kibanaLoadTest.simulation.branch.Request] = Option.empty
     for (request <- journey.requests) {
@@ -46,7 +46,7 @@ class GenericJourney extends BaseSimulation {
         scn = scn.pause(pauseDuration.toString, TimeUnit.MILLISECONDS)
       }
 
-      scn = scn.exec(ApiCall.execute(defaultHeaders, request))
+      scn = scn.exec(ApiCall.execute(request))
       priorRequest = Option(request)
     }
     scn
@@ -64,6 +64,13 @@ class GenericJourney extends BaseSimulation {
   // TODO: Read this from an external file later on
   //private val journeyFile = fromFile("journey.json").getLines mkString "\n"
   private val journeyFile = fromResource("journey.json").getLines mkString "\n"
+  private val envConfig: String = System.getProperty("env", "config/local.conf")
+  private val baseUrl: String = "http://localhost:5620"
+  val appConfig: KibanaConfiguration = new KibanaConfiguration(Helper.readResourceConfigFile(envConfig))
+    .syncWithInstance()
+
+  val httpHelper = new HttpHelper(appConfig)
+  var httpProtocol: HttpProtocolBuilder = httpHelper.getProtocol.baseUrl(baseUrl)
 
   private val journey = journeyFile.parseJson.convertTo[Journey]
 
@@ -77,6 +84,5 @@ class GenericJourney extends BaseSimulation {
         populationForStage(testScenario, journey.scalabilitySetup.test)
           .protocols(httpProtocol)
       )
-    //TODO: Set this from the journey?
-  ).maxDuration(props.simulationTimeout * 1)
+  ).maxDuration(journey.scalabilitySetup.maxDuration)
 }

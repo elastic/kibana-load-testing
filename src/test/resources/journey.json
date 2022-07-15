@@ -17,19 +17,54 @@
 
   "requests": [
     {
-      "timestamp": 1656925429,
-      "path": "/api/telemetry/v2/clusters/_stats",
-      "method": "POST",
-      "body": "{ \"refreshCache\": true }",
+      "timestamp": 1656926429,
+      "method": "GET",
+      "path": "/login",
+      "headers": {
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+        "Connection": "keep-alive",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36",
+        "Sec-Fetch-Site": "none",
+        "Sec-Fetch-Dest": "document",
+        "Host": "localhost:5620",
+        "Pragma": "no-cache",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Traceparent": "00-12cb848924c0e5080f5945381cfa7073-1d65db30df8ce535-01",
+        "Sec-Fetch-Mode": "navigate",
+        "Cache-Control": "no-cache",
+        "Upgrade-Insecure-Requests": "1",
+        "Sec-Fetch-User": "?1"
+      },
+      "body": "",
       "status": 200
     },
     {
       "timestamp": 1656926429,
-      "path": "/api/telemetry/v2/clusters/_stats",
       "method": "POST",
-      "body": "{ \"refreshCache\": true }",
+      "path": "/internal/security/login",
+      "headers": {
+        "Origin": "http://localhost:5620",
+        "Sec-Ch-Ua": "",
+        "Accept": "*/*",
+        "Kbn-Version": "8.4.0",
+        "Sec-Ch-Ua-Platform": "",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36",
+        "Connection": "keep-alive",
+        "Referer": "http://localhost:5620/login?next=%2F",
+        "Sec-Fetch-Site": "same-origin",
+        "Sec-Fetch-Dest": "empty",
+        "Host": "localhost:5620",
+        "X-Kbn-Context": "%7B%22name%22%3A%22security_login%22%2C%22url%22%3A%22%2Flogin%22%7D",
+        "Pragma": "no-cache",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Traceparent": "00-8d779279e22c8b6fec02a77f5f767a59-27bdde2086ccaab0-01",
+        "Sec-Fetch-Mode": "cors",
+        "Cache-Control": "no-cache",
+        "Sec-Ch-Ua-Mobile": "?0",
+        "Content-Type": "application/json"
+      },
+      "body": "{\"providerType\": \"basic\", \"providerName\": \"basic\",\"currentURL\": \"http://localhost:5620/login?next=%2F\",\"params\": {\"username\": \"elastic\",\"password\": \"changeme\"}}",
       "status": 200
     }
-
   ]
 }
