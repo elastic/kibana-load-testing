@@ -52,6 +52,11 @@ object Helper {
     sdf.format(new Date(timestamp))
   }
 
+  def convertDateToTimestamp(date: String): Long = {
+    val sdf = new SimpleDateFormat(dateFormat)
+    sdf.parse(date).getTime
+  }
+
   def readResourceConfigFile(configName: String): Config = {
     val is = getClass.getClassLoader.getResourceAsStream(configName)
     if (is == null) {

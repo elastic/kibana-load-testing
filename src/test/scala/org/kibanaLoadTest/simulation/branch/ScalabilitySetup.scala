@@ -3,7 +3,7 @@ package org.kibanaLoadTest.simulation.branch
 import org.kibanaLoadTest.simulation.branch.StageJsonProtocol._
 import spray.json.DefaultJsonProtocol
 
-case class ScalabilitySetup(warmup: Stage, test: Stage, maxDuration: Int)
+case class ScalabilitySetup(warmup: List[Step], test: List[Step], maxDuration: String)
 
 
 object ScalabilitySetupJsonProtocol extends DefaultJsonProtocol {

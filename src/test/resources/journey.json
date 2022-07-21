@@ -1,70 +1,544 @@
 {
-  "name": "telemetry",
+  "journeyName": "login",
+  "kibanaVersion": "8.4.0-SNAPSHOT",
   "scalabilitySetup": {
-    "warmup": {
-      "action": "constantConcurrentUsers",
-      "maxUserCount": 1,
-      "duration": 30
-    },
-    "test": {
-      "action": "rampConcurrentUsers",
-      "minUserCount": 1,
-      "maxUserCount": 1,
-      "duration": 30
-    },
-    "maxDuration": 60
+    "warmup": [
+      {
+        "action": "constantConcurrentUsers",
+        "maxUsersCount": 1,
+        "duration": "10s"
+      },
+      {
+        "action": "rampConcurrentUsers",
+        "minUsersCount": 1,
+        "maxUsersCount": 5,
+        "duration": "20s"
+      }
+    ],
+    "test": [
+      {
+        "action": "constantConcurrentUsers",
+        "maxUsersCount": 5,
+        "duration": "1m"
+      }
+    ],
+    "maxDuration": "5m"
   },
-
   "requests": [
     {
-      "timestamp": 1656926429,
-      "method": "GET",
-      "path": "/login",
-      "headers": {
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-        "Connection": "keep-alive",
-        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36",
-        "Sec-Fetch-Site": "none",
-        "Sec-Fetch-Dest": "document",
-        "Host": "localhost:5620",
-        "Pragma": "no-cache",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Traceparent": "00-12cb848924c0e5080f5945381cfa7073-1d65db30df8ce535-01",
-        "Sec-Fetch-Mode": "navigate",
-        "Cache-Control": "no-cache",
-        "Upgrade-Insecure-Requests": "1",
-        "Sec-Fetch-User": "?1"
+      "traceId": "877a43fe568ac9e71bab921fb9c5660c",
+      "parentId": "a55368de5181ab48",
+      "processor": {
+        "name": "transaction",
+        "event": "transaction"
       },
-      "body": "",
-      "status": 200
+      "request": {
+        "timestamp": "2022-07-12T16:34:30.740Z",
+        "method": "GET",
+        "path": "/",
+        "headers": {
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+          "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36",
+          "Connection": "keep-alive",
+          "Sec-Fetch-Site": "none",
+          "Sec-Fetch-Dest": "document",
+          "Host": "localhost:5620",
+          "Pragma": "no-cache",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Traceparent": "00-877a43fe568ac9e71bab921fb9c5660c-a55368de5181ab48-01",
+          "Sec-Fetch-Mode": "navigate",
+          "Cache-Control": "no-cache",
+          "Upgrade-Insecure-Requests": "1",
+          "Sec-Fetch-User": "?1"
+        },
+        "statusCode": 302
+      },
+      "transaction": {
+        "id": "9b6aaa904e4c2481",
+        "name": "GET /",
+        "type": "request"
+      }
     },
     {
-      "timestamp": 1656926429,
-      "method": "POST",
-      "path": "/internal/security/login",
-      "headers": {
-        "Origin": "http://localhost:5620",
-        "Sec-Ch-Ua": "",
-        "Accept": "*/*",
-        "Kbn-Version": "8.4.0",
-        "Sec-Ch-Ua-Platform": "",
-        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36",
-        "Connection": "keep-alive",
-        "Referer": "http://localhost:5620/login?next=%2F",
-        "Sec-Fetch-Site": "same-origin",
-        "Sec-Fetch-Dest": "empty",
-        "Host": "localhost:5620",
-        "X-Kbn-Context": "%7B%22name%22%3A%22security_login%22%2C%22url%22%3A%22%2Flogin%22%7D",
-        "Pragma": "no-cache",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Traceparent": "00-8d779279e22c8b6fec02a77f5f767a59-27bdde2086ccaab0-01",
-        "Sec-Fetch-Mode": "cors",
-        "Cache-Control": "no-cache",
-        "Sec-Ch-Ua-Mobile": "?0",
-        "Content-Type": "application/json"
+      "traceId": "877a43fe568ac9e71bab921fb9c5660c",
+      "parentId": "a55368de5181ab48",
+      "processor": {
+        "name": "transaction",
+        "event": "transaction"
       },
-      "body": "{\"providerType\": \"basic\", \"providerName\": \"basic\",\"currentURL\": \"http://localhost:5620/login?next=%2F\",\"params\": {\"username\": \"elastic\",\"password\": \"changeme\"}}",
-      "status": 200
+      "request": {
+        "timestamp": "2022-07-12T16:34:30.846Z",
+        "method": "GET",
+        "path": "/login",
+        "headers": {
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+          "Connection": "keep-alive",
+          "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36",
+          "Sec-Fetch-Site": "none",
+          "Sec-Fetch-Dest": "document",
+          "Host": "localhost:5620",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Pragma": "no-cache",
+          "Traceparent": "00-877a43fe568ac9e71bab921fb9c5660c-a55368de5181ab48-01",
+          "Sec-Fetch-Mode": "navigate",
+          "Cache-Control": "no-cache",
+          "Upgrade-Insecure-Requests": "1",
+          "Sec-Fetch-User": "?1"
+        },
+        "statusCode": 200
+      },
+      "transaction": {
+        "id": "7b26c6b0d5fc5b70",
+        "name": "GET /login",
+        "type": "request"
+      }
+    },
+    {
+      "traceId": "877a43fe568ac9e71bab921fb9c5660c",
+      "parentId": "70e4ab623f7696a9",
+      "processor": {
+        "name": "transaction",
+        "event": "transaction"
+      },
+      "request": {
+        "timestamp": "2022-07-12T16:34:34.565Z",
+        "method": "POST",
+        "path": "/api/core/capabilities",
+        "headers": {
+          "Origin": "http://localhost:5620",
+          "Sec-Ch-Ua": "",
+          "Accept": "*/*",
+          "Kbn-Version": "8.4.0-SNAPSHOT",
+          "Sec-Ch-Ua-Platform": "",
+          "Connection": "keep-alive",
+          "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36",
+          "Referer": "http://localhost:5620/login?next=%2F",
+          "Sec-Fetch-Dest": "empty",
+          "Sec-Fetch-Site": "same-origin",
+          "X-Kbn-Context": "%7B%22url%22%3A%22%2Flogin%22%7D",
+          "Host": "localhost:5620",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Pragma": "no-cache",
+          "Traceparent": "00-877a43fe568ac9e71bab921fb9c5660c-70e4ab623f7696a9-01",
+          "Sec-Fetch-Mode": "cors",
+          "Cache-Control": "no-cache",
+          "Content-Length": "193",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Content-Type": "application/json"
+        },
+        "body": "{\"applications\":[\"error\",\"status\",\"security_access_agreement\",\"security_capture_url\",\"security_login\",\"security_logout\",\"security_logged_out\",\"security_overwritten_session\",\"security_account\"]}",
+        "statusCode": 200
+      },
+      "transaction": {
+        "id": "e590cd00a8572f2c",
+        "name": "POST /api/core/capabilities",
+        "type": "request"
+      }
+    },
+    {
+      "traceId": "fbe3d22f8929659016a3cc2e676fcd56",
+      "parentId": "85601db6be2000ff",
+      "processor": {
+        "name": "transaction",
+        "event": "transaction"
+      },
+      "request": {
+        "timestamp": "2022-07-12T16:34:34.945Z",
+        "method": "GET",
+        "path": "/internal/security/login_state",
+        "headers": {
+          "Sec-Ch-Ua": "",
+          "Accept": "*/*",
+          "Kbn-Version": "8.4.0-SNAPSHOT",
+          "Sec-Ch-Ua-Platform": "",
+          "Connection": "keep-alive",
+          "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36",
+          "Referer": "http://localhost:5620/login?next=%2F",
+          "Sec-Fetch-Dest": "empty",
+          "Sec-Fetch-Site": "same-origin",
+          "X-Kbn-Context": "%7B%22name%22%3A%22security_login%22%2C%22url%22%3A%22%2Flogin%22%7D",
+          "Host": "localhost:5620",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Pragma": "no-cache",
+          "Traceparent": "00-fbe3d22f8929659016a3cc2e676fcd56-85601db6be2000ff-01",
+          "Sec-Fetch-Mode": "cors",
+          "Cache-Control": "no-cache",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Content-Type": "application/json"
+        },
+        "statusCode": 200
+      },
+      "transaction": {
+        "id": "840646495740f3a5",
+        "name": "GET /internal/security/login_state",
+        "type": "request"
+      }
+    },
+    {
+      "traceId": "d8d427414477e2a3a7375ba820034d6f",
+      "parentId": "4d50d5bd60e099f1",
+      "processor": {
+        "name": "transaction",
+        "event": "transaction"
+      },
+      "request": {
+        "timestamp": "2022-07-12T16:34:43.886Z",
+        "method": "POST",
+        "path": "/internal/security/login",
+        "headers": {
+          "Origin": "http://localhost:5620",
+          "Sec-Ch-Ua": "",
+          "Accept": "*/*",
+          "Kbn-Version": "8.4.0-SNAPSHOT",
+          "Sec-Ch-Ua-Platform": "",
+          "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36",
+          "Referer": "http://localhost:5620/login?next=%2F",
+          "Connection": "keep-alive",
+          "Sec-Fetch-Dest": "empty",
+          "Sec-Fetch-Site": "same-origin",
+          "X-Kbn-Context": "%7B%22name%22%3A%22security_login%22%2C%22url%22%3A%22%2Flogin%22%7D",
+          "Host": "localhost:5620",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Pragma": "no-cache",
+          "Traceparent": "00-d8d427414477e2a3a7375ba820034d6f-4d50d5bd60e099f1-01",
+          "Sec-Fetch-Mode": "cors",
+          "Cache-Control": "no-cache",
+          "Content-Length": "153",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Content-Type": "application/json"
+        },
+        "body": "{\"providerType\":\"basic\",\"providerName\":\"basic\",\"currentURL\":\"http://localhost:5620/login?next=%2F\",\"params\":{\"username\":\"elastic\",\"password\":\"changeme\"}}",
+        "statusCode": 200
+      },
+      "transaction": {
+        "id": "baab48da112ecd05",
+        "name": "POST /internal/security/login",
+        "type": "request"
+      }
+    },
+    {
+      "traceId": "877a43fe568ac9e71bab921fb9c5660c",
+      "parentId": "a55368de5181ab48",
+      "processor": {
+        "name": "transaction",
+        "event": "transaction"
+      },
+      "request": {
+        "timestamp": "2022-07-12T16:34:44.614Z",
+        "method": "GET",
+        "path": "/",
+        "headers": {
+          "Cookie": "sid=Fe26.2**1f3d3c6c6d5b60c5cb26e67f4d99543f4fd2c52964c0386f3a18f0a3204f17da*hkcUt8mKOL9T6-NUXj_F0g*4REjvkPqKL_nqY--RkpDM96eknaTgojxzL34XcbdbhYxdFcQKxTTFbWqtp_cH1GZB5-VtQoeX0uKgyDHFhAm51JtuEf8D33Il7Pz4UXhqiU5Bu6nDOBp75Lu-rl3NnP1ql2oQan3H-8RugJMNztQt0zJEY66AzhV6tzoj8ipUV2s3nyhiJBGOT-v-mXeBfXKXhxce5P-kLMwrPm05iudHNSL2fvX-OkpwbMWFhhqdL0rau3dOR_dh-5Vi2nvCbIt**efeb43bbfc3bec11dc6b766d28ed85614642676eece918addc231a2e72105a08*zbGxddZKmn9uxoGXe1DiYcIpfhyfDR73z6laEk-bDwA",
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+          "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36",
+          "Connection": "keep-alive",
+          "Referer": "http://localhost:5620/login?next=%2F",
+          "Sec-Fetch-Dest": "document",
+          "Sec-Fetch-Site": "same-origin",
+          "Host": "localhost:5620",
+          "Pragma": "no-cache",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Traceparent": "00-877a43fe568ac9e71bab921fb9c5660c-a55368de5181ab48-01",
+          "Sec-Fetch-Mode": "navigate",
+          "Authorization": "[REDACTED]",
+          "Cache-Control": "no-cache",
+          "Upgrade-Insecure-Requests": "1",
+          "Sec-Fetch-User": "?1"
+        },
+        "statusCode": 302
+      },
+      "transaction": {
+        "id": "7180b8e4e5892480",
+        "name": "GET /",
+        "type": "request"
+      }
+    },
+    {
+      "traceId": "877a43fe568ac9e71bab921fb9c5660c",
+      "parentId": "a55368de5181ab48",
+      "processor": {
+        "name": "transaction",
+        "event": "transaction"
+      },
+      "request": {
+        "timestamp": "2022-07-12T16:34:44.721Z",
+        "method": "GET",
+        "path": "/spaces/enter",
+        "headers": {
+          "Cookie": "sid=Fe26.2**1d9e7e0e05f1684f28ae632773fd5e1ad42d530d4224fc386d31f9fff7fe3604*SyrzKTrCWmmhItnOeVLSfA*sMBkYYYJmL97B83ogU1Cl4eWMlMg0mqnJgvj1yE1B21Xht2mt-LhNMAW75OxeLs6AgLSnaCNrP03iG1rh6Onr45yJah3GXNIy1oMHfiNqPhD5X6rGHCqW-YjjPqlbVKBpq9oYJc3W50zePNSb6ZDTMOMHMXjQgoXZD7tP2KSJZT-_RBos5Jfs3981gqMjHPQc-9YGF9Fb1uAV_If1TlCki91QROzPZCe8X8m4U42HsoOTCUxMy3cDc8VaEBUk3gK**9ad5290a8fd608be586c098ecde062c7963f1e58e34712408ae8472cd79c42f2*pkgVYQz4Rap-wWjgLwbMe5mitVNzqxu37U4DOQFQPrg",
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+          "Referer": "http://localhost:5620/login?next=%2F",
+          "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36",
+          "Connection": "keep-alive",
+          "Sec-Fetch-Site": "same-origin",
+          "Sec-Fetch-Dest": "document",
+          "Host": "localhost:5620",
+          "Pragma": "no-cache",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Traceparent": "00-877a43fe568ac9e71bab921fb9c5660c-a55368de5181ab48-01",
+          "Sec-Fetch-Mode": "navigate",
+          "Authorization": "[REDACTED]",
+          "Cache-Control": "no-cache",
+          "Upgrade-Insecure-Requests": "1",
+          "Sec-Fetch-User": "?1"
+        },
+        "statusCode": 302
+      },
+      "transaction": {
+        "id": "f391d270d551ccc2",
+        "name": "GET /spaces/enter",
+        "type": "request"
+      }
+    },
+    {
+      "traceId": "877a43fe568ac9e71bab921fb9c5660c",
+      "parentId": "a55368de5181ab48",
+      "processor": {
+        "name": "transaction",
+        "event": "transaction"
+      },
+      "request": {
+        "timestamp": "2022-07-12T16:34:44.829Z",
+        "method": "GET",
+        "path": "/app/home",
+        "headers": {
+          "Cookie": "sid=Fe26.2**ecefcda94c83b172cab314068f1835dd81230c9879551658dbe93493622032c3*l8NhG63CZNEvPFEndyIehA*fzZ0lH21L-fT_t7GsUG5mK_v2PqfVufwIVMjqfof0hdL3RFtHLqsHymMv3zYWyUCjOE8eej2lIiFCx9LgKWRLnntG020U6Oo3G1FYRa6ylooNy0kTDTCrZxhW-2ajtgByGygFRLGfrVqRjd8872NoPd7J_68S4zyBlDYz6FV0mcGL9c0iiFYFZufiELxk65Mh5FcfKRz7fx1ah3FXV9Waifx6Y4Lpm5rqZMLZkoVWRwhzxZnVHtlhAmYoRl4fCgs**f8440e104c832d8f8239fc269b03b708ba6587aa3562ec6356ae4999ba2f0922*CkT_x1kmqN_YmPwWxa_TWnYcdupegBxyOmJZcNGrng8",
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+          "Referer": "http://localhost:5620/login?next=%2F",
+          "Connection": "keep-alive",
+          "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36",
+          "Sec-Fetch-Site": "same-origin",
+          "Sec-Fetch-Dest": "document",
+          "Host": "localhost:5620",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Pragma": "no-cache",
+          "Traceparent": "00-877a43fe568ac9e71bab921fb9c5660c-a55368de5181ab48-01",
+          "Sec-Fetch-Mode": "navigate",
+          "Authorization": "[REDACTED]",
+          "Cache-Control": "no-cache",
+          "Upgrade-Insecure-Requests": "1",
+          "Sec-Fetch-User": "?1"
+        },
+        "statusCode": 200
+      },
+      "transaction": {
+        "id": "04f09c6d8c8170a0",
+        "name": "GET /app/?/#",
+        "type": "request"
+      }
+    },
+    {
+      "traceId": "877a43fe568ac9e71bab921fb9c5660c",
+      "parentId": "5818e1799a0089ef",
+      "processor": {
+        "name": "transaction",
+        "event": "transaction"
+      },
+      "request": {
+        "timestamp": "2022-07-12T16:34:50.254Z",
+        "method": "POST",
+        "path": "/api/core/capabilities",
+        "headers": {
+          "Cookie": "sid=Fe26.2**04bec28699bf4375c45e814e566fbe004286731783f99c868e96cab71e4739f4*yZFMQ3opBAMKiC0A7GwLzw*Ry-g15HN2NoTZPHHcOSCPx5_hz15UgKQUXeagPKvV41IVuDmV4UF_KDpHm5Vu8mBUSmD1smQbszCFTHETF7BtI5t402cE67kcJQVe_H_gHyCH6P3UYPDogWD_LK6JB8HKwuXGFEnJo_RKZui7vGQiTF1CVHODKq0vIZ9aZv74zb3B4QnwtLEl5EjjOkxWflghrTuESjXD0HY7UI7Pgc43rlzOMLvrH8S_xQrPQ3lZmCFCuEbvO7dV0Oel-C3HUtQ**0fd43d05632ae0e6c4d1129b28ce8497db10f70f9d13d142a025497cb38ea522*qtzD68oPDfd4Pgsh5xMATO2rv3y6fBS8Wf0N7cYBQq0",
+          "Origin": "http://localhost:5620",
+          "Sec-Ch-Ua": "",
+          "Accept": "*/*",
+          "Kbn-Version": "8.4.0-SNAPSHOT",
+          "Sec-Ch-Ua-Platform": "",
+          "Connection": "keep-alive",
+          "Referer": "http://localhost:5620/app/home",
+          "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36",
+          "Sec-Fetch-Dest": "empty",
+          "Sec-Fetch-Site": "same-origin",
+          "X-Kbn-Context": "%7B%22url%22%3A%22%2Fapp%2Fhome%22%7D",
+          "Host": "localhost:5620",
+          "Pragma": "no-cache",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Traceparent": "00-877a43fe568ac9e71bab921fb9c5660c-5818e1799a0089ef-01",
+          "Sec-Fetch-Mode": "cors",
+          "Authorization": "[REDACTED]",
+          "Cache-Control": "no-cache",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Content-Length": "655",
+          "Content-Type": "application/json"
+        },
+        "body": "{\"applications\":[\"error\",\"status\",\"kibana\",\"dev_tools\",\"r\",\"short_url_redirect\",\"home\",\"management\",\"space_selector\",\"security_access_agreement\",\"security_capture_url\",\"security_login\",\"security_logout\",\"security_logged_out\",\"security_overwritten_session\",\"security_account\",\"reportingRedirect\",\"graph\",\"discover\",\"integrations\",\"fleet\",\"ingestManager\",\"csp\",\"visualize\",\"canvas\",\"dashboards\",\"lens\",\"osquery\",\"maps\",\"ml\",\"securitySolutionUI\",\"siem\",\"observability-overview\",\"uptime\",\"synthetics\",\"logs\",\"metrics\",\"infra\",\"monitoring\",\"enterpriseSearch\",\"enterpriseSearchContent\",\"elasticsearch\",\"appSearch\",\"workplaceSearch\",\"apm\",\"ux\",\"kibanaOverview\"]}",
+        "statusCode": 200
+      },
+      "transaction": {
+        "id": "d480f951de55865e",
+        "name": "POST /api/core/capabilities",
+        "type": "request"
+      }
+    },
+    {
+      "traceId": "877a43fe568ac9e71bab921fb9c5660c",
+      "parentId": "e0a819cb6651de72",
+      "processor": {
+        "name": "transaction",
+        "event": "transaction"
+      },
+      "request": {
+        "timestamp": "2022-07-12T16:34:50.311Z",
+        "method": "GET",
+        "path": "/internal/security/me",
+        "headers": {
+          "Cookie": "sid=Fe26.2**04bec28699bf4375c45e814e566fbe004286731783f99c868e96cab71e4739f4*yZFMQ3opBAMKiC0A7GwLzw*Ry-g15HN2NoTZPHHcOSCPx5_hz15UgKQUXeagPKvV41IVuDmV4UF_KDpHm5Vu8mBUSmD1smQbszCFTHETF7BtI5t402cE67kcJQVe_H_gHyCH6P3UYPDogWD_LK6JB8HKwuXGFEnJo_RKZui7vGQiTF1CVHODKq0vIZ9aZv74zb3B4QnwtLEl5EjjOkxWflghrTuESjXD0HY7UI7Pgc43rlzOMLvrH8S_xQrPQ3lZmCFCuEbvO7dV0Oel-C3HUtQ**0fd43d05632ae0e6c4d1129b28ce8497db10f70f9d13d142a025497cb38ea522*qtzD68oPDfd4Pgsh5xMATO2rv3y6fBS8Wf0N7cYBQq0",
+          "Sec-Ch-Ua": "",
+          "Accept": "*/*",
+          "Kbn-Version": "8.4.0-SNAPSHOT",
+          "Kbn-System-Request": "true",
+          "Sec-Ch-Ua-Platform": "",
+          "Referer": "http://localhost:5620/app/home",
+          "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36",
+          "Connection": "keep-alive",
+          "Sec-Fetch-Dest": "empty",
+          "Sec-Fetch-Site": "same-origin",
+          "X-Kbn-Context": "%7B%22url%22%3A%22%2Fapp%2Fhome%22%7D",
+          "Host": "localhost:5620",
+          "Pragma": "no-cache",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Traceparent": "00-877a43fe568ac9e71bab921fb9c5660c-e0a819cb6651de72-01",
+          "Sec-Fetch-Mode": "cors",
+          "Authorization": "[REDACTED]",
+          "Cache-Control": "no-cache",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Content-Type": "application/json"
+        },
+        "statusCode": 200
+      },
+      "transaction": {
+        "id": "39ae94ec8e690da5",
+        "name": "GET /internal/security/me",
+        "type": "request"
+      }
+    },
+    {
+      "traceId": "877a43fe568ac9e71bab921fb9c5660c",
+      "parentId": "a9468c744e27b6b6",
+      "processor": {
+        "name": "transaction",
+        "event": "transaction"
+      },
+      "request": {
+        "timestamp": "2022-07-12T16:34:50.496Z",
+        "method": "GET",
+        "path": "/api/licensing/info",
+        "headers": {
+          "Cookie": "sid=Fe26.2**cf7840ffde14c213f2b28afad13473fa92c68dc034ef99b5b39aa70139f46e1b*Z6T5cvP52onkB-WfSINJqg*Xue7d7Jv91ewgBksjiyZz52pbiNx_KJSAJO_ZAL6JfEOAf4Z3HEQ5xk72LKE-K1xKzKQsV5sHJz0MOiXxVxezeYtTU_WoMFc4r50FZjkG29zwuK7zzGvIG8uquElKdbj4X3zz8sdL40iOuKnqR1CAdvtktgFezgthYKaBq6bGdYgcgB4UBhaipMlTexmZlf6AeT7dh2pholBGGX5qwymO4KjkUO_4zQTuPZsfEhr7cjE4AgIJhknFjbL5-nPMltQ**ca2dc2aa687704d6031c02b2ae09ff70bdb85e918b2cbc57a1e61ca55e92074e*Syx-M5BDHbe0QIEz68oqbWt1MvBp9zQxcfLofhxbmLA",
+          "Sec-Ch-Ua": "",
+          "Accept": "*/*",
+          "Kbn-Version": "8.4.0-SNAPSHOT",
+          "Sec-Ch-Ua-Platform": "",
+          "Kbn-System-Request": "true",
+          "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36",
+          "Referer": "http://localhost:5620/app/home",
+          "Connection": "keep-alive",
+          "Sec-Fetch-Site": "same-origin",
+          "Sec-Fetch-Dest": "empty",
+          "X-Kbn-Context": "%7B%22url%22%3A%22%2Fapp%2Fhome%22%7D",
+          "Host": "localhost:5620",
+          "Pragma": "no-cache",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Traceparent": "00-877a43fe568ac9e71bab921fb9c5660c-a9468c744e27b6b6-01",
+          "Sec-Fetch-Mode": "cors",
+          "Authorization": "[REDACTED]",
+          "Cache-Control": "no-cache",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Content-Type": "application/json"
+        },
+        "statusCode": 200
+      },
+      "transaction": {
+        "id": "549af9b3366074eb",
+        "name": "GET /api/licensing/info",
+        "type": "request"
+      }
+    },
+    {
+      "traceId": "a25e1c01fda9c9d8465343d031a338f7",
+      "parentId": "89c85f36fb7c6107",
+      "processor": {
+        "name": "transaction",
+        "event": "transaction"
+      },
+      "request": {
+        "timestamp": "2022-07-12T16:34:50.643Z",
+        "method": "POST",
+        "path": "/internal/licensing/feature_usage/register",
+        "headers": {
+          "Origin": "http://localhost:5620",
+          "Cookie": "sid=Fe26.2**cf7840ffde14c213f2b28afad13473fa92c68dc034ef99b5b39aa70139f46e1b*Z6T5cvP52onkB-WfSINJqg*Xue7d7Jv91ewgBksjiyZz52pbiNx_KJSAJO_ZAL6JfEOAf4Z3HEQ5xk72LKE-K1xKzKQsV5sHJz0MOiXxVxezeYtTU_WoMFc4r50FZjkG29zwuK7zzGvIG8uquElKdbj4X3zz8sdL40iOuKnqR1CAdvtktgFezgthYKaBq6bGdYgcgB4UBhaipMlTexmZlf6AeT7dh2pholBGGX5qwymO4KjkUO_4zQTuPZsfEhr7cjE4AgIJhknFjbL5-nPMltQ**ca2dc2aa687704d6031c02b2ae09ff70bdb85e918b2cbc57a1e61ca55e92074e*Syx-M5BDHbe0QIEz68oqbWt1MvBp9zQxcfLofhxbmLA",
+          "Sec-Ch-Ua": "",
+          "Accept": "*/*",
+          "Kbn-Version": "8.4.0-SNAPSHOT",
+          "Sec-Ch-Ua-Platform": "",
+          "Referer": "http://localhost:5620/app/home",
+          "Connection": "keep-alive",
+          "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36",
+          "Sec-Fetch-Dest": "empty",
+          "Sec-Fetch-Site": "same-origin",
+          "Host": "localhost:5620",
+          "X-Kbn-Context": "%7B%22name%22%3A%22home%22%2C%22url%22%3A%22%2Fapp%2Fhome%22%7D",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Pragma": "no-cache",
+          "Traceparent": "00-a25e1c01fda9c9d8465343d031a338f7-89c85f36fb7c6107-01",
+          "Sec-Fetch-Mode": "cors",
+          "Authorization": "[REDACTED]",
+          "Cache-Control": "no-cache",
+          "Content-Length": "280",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Content-Type": "application/json"
+        },
+        "body": "[{\"featureName\":\"URL drilldown\",\"licenseType\":\"gold\"},{\"featureName\":\"geo_line aggregation\",\"licenseType\":\"gold\"},{\"featureName\":\"geo_tile aggregation on geo_shape field-type\",\"licenseType\":\"gold\"},{\"featureName\":\"layer from local Elastic Maps Server\",\"licenseType\":\"enterprise\"}]",
+        "statusCode": 200
+      },
+      "transaction": {
+        "id": "93282a064bcbbaa2",
+        "name": "POST /internal/licensing/feature_usage/register",
+        "type": "request"
+      }
+    },
+    {
+      "traceId": "a25e1c01fda9c9d8465343d031a338f7",
+      "parentId": "3972b9c15e3f70e4",
+      "processor": {
+        "name": "transaction",
+        "event": "transaction"
+      },
+      "request": {
+        "timestamp": "2022-07-12T16:34:50.645Z",
+        "method": "GET",
+        "path": "/api/banners/info",
+        "headers": {
+          "Cookie": "sid=Fe26.2**cf7840ffde14c213f2b28afad13473fa92c68dc034ef99b5b39aa70139f46e1b*Z6T5cvP52onkB-WfSINJqg*Xue7d7Jv91ewgBksjiyZz52pbiNx_KJSAJO_ZAL6JfEOAf4Z3HEQ5xk72LKE-K1xKzKQsV5sHJz0MOiXxVxezeYtTU_WoMFc4r50FZjkG29zwuK7zzGvIG8uquElKdbj4X3zz8sdL40iOuKnqR1CAdvtktgFezgthYKaBq6bGdYgcgB4UBhaipMlTexmZlf6AeT7dh2pholBGGX5qwymO4KjkUO_4zQTuPZsfEhr7cjE4AgIJhknFjbL5-nPMltQ**ca2dc2aa687704d6031c02b2ae09ff70bdb85e918b2cbc57a1e61ca55e92074e*Syx-M5BDHbe0QIEz68oqbWt1MvBp9zQxcfLofhxbmLA",
+          "Sec-Ch-Ua": "",
+          "Accept": "*/*",
+          "Kbn-Version": "8.4.0-SNAPSHOT",
+          "Sec-Ch-Ua-Platform": "",
+          "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36",
+          "Referer": "http://localhost:5620/app/home",
+          "Connection": "keep-alive",
+          "Sec-Fetch-Site": "same-origin",
+          "Sec-Fetch-Dest": "empty",
+          "X-Kbn-Context": "%7B%22name%22%3A%22home%22%2C%22url%22%3A%22%2Fapp%2Fhome%22%7D",
+          "Host": "localhost:5620",
+          "Pragma": "no-cache",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Traceparent": "00-a25e1c01fda9c9d8465343d031a338f7-3972b9c15e3f70e4-01",
+          "Sec-Fetch-Mode": "cors",
+          "Authorization": "[REDACTED]",
+          "Cache-Control": "no-cache",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Content-Type": "application/json"
+        },
+        "statusCode": 200
+      },
+      "transaction": {
+        "id": "c0099f9961b4f711",
+        "name": "GET /api/banners/info",
+        "type": "request"
+      }
     }
   ]
 }
