@@ -27,52 +27,63 @@ object ApiCall {
       "Cookie",
       "X-Kbn-Context"
     )
-
     val headers = if (request.headers.contains("Kbn-Version")) defaultHeaders + ("Kbn-Version" -> config.version) else defaultHeaders
-
     val httpRequestBuilder = request.method match {
-      case "GET" => http(requestName = request.path).get(request.path)
-      case "POST" => http(requestName = request.path).post(request.path)
-      case "PUT" => http(requestName = request.path).put(request.path)
-      case "DELETE" => http(requestName = request.path).delete(request.path)
+      case "GET" => http(requestName = s"${request.method} ${request.path}")
+        .get(request.path)
+        .headers(headers)
+        .check(status.is(request.statusCode))
+      case "POST" => http(requestName = s"${request.method} ${request.path}")
+        .post(request.path)
+        .body(StringBody(request.body.get)).asJson
+        .headers(headers)
+        .check(status.is(request.statusCode))
+      case "PUT" => http(requestName = s"${request.method} ${request.path}")
+        .put(request.path)
+        .headers(headers)
+        .check(status.is(request.statusCode))
+      case "DELETE" => http(requestName = s"${request.method} ${request.path}")
+        .delete(request.path)
+        .headers(headers)
+        .check(status.is(request.statusCode))
       case _ => throw new IllegalArgumentException(s"Invalid method ${request.method}")
     }
-
-    if (request.body.isDefined) httpRequestBuilder.body(StringBody(request.body.get))
-
-    httpRequestBuilder.headers(headers).check(status.is(request.statusCode))
-
     exec(httpRequestBuilder)
   }
 }
 
 class GenericJourney extends Simulation {
-  def scenarioForStage(journey: Journey, stageName: String, config: KibanaConfiguration): ScenarioBuilder = {
-    var scn: ScenarioBuilder = scenario(s"${stageName} for ${journey.journeyName} ${appConfig.version}")
-
-    var priorRequest: Option[org.kibanaLoadTest.simulation.branch.Request] = Option.empty
-    for (trace <- journey.requests) {
-      val request = trace.request
-      val priorTimestamp = priorRequest.map(_.timestamp).getOrElse(request.timestamp)
-      //TODO: Ensure that we return dates in this format in JSON (millis since epoch)
-      //TODO: Move convertion to deserialization?
-      val pauseDuration = Math.max(0L, Helper.convertDateToTimestamp(request.timestamp) - Helper.convertDateToTimestamp(priorTimestamp))
-      if (pauseDuration > 0L) {
-        scn = scn.pause(pauseDuration.toString, TimeUnit.MILLISECONDS)
-      }
-
-      scn = scn.exec(ApiCall.execute(request, config))
-      priorRequest = Option(request)
-    }
-    scn
-  }
-
   def getDuration(duration: String) = {
     duration.takeRight(1) match {
       case "s" =>  duration.dropRight(1).toInt
       case "m" => duration.dropRight(1).toInt * 60
       case _ => throw new IllegalArgumentException(s"Invalid duration format: ${duration}")
     }
+  }
+
+  def scenarioSteps(journey: Journey, config: KibanaConfiguration):ChainBuilder = {
+    var steps: ChainBuilder = exec()
+
+    //TODO: Do we need to filter out static page requests?
+    val tracesAPICallsOnly = journey.requests.filter(_.request.path.matches("(\\/api|\\/internal).*"))
+
+    var priorRequest: Option[org.kibanaLoadTest.simulation.branch.Request] = Option.empty
+    for (trace <- tracesAPICallsOnly) {
+      val request = trace.request
+      val priorTimestamp = priorRequest.map(_.timestamp).getOrElse(request.timestamp)
+      val pauseDuration = Math.max(0L, request.timestamp.getTime - priorTimestamp.getTime)
+      if (pauseDuration > 0L) {
+        steps = steps.pause(pauseDuration.toString, TimeUnit.MILLISECONDS)
+      }
+
+      steps = steps.exec(ApiCall.execute(request, config))
+      priorRequest = Option(request)
+    }
+    steps
+  }
+
+  def scenarioForStage(steps: ChainBuilder, scenarioName: String): ScenarioBuilder = {
+    scenario(scenarioName).exec(steps)
   }
 
   def populationForStage(scn: ScenarioBuilder, stage: List[Step]): PopulationBuilder = {
@@ -88,10 +99,13 @@ class GenericJourney extends Simulation {
     scn.inject(steps)
   }
 
+  private val journeyPath: String = System.getProperty("journeyPath")
+  val fileExists = new java.io.File(journeyPath).isFile
 
-  // TODO: Read this from an external file later on
-  //private val journeyFile = fromFile("journey.json").getLines mkString "\n"
-  private val journeyFile = fromResource("journey.json").getLines mkString "\n"
+  if (!fileExists || !journeyPath.endsWith(".json")) {
+    throw new IllegalArgumentException(s"Provide path to valid json journey file using journeyPath system var, found '$journeyPath'")
+  }
+  private val journeyFile = fromFile(journeyPath).getLines mkString "\n"
   private val envConfig: String = System.getProperty("env", "config/local.conf")
   val appConfig: KibanaConfiguration = new KibanaConfiguration(Helper.readResourceConfigFile(envConfig))
     .syncWithInstance()
@@ -102,11 +116,12 @@ class GenericJourney extends Simulation {
 
   private val journey = journeyFile.parseJson.convertTo[Journey]
 
-  private val warmupScenario = scenarioForStage(journey, "warmup", appConfig)
-  private val testScenario = scenarioForStage(journey, "test", appConfig)
+  private val steps = scenarioSteps(journey, appConfig)
+  private val warmupScenario = scenarioForStage(steps, s"warmup for ${journey.journeyName} ${appConfig.version}")
+  private val testScenario = scenarioForStage(steps, s"test for ${journey.journeyName} ${appConfig.version}")
 
   setUp(
-    populationForStage(warmupScenario, journey.scalabilitySetup.test)
+    populationForStage(warmupScenario, journey.scalabilitySetup.warmup)
       .protocols(httpProtocol)
       .andThen(
         populationForStage(testScenario, journey.scalabilitySetup.test)

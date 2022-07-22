@@ -52,9 +52,9 @@ object Helper {
     sdf.format(new Date(timestamp))
   }
 
-  def convertDateToTimestamp(date: String): Long = {
+  def convertStringToDate(date: String): Date = {
     val sdf = new SimpleDateFormat(dateFormat)
-    sdf.parse(date).getTime
+    sdf.parse(date)
   }
 
   def readResourceConfigFile(configName: String): Config = {
