@@ -222,6 +222,7 @@ class HttpHelper(appConfig: KibanaConfiguration) {
       .inferHtmlResources(
         BlackList(
           """.*\.js""",
+          """.*\.svg""",
           """.*\.css""",
           """.*\.gif""",
           """.*\.jpeg""",
