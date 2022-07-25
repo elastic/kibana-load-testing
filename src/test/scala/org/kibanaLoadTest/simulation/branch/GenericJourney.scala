@@ -150,16 +150,29 @@ class GenericJourney extends Simulation {
   private val journeyFile = Using(fromFile(journeyPath)) { f =>
     f.getLines().mkString("\n")
   }
-  private val envConfig: String = System.getProperty("env", "config/local.conf")
+  private val journey = journeyFile.get.parseJson.convertTo[Journey]
+
+  // These values are valid as long we use FTR to start Kibana server
+  private val kibanaHost = "http://localhost:5620"
+  private val esHost = "http://localhost:9220"
+  private val providerType = "basic"
+  private val providerName = "basic"
+  private val username = "elastic"
+  private val password = "changeme"
+
   val appConfig: KibanaConfiguration = new KibanaConfiguration(
-    Helper.readResourceConfigFile(envConfig)
+    kibanaHost,
+    journey.kibanaVersion,
+    esHost,
+    username,
+    password,
+    providerType,
+    providerName
   )
 
   val httpHelper = new HttpHelper(appConfig)
   var httpProtocol: HttpProtocolBuilder =
     httpHelper.getProtocol.baseUrl(appConfig.baseUrl).disableFollowRedirect
-
-  private val journey = journeyFile.get.parseJson.convertTo[Journey]
 
   private val steps = scenarioSteps(journey, appConfig)
   private val warmupScenario = scenarioForStage(

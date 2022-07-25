@@ -35,6 +35,39 @@ class KibanaConfiguration {
   var esBuildDate = ""
   var esLuceneVersion = ""
 
+  def this(
+      kibanaHost: String,
+      kibanaVersion: String,
+      esHost: String,
+      username: String,
+      password: String,
+      providerType: String,
+      providerName: String
+  ) {
+    this()
+    // read required values
+    this.baseUrl = Helper.validateUrl(
+      kibanaHost,
+      s"'kibanaHost' should be a valid Kibana URL"
+    )
+    this.esUrl =
+      Helper.validateUrl(esHost, s"'esHost' should be a valid ES URL")
+    this.buildVersion = kibanaVersion
+    this.version = new Version(this.buildVersion).version
+    this.isSecurityEnabled = true
+    this.username = username
+    this.password = password
+    this.isAbove79x = new Version(this.buildVersion).isAbove79x
+
+    this.loginPayload =
+      if (this.isAbove79x)
+        s"""{"providerType":"$providerType","providerName":"$providerName","currentURL":"${this.baseUrl}/login","params":{"username":"${this.username}","password":"${this.password}"}}"""
+      else s"""{"username":"${this.username}","password":"${this.password}"}"""
+    this.loginStatusCode = if (this.isAbove79x) 200 else 204
+    this.deploymentId = None
+    this.deleteDeploymentOnFinish = false
+  }
+
   def this(config: Config) = {
     this()
     // validate config
