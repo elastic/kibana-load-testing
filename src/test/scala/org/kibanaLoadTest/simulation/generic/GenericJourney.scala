@@ -1,30 +1,31 @@
-package org.kibanaLoadTest.simulation.branch
+package org.kibanaLoadTest.simulation.generic
 
-import io.gatling.core.Predef.{exec, _}
+import io.gatling.core.Predef._
+import io.gatling.core.controller.inject.closed.ClosedInjectionStep
 import io.gatling.core.structure.{
   ChainBuilder,
   PopulationBuilder,
   ScenarioBuilder
 }
-import io.gatling.http.Predef.{http, status, _}
+import io.gatling.http.Predef._
 import io.gatling.http.protocol.HttpProtocolBuilder
 import org.kibanaLoadTest.KibanaConfiguration
-import org.kibanaLoadTest.helpers.{Helper, HttpHelper}
-import org.kibanaLoadTest.simulation.branch.JourneyJsonProtocol._
-
-import scala.collection.mutable.ListBuffer
+import org.kibanaLoadTest.helpers.Helper
+import org.kibanaLoadTest.helpers.HttpHelper
+import org.kibanaLoadTest.simulation.generic
+import org.kibanaLoadTest.simulation.generic.mapping.{Step, Journey}
+import org.kibanaLoadTest.simulation.generic.mapping.JourneyJsonProtocol._
 import spray.json._
-import io.gatling.core.controller.inject.closed.ClosedInjectionStep
-import org.kibanaLoadTest.scenario.Login.loginHeaders
 
-import java.util.concurrent.TimeUnit
-import scala.io.Source._
 import java.io.File
+import java.util.concurrent.TimeUnit
+import scala.collection.mutable.ListBuffer
+import scala.io.Source._
 import scala.util.Using
 
 object ApiCall {
   def execute(
-      request: org.kibanaLoadTest.simulation.branch.Request,
+      request: mapping.Request,
       config: KibanaConfiguration
   ): ChainBuilder = {
     val defaultHeaders = request.headers.-(
@@ -86,7 +87,7 @@ class GenericJourney extends Simulation {
       config: KibanaConfiguration
   ): ChainBuilder = {
     var steps: ChainBuilder = exec()
-    var priorRequest: Option[org.kibanaLoadTest.simulation.branch.Request] =
+    var priorRequest: Option[mapping.Request] =
       Option.empty
     for (trace <- journey.requests) {
       val request = trace.request
@@ -134,33 +135,27 @@ class GenericJourney extends Simulation {
     scn.inject(steps)
   }
 
-  private val journeyPath = Option(System.getProperty("journeyPath")) match {
-    case Some(v) => new File(v)
-    case _ =>
-      throw new IllegalArgumentException(
-        "The journeyPath system property is mandatory but no value is provided"
-      )
-  }
-  if (!journeyPath.isFile || !journeyPath.getName.endsWith(".json")) {
-    throw new IllegalArgumentException(
-      s"Provide path to valid json journey file using journeyPath system var, found '$journeyPath'"
-    )
-  }
+  private val journeyJson =
+    Using(fromFile(Helper.loadJsonFile("journeyPath"))) { f =>
+      f.getLines().mkString("\n")
+    }
+  private val journey = journeyJson.get.parseJson.convertTo[Journey]
 
-  private val journeyFile = Using(fromFile(journeyPath)) { f =>
-    f.getLines().mkString("\n")
-  }
-  private val journey = journeyFile.get.parseJson.convertTo[Journey]
+  // Default values are valid as long we use FTR to start Kibana server
+  private val kibanaHost =
+    Option(System.getProperty("KIBANA_HOST")).getOrElse("http://localhost:5620")
+  private val esHost =
+    Option(System.getProperty("ES_HOST")).getOrElse("http://localhost:9220")
+  private val providerType =
+    Option(System.getProperty("AUTH_PROVIDER_TYPE")).getOrElse("basic")
+  private val providerName =
+    Option(System.getProperty("AUTH_PROVIDER_NAME")).getOrElse("basic")
+  private val username =
+    Option(System.getProperty("AUTH_LOGIN")).getOrElse("elastic")
+  private val password =
+    Option(System.getProperty("AUTH_PASSWORD")).getOrElse("changeme")
 
-  // These values are valid as long we use FTR to start Kibana server
-  private val kibanaHost = "http://localhost:5620"
-  private val esHost = "http://localhost:9220"
-  private val providerType = "basic"
-  private val providerName = "basic"
-  private val username = "elastic"
-  private val password = "changeme"
-
-  val appConfig: KibanaConfiguration = new KibanaConfiguration(
+  private val config: KibanaConfiguration = new KibanaConfiguration(
     kibanaHost,
     journey.kibanaVersion,
     esHost,
@@ -169,19 +164,18 @@ class GenericJourney extends Simulation {
     providerType,
     providerName
   )
-
-  val httpHelper = new HttpHelper(appConfig)
-  var httpProtocol: HttpProtocolBuilder =
-    httpHelper.getProtocol.baseUrl(appConfig.baseUrl).disableFollowRedirect
-
-  private val steps = scenarioSteps(journey, appConfig)
+  private val httpProtocol: HttpProtocolBuilder =
+    new HttpHelper(config).getProtocol
+      .baseUrl(config.baseUrl)
+      .disableFollowRedirect
+  private val steps = scenarioSteps(journey, config)
   private val warmupScenario = scenarioForStage(
     steps,
-    s"warmup for ${journey.journeyName} ${appConfig.version}"
+    s"warmup for ${journey.journeyName} ${config.version}"
   )
   private val testScenario = scenarioForStage(
     steps,
-    s"test for ${journey.journeyName} ${appConfig.version}"
+    s"test for ${journey.journeyName} ${config.version}"
   )
 
   setUp(

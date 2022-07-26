@@ -143,7 +143,7 @@ make api calls defined in the file.
 In order to run it, pass json file using the following command:
 
 ```
-mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.branch.GenericJourney -DjourneyPath=<path_to_json_file>
+mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.generic.GenericJourney -DjourneyPath=<path_to_json_file>
 ```
 
 ## Test results
