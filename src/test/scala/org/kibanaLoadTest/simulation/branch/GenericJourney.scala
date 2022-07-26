@@ -28,16 +28,16 @@ object ApiCall {
       config: KibanaConfiguration
   ): ChainBuilder = {
     val defaultHeaders = request.headers.-(
-      "content-length",
-      "kbn-version",
-      "traceparent",
-      "authorization",
-      "cookie",
-      "x-kbn-context"
+      "Content-Length",
+      "Kbn-Version",
+      "Traceparent",
+      "Authorization",
+      "Cookie",
+      "X-Kbn-Context"
     )
     val headers =
-      if (request.headers.contains("kbn-version"))
-        defaultHeaders + ("kbn-version" -> config.version)
+      if (request.headers.contains("Kbn-Version"))
+        defaultHeaders + ("Kbn-Version" -> config.version)
       else defaultHeaders
     val httpRequestBuilder = request.method match {
       case "GET" =>
