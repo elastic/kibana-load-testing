@@ -135,6 +135,17 @@ In order to run your simulation, use the following command:
 mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.MySimulation
 ```
 
+## Running simulation from APM traces collected during single user journey run on CI
+
+We created `GenericJourney` simulation in order run scalability testing for a single user journey.
+Simulation reads json file with APM traces directly in Gatling runtime and
+make api calls defined in the file.
+In order to run it, pass json file using the following command:
+
+```
+mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.generic.GenericJourney -DjourneyPath=<path_to_json_file>
+```
+
 ## Test results
 Gatling generates html report for each simulation run, available in `<project_root>/target/gatling/<simulation>`path
 

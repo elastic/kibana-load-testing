@@ -52,6 +52,11 @@ object Helper {
     sdf.format(new Date(timestamp))
   }
 
+  def convertStringToDate(date: String): Date = {
+    val sdf = new SimpleDateFormat(dateFormat)
+    sdf.parse(date)
+  }
+
   def readResourceConfigFile(configName: String): Config = {
     val is = getClass.getClassLoader.getResourceAsStream(configName)
     if (is == null) {
@@ -304,5 +309,21 @@ object Helper {
     })
 
     (requestJsonArray, concurrentUsersJsonArray, Array(combinedStatsJson))
+  }
+
+  def loadJsonFile(systemPropName: String): File = {
+    val file = Option(System.getProperty(systemPropName)) match {
+      case Some(v) => new File(v)
+      case _ =>
+        throw new IllegalArgumentException(
+          s"The $systemPropName system property is mandatory but no value is provided"
+        )
+    }
+    if (!file.isFile || !file.getName.endsWith(".json")) {
+      throw new IllegalArgumentException(
+        s"Provide path to valid json file using '$systemPropName' system property, found '$file'"
+      )
+    }
+    file
   }
 }
