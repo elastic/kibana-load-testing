@@ -143,17 +143,12 @@ class GenericJourney extends Simulation {
 
   // Default values are valid as long we use FTR to start Kibana server
   private val kibanaHost =
-    Option(System.getProperty("KIBANA_HOST")).getOrElse("http://localhost:5620")
-  private val esHost =
-    Option(System.getProperty("ES_HOST")).getOrElse("http://localhost:9220")
-  private val providerType =
-    Option(System.getProperty("AUTH_PROVIDER_TYPE")).getOrElse("basic")
-  private val providerName =
-    Option(System.getProperty("AUTH_PROVIDER_NAME")).getOrElse("basic")
-  private val username =
-    Option(System.getProperty("AUTH_LOGIN")).getOrElse("elastic")
-  private val password =
-    Option(System.getProperty("AUTH_PASSWORD")).getOrElse("changeme")
+    System.getProperty("KIBANA_HOST", "http://localhost:5620")
+  private val esHost = System.getProperty("ES_HOST", "http://localhost:9220")
+  private val providerType = System.getProperty("AUTH_PROVIDER_TYPE", "basic")
+  private val providerName = System.getProperty("AUTH_PROVIDER_NAME", "basic")
+  private val username = System.getProperty("AUTH_LOGIN", "elastic")
+  private val password = System.getProperty("AUTH_PASSWORD", "changeme")
 
   private val config: KibanaConfiguration = new KibanaConfiguration(
     kibanaHost,
