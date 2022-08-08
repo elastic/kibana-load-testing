@@ -9,6 +9,7 @@ import io.gatling.core.structure.{
 }
 import io.gatling.http.Predef._
 import io.gatling.http.protocol.HttpProtocolBuilder
+import io.gatling.http.request.builder.HttpRequestBuilder
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.Helper
 import org.kibanaLoadTest.helpers.HttpHelper
@@ -25,10 +26,26 @@ import scala.util.Using
 
 object ApiCall {
   def execute(
-      request: mapping.Request,
+      requests: List[mapping.Request],
       config: KibanaConfiguration
   ): ChainBuilder = {
-    val defaultHeaders = request.headers.-(
+    // Workaround for https://github.com/gatling/gatling/issues/3783
+    val httpParentRequest = httpRequest(requests(0).http, config)
+    val children = requests.drop(1);
+    if (children.isEmpty) {
+      exec(httpParentRequest)
+    } else {
+      val childHttpRequests: Seq[HttpRequestBuilder] =
+        (children.map(request => httpRequest(request.http, config))).toSeq
+      exec(httpParentRequest.resources(childHttpRequests: _*))
+    }
+  }
+
+  def httpRequest(
+      request: mapping.Http,
+      config: KibanaConfiguration
+  ): HttpRequestBuilder = {
+    val excludeHeaders = List(
       "Content-Length",
       "Kbn-Version",
       "Traceparent",
@@ -36,11 +53,13 @@ object ApiCall {
       "Cookie",
       "X-Kbn-Context"
     )
+    val defaultHeaders = request.headers.--(excludeHeaders.iterator)
+
     val headers =
       if (request.headers.contains("Kbn-Version"))
         defaultHeaders + ("Kbn-Version" -> config.version)
       else defaultHeaders
-    val httpRequestBuilder = request.method match {
+    request.method match {
       case "GET" =>
         http(requestName = s"${request.method} ${request.path}")
           .get(request.path)
@@ -66,7 +85,6 @@ object ApiCall {
       case _ =>
         throw new IllegalArgumentException(s"Invalid method ${request.method}")
     }
-    exec(httpRequestBuilder)
   }
 }
 
@@ -87,20 +105,19 @@ class GenericJourney extends Simulation {
       config: KibanaConfiguration
   ): ChainBuilder = {
     var steps: ChainBuilder = exec()
-    var priorRequest: Option[mapping.Request] =
+    var priorStream: Option[mapping.RequestStream] =
       Option.empty
-    for (trace <- journey.requests) {
-      val request = trace.request
-      val priorTimestamp =
-        priorRequest.map(_.timestamp).getOrElse(request.timestamp)
+    for (stream <- journey.streams) {
+      val priorDate =
+        priorStream.map(_.endTime).getOrElse(stream.endTime)
       val pauseDuration =
-        Math.max(0L, request.timestamp.getTime - priorTimestamp.getTime)
+        Math.max(0L, stream.startTime.getTime - priorDate.getTime)
       if (pauseDuration > 0L) {
         steps = steps.pause(pauseDuration.toString, TimeUnit.MILLISECONDS)
       }
 
-      steps = steps.exec(ApiCall.execute(request, config))
-      priorRequest = Option(request)
+      steps = steps.exec(ApiCall.execute(stream.requests, config))
+      priorStream = Option(stream)
     }
     steps
   }
@@ -162,7 +179,11 @@ class GenericJourney extends Simulation {
   private val httpProtocol: HttpProtocolBuilder =
     new HttpHelper(config).getProtocol
       .baseUrl(config.baseUrl)
+      // Gatling automatically follow redirects in case of 301, 302, 303, 307 or 308 response status code
+      // Disabling this behavior since we run the defined sequence of requests
       .disableFollowRedirect
+      // Mimic real Chrome browser
+      .maxConnectionsPerHostLikeChrome
   private val steps = scenarioSteps(journey, config)
   private val warmupScenario = scenarioForStage(
     steps,
