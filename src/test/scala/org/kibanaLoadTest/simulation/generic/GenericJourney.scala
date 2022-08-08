@@ -59,26 +59,27 @@ object ApiCall {
       if (request.headers.contains("Kbn-Version"))
         defaultHeaders + ("Kbn-Version" -> config.version)
       else defaultHeaders
+    val path = request.path.replaceAll(".+?(?=\\/bundles)", "");
     request.method match {
       case "GET" =>
-        http(requestName = s"${request.method} ${request.path}")
+        http(requestName = s"${request.method} ${path}")
           .get(request.path)
           .headers(headers)
           .check(status.is(request.statusCode))
       case "POST" =>
-        http(requestName = s"${request.method} ${request.path}")
+        http(requestName = s"${request.method} ${path}")
           .post(request.path)
           .body(StringBody(request.body.get))
           .asJson
           .headers(headers)
           .check(status.is(request.statusCode))
       case "PUT" =>
-        http(requestName = s"${request.method} ${request.path}")
+        http(requestName = s"${request.method} ${path}")
           .put(request.path)
           .headers(headers)
           .check(status.is(request.statusCode))
       case "DELETE" =>
-        http(requestName = s"${request.method} ${request.path}")
+        http(requestName = s"${request.method} ${path}")
           .delete(request.path)
           .headers(headers)
           .check(status.is(request.statusCode))
