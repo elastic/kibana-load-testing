@@ -183,8 +183,6 @@ class GenericJourney extends Simulation {
       // Gatling automatically follow redirects in case of 301, 302, 303, 307 or 308 response status code
       // Disabling this behavior since we run the defined sequence of requests
       .disableFollowRedirect
-      // Mimic real Chrome browser
-      .maxConnectionsPerHostLikeChrome
   private val steps = scenarioSteps(journey, config)
   private val warmupScenario = scenarioForStage(
     steps,
