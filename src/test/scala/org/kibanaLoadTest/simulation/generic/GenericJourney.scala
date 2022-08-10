@@ -30,7 +30,7 @@ object ApiCall {
       config: KibanaConfiguration
   ): ChainBuilder = {
     // Workaround for https://github.com/gatling/gatling/issues/3783
-    val httpParentRequest = httpRequest(requests(0).http, config)
+    val httpParentRequest = httpRequest(requests.head.http, config)
     val children = requests.drop(1);
     if (children.isEmpty) {
       exec(httpParentRequest)
