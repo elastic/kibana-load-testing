@@ -1,24 +1,14 @@
 package org.kibanaLoadTest.simulation.generic.mapping
 
 import org.kibanaLoadTest.helpers.Helper
-import spray.json.{
-  DefaultJsonProtocol,
-  JsNumber,
-  JsString,
-  JsValue,
-  JsonFormat,
-  deserializationError
-}
+import spray.json.{DefaultJsonProtocol, JsNumber, JsString, JsValue, JsonFormat, RootJsonFormat, deserializationError}
 
 import java.util.Date
+import org.kibanaLoadTest.simulation.generic.mapping.HttpJsonProtocol._
 
 case class Request(
-    path: String,
-    headers: Map[String, String],
-    method: String,
-    body: Option[String],
-    statusCode: Int,
-    timestamp: Date
+    http: Http,
+    date: Date
 )
 
 object DateJsonProtocol extends DefaultJsonProtocol {
@@ -36,5 +26,5 @@ object DateJsonProtocol extends DefaultJsonProtocol {
 import org.kibanaLoadTest.simulation.generic.mapping.DateJsonProtocol._
 
 object RequestJsonProtocol extends DefaultJsonProtocol {
-  implicit val requestFormat = jsonFormat6(Request)
+  implicit val requestFormat: RootJsonFormat[Request] = jsonFormat2(Request)
 }

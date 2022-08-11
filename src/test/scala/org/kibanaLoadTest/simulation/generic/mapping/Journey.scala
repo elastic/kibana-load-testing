@@ -1,14 +1,14 @@
 package org.kibanaLoadTest.simulation.generic.mapping
 
 import ScalabilitySetupJsonProtocol._
-import TraceJsonProtocol._
+import org.kibanaLoadTest.simulation.generic.mapping.RequestStreamJsonProtocol._
 import spray.json.DefaultJsonProtocol
 
 case class Journey(
     journeyName: String,
     kibanaVersion: String,
     scalabilitySetup: ScalabilitySetup,
-    requests: List[Trace]
+    streams: List[RequestStream]
 )
 
 object JourneyJsonProtocol extends DefaultJsonProtocol {
