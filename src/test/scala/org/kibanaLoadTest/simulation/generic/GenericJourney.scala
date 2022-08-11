@@ -30,8 +30,8 @@ object ApiCall {
       config: KibanaConfiguration
   ): ChainBuilder = {
     // Workaround for https://github.com/gatling/gatling/issues/3783
-    val httpParentRequest = httpRequest(requests.head.http, config)
-    val children = requests.drop(1);
+    val parent::children = requests
+    val httpParentRequest = httpRequest(parent.http, config)
     if (children.isEmpty) {
       exec(httpParentRequest)
     } else {
@@ -117,8 +117,10 @@ class GenericJourney extends Simulation {
         steps = steps.pause(pauseDuration.toString, TimeUnit.MILLISECONDS)
       }
 
-      steps = steps.exec(ApiCall.execute(stream.requests, config))
-      priorStream = Option(stream)
+      if (!stream.requests.isEmpty) {
+        steps = steps.exec(ApiCall.execute(stream.requests, config))
+        priorStream = Option(stream)
+      }
     }
     steps
   }
