@@ -225,29 +225,6 @@ object Helper {
     UUID.randomUUID.toString
   }
 
-  def moveResponseLogToResultsDir(): Unit = {
-    val lastReportPath = getLastReportPath
-    val regexp = "[\\w|\\/\\-\\+\\.\\_\\@\\{\\}\\[\\]]+response-\\d{14}.log"
-    val targetFiles = getTargetFiles
-    targetFiles.foreach(p => println(p))
-    val responseLogsPaths =
-      targetFiles
-        .filter(p => p matches regexp)
-        .filter(p =>
-          new File(p).length() > 1000
-        ) // sometimes Gatling leaves extra empty log file
-    if (responseLogsPaths.isEmpty) {
-      throw new RuntimeException("response.log file is not found in /target")
-    }
-    Files.move(
-      Paths.get(responseLogsPaths.head),
-      Paths.get(lastReportPath + File.separator + "response.log"),
-      StandardCopyOption.REPLACE_EXISTING
-    )
-    // delete all listed response-*.log files
-    responseLogsPaths.foreach(p => Files.deleteIfExists(Paths.get(p)))
-  }
-
   def prepareDocsForIngestion(
       statsFilePath: String,
       simLogFilePath: String,
