@@ -13,7 +13,6 @@ class DataStreamIngestionTest {
 
   val simLogFilePath = new File(s"${fixturesPath()}/simulation.log.txt").getAbsolutePath
   val testRunFilePath = new File(s"${fixturesPath()}/testRun.txt").getAbsolutePath
-  val responseFilePath = new File(s"${fixturesPath()}/response.log.txt").getAbsolutePath
   val statsFilePath = new File(s"${fixturesPath()}/global_stats.json").getAbsolutePath
   val DEFAULT_INTEGRATION_TEST_DATA_STREAM = "integration-test-gatling-data"
 
@@ -23,7 +22,7 @@ class DataStreamIngestionTest {
     val client = new ESClient(config())
 
     val (requestsArray, _, _) =
-      Helper.prepareDocsForIngestion(statsFilePath, simLogFilePath, responseFilePath, testRunFilePath)
+      Helper.prepareDocsForIngestion(statsFilePath, simLogFilePath, testRunFilePath)
     logSome(1)(requestsArray)
 
     val writeData = writeAndAssert(client)(requestsArray)_
@@ -48,7 +47,7 @@ class DataStreamIngestionTest {
       .format(Helper.getSrcPath)
 
   def showFrom: () => Unit = () => {
-    val xs = simLogFilePath :: testRunFilePath :: responseFilePath :: statsFilePath :: Nil
+    val xs = simLogFilePath :: testRunFilePath :: statsFilePath :: Nil
     println(s"\n### Ingesting from:")
     xs foreach println
     println()
