@@ -12,7 +12,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <scala.version>2.13.8</scala.version>
-        <elasticsearch.client.version>7.17.3</elasticsearch.client.version>
+        <elasticsearch.client.version>7.17.5</elasticsearch.client.version>
         <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <gatling.version>3.6.1</gatling.version>
@@ -95,7 +95,7 @@
         <dependency>
             <groupId>io.circe</groupId>
             <artifactId>circe-parser_2.13</artifactId>
-            <version>0.14.1</version>
+            <version>0.14.2</version>
         </dependency>
         <dependency>
             <groupId>io.circe</groupId>
