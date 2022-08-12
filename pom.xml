@@ -23,7 +23,7 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.9.0</version>
+            <version>2.9.1</version>
         </dependency>
         <dependency>
             <artifactId>scala-library</artifactId>
@@ -95,7 +95,7 @@
         <dependency>
             <groupId>io.circe</groupId>
             <artifactId>circe-parser_2.13</artifactId>
-            <version>0.14.1</version>
+            <version>0.14.2</version>
         </dependency>
         <dependency>
             <groupId>io.circe</groupId>
