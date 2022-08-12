@@ -18,14 +18,11 @@ import org.kibanaLoadTest.helpers.{
 import org.kibanaLoadTest.ingest.Main.{
   GLOBAL_STATS_INDEX,
   SIMULATION_LOG_FILENAME,
-  RESPONSE_LOG_FILENAME,
   GLOBAL_STATS_FILENAME,
   TEST_RUN_FILENAME,
   USERS_INDEX,
   logger
 }
-
-import java.nio.file.{Files, Paths}
 
 class IngestionTest {
 
@@ -114,9 +111,6 @@ class IngestionTest {
     val testRunFilePath: String = new File(
       testPath + TEST_RUN_FILENAME
     ).getAbsolutePath
-    val responseFilePath: String = new File(
-      testPath + RESPONSE_LOG_FILENAME
-    ).getAbsolutePath
     val statsFilePath: String = new File(
       testPath + GLOBAL_STATS_FILENAME
     ).getAbsolutePath
@@ -125,7 +119,6 @@ class IngestionTest {
       Helper.prepareDocsForIngestion(
         statsFilePath,
         simLogFilePath,
-        responseFilePath,
         testRunFilePath
       )
 

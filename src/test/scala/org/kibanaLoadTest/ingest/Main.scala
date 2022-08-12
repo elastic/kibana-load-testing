@@ -50,13 +50,11 @@ object Main {
         reportFolders(i) + File.separator + TEST_RUN_FILENAME
       val simLogFilePath =
         reportFolders(i) + File.separator + SIMULATION_LOG_FILENAME
-      val responseFilePath =
-        reportFolders(i) + File.separator + RESPONSE_LOG_FILENAME
       val statsFilePath =
         reportFolders(
           i
         ) + File.separator + "js" + File.separator + GLOBAL_STATS_FILENAME
-      Array(testRunFilePath, simLogFilePath, responseFilePath, statsFilePath)
+      Array(testRunFilePath, simLogFilePath, statsFilePath)
         .foreach(path => {
           if (!Files.exists(Paths.get(path))) {
             esClient.Instance.closeConnection()
@@ -72,7 +70,6 @@ object Main {
         Helper.prepareDocsForIngestion(
           statsFilePath,
           simLogFilePath,
-          responseFilePath,
           testRunFilePath
         )
 

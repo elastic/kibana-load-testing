@@ -15,8 +15,8 @@ import io.circe.parser.parse
 import org.slf4j.{Logger, LoggerFactory}
 import spray.json.JsonParser
 import spray.json.JsonParser.ParsingException
-import scala.collection.parallel.CollectionConverters.MutableIterableIsParallelizable
 
+import scala.collection.parallel.CollectionConverters.{ArrayIsParallelizable}
 import scala.jdk.CollectionConverters._
 import scala.io.Source
 
@@ -251,7 +251,6 @@ object Helper {
   def prepareDocsForIngestion(
       statsFilePath: String,
       simLogFilePath: String,
-      responseFilePath: String,
       testRunFilePath: String
   ): (Array[Json], Array[Json], Array[Json]) = {
     val statsJsonString =
@@ -259,26 +258,8 @@ object Helper {
         Source.fromFile(statsFilePath).getLines().mkString
       )
     val statsJson = parse(statsJsonString).getOrElse(Json.Null)
-    val (requestsTimeline, concurrentUsers, usersStats) =
+    val (requests, concurrentUsers, usersStats) =
       LogParser.parseSimulationLog(simLogFilePath)
-    val responses = ResponseParser.getRequests(responseFilePath)
-
-    if (responses.length == requestsTimeline.length) {
-      val responseCount = responses.length
-      var j = 0
-      while (j < responseCount) {
-        responses(j) = responses(j).copy(
-          requestSendStartTime = requestsTimeline(j).requestSendStartTime,
-          responseReceiveEndTime = requestsTimeline(j).responseReceiveEndTime,
-          requestTime = requestsTimeline(j).requestTime
-        )
-        j += 1
-      }
-    } else {
-      logger.error(
-        s"Response count does not match timelineCount: '${responses.length}' vs '${requestsTimeline.length}'"
-      )
-    }
 
     val metaJson = Helper.getMetaJson(testRunFilePath, simLogFilePath)
     val usersStatsJsonString: String = s"""
@@ -291,14 +272,14 @@ object Helper {
     val combinedStatsJson = statsJson
       .deepMerge(metaJson)
       .deepMerge(parse(usersStatsJsonString).getOrElse(Json.Null))
-    val requestJsonArray = responses.par
-      .map(response => {
+    val requestJsonArray = requests.par
+      .map(request => {
         val gson = new Gson
-        val responseJson = parse(gson.toJson(response)).getOrElse(Json.Null)
-        if (responseJson == Json.Null) {
-          logger.error(s"Failed to parse json: ${response.toString}")
+        val requestJson = parse(gson.toJson(request)).getOrElse(Json.Null)
+        if (requestJson == Json.Null) {
+          logger.error(s"Failed to parse json: ${request.toString}")
         }
-        responseJson.deepMerge(metaJson)
+        requestJson.deepMerge(metaJson)
       })
       .toArray
 
