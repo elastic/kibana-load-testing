@@ -20,18 +20,18 @@
         </encoder>
     </appender>
 
-    <appender name="FILE_RESP" class="ch.qos.logback.core.FileAppender">
-        <file>target/response-${date}.log</file>
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger{15} - %msg%n%rEx</pattern>
-        </encoder>
-    </appender>
+<!--    <appender name="FILE_RESP" class="ch.qos.logback.core.FileAppender">-->
+<!--        <file>target/response-${date}.log</file>-->
+<!--        <encoder>-->
+<!--            <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger{15} - %msg%n%rEx</pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
 
     <!-- uncomment and set to DEBUG to log all failing HTTP requests -->
     <!-- uncomment and set to TRACE to log all HTTP requests -->
-    <logger name="io.gatling.http.engine.response" level="TRACE" additivity="false">
-        <appender-ref ref="FILE_RESP"/>
-    </logger>
+<!--    <logger name="io.gatling.http.engine.response" level="TRACE" additivity="false">-->
+<!--        <appender-ref ref="FILE_RESP"/>-->
+<!--    </logger>-->
 
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
