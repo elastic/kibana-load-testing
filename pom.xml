@@ -95,7 +95,7 @@
         <dependency>
             <groupId>io.circe</groupId>
             <artifactId>circe-parser_2.13</artifactId>
-            <version>0.14.1</version>
+            <version>0.14.2</version>
         </dependency>
         <dependency>
             <groupId>io.circe</groupId>
@@ -105,7 +105,7 @@
         <dependency>
             <groupId>io.circe</groupId>
             <artifactId>circe-generic_2.13</artifactId>
-            <version>0.14.1</version>
+            <version>0.14.2</version>
         </dependency>
 
         <dependency>
