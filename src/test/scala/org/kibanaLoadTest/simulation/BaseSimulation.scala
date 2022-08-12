@@ -4,7 +4,6 @@ import io.gatling.core.Predef._
 import io.gatling.core.structure.ChainBuilder
 import io.gatling.http.protocol.HttpProtocolBuilder
 import org.kibanaLoadTest.KibanaConfiguration
-import org.kibanaLoadTest.helpers.Helper.moveResponseLogToResultsDir
 import org.kibanaLoadTest.helpers.{
   CloudHttpClient,
   Helper,
