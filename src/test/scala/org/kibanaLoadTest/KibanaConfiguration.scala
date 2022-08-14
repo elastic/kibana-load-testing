@@ -43,7 +43,7 @@ class KibanaConfiguration {
       password: String,
       providerType: String,
       providerName: String
-  ) {
+  ) = {
     this()
     // read required values
     this.baseUrl = Helper.validateUrl(

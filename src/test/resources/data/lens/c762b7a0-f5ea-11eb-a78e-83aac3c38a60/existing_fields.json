@@ -15,7 +15,7 @@
       ]
     }
   },
-  "fromDate":"${startTime}",
-  "toDate":"${endTime}",
+  "fromDate":"#{startTime}",
+  "toDate":"#{endTime}",
   "timeFieldName":"order_date"
 }

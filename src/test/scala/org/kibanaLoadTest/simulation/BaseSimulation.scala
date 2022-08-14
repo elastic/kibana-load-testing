@@ -78,8 +78,8 @@ class BaseSimulation extends Simulation {
   var defaultTextHeaders: Map[String, String] = httpHelper.defaultTextHeaders
 
   if (appConfig.isSecurityEnabled) {
-    defaultHeaders += ("Cookie" -> "${Cookie}")
-    defaultTextHeaders += ("Cookie" -> "${Cookie}")
+    defaultHeaders += ("Cookie" -> "#{Cookie}")
+    defaultTextHeaders += ("Cookie" -> "#{Cookie}")
   }
 
   var loginStep: ChainBuilder = Login

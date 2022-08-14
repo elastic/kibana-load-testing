@@ -45,8 +45,8 @@
                     "range": {
                       "order_date": {
                         "format": "strict_date_optional_time",
-                        "gte": "${startTime}",
-                        "lte": "${endTime}"
+                        "gte": "#{startTime}",
+                        "lte": "#{endTime}"
                       }
                     }
                   }
@@ -61,7 +61,7 @@
         }
       },
       "options": {
-        "sessionId": "${sessionId}",
+        "sessionId": "#{sessionId}",
         "isRestore": false,
         "legacyHitsTotal": false,
         "strategy": "ese",
