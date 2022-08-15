@@ -3,6 +3,7 @@ package org.kibanaLoadTest.helpers
 import io.circe.Json
 import io.circe.parser.parse
 import io.gatling.core.Predef._
+import io.gatling.core.filter.DenyList
 import io.gatling.http.Predef._
 import io.gatling.http.protocol.HttpProtocolBuilder
 import org.apache.http.auth.{AuthScope, UsernamePasswordCredentials}
@@ -220,21 +221,23 @@ class HttpHelper(appConfig: KibanaConfiguration) {
     http
       .baseUrl(appConfig.baseUrl)
       .inferHtmlResources(
-        BlackList(
-          """.*\.js""",
-          """.*\.svg""",
-          """.*\.css""",
-          """.*\.gif""",
-          """.*\.jpeg""",
-          """.*\.jpg""",
-          """.*\.ico""",
-          """.*\.woff""",
-          """.*\.woff2""",
-          """.*\.(t|o)tf""",
-          """.*\.png""",
-          """.*detectportal\.firefox\.com.*"""
-        ),
-        WhiteList()
+        allow = AllowList(),
+        deny = new DenyList(
+          Seq(
+            """.*\.js""",
+            """.*\.svg""",
+            """.*\.css""",
+            """.*\.gif""",
+            """.*\.jpeg""",
+            """.*\.jpg""",
+            """.*\.ico""",
+            """.*\.woff""",
+            """.*\.woff2""",
+            """.*\.(t|o)tf""",
+            """.*\.png""",
+            """.*detectportal\.firefox\.com.*"""
+          )
+        )
       )
       .acceptHeader(
         "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"

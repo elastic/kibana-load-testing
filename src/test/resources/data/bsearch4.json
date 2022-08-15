@@ -55,8 +55,8 @@
                   {
                     "range":{
                       "order_date":{
-                        "gte":"${startTime}",
-                        "lte":"${endTime}",
+                        "gte":"#{startTime}",
+                        "lte":"#{endTime}",
                         "format":"strict_date_optional_time"
                       }
                     }

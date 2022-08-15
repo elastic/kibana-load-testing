@@ -1,8 +1,8 @@
 {
   "timerange":{
     "timezone":"Europe/Berlin",
-    "min":"${startTime}",
-    "max":"${endTime}"
+    "min":"#{startTime}",
+    "max":"#{endTime}"
   },
   "query":[
 
@@ -67,7 +67,7 @@
       "use_kibana_indexes":true,
       "hide_last_value_indicator":true,
       "index_pattern":{
-        "id":"${indexPatternId}"
+        "id":"#{indexPatternId}"
       },
       "tooltip_mode":"show_all",
       "drop_last_bucket":0

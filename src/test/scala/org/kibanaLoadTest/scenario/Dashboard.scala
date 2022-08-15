@@ -78,7 +78,7 @@ object Dashboard {
           http("query dashboard panels")
             .post("/api/saved_objects/_bulk_get")
             .body(
-              StringBody("[{\"id\":\"${dashboardId}\",\"type\":\"dashboard\"}]")
+              StringBody("[{\"id\":\"#{dashboardId}\",\"type\":\"dashboard\"}]")
             )
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")
@@ -109,7 +109,7 @@ object Dashboard {
           )).exec(
           http("query visualizations")
             .post("/api/saved_objects/_bulk_resolve")
-            .body(StringBody("[${vizListString}]"))
+            .body(StringBody("[#{vizListString}]"))
             .asJson
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")
@@ -117,7 +117,7 @@ object Dashboard {
         ).exec(
           http("bulk_get: search")
             .post("/api/saved_objects/_bulk_get")
-            .body(StringBody("[${searchString}]"))
+            .body(StringBody("[#{searchString}]"))
             .asJson
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")
@@ -125,7 +125,7 @@ object Dashboard {
         ).exec(
           http("bulk_resolve: map")
             .post("/api/saved_objects/_bulk_resolve")
-            .body(StringBody("[${mapString}]"))
+            .body(StringBody("[#{mapString}]"))
             .asJson
             .headers(headers)
             .header("Referer", baseUrl + "/app/dashboards")
@@ -133,7 +133,7 @@ object Dashboard {
         ).exec(
           http("bulk_resolve: lens")
           .post("/api/saved_objects/_bulk_resolve")
-          .body(StringBody("[${lensString}]"))
+          .body(StringBody("[#{lensString}]"))
           .asJson
           .headers(headers)
           .header("Referer", baseUrl + "/app/dashboards")
@@ -143,7 +143,7 @@ object Dashboard {
             .post("/api/saved_objects/_bulk_resolve")
             .body(
               StringBody(
-                "[{\"id\":\"${indexPatternId}\",\"type\":\"index-pattern\"}]"
+                "[{\"id\":\"#{indexPatternId}\",\"type\":\"index-pattern\"}]"
               )
             )
             .headers(headers)
@@ -196,10 +196,10 @@ object Dashboard {
               Helper.loadJsonString(s"data/dashboard/bsearch${session("index").as[Int]}.json")
             )
           }).pause(2).exec(
-            http("query bsearch ${index}")
+            http("query bsearch #{index}")
               .post("/internal/bsearch")
               .queryParam("compress", "true")
-              .body(StringBody("${payloadString}"))
+              .body(StringBody("#{payloadString}"))
               .asJson
               .headers(headers)
               .header("Referer", baseUrl + "/app/dashboards")

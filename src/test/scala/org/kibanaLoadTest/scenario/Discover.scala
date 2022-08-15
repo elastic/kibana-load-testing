@@ -101,7 +101,7 @@ object Discover {
           .post("/api/saved_objects/_bulk_resolve")
           .body(
             StringBody(
-              "[{\"id\":\"${indexPatternId}\",\"type\":\"index-pattern\"}]"
+              "[{\"id\":\"#{indexPatternId}\",\"type\":\"index-pattern\"}]"
             )
           )
           .headers(defaultHeaders)

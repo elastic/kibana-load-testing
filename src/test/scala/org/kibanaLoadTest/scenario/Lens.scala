@@ -26,7 +26,7 @@ object Lens {
           .headers(headers)
           .header("Referer", baseUrl + "/app/lens")
           .body(
-            StringBody("[{\"id\":\"${vizId}\",\"type\":\"lens\"}]")
+            StringBody("[{\"id\":\"#{vizId}\",\"type\":\"lens\"}]")
           )
           .check(status.is(200))
           .check(
@@ -44,7 +44,7 @@ object Lens {
           .header("Referer", baseUrl + "/app/lens")
           .body(
             StringBody(
-              "[{\"id\":\"${indexPatternId}\",\"type\":\"index-pattern\"}]"
+              "[{\"id\":\"#{indexPatternId}\",\"type\":\"index-pattern\"}]"
             )
           )
           .check(status.is(200))
@@ -75,7 +75,7 @@ object Lens {
       .pause(1)
       .exec(
         http("lens/existing_fields")
-          .post("/api/lens/existing_fields/${indexPatternId}")
+          .post("/api/lens/existing_fields/#{indexPatternId}")
           .headers(headers)
           .header("Referer", baseUrl + "/app/lens")
           .body(ElFileBody(s"data/lens/$id/existing_fields.json"))

@@ -27,7 +27,7 @@ object Visualize {
           .headers(headers)
           .header("Referer", baseUrl + "/app/visualize")
           .body(
-            StringBody("[{\"id\":\"${vizId}\",\"type\":\"visualization\"}]")
+            StringBody("[{\"id\":\"#{vizId}\",\"type\":\"visualization\"}]")
           )
           .check(status.is(200))
           .check(
@@ -43,7 +43,7 @@ object Visualize {
           .header("Referer", baseUrl + "/app/visualize")
           .body(
             StringBody(
-              "[{\"id\":\"${indexPatternId}\",\"type\":\"index-pattern\"}]"
+              "[{\"id\":\"#{indexPatternId}\",\"type\":\"index-pattern\"}]"
             )
           )
           .check(status.is(200))

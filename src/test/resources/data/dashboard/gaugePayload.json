@@ -1,8 +1,8 @@
 {
   "timerange":{
     "timezone":"Africa/Abidjan",
-    "min":"${startTime}",
-    "max":"${endTime}"
+    "min":"#{startTime}",
+    "max":"#{endTime}"
   },
   "query":[
     {
@@ -86,7 +86,7 @@
       "drop_last_bucket":0,
       "isModelInvalid":false,
       "index_pattern":{
-        "id":"${indexPatternId}"
+        "id":"#{indexPatternId}"
       }
     }
   ],
@@ -94,7 +94,7 @@
 
   },
   "searchSession":{
-    "sessionId":"${sessionId}",
+    "sessionId":"#{sessionId}",
     "isRestore":false,
     "isStored":false
   }

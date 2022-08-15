@@ -43,7 +43,7 @@ object Canvas {
       )
       .exec(
         http("canvas: workpad/resolve")
-          .get("/api/canvas/workpad/resolve/${workpadId}")
+          .get("/api/canvas/workpad/resolve/#{workpadId}")
           .headers(headersWithXsrf)
           .check(status.is(200))
       )
