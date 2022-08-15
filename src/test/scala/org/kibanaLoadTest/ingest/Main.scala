@@ -24,6 +24,9 @@ object Main {
     val hostValue = System.getenv("HOST_FROM_VAULT")
     val host =
       if (hostValue.startsWith("http")) hostValue else "https://" + hostValue
+//    val hostname::port = hostValue.split(":") match {
+//      case Array(hostname, port) => (hostname.toString, port.toInt)
+//    }
     val username = System.getenv("USER_FROM_VAULT")
     val password = System.getenv("PASS_FROM_VAULT")
 
@@ -40,7 +43,7 @@ object Main {
         .withValue("username", ConfigValueFactory.fromAnyRef(username))
         .withValue("password", ConfigValueFactory.fromAnyRef(password))
     )
-    val esClient = new ESClient(esConfig)
+    val esClient = ESClient.getInstance(hostValue, username, password)
 
     logger.info(s"Found ${reportFolders.length} Gatling reports")
     var i = 0
@@ -57,7 +60,7 @@ object Main {
       Array(testRunFilePath, simLogFilePath, statsFilePath)
         .foreach(path => {
           if (!Files.exists(Paths.get(path))) {
-            esClient.Instance.closeConnection()
+            esClient.closeConnection()
             throw new RuntimeException(
               s"Required file '$path' is not found"
             )
@@ -73,13 +76,13 @@ object Main {
           testRunFilePath
         )
 
-      esClient.Instance.bulk(GLOBAL_STATS_INDEX, combinedStatsArray)
-      esClient.Instance.bulk(DATA_INDEX, requestsArray)
-      esClient.Instance.bulk(USERS_INDEX, concurrentUsersArray)
+      esClient.bulk(GLOBAL_STATS_INDEX, combinedStatsArray, 100)
+      esClient.bulk(DATA_INDEX, requestsArray, 100)
+      esClient.bulk(USERS_INDEX, concurrentUsersArray, 100)
 
       i += 1
     }
 
-    esClient.Instance.closeConnection()
+    esClient.closeConnection()
   }
 }

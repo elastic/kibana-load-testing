@@ -86,12 +86,12 @@ class IngestionTest {
   }
 
   @Test
-  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
+  //@EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
   def ingestReportTest(): Unit = {
     val DATA_INDEX = "gatling-data"
-    val host = System.getenv("HOST_FROM_VAULT")
-    val username = System.getenv("USER_FROM_VAULT")
-    val password = System.getenv("PASS_FROM_VAULT")
+    val host = "http://locahost:9200"//System.getenv("HOST_FROM_VAULT")
+    val username = "elastic"//System.getenv("USER_FROM_VAULT")
+    val password = "changeme"//System.getenv("PASS_FROM_VAULT")
     val esConfig = new ESConfiguration(
       ConfigFactory.load
         .withValue("host", ConfigValueFactory.fromAnyRef(host))
@@ -99,7 +99,7 @@ class IngestionTest {
         .withValue("password", ConfigValueFactory.fromAnyRef(password))
     )
 
-    val esClient = new ESClient(esConfig)
+    val esClient = ESClient.getInstance(host, username, password)
     val reportFolders = getReportFolderPaths
 
     logger.info(s"Found ${reportFolders.length} Gatling reports")
@@ -122,11 +122,11 @@ class IngestionTest {
         testRunFilePath
       )
 
-    esClient.Instance.bulk(GLOBAL_STATS_INDEX, combinedStatsArray)
-    esClient.Instance.bulk(DATA_INDEX, requestsArray)
-    esClient.Instance.bulk(USERS_INDEX, concurrentUsersArray)
+    esClient.bulk(GLOBAL_STATS_INDEX, combinedStatsArray, 100)
+    esClient.bulk(DATA_INDEX, requestsArray, 100)
+    esClient.bulk(USERS_INDEX, concurrentUsersArray, 100)
 
-    esClient.Instance.closeConnection()
+    esClient.closeConnection()
   }
 
   @Test
@@ -162,7 +162,7 @@ class IngestionTest {
   }
 
   @Test
-  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
+  //@EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
   def ESArchiverIngestTest(): Unit = {
     val mappingsFilePath =
       getClass.getResource("/test/es_archive/mappings.json").getPath
@@ -171,30 +171,31 @@ class IngestionTest {
     val indexArray = ESArchiver.readDataFromFile(mappingsFilePath)
     val docsArray = ESArchiver.readDataFromFile(dataFilePath)
 
-    val host = System.getenv("HOST_FROM_VAULT")
-    val username = System.getenv("USER_FROM_VAULT")
-    val password = System.getenv("PASS_FROM_VAULT")
+    val host = "http://locahost:9200"//System.getenv("HOST_FROM_VAULT")
+    val username = "elastic"//System.getenv("USER_FROM_VAULT")
+    val password = "changeme"//System.getenv("PASS_FROM_VAULT")
 
-    val esConfig = new ESConfiguration(
-      ConfigFactory.load
-        .withValue("host", ConfigValueFactory.fromAnyRef(host))
-        .withValue("username", ConfigValueFactory.fromAnyRef(username))
-        .withValue("password", ConfigValueFactory.fromAnyRef(password))
-    )
+//    val esConfig = new ESConfiguration(
+//      ConfigFactory.load
+//        .withValue("host", ConfigValueFactory.fromAnyRef(host))
+//        .withValue("username", ConfigValueFactory.fromAnyRef(username))
+//        .withValue("password", ConfigValueFactory.fromAnyRef(password))
+//    )
 
-    val client = new ESClient(esConfig)
+    val client = ESClient.getInstance(host, username, password)
+
 
     indexArray.foreach(item => {
-      client.Instance.createIndex(item.index + "6", item.source)
+      client.createIndex(item.index + "6", item.source)
       println(s"${item.index} index was created")
     })
 
-    client.Instance.bulk(
+    client.bulk(
       indexArray(0).index,
       docsArray.map(doc => doc.source).toArray[Json],
-      chunkSize = 1000
+      1000
     )
 
-    client.Instance.closeConnection()
+    client.closeConnection()
   }
 }
