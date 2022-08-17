@@ -15,8 +15,8 @@
         <elasticsearch.client.version>7.17.3</elasticsearch.client.version>
         <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <gatling.version>3.7.1</gatling.version>
-        <gatling-maven-plugin.version>3.1.2</gatling-maven-plugin.version>
+        <gatling.version>3.8.3</gatling.version>
+        <gatling-maven-plugin.version>4.2.5</gatling-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -155,20 +155,6 @@
                                 <arg>-language:postfixOps</arg>
                             </args>
                         </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- so maven can build a package for FrontLine -->
-            <plugin>
-                <groupId>io.gatling.frontline</groupId>
-                <artifactId>frontline-maven-plugin</artifactId>
-                <version>1.2.3</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>package</goal>
-                        </goals>
                     </execution>
                 </executions>
             </plugin>
