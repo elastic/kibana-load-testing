@@ -178,7 +178,7 @@ class GenericJourney extends Simulation {
     password,
     providerType,
     providerName
-  )
+  ).syncWithInstance()
   private val httpProtocol: HttpProtocolBuilder =
     new HttpHelper(config).getProtocol
       .baseUrl(config.baseUrl)
