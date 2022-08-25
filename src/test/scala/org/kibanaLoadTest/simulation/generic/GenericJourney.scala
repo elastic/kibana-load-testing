@@ -57,7 +57,7 @@ object ApiCall {
 
     val headers =
       if (request.headers.contains("Kbn-Version"))
-        defaultHeaders + ("Kbn-Version" -> config.version)
+        defaultHeaders + ("Kbn-Version" -> config.buildVersion)
       else defaultHeaders
     val path = request.path.replaceAll(".+?(?=\\/bundles)", "");
     request.method match {
@@ -172,7 +172,6 @@ class GenericJourney extends Simulation {
 
   private val config: KibanaConfiguration = new KibanaConfiguration(
     kibanaHost,
-    journey.kibanaVersion,
     esHost,
     username,
     password,

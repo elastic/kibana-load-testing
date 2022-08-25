@@ -31,26 +31,10 @@ class KibanaAPITest {
   }
 
   @Test
-  def statusCheckTest(): Unit = {
-    val statusResponse = helper.getStatus
-    val buildNumber = statusResponse
-      .extract[String](Symbol("version") / Symbol("number"))
-    assertEquals(config.version, buildNumber)
-  }
-
-  @Test
   def importSavedObjectsTest(): Unit = {
     val importResponse = helper.importSavedObjects(soPath)
     val isSuccess = importResponse
       .extract[Boolean](Symbol("success"))
     assertEquals(true, isSuccess)
-  }
-
-  @Test
-  def getESDataTest(): Unit = {
-    val responseJson = helper.getElasticSearchData
-    val tagline =
-      responseJson.hcursor.downField("tagline").as[String].getOrElse("")
-    assertEquals("You Know, for Search", tagline)
   }
 }

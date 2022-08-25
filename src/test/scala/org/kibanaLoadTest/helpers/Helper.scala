@@ -4,7 +4,7 @@ import com.google.gson.Gson
 
 import java.io.{File, PrintWriter}
 import java.net.{MalformedURLException, URL}
-import java.nio.file.{Files, Paths, StandardCopyOption}
+import java.nio.file.Paths
 import java.text.SimpleDateFormat
 import java.time.{Instant, ZoneId}
 import java.time.format.DateTimeFormatter
