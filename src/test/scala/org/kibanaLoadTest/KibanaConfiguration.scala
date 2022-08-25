@@ -205,10 +205,9 @@ class KibanaConfiguration {
   }
 
   def print(): Unit = {
-    logger.info(s"Base URL = ${this.baseUrl}")
+    logger.info(s"Kibana baseUrl = ${this.baseUrl}")
     logger.info(s"Kibana version = ${this.buildVersion}")
     logger.info(s"Security Enabled = ${this.isSecurityEnabled}")
-    logger.info(s"Auth payload = ${this.loginPayload}")
   }
 }
 
@@ -225,7 +224,7 @@ object HttpClient {
       val response = httpClient.execute(request)
       response.getStatusLine.getStatusCode match {
         case HttpStatus.SC_OK =>
-          EntityUtils.toString(response.getEntity, "UTF-8")
+          return Some(EntityUtils.toString(response.getEntity, "UTF-8"))
         case _ => return None
       }
     } catch {
@@ -258,7 +257,7 @@ object HttpClient {
       val response = httpClient.execute(request)
       response.getStatusLine.getStatusCode match {
         case HttpStatus.SC_OK =>
-          EntityUtils.toString(response.getEntity, "UTF-8")
+          return Some(EntityUtils.toString(response.getEntity, "UTF-8"))
         case _ => return None
       }
     } catch {
