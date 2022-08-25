@@ -57,29 +57,24 @@ class KibanaConfiguration {
       esHost,
       s"'esHost' should be a valid Elasticsearch URL"
     )
-    HttpClient.getKibanaStatus(kibanaHost) match {
-      case Some(value) =>
-        this.buildHash =
-          value.extract[String](Symbol("version") / Symbol("build_hash"))
-        this.buildNumber =
-          value.extract[Long](Symbol("version") / Symbol("build_number"))
-        this.isSnapshotBuild = value
-          .extract[Boolean](Symbol("version") / Symbol("build_snapshot"))
-        this.version =
-          value.extract[String](Symbol("version") / Symbol("number"))
-        this.buildVersion =
-          if (this.isSnapshotBuild) s"${this.version}-SNAPSHOT"
-          else this.version
-        this.username = username
-        this.password = password
-        this.providerType = providerType
-        this.providerName = providerName
-        this.getElasticSearchInfo()
-      case None =>
-        throw new RuntimeException(
-          "Failed to parse response with Kibana status"
-        )
-    }
+    this.readKibanaBuildInfo(this.baseUrl)
+    this.isSecurityEnabled = true
+    this.username = username
+    this.password = password
+    this.providerType = providerType
+    this.providerName = providerName
+
+    val isAbove79x = new Version(this.buildVersion).isAbove79x
+    this.setLoginPayloadAndStatusCode(
+      isAbove79x,
+      this.baseUrl,
+      this.username,
+      this.password,
+      this.providerType,
+      this.providerName
+    )
+
+    this.readElasticsearchBuildInfo(this.esUrl, this.username, this.password)
   }
 
   def this(config: Config) = {
@@ -102,7 +97,6 @@ class KibanaConfiguration {
           "'auth.username' and 'auth.password' should be valid credentials"
       )
     }
-    // read required values
     this.baseUrl = Helper.validateUrl(
       config.getString("host.kibana"),
       s"'host.kibana' should be a valid Kibana URL"
@@ -111,18 +105,9 @@ class KibanaConfiguration {
       config.getString("host.es"),
       s"'host.es' should be a valid ES URL"
     )
-    this.buildVersion = config.getString("host.version")
-    this.version = new Version(this.buildVersion).version
-    this.isSecurityEnabled = config.getBoolean("security.on")
-    this.username = config.getString("auth.username")
-    this.password = config.getString("auth.password")
 
-    this.setLoginPayloadAndStatusCode(config)
-    this.setDeploymentInfo(config)
-    this.getElasticSearchInfo()
-  }
+    this.readKibanaBuildInfo(this.baseUrl)
 
-  def setLoginPayloadAndStatusCode(config: Config): Unit = {
     val isAbove79x = new Version(this.buildVersion).isAbove79x
     if (
       isAbove79x && (!config.hasPathOrNull("auth.providerType") || !config
@@ -134,13 +119,35 @@ class KibanaConfiguration {
       )
     }
 
+    this.isSecurityEnabled = config.getBoolean("security.on")
+    this.username = config.getString("auth.username")
+    this.password = config.getString("auth.password")
+    this.providerType = config.getString("auth.providerType")
+    this.providerName = config.getString("auth.providerName")
+    this.setLoginPayloadAndStatusCode(
+      isAbove79x,
+      this.baseUrl,
+      this.username,
+      this.password,
+      this.providerType,
+      this.providerName
+    )
+    this.setDeploymentInfo(config)
+    this.readElasticsearchBuildInfo(this.esUrl, this.username, this.password)
+  }
+
+  def setLoginPayloadAndStatusCode(
+      isAbove79x: Boolean,
+      baseUrl: String,
+      username: String,
+      password: String,
+      providerType: String,
+      providerName: String
+  ): Unit = {
     this.loginPayload =
-      if (isAbove79x) s"""{"providerType":"${config.getString(
-        "auth.providerType"
-      )}","providerName":"${config.getString(
-        "auth.providerName"
-      )}","currentURL":"${this.baseUrl}/login","params":{"username":"${this.username}","password":"${this.password}"}}"""
-      else s"""{"username":"${this.username}","password":"${this.password}"}"""
+      if (isAbove79x)
+        s"""{"providerType":"$providerType","providerName":"$providerName","currentURL":"$baseUrl/login","params":{"username":"$username","password":"$password"}}"""
+      else s"""{"username":"$username","password":"$password"}"""
     this.loginStatusCode = if (isAbove79x) 200 else 204
   }
 
@@ -154,12 +161,33 @@ class KibanaConfiguration {
       else true
   }
 
-  def getElasticSearchInfo(): Unit = {
-    HttpClient.getElasticSearchInfo(
-      this.esUrl,
-      this.username,
-      this.password
-    ) match {
+  def readKibanaBuildInfo(kibanaHost: String): Unit = {
+    HttpClient.getKibanaStatus(kibanaHost) match {
+      case Some(value) =>
+        this.buildHash =
+          value.extract[String](Symbol("version") / Symbol("build_hash"))
+        this.buildNumber =
+          value.extract[Long](Symbol("version") / Symbol("build_number"))
+        this.isSnapshotBuild = value
+          .extract[Boolean](Symbol("version") / Symbol("build_snapshot"))
+        this.version =
+          value.extract[String](Symbol("version") / Symbol("number"))
+        this.buildVersion =
+          if (this.isSnapshotBuild) s"${this.version}-SNAPSHOT"
+          else this.version
+      case None =>
+        throw new RuntimeException(
+          "Failed to parse response with Kibana status"
+        )
+    }
+  }
+
+  def readElasticsearchBuildInfo(
+      esUrl: String,
+      username: String,
+      password: String
+  ): Unit = {
+    HttpClient.getElasticSearchInfo(esUrl, username, password) match {
       case Some(value) =>
         this.esVersion =
           value.extract[String](Symbol("version") / Symbol("number"))
