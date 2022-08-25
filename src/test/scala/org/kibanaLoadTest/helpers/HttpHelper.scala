@@ -26,7 +26,7 @@ import org.slf4j.{Logger, LoggerFactory}
 
 import java.io.File
 
-class HttpHelper(appConfig: KibanaConfiguration) {
+class HttpHelper(config: KibanaConfiguration) {
   val loginHeaders = Map(
     "Content-Type" -> "application/json",
     "kbn-xsrf" -> "xsrf"
@@ -34,16 +34,16 @@ class HttpHelper(appConfig: KibanaConfiguration) {
   val logger: Logger = LoggerFactory.getLogger("HttpHelper")
 
   def loginIfNeeded(httpClient: CloseableHttpClient): HttpHelper = {
-    if (appConfig.isSecurityEnabled) {
+    if (config.isSecurityEnabled) {
       var statusCode = 0
       var response = ""
-      val url = appConfig.baseUrl + "/internal/security/login"
+      val url = config.baseUrl + "/internal/security/login"
       val loginRequest = new HttpPost(url)
       loginHeaders foreach {
         case (key, value) => loginRequest.addHeader(key, value)
       }
       try {
-        loginRequest.setEntity(new StringEntity(appConfig.loginPayload))
+        loginRequest.setEntity(new StringEntity(config.loginPayload))
         val loginResponse = httpClient.execute(loginRequest)
         statusCode = loginResponse.getStatusLine.getStatusCode
         response = EntityUtils.toString(loginResponse.getEntity, "UTF-8")
@@ -51,12 +51,12 @@ class HttpHelper(appConfig: KibanaConfiguration) {
         case e: Throwable =>
           logger.error(
             s"Login to Kibana failed:\nPOST $url\nHeaders: ${loginHeaders
-              .toString()}\nBody: ${appConfig.loginPayload}\n${e.getStackTrace}"
+              .toString()}\nBody: ${config.loginPayload}\n${e.getStackTrace}"
           )
           throw e
       }
 
-      if (statusCode != appConfig.loginStatusCode) {
+      if (statusCode != config.loginStatusCode) {
         throw new RuntimeException(
           s"Login to Kibana failed with code ${statusCode}: $response"
         )
@@ -73,10 +73,10 @@ class HttpHelper(appConfig: KibanaConfiguration) {
     this.loginIfNeeded(httpClient)
     try {
       val sampleDataRequest = new HttpDelete(
-        appConfig.baseUrl + s"/api/sample_data/$data"
+        config.baseUrl + s"/api/sample_data/$data"
       )
       sampleDataRequest.addHeader("Connection", "keep-alive")
-      sampleDataRequest.addHeader("kbn-version", appConfig.buildVersion)
+      sampleDataRequest.addHeader("kbn-version", config.buildVersion)
 
       val sampleDataResponse = httpClient.execute(sampleDataRequest)
       statusCode = sampleDataResponse.getStatusLine.getStatusCode
@@ -102,10 +102,10 @@ class HttpHelper(appConfig: KibanaConfiguration) {
     this.loginIfNeeded(httpClient)
     try {
       val sampleDataRequest = new HttpPost(
-        appConfig.baseUrl + ("/api/sample_data/" + data)
+        config.baseUrl + ("/api/sample_data/" + data)
       )
       sampleDataRequest.addHeader("Connection", "keep-alive")
-      sampleDataRequest.addHeader("kbn-version", appConfig.buildVersion)
+      sampleDataRequest.addHeader("kbn-version", config.buildVersion)
 
       val sampleDataResponse = httpClient.execute(sampleDataRequest)
       statusCode = sampleDataResponse.getStatusLine.getStatusCode
@@ -130,10 +130,10 @@ class HttpHelper(appConfig: KibanaConfiguration) {
     val httpClient = HttpClientBuilder.create.build
     this.loginIfNeeded(httpClient)
     val importRequest = new HttpPost(
-      appConfig.baseUrl + "/api/saved_objects/_import?createNewCopies=true"
+      config.baseUrl + "/api/saved_objects/_import?createNewCopies=true"
     )
     importRequest.addHeader("Connection", "keep-alive")
-    importRequest.addHeader("kbn-version", appConfig.buildVersion)
+    importRequest.addHeader("kbn-version", config.buildVersion)
     val builder = MultipartEntityBuilder.create
     builder.addBinaryBody("file", file)
     val multipart = builder.build()
@@ -154,59 +154,13 @@ class HttpHelper(appConfig: KibanaConfiguration) {
     responseBody
   }
 
-  def getStatus: String = {
-    logger.info("Kibana status call")
-    var responseBody = ""
-    val httpClient = HttpClientBuilder.create.build
-    this.loginIfNeeded(httpClient)
-    try {
-      val statusRequest = new HttpGet(
-        appConfig.baseUrl + "/api/status"
-      )
-      val statusResponse = httpClient.execute(statusRequest)
-      responseBody = EntityUtils.toString(statusResponse.getEntity, "UTF-8")
-    } catch {
-      case _: Throwable =>
-        logger.error("Exception occurred during getting Kibana status")
-    } finally {
-      httpClient.close()
-    }
-
-    responseBody
-  }
-
-  def getElasticSearchData: Json = {
-    logger.info("ES status call")
-    var jsonString = ""
-    var httpClient: CloseableHttpClient = null
-    var response: CloseableHttpResponse = null
-    val request = new HttpGet(appConfig.esUrl)
-    val provider = new BasicCredentialsProvider
-    provider.setCredentials(
-      AuthScope.ANY,
-      new UsernamePasswordCredentials(appConfig.username, appConfig.password)
-    )
-
-    try {
-      httpClient =
-        HttpClientBuilder.create.setDefaultCredentialsProvider(provider).build
-      response = httpClient.execute(request)
-      jsonString = EntityUtils.toString(response.getEntity)
-    } finally {
-      if (response != null) response.close()
-      if (httpClient != null) httpClient.close()
-    }
-
-    parse(jsonString).getOrElse(Json.Null)
-  }
-
   def getDefaultHeaders: Map[String, String] = {
     Map(
       "Connection" -> "keep-alive",
-      "kbn-version" -> appConfig.buildVersion,
+      "kbn-version" -> config.buildVersion,
       "Content-Type" -> "application/json",
       "Accept" -> "*/*",
-      "Origin" -> appConfig.baseUrl,
+      "Origin" -> config.baseUrl,
       "Sec-Fetch-Site" -> "same-origin",
       "Sec-Fetch-Mode" -> "cors",
       "Sec-Fetch-Dest" -> "empty"
@@ -219,7 +173,7 @@ class HttpHelper(appConfig: KibanaConfiguration) {
 
   def getProtocol: HttpProtocolBuilder = {
     http
-      .baseUrl(appConfig.baseUrl)
+      .baseUrl(config.baseUrl)
       .inferHtmlResources(
         allow = AllowList(),
         deny = new DenyList(

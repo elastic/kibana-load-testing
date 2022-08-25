@@ -30,7 +30,6 @@ class HelpersTest {
     )
     assertEquals(config.baseUrl, "http://localhost:5620")
     assertEquals(config.buildVersion, "8.0.0")
-    assertEquals(config.isAbove79x, true)
     assertEquals(config.isSecurityEnabled, true)
     assertEquals(config.loginStatusCode, 200)
     assertEquals(

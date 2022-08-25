@@ -57,7 +57,6 @@ class BaseSimulation extends Simulation {
     logger.info(s"Using existing deployment: ${deploymentId.get}")
     SimulationHelper
       .useExistingDeployment(deploymentId.get)
-      .syncWithInstance()
   } else if (cloudDeployVersion.isDefined) {
     // create new deployment on Cloud
     logger.info(s"Reading deployment configuration: $CLOUD_DEPLOY_CONFIG")
@@ -66,11 +65,9 @@ class BaseSimulation extends Simulation {
         stackVersion = cloudDeployVersion.get,
         deployFile = CLOUD_DEPLOY_CONFIG
       )
-      .syncWithInstance()
     // use existing deployment or local instance
   } else
     new KibanaConfiguration(Helper.readResourceConfigFile(envConfig))
-      .syncWithInstance()
 
   val httpHelper = new HttpHelper(appConfig)
   var httpProtocol: HttpProtocolBuilder = httpHelper.getProtocol
