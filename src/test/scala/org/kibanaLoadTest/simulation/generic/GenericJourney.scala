@@ -30,7 +30,7 @@ object ApiCall {
       config: KibanaConfiguration
   ): ChainBuilder = {
     // Workaround for https://github.com/gatling/gatling/issues/3783
-    val parent::children = requests
+    val parent :: children = requests
     val httpParentRequest = httpRequest(parent.http, config)
     if (children.isEmpty) {
       exec(httpParentRequest)
@@ -67,12 +67,27 @@ object ApiCall {
           .headers(headers)
           .check(status.is(request.statusCode))
       case "POST" =>
-        http(requestName = s"${request.method} ${path}")
-          .post(request.path)
-          .body(StringBody(request.body.get))
-          .asJson
-          .headers(headers)
-          .check(status.is(request.statusCode))
+        request.body match {
+          case Some(value) =>
+            // https://gatling.io/docs/gatling/reference/current/http/request/#stringbody
+            // Gatling uses #{value} syntax to pass session values, we disable it by replacing # with ##
+            // $ was deprecated, but Gatling still identifies it as session attribute
+            val bodyString = value.replace("#", "##").replace("$", "$$")
+            println(bodyString)
+            http(requestName = s"${request.method} ${path}")
+              .post(request.path)
+              .body(StringBody(bodyString))
+              .asJson
+              .headers(headers)
+              .check(status.is(request.statusCode))
+          case _ =>
+            http(requestName = s"${request.method} ${path}")
+              .post(request.path)
+              .asJson
+              .headers(headers)
+              .check(status.is(request.statusCode))
+        }
+
       case "PUT" =>
         http(requestName = s"${request.method} ${path}")
           .put(request.path)
