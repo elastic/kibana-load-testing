@@ -57,7 +57,7 @@ object ApiCall {
 
     val headers =
       if (request.headers.contains("Kbn-Version"))
-        defaultHeaders + ("Kbn-Version" -> config.version)
+        defaultHeaders + ("Kbn-Version" -> config.buildVersion)
       else defaultHeaders
     val path = request.path.replaceAll(".+?(?=\\/bundles)", "");
     request.method match {
@@ -140,13 +140,11 @@ class GenericJourney extends Simulation {
     for (step <- stage) {
       val injectionStep = step.action match {
         case "constantConcurrentUsers" =>
-          constantConcurrentUsers(step.maxUsersCount) during (getDuration(
-            step.duration
-          ))
+          constantConcurrentUsers(5) during (30)
         case "rampConcurrentUsers" =>
           rampConcurrentUsers(
             step.minUsersCount.get
-          ) to step.maxUsersCount during (getDuration(step.duration))
+          ) to 10 during (30)
         case _ =>
           throw new IllegalArgumentException(s"Invalid action: ${step.action}")
       }
