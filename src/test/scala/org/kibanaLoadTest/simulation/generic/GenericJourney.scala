@@ -73,7 +73,6 @@ object ApiCall {
             // Gatling uses #{value} syntax to pass session values, we disable it by replacing # with ##
             // $ was deprecated, but Gatling still identifies it as session attribute
             val bodyString = value.replace("#", "##").replace("$", "$$")
-            println(bodyString)
             http(requestName = s"${request.method} ${path}")
               .post(request.path)
               .body(StringBody(bodyString))
