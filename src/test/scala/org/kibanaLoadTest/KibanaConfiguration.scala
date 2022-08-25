@@ -1,16 +1,10 @@
 package org.kibanaLoadTest
 
 import com.typesafe.config.Config
-import io.circe.Json
-import io.circe.parser.parse
 import org.apache.http.HttpStatus
 import org.apache.http.auth.{AuthScope, UsernamePasswordCredentials}
-import org.apache.http.client.methods.{CloseableHttpResponse, HttpGet}
-import org.apache.http.impl.client.{
-  BasicCredentialsProvider,
-  CloseableHttpClient,
-  HttpClientBuilder
-}
+import org.apache.http.client.methods.HttpGet
+import org.apache.http.impl.client.{BasicCredentialsProvider, HttpClientBuilder}
 import org.apache.http.util.EntityUtils
 import org.kibanaLoadTest.helpers.{Helper, Version}
 import org.slf4j.{Logger, LoggerFactory}
@@ -128,7 +122,7 @@ class KibanaConfiguration {
     this.getElasticSearchInfo()
   }
 
-  def setLoginPayloadAndStatusCode(config: Config) = {
+  def setLoginPayloadAndStatusCode(config: Config): Unit = {
     val isAbove79x = new Version(this.buildVersion).isAbove79x
     if (
       isAbove79x && (!config.hasPathOrNull("auth.providerType") || !config
@@ -150,7 +144,7 @@ class KibanaConfiguration {
     this.loginStatusCode = if (isAbove79x) 200 else 204
   }
 
-  def setDeploymentInfo(config: Config) = {
+  def setDeploymentInfo(config: Config): Unit = {
     this.deploymentId = if (config.hasPath("deploymentId")) {
       Option(config.getString("deploymentId"))
     } else None
@@ -160,8 +154,12 @@ class KibanaConfiguration {
       else true
   }
 
-  def getElasticSearchInfo() = {
-      HttpClient.getElasticSearchInfo(this.esUrl, this.username, this.password) match {
+  def getElasticSearchInfo(): Unit = {
+    HttpClient.getElasticSearchInfo(
+      this.esUrl,
+      this.username,
+      this.password
+    ) match {
       case Some(value) =>
         this.esVersion =
           value.extract[String](Symbol("version") / Symbol("number"))

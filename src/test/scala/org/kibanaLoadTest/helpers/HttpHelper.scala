@@ -1,25 +1,17 @@
 package org.kibanaLoadTest.helpers
 
-import io.circe.Json
-import io.circe.parser.parse
 import io.gatling.core.Predef._
 import io.gatling.core.filter.DenyList
 import io.gatling.http.Predef._
 import io.gatling.http.protocol.HttpProtocolBuilder
-import org.apache.http.auth.{AuthScope, UsernamePasswordCredentials}
 import org.apache.http.client.methods.{
   CloseableHttpResponse,
   HttpDelete,
-  HttpGet,
   HttpPost
 }
 import org.apache.http.entity.StringEntity
 import org.apache.http.entity.mime.MultipartEntityBuilder
-import org.apache.http.impl.client.{
-  BasicCredentialsProvider,
-  CloseableHttpClient,
-  HttpClientBuilder
-}
+import org.apache.http.impl.client.{CloseableHttpClient, HttpClientBuilder}
 import org.apache.http.util.EntityUtils
 import org.kibanaLoadTest.KibanaConfiguration
 import org.slf4j.{Logger, LoggerFactory}
