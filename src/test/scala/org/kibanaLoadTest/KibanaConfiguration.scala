@@ -228,8 +228,7 @@ object HttpClient {
         case _ => return None
       }
     } catch {
-      case _: Throwable =>
-        logger.error("Exception occurred on getting Kibana status")
+      case e:Throwable => logger.error(s"Exception occurred on getting Kibana status: ${e.getMessage}")
     } finally {
       httpClient.close()
     }
@@ -261,8 +260,7 @@ object HttpClient {
         case _ => return None
       }
     } catch {
-      case _: Throwable =>
-        logger.error("Exception occurred on getting Elasticsearch status")
+      case e:Throwable => logger.error(s"Exception occurred on getting Elasticsearch status: ${e.getMessage}")
     } finally {
       httpClient.close()
     }
