@@ -146,6 +146,9 @@ In order to run it, pass json file using the following command:
 mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.generic.GenericJourney -DjourneyPath=<path_to_json_file>
 ```
 
+It is possible to override journey config by setting custom values via environment variables:
+KIBANA_HOST, ES_HOST, AUTH_PROVIDER_TYPE, AUTH_PROVIDER_NAME, AUTH_LOGIN, AUTH_PASSWORD
+
 ## Test results
 Gatling generates html report for each simulation run, available in `<project_root>/target/gatling/<simulation>`path
 
