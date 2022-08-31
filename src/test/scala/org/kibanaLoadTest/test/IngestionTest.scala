@@ -1,28 +1,14 @@
 package org.kibanaLoadTest.test
 
-import java.io.File
-import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
 import io.circe.Json
+
+import java.io.File
 import org.junit.jupiter.api.Assertions.{assertEquals, assertTrue}
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
-import org.kibanaLoadTest.ESConfiguration
 import org.kibanaLoadTest.helpers.Helper.getReportFolderPaths
-import org.kibanaLoadTest.helpers.{
-  ESArchiver,
-  ESClient,
-  Helper,
-  LogParser,
-  ResponseParser
-}
-import org.kibanaLoadTest.ingest.Main.{
-  GLOBAL_STATS_INDEX,
-  SIMULATION_LOG_FILENAME,
-  GLOBAL_STATS_FILENAME,
-  TEST_RUN_FILENAME,
-  USERS_INDEX,
-  logger
-}
+import org.kibanaLoadTest.helpers.{ESArchiver, ESClient, Helper, LogParser, ResponseParser}
+import org.kibanaLoadTest.ingest.Main.{GLOBAL_STATS_FILENAME, GLOBAL_STATS_INDEX, SIMULATION_LOG_FILENAME, TEST_RUN_FILENAME, USERS_INDEX, logger}
 
 class IngestionTest {
 
@@ -86,20 +72,15 @@ class IngestionTest {
   }
 
   @Test
-  //@EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
+  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
   def ingestReportTest(): Unit = {
     val DATA_INDEX = "gatling-data"
-    val host = "http://locahost:9200"//System.getenv("HOST_FROM_VAULT")
-    val username = "elastic"//System.getenv("USER_FROM_VAULT")
-    val password = "changeme"//System.getenv("PASS_FROM_VAULT")
-    val esConfig = new ESConfiguration(
-      ConfigFactory.load
-        .withValue("host", ConfigValueFactory.fromAnyRef(host))
-        .withValue("username", ConfigValueFactory.fromAnyRef(username))
-        .withValue("password", ConfigValueFactory.fromAnyRef(password))
-    )
+    val host: String = System.getenv("HOST_FROM_VAULT")
+    val url = Helper.parseUrl(host)
+    val username: String = System.getenv("USER_FROM_VAULT")
+    val password: String = System.getenv("PASS_FROM_VAULT")
 
-    val esClient = ESClient.getInstance(host, username, password)
+    val esClient = ESClient.getInstance(url, username, password)
     val reportFolders = getReportFolderPaths
 
     logger.info(s"Found ${reportFolders.length} Gatling reports")
@@ -171,31 +152,24 @@ class IngestionTest {
     val indexArray = ESArchiver.readDataFromFile(mappingsFilePath)
     val docsArray = ESArchiver.readDataFromFile(dataFilePath)
 
-    val host = "http://locahost:9200"//System.getenv("HOST_FROM_VAULT")
-    val username = "elastic"//System.getenv("USER_FROM_VAULT")
-    val password = "changeme"//System.getenv("PASS_FROM_VAULT")
+    val host = System.getenv("HOST_FROM_VAULT")
+    val username = System.getenv("USER_FROM_VAULT")
+    val password = System.getenv("PASS_FROM_VAULT")
+    val url = Helper.parseUrl(host)
 
-//    val esConfig = new ESConfiguration(
-//      ConfigFactory.load
-//        .withValue("host", ConfigValueFactory.fromAnyRef(host))
-//        .withValue("username", ConfigValueFactory.fromAnyRef(username))
-//        .withValue("password", ConfigValueFactory.fromAnyRef(password))
-//    )
-
-    val client = ESClient.getInstance(host, username, password)
-
+    val esClient = ESClient.getInstance(url, username, password)
 
     indexArray.foreach(item => {
-      client.createIndex(item.index + "6", item.source)
+      esClient.createIndex(item.index + "6", item.source)
       println(s"${item.index} index was created")
     })
 
-    client.bulk(
+    esClient.bulk(
       indexArray(0).index,
       docsArray.map(doc => doc.source).toArray[Json],
       1000
     )
 
-    client.closeConnection()
+    esClient.closeConnection()
   }
 }

@@ -2,7 +2,6 @@ package org.kibanaLoadTest.ingest
 
 import java.io.File
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
-import org.kibanaLoadTest.ESConfiguration
 import org.kibanaLoadTest.helpers.{ESClient, Helper}
 import org.kibanaLoadTest.helpers.Helper.getReportFolderPaths
 import org.slf4j.{Logger, LoggerFactory}
@@ -24,9 +23,7 @@ object Main {
     val hostValue = System.getenv("HOST_FROM_VAULT")
     val host =
       if (hostValue.startsWith("http")) hostValue else "https://" + hostValue
-//    val hostname::port = hostValue.split(":") match {
-//      case Array(hostname, port) => (hostname.toString, port.toInt)
-//    }
+    val url = Helper.parseUrl(host)
     val username = System.getenv("USER_FROM_VAULT")
     val password = System.getenv("PASS_FROM_VAULT")
 
@@ -37,13 +34,7 @@ object Main {
       exit(0)
     }
 
-    val esConfig = new ESConfiguration(
-      ConfigFactory.load
-        .withValue("host", ConfigValueFactory.fromAnyRef(host))
-        .withValue("username", ConfigValueFactory.fromAnyRef(username))
-        .withValue("password", ConfigValueFactory.fromAnyRef(password))
-    )
-    val esClient = ESClient.getInstance(hostValue, username, password)
+    val esClient = ESClient.getInstance(url, username, password)
 
     logger.info(s"Found ${reportFolders.length} Gatling reports")
     var i = 0

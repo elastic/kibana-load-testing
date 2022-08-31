@@ -5,9 +5,7 @@ import com.typesafe.config.ConfigFactory
 import com.typesafe.config.ConfigValueFactory
 import io.circe.Json
 import org.junit.jupiter.api.Test
-import org.kibanaLoadTest.ESConfiguration
-import org.kibanaLoadTest.helpers.ESClient
-import org.kibanaLoadTest.helpers.Helper
+import org.kibanaLoadTest.helpers.{ESClient, Helper}
 
 class DataStreamIngestionTest {
 

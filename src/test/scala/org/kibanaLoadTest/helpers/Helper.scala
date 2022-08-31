@@ -134,6 +134,15 @@ object Helper {
     }
   }
 
+  def parseUrl(str: String): URL = {
+    try {
+      new URL(str)
+    } catch {
+      case ex: Exception =>
+        throw new RuntimeException(s"Error: ${ex.getMessage}")
+    }
+  }
+
   def writeMapToFile(data: Map[String, Any], filePath: String): Unit = {
     new PrintWriter(filePath) {
       data.foreach {
