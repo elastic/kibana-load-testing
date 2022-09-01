@@ -88,7 +88,7 @@ public class ESClient {
                 JsonpMapper jsonpMapper = client._transport().jsonpMapper();
                 JsonProvider jsonProvider = jsonpMapper.jsonProvider();
                 JsonData res = JsonData.from(jsonProvider.createParser(new StringReader(json.toString())), jsonpMapper);
-                br.operations(op -> op.index(idx -> idx.index(indexName).document(res)));
+                br.operations(op -> op.create(idx -> idx.index(indexName).document(res)));
             }
             try {
                 BulkResponse result = client.bulk(br.build());
