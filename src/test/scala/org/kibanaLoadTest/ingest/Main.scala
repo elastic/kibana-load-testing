@@ -2,7 +2,6 @@ package org.kibanaLoadTest.ingest
 
 import java.io.File
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
-import org.kibanaLoadTest.ESConfiguration
 import org.kibanaLoadTest.helpers.{ESClient, Helper}
 import org.kibanaLoadTest.helpers.Helper.getReportFolderPaths
 import org.slf4j.{Logger, LoggerFactory}
@@ -24,6 +23,7 @@ object Main {
     val hostValue = System.getenv("HOST_FROM_VAULT")
     val host =
       if (hostValue.startsWith("http")) hostValue else "https://" + hostValue
+    val url = Helper.parseUrl(host)
     val username = System.getenv("USER_FROM_VAULT")
     val password = System.getenv("PASS_FROM_VAULT")
 
@@ -34,13 +34,7 @@ object Main {
       exit(0)
     }
 
-    val esConfig = new ESConfiguration(
-      ConfigFactory.load
-        .withValue("host", ConfigValueFactory.fromAnyRef(host))
-        .withValue("username", ConfigValueFactory.fromAnyRef(username))
-        .withValue("password", ConfigValueFactory.fromAnyRef(password))
-    )
-    val esClient = new ESClient(esConfig)
+    val esClient = ESClient.getInstance(url, username, password)
 
     logger.info(s"Found ${reportFolders.length} Gatling reports")
     var i = 0
@@ -57,7 +51,7 @@ object Main {
       Array(testRunFilePath, simLogFilePath, statsFilePath)
         .foreach(path => {
           if (!Files.exists(Paths.get(path))) {
-            esClient.Instance.closeConnection()
+            esClient.closeConnection()
             throw new RuntimeException(
               s"Required file '$path' is not found"
             )
@@ -73,13 +67,13 @@ object Main {
           testRunFilePath
         )
 
-      esClient.Instance.bulk(GLOBAL_STATS_INDEX, combinedStatsArray)
-      esClient.Instance.bulk(DATA_INDEX, requestsArray)
-      esClient.Instance.bulk(USERS_INDEX, concurrentUsersArray)
+      esClient.bulk(GLOBAL_STATS_INDEX, combinedStatsArray, 100)
+      esClient.bulk(DATA_INDEX, requestsArray, 100)
+      esClient.bulk(USERS_INDEX, concurrentUsersArray, 100)
 
       i += 1
     }
 
-    esClient.Instance.closeConnection()
+    esClient.closeConnection()
   }
 }

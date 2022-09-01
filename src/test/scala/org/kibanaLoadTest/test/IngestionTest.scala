@@ -1,28 +1,14 @@
 package org.kibanaLoadTest.test
 
-import java.io.File
-import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
 import io.circe.Json
+
+import java.io.File
 import org.junit.jupiter.api.Assertions.{assertEquals, assertTrue}
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
-import org.kibanaLoadTest.ESConfiguration
 import org.kibanaLoadTest.helpers.Helper.getReportFolderPaths
-import org.kibanaLoadTest.helpers.{
-  ESArchiver,
-  ESClient,
-  Helper,
-  LogParser,
-  ResponseParser
-}
-import org.kibanaLoadTest.ingest.Main.{
-  GLOBAL_STATS_INDEX,
-  SIMULATION_LOG_FILENAME,
-  GLOBAL_STATS_FILENAME,
-  TEST_RUN_FILENAME,
-  USERS_INDEX,
-  logger
-}
+import org.kibanaLoadTest.helpers.{ESArchiver, ESClient, Helper, LogParser, ResponseParser}
+import org.kibanaLoadTest.ingest.Main.{GLOBAL_STATS_FILENAME, GLOBAL_STATS_INDEX, SIMULATION_LOG_FILENAME, TEST_RUN_FILENAME, USERS_INDEX, logger}
 
 class IngestionTest {
 
@@ -89,17 +75,12 @@ class IngestionTest {
   @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
   def ingestReportTest(): Unit = {
     val DATA_INDEX = "gatling-data"
-    val host = System.getenv("HOST_FROM_VAULT")
-    val username = System.getenv("USER_FROM_VAULT")
-    val password = System.getenv("PASS_FROM_VAULT")
-    val esConfig = new ESConfiguration(
-      ConfigFactory.load
-        .withValue("host", ConfigValueFactory.fromAnyRef(host))
-        .withValue("username", ConfigValueFactory.fromAnyRef(username))
-        .withValue("password", ConfigValueFactory.fromAnyRef(password))
-    )
+    val host: String = System.getenv("HOST_FROM_VAULT")
+    val url = Helper.parseUrl(host)
+    val username: String = System.getenv("USER_FROM_VAULT")
+    val password: String = System.getenv("PASS_FROM_VAULT")
 
-    val esClient = new ESClient(esConfig)
+    val esClient = ESClient.getInstance(url, username, password)
     val reportFolders = getReportFolderPaths
 
     logger.info(s"Found ${reportFolders.length} Gatling reports")
@@ -122,11 +103,11 @@ class IngestionTest {
         testRunFilePath
       )
 
-    esClient.Instance.bulk(GLOBAL_STATS_INDEX, combinedStatsArray)
-    esClient.Instance.bulk(DATA_INDEX, requestsArray)
-    esClient.Instance.bulk(USERS_INDEX, concurrentUsersArray)
+    esClient.bulk(GLOBAL_STATS_INDEX, combinedStatsArray, 100)
+    esClient.bulk(DATA_INDEX, requestsArray, 100)
+    esClient.bulk(USERS_INDEX, concurrentUsersArray, 100)
 
-    esClient.Instance.closeConnection()
+    esClient.closeConnection()
   }
 
   @Test
@@ -162,7 +143,7 @@ class IngestionTest {
   }
 
   @Test
-  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
+  //@EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
   def ESArchiverIngestTest(): Unit = {
     val mappingsFilePath =
       getClass.getResource("/test/es_archive/mappings.json").getPath
@@ -174,27 +155,21 @@ class IngestionTest {
     val host = System.getenv("HOST_FROM_VAULT")
     val username = System.getenv("USER_FROM_VAULT")
     val password = System.getenv("PASS_FROM_VAULT")
+    val url = Helper.parseUrl(host)
 
-    val esConfig = new ESConfiguration(
-      ConfigFactory.load
-        .withValue("host", ConfigValueFactory.fromAnyRef(host))
-        .withValue("username", ConfigValueFactory.fromAnyRef(username))
-        .withValue("password", ConfigValueFactory.fromAnyRef(password))
-    )
-
-    val client = new ESClient(esConfig)
+    val esClient = ESClient.getInstance(url, username, password)
 
     indexArray.foreach(item => {
-      client.Instance.createIndex(item.index + "6", item.source)
+      esClient.createIndex(item.index + "6", item.source)
       println(s"${item.index} index was created")
     })
 
-    client.Instance.bulk(
+    esClient.bulk(
       indexArray(0).index,
       docsArray.map(doc => doc.source).toArray[Json],
-      chunkSize = 1000
+      1000
     )
 
-    client.Instance.closeConnection()
+    esClient.closeConnection()
   }
 }

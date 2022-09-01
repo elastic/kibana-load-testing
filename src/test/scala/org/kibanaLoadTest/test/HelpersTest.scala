@@ -29,7 +29,7 @@ class HelpersTest {
       Helper.readResourceConfigFile("config/local.conf")
     )
     assertEquals(config.baseUrl, "http://localhost:5620")
-    assertEquals(config.buildVersion, "8.0.0")
+    assertEquals(config.buildVersion, "8.5.0")
     assertEquals(config.isSecurityEnabled, true)
     assertEquals(config.loginStatusCode, 200)
     assertEquals(
@@ -139,5 +139,14 @@ class HelpersTest {
   def generateUUIDTest(): Unit = {
     val uuid = generateUUID
     assertTrue(uuid.matches("[a-zA-Z0-9-]+"))
+  }
+
+  @Test
+  def parseURLTest(): Unit = {
+    val testStr = "http://localhost:9220"
+    val url = Helper.parseUrl(testStr)
+    assertEquals(9220, url.getPort)
+    assertEquals("http", url.getProtocol)
+    assertEquals("localhost", url.getHost)
   }
 }
