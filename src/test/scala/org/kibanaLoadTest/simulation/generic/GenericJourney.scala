@@ -59,11 +59,13 @@ object ApiCall {
       if (request.headers.contains("Kbn-Version"))
         defaultHeaders + ("Kbn-Version" -> config.buildVersion)
       else defaultHeaders
-    val path = request.path.replaceAll(".+?(?=\\/bundles)", "");
+    val requestName = s"${request.method} ${request.path
+      .replaceAll(".+?(?=\\/bundles)", "") + request.query.getOrElse("")}"
+    val url = request.path + request.query.getOrElse("")
     request.method match {
       case "GET" =>
-        http(requestName = s"${request.method} ${path}")
-          .get(request.path)
+        http(requestName)
+          .get(url)
           .headers(headers)
           .check(status.is(request.statusCode))
       case "POST" =>
@@ -73,28 +75,28 @@ object ApiCall {
             // Gatling uses #{value} syntax to pass session values, we disable it by replacing # with ##
             // $ was deprecated, but Gatling still identifies it as session attribute
             val bodyString = value.replace("#", "##").replace("$", "$$")
-            http(requestName = s"${request.method} ${path}")
-              .post(request.path)
+            http(requestName)
+              .post(url)
               .body(StringBody(bodyString))
               .asJson
               .headers(headers)
               .check(status.is(request.statusCode))
           case _ =>
-            http(requestName = s"${request.method} ${path}")
-              .post(request.path)
+            http(requestName)
+              .post(url)
               .asJson
               .headers(headers)
               .check(status.is(request.statusCode))
         }
 
       case "PUT" =>
-        http(requestName = s"${request.method} ${path}")
-          .put(request.path)
+        http(requestName)
+          .put(url)
           .headers(headers)
           .check(status.is(request.statusCode))
       case "DELETE" =>
-        http(requestName = s"${request.method} ${path}")
-          .delete(request.path)
+        http(requestName)
+          .delete(url)
           .headers(headers)
           .check(status.is(request.statusCode))
       case _ =>
@@ -195,6 +197,7 @@ class GenericJourney extends Simulation {
   private val httpProtocol: HttpProtocolBuilder =
     new HttpHelper(config).getProtocol
       .baseUrl(config.baseUrl)
+      .disableUrlEncoding
       // Gatling automatically follow redirects in case of 301, 302, 303, 307 or 308 response status code
       // Disabling this behavior since we run the defined sequence of requests
       .disableFollowRedirect
