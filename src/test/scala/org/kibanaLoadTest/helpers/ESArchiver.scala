@@ -10,7 +10,7 @@ import java.nio.file.{Path, Paths}
 
 case class Doc(indexType: String, name: String, source: Json)
 
-class ESArchiver(config: KibanaConfiguration) {
+class ESArchiver(config: KibanaConfiguration, bulkSize: Int = 1000) {
   val logger: Logger = LoggerFactory.getLogger("ESArchiver")
   private val MAPPINGS_FILENAME = "mappings.json"
   private val DATA_FILENAME = "data.json.gz"
@@ -40,7 +40,7 @@ class ESArchiver(config: KibanaConfiguration) {
     }
   }
 
-  def load(archivePath: Path, bulkSize: Int = 1000): Unit = {
+  def load(archivePath: Path): Unit = {
     val client = ESClient.getInstance(
       Helper.parseUrl(config.esUrl),
       config.username,
