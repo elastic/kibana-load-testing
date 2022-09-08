@@ -1,10 +1,12 @@
 package org.kibanaLoadTest.helpers;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.ElasticsearchException;
 import co.elastic.clients.elasticsearch.core.BulkRequest;
 import co.elastic.clients.elasticsearch.core.BulkResponse;
 import co.elastic.clients.elasticsearch.core.bulk.BulkResponseItem;
 import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
+import co.elastic.clients.elasticsearch.indices.DeleteIndexRequest;
 import co.elastic.clients.json.JsonData;
 import co.elastic.clients.json.JsonpMapper;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
@@ -70,13 +72,35 @@ public class ESClient {
         CreateIndexRequest req = CreateIndexRequest.of(b -> b.index(indexName).withJson(new StringReader(source.toString())));
         try {
             boolean created = client.indices().create(req).acknowledged();
-            logger.error(String.format("Index '%s' created %b", indexName, created));
+            if (created) {
+                logger.info(String.format("Created index '%s'", indexName));
+            } else {
+                logger.error(String.format("Failed to create index '%s'", indexName));
+            }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("IO Exception in esClient.createIndex", e);
+        } catch (ElasticsearchException e) {
+            throw new RuntimeException("createIndex", e);
         }
     }
 
-    public void bulk(String indexName, Json[] jsonArray, Integer chunkSize) {
+    public void deleteIndex(String indexName) {
+        DeleteIndexRequest req = DeleteIndexRequest.of(b -> b.index(indexName));
+        try {
+            boolean deleted = client.indices().delete(req).acknowledged();
+            if (deleted) {
+                logger.info(String.format("Deleted index '%s'", indexName));
+            } else {
+                logger.error(String.format("Failed to delete index '%s'", indexName));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("IO Exception in esClient.deleteIndex", e);
+        } catch (ElasticsearchException e) {
+            throw new RuntimeException("deleteIndex", e);
+        }
+    }
+
+    public void bulk(String indexName, Json[] jsonArray, int chunkSize) {
         logger.info(String.format("Ingesting to %s index: %d docs", indexName, jsonArray.length));
         int bulkSize = indexName == "gatling-data" ? BULK_SIZE_DEFAULT : chunkSize;
         Date startTime = new Date();
@@ -84,7 +108,7 @@ public class ESClient {
         for (int i = 0; i < jsonArray.length; i += bulkSize) {
             Json[] chunk = Arrays.copyOfRange(jsonArray, i, Math.min(jsonArray.length, i + chunkSize));
             BulkRequest.Builder br = new BulkRequest.Builder();
-            for (Json json: chunk) {
+            for (Json json : chunk) {
                 JsonpMapper jsonpMapper = client._transport().jsonpMapper();
                 JsonProvider jsonProvider = jsonpMapper.jsonProvider();
                 JsonData res = JsonData.from(jsonProvider.createParser(new StringReader(json.toString())), jsonpMapper);
@@ -94,14 +118,16 @@ public class ESClient {
                 BulkResponse result = client.bulk(br.build());
                 if (result.errors()) {
                     logger.error("Bulk had errors");
-                    for (BulkResponseItem item: result.items()) {
+                    for (BulkResponseItem item : result.items()) {
                         if (item.error() != null) {
                             logger.error(item.error().reason());
                         }
                     }
                 }
             } catch (IOException e) {
-                logger.error(String.format("Bulk upload failed %s", e.getMessage()));
+                throw new RuntimeException("IO Exception in esClient.bulk", e);
+            } catch (ElasticsearchException e) {
+                throw new RuntimeException("bulk", e);
             }
         }
 
@@ -113,13 +139,13 @@ public class ESClient {
 
     public void closeConnection() {
         if (INSTANCE != null) {
-            logger.info("Closing connection");
             try {
                 restClient.close();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("IO Exception in esClient.closeConnection", e);
+            } finally {
+                INSTANCE = null;
             }
         }
     }
-
 }

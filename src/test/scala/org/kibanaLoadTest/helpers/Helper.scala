@@ -2,9 +2,9 @@ package org.kibanaLoadTest.helpers
 
 import com.google.gson.Gson
 
-import java.io.{File, PrintWriter}
+import java.io.{BufferedReader, File, FileInputStream, InputStreamReader, PrintWriter}
 import java.net.{MalformedURLException, URL}
-import java.nio.file.Paths
+import java.nio.file.{Path, Paths}
 import java.text.SimpleDateFormat
 import java.time.{Instant, ZoneId}
 import java.time.format.DateTimeFormatter
@@ -16,7 +16,9 @@ import org.slf4j.{Logger, LoggerFactory}
 import spray.json.JsonParser
 import spray.json.JsonParser.ParsingException
 
-import scala.collection.parallel.CollectionConverters.{ArrayIsParallelizable}
+import java.util.zip.GZIPInputStream
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.parallel.CollectionConverters.ArrayIsParallelizable
 import scala.jdk.CollectionConverters._
 import scala.io.Source
 
@@ -278,7 +280,7 @@ object Helper {
     (requestJsonArray, concurrentUsersJsonArray, Array(combinedStatsJson))
   }
 
-  def loadJsonFile(systemPropName: String): File = {
+  def loadFile(systemPropName: String): File = {
     val file = Option(System.getProperty(systemPropName)) match {
       case Some(v) => new File(v)
       case _ =>
@@ -292,5 +294,42 @@ object Helper {
       )
     }
     file
+  }
+
+  def checkFilesExist(paths: Path*): Unit = {
+    paths.foreach(path => {
+      val file = new File(path.toString)
+      if (!file.exists()) {
+        throw new RuntimeException(s"File does not exist: ${file.getPath}")
+      }
+    })
+  }
+
+  def readArchiveFile(filePath: Path): List[String] = {
+    checkFilesExist(filePath)
+    val inputStream = if (filePath.toString.endsWith(".gz")) {
+      new InputStreamReader(
+        new GZIPInputStream(new FileInputStream(filePath.toFile)),
+        "UTF-8"
+      )
+    } else if (filePath.toString.endsWith(".json")) {
+      new InputStreamReader(new FileInputStream(filePath.toFile))
+    } else throw new RuntimeException(s"Cannot parse the file: $filePath")
+    val br = new BufferedReader(inputStream)
+    var strLine = Option(br.readLine())
+    var jsonString = ""
+    val jsonStringBuffer = new ArrayBuffer[String]()
+    while (strLine.isDefined) {
+      val nextLine = Option(br.readLine())
+      if (nextLine.isEmpty || nextLine.get.length == 0) {
+        jsonString += strLine.get
+        jsonStringBuffer += jsonString
+        jsonString = ""
+      } else {
+        jsonString += strLine.get
+      }
+      strLine = nextLine
+    }
+    jsonStringBuffer.filter(_.length > 0).toList
   }
 }

@@ -9,6 +9,6 @@ case class Step(
     duration: String
 )
 
-object StageJsonProtocol extends DefaultJsonProtocol {
-  implicit val stageFormat = jsonFormat4(Step)
+object StepJsonProtocol extends DefaultJsonProtocol {
+  implicit val stepFormat = jsonFormat4(Step)
 }

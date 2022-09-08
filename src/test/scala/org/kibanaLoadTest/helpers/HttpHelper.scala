@@ -4,19 +4,12 @@ import io.gatling.core.Predef._
 import io.gatling.core.filter.DenyList
 import io.gatling.http.Predef._
 import io.gatling.http.protocol.HttpProtocolBuilder
-import org.apache.http.client.methods.{
-  CloseableHttpResponse,
-  HttpDelete,
-  HttpPost
-}
+import org.apache.http.client.methods.{HttpDelete, HttpPost}
 import org.apache.http.entity.StringEntity
-import org.apache.http.entity.mime.MultipartEntityBuilder
 import org.apache.http.impl.client.{CloseableHttpClient, HttpClientBuilder}
 import org.apache.http.util.EntityUtils
 import org.kibanaLoadTest.KibanaConfiguration
 import org.slf4j.{Logger, LoggerFactory}
-
-import java.io.File
 
 class HttpHelper(config: KibanaConfiguration) {
   val loginHeaders = Map(
@@ -114,36 +107,6 @@ class HttpHelper(config: KibanaConfiguration) {
         "Adding sample data failed with code " + statusCode + ": " + responseBody
       )
     }
-  }
-
-  def importSavedObjects(filePath: String): String = {
-    logger.info(s"Importing saved objects from '$filePath'")
-    val file = new File(filePath)
-    val httpClient = HttpClientBuilder.create.build
-    this.loginIfNeeded(httpClient)
-    val importRequest = new HttpPost(
-      config.baseUrl + "/api/saved_objects/_import?createNewCopies=true"
-    )
-    importRequest.addHeader("Connection", "keep-alive")
-    importRequest.addHeader("kbn-version", config.buildVersion)
-    val builder = MultipartEntityBuilder.create
-    builder.addBinaryBody("file", file)
-    val multipart = builder.build()
-    importRequest.setEntity(multipart)
-    var responseBody = ""
-    var response: CloseableHttpResponse = null
-    try {
-      response = httpClient.execute(importRequest)
-      responseBody = EntityUtils.toString(response.getEntity)
-    } catch {
-      case _: Throwable =>
-        logger.error("Exception occurred during saved objects import")
-    } finally {
-      if (response != null) response.close()
-      httpClient.close()
-    }
-
-    responseBody
   }
 
   def getDefaultHeaders: Map[String, String] = {
