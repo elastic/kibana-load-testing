@@ -73,12 +73,12 @@ class ESArchiver(config: KibanaConfiguration, bulkSize: Int = 1000) {
     } catch {
       case e: RuntimeException =>
         e.getMessage match {
-          case "createIndex" =>
+          case s"Failed to create index$x" =>
             e.getCause.getMessage.startsWith(INDEX_EXISTS_ERROR) match {
               case true  => logger.warn(e.getCause.getMessage)
               case false => throw new RuntimeException(e)
             }
-          case "bulk" => throw new RuntimeException(e)
+          case _ => throw new RuntimeException(e)
         }
     } finally {
       client.closeConnection()

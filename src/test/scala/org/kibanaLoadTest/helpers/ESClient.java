@@ -77,10 +77,8 @@ public class ESClient {
             } else {
                 logger.error(String.format("Failed to create index '%s'", indexName));
             }
-        } catch (IOException e) {
-            throw new RuntimeException("IO Exception in esClient.createIndex", e);
-        } catch (ElasticsearchException e) {
-            throw new RuntimeException("createIndex", e);
+        } catch (IOException | ElasticsearchException ex) {
+            throw new RuntimeException(String.format("Failed to create index", indexName), ex);
         }
     }
 
@@ -93,10 +91,8 @@ public class ESClient {
             } else {
                 logger.error(String.format("Failed to delete index '%s'", indexName));
             }
-        } catch (IOException e) {
-            throw new RuntimeException("IO Exception in esClient.deleteIndex", e);
-        } catch (ElasticsearchException e) {
-            throw new RuntimeException("deleteIndex", e);
+        } catch (IOException | ElasticsearchException ex) {
+            throw new RuntimeException(String.format("Failed to delete index '%s'", indexName), ex);
         }
     }
 
@@ -124,10 +120,8 @@ public class ESClient {
                         }
                     }
                 }
-            } catch (IOException e) {
-                throw new RuntimeException("IO Exception in esClient.bulk", e);
-            } catch (ElasticsearchException e) {
-                throw new RuntimeException("bulk", e);
+            } catch (IOException | ElasticsearchException ex) {
+                throw new RuntimeException(String.format("Bulk ingest for %s", indexName), ex);
             }
         }
 

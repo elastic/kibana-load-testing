@@ -10,7 +10,7 @@ import org.kibanaLoadTest.helpers.Helper.{
 }
 import org.kibanaLoadTest.helpers.{Helper, Version}
 
-import java.io.File
+import java.io.{File, FileNotFoundException}
 import java.nio.file.Paths
 import java.util.Calendar
 import scala.reflect.io.Directory
@@ -159,7 +159,7 @@ class HelpersTest {
   def checkFilesExistTest(): Unit = {
     val invalidPath = "/xyz/so.json"
     val exception = assertThrows(
-      classOf[RuntimeException],
+      classOf[FileNotFoundException],
       () => Helper.checkFilesExist(Paths.get(invalidPath))
     )
     assertEquals(

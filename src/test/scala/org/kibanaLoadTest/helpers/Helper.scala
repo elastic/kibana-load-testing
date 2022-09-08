@@ -2,7 +2,7 @@ package org.kibanaLoadTest.helpers
 
 import com.google.gson.Gson
 
-import java.io.{BufferedReader, File, FileInputStream, InputStreamReader, PrintWriter}
+import java.io.{BufferedReader, File, FileInputStream, FileNotFoundException, InputStreamReader, PrintWriter}
 import java.net.{MalformedURLException, URL}
 import java.nio.file.{Path, Paths}
 import java.text.SimpleDateFormat
@@ -300,7 +300,7 @@ object Helper {
     paths.foreach(path => {
       val file = new File(path.toString)
       if (!file.exists()) {
-        throw new RuntimeException(s"File does not exist: ${file.getPath}")
+        throw new FileNotFoundException(s"File does not exist: ${file.getPath}")
       }
     })
   }
@@ -330,6 +330,6 @@ object Helper {
       }
       strLine = nextLine
     }
-    jsonStringBuffer.filter(_.length > 0).toList
+    jsonStringBuffer.filter(_.nonEmpty).toList
   }
 }

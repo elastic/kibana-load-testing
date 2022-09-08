@@ -40,8 +40,6 @@ class IngestionTest {
   private val providerName = sys.env.getOrElse("AUTH_PROVIDER_NAME", "basic")
   private val username = sys.env.getOrElse("AUTH_LOGIN", "elastic")
   private val password = sys.env.getOrElse("AUTH_PASSWORD", "changeme")
-  private val savedObjectPath =
-    Paths.get(getClass.getResource("/test/so.json").getPath)
   private var config: KibanaConfiguration = null
   private var helper: HttpHelper = null
   val expRequestRecordCount = 18

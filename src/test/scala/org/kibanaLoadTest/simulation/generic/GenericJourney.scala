@@ -178,12 +178,12 @@ class GenericJourney extends Simulation {
       kbnClientCallback: Path => Unit,
       esArchiverCallback: Path => Unit
   ): Unit = {
-    if (!testData.esArchives.isEmpty) {
+    if (testData.esArchives.isDefined) {
       testData.esArchives.get.foreach(archiveRelativePath => {
         esArchiverCallback(Paths.get(kibanaRootPath, archiveRelativePath))
       })
     }
-    if (!testData.kbnArchives.isEmpty) {
+    if (testData.kbnArchives.isDefined) {
       testData.kbnArchives.get.foreach(archiveRelativePath => {
         kbnClientCallback(Paths.get(kibanaRootPath, archiveRelativePath))
       })
@@ -234,7 +234,7 @@ class GenericJourney extends Simulation {
   )
 
   private val testData = journey.testData
-  if (!testData.isEmpty) {
+  if (testData.isDefined) {
     if (
       kibanaRootPath.isEmpty || !Files.exists(Paths.get(kibanaRootPath.get))
     ) {
@@ -261,7 +261,7 @@ class GenericJourney extends Simulation {
 
   // Using 'after' hook to cleanup Elasticsearch after journey run
   after {
-    if (!testData.isEmpty) {
+    if (testData.isDefined) {
       testDataLoader(
         testData.get,
         kibanaRootPath.get,

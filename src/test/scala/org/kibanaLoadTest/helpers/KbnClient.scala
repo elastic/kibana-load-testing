@@ -141,8 +141,7 @@ class KbnClient(config: KibanaConfiguration) {
         Future {
           val client = HttpClientBuilder.create.build
           try {
-            val url =
-              config.baseUrl + s"/api/saved_objects/${so.soType}/${so.id}?force=true"
+            val url = s"${config.baseUrl}/api/saved_objects/${so.soType}/${so.id}?force=true"
             val deleteRequest = new HttpDelete(url)
             deleteRequest.addHeader("Connection", "keep-alive")
             deleteRequest.addHeader("kbn-version", config.buildVersion)
