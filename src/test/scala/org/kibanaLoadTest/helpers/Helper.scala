@@ -325,13 +325,13 @@ object Helper {
     val jsonStringBuffer = new ArrayBuffer[String]()
 
     var strLine = Option(br.readLine())
-    var sb = new StringBuffer("")
+    var sb = new StringBuilder("")
     while (strLine.isDefined) {
       val nextLine = Option(br.readLine())
       if (nextLine.isEmpty || nextLine.get.length == 0) {
         sb.append(strLine.get)
         jsonStringBuffer.append(sb.toString)
-        sb = new StringBuffer("")
+        sb = new StringBuilder("")
       } else {
         sb.append(strLine.get)
       }

@@ -78,7 +78,7 @@ public class ESClient {
                 logger.error(String.format("Failed to create index '%s'", indexName));
             }
         } catch (IOException | ElasticsearchException ex) {
-            throw new RuntimeException(String.format("Failed to create index", indexName), ex);
+            throw new RuntimeException(String.format("Failed to create index '%s'", indexName), ex);
         }
     }
 
