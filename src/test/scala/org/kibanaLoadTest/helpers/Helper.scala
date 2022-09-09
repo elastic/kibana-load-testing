@@ -2,7 +2,14 @@ package org.kibanaLoadTest.helpers
 
 import com.google.gson.Gson
 
-import java.io.{BufferedReader, File, FileInputStream, FileNotFoundException, InputStreamReader, PrintWriter}
+import java.io.{
+  BufferedReader,
+  File,
+  FileInputStream,
+  FileNotFoundException,
+  InputStreamReader,
+  PrintWriter
+}
 import java.net.{MalformedURLException, URL}
 import java.nio.file.{Path, Paths}
 import java.text.SimpleDateFormat
@@ -316,17 +323,18 @@ object Helper {
       new InputStreamReader(new FileInputStream(filePath.toFile))
     } else throw new RuntimeException(s"Cannot parse the file: $filePath")
     val br = new BufferedReader(inputStream)
-    var strLine = Option(br.readLine())
-    var jsonString = ""
     val jsonStringBuffer = new ArrayBuffer[String]()
+
+    var strLine = Option(br.readLine())
+    var sb = new StringBuffer("")
     while (strLine.isDefined) {
       val nextLine = Option(br.readLine())
       if (nextLine.isEmpty || nextLine.get.length == 0) {
-        jsonString += strLine.get
-        jsonStringBuffer += jsonString
-        jsonString = ""
+        sb.append(strLine.get)
+        jsonStringBuffer.append(sb.toString)
+        sb = new StringBuffer("")
       } else {
-        jsonString += strLine.get
+        sb.append(strLine.get)
       }
       strLine = nextLine
     }
