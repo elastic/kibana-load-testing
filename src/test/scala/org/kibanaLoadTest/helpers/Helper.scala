@@ -313,7 +313,6 @@ object Helper {
   }
 
   def readArchiveFile(filePath: Path): List[String] = {
-    checkFilesExist(filePath)
     val inputStream = if (filePath.toString.endsWith(".gz")) {
       new InputStreamReader(
         new GZIPInputStream(new FileInputStream(filePath.toFile)),
