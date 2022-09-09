@@ -40,9 +40,9 @@ class KibanaAPITest {
   }
 
   @Test
-  def kbnClientGetCookieTest() = {
+  def kbngetClientAndConnManagerTest() = {
     val client = new KbnClient(config)
-    val closureToTest: Executable = () => client.getCookie()
+    val closureToTest: Executable = () => client.getClientAndConnectionManager()
     assertDoesNotThrow(closureToTest)
   }
 
@@ -60,7 +60,10 @@ class KibanaAPITest {
     val loadClosure: Executable = () => helper.addSampleData("ecommerce")
     val unloadClosure: Executable = () => helper.removeSampleData("ecommerce")
     assertDoesNotThrow(loadClosure, "helper.addSampleData throws exception")
-    assertDoesNotThrow(unloadClosure, "helper.removeSampleData throws exception")
+    assertDoesNotThrow(
+      unloadClosure,
+      "helper.removeSampleData throws exception"
+    )
   }
 
   @Test

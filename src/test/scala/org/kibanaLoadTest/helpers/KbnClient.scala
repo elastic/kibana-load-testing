@@ -4,6 +4,7 @@ import spray.json.DefaultJsonProtocol.{BooleanJsonFormat, IntJsonFormat}
 import spray.json.lenses.JsonLenses._
 import io.circe.Json
 import io.circe.parser.parse
+import org.apache.http.HttpStatus
 import org.apache.http.client.methods.{
   CloseableHttpResponse,
   HttpDelete,
@@ -11,7 +12,8 @@ import org.apache.http.client.methods.{
 }
 import org.apache.http.entity.{ContentType, StringEntity}
 import org.apache.http.entity.mime.MultipartEntityBuilder
-import org.apache.http.impl.client.HttpClientBuilder
+import org.apache.http.impl.client.{CloseableHttpClient, HttpClients}
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager
 import org.apache.http.util.EntityUtils
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.Helper.checkFilesExist
@@ -29,35 +31,39 @@ case class SavedObject(id: String, soType: String)
 
 class KbnClient(config: KibanaConfiguration) {
   private val logger: Logger = LoggerFactory.getLogger("KbnClient")
+  private val MAX_CONCURRENT_CONNECTIONS = 20
   private def getJsonPath(path: Path) =
-    if (path.toString.endsWith(".json")) path else Paths.get(path.toString + ".json")
+    if (path.toString.endsWith(".json")) path
+    else Paths.get(path.toString + ".json")
 
-  def getCookie(): String = {
-    val loginHeaders = Map(
-      "Content-Type" -> "application/json",
-      "kbn-xsrf" -> "xsrf"
-    )
-    val url = config.baseUrl + "/internal/security/login"
-    val loginRequest = new HttpPost(url)
-    loginHeaders foreach {
-      case (key, value) => loginRequest.addHeader(key, value)
+  def getClientAndConnectionManager(
+      perRouteConnections: Int = MAX_CONCURRENT_CONNECTIONS,
+      withAuth: Boolean = true
+  ): (CloseableHttpClient, PoolingHttpClientConnectionManager) = {
+    val connManager = new PoolingHttpClientConnectionManager()
+    connManager.setDefaultMaxPerRoute(perRouteConnections)
+    connManager.setMaxTotal(perRouteConnections)
+    val client = HttpClients
+      .custom()
+      .setConnectionManager(connManager)
+      .build()
+
+    if (withAuth) {
+      // login to Kibana
+      val loginHeaders = Map(
+        "Content-Type" -> "application/json",
+        "kbn-xsrf" -> "xsrf"
+      )
+      val url = config.baseUrl + "/internal/security/login"
+      val loginRequest = new HttpPost(url)
+      loginHeaders foreach {
+        case (key, value) => loginRequest.addHeader(key, value)
+      }
+      loginRequest.setEntity(new StringEntity(config.loginPayload))
+      client.execute(loginRequest)
     }
-    val client = HttpClientBuilder.create.build
-    loginRequest.setEntity(new StringEntity(config.loginPayload))
-    val loginResponse: CloseableHttpResponse = null
-    try {
-      val loginResponse = client.execute(loginRequest)
-      loginResponse
-        .getHeaders("set-cookie")(0)
-        .getValue
-        .split(";")(0)
-    } catch {
-      case e: Throwable =>
-        throw new RuntimeException("Login exception", e)
-    } finally {
-      if (loginResponse != null) loginResponse.close()
-      client.close()
-    }
+
+    (client, connManager)
   }
 
   def load(path: Path): Unit = {
@@ -67,13 +73,11 @@ class KbnClient(config: KibanaConfiguration) {
     logger.info(
       s"Importing ${savedObjectStringList.length} saved objects from [${archivePath.toString}]"
     )
-    val cookie = this.getCookie()
     val importRequest = new HttpPost(
       config.baseUrl + "/api/saved_objects/_import?overwrite=true"
     )
     importRequest.addHeader("Connection", "keep-alive")
     importRequest.addHeader("kbn-version", config.buildVersion)
-    importRequest.addHeader("Cookie", cookie)
 
     val builder = MultipartEntityBuilder.create
     builder.addBinaryBody(
@@ -87,7 +91,7 @@ class KbnClient(config: KibanaConfiguration) {
     val multipart = builder.build()
     importRequest.setEntity(multipart)
     var response: CloseableHttpResponse = null
-    val client = HttpClientBuilder.create.build
+    val (client, connManager) = getClientAndConnectionManager()
     try {
       response = client.execute(importRequest)
       val responseBody = EntityUtils.toString(response.getEntity)
@@ -109,10 +113,13 @@ class KbnClient(config: KibanaConfiguration) {
     } finally {
       if (response != null) response.close()
       client.close()
+      connManager.close()
     }
   }
 
   def unload(path: Path): Unit = {
+    val (client, connManager) = getClientAndConnectionManager()
+
     val archivePath = this.getJsonPath(path)
     checkFilesExist(archivePath)
     val savedObjects = Helper
@@ -127,35 +134,43 @@ class KbnClient(config: KibanaConfiguration) {
     logger.info(
       s"Deleting ${savedObjects.length} saved objects from [${archivePath.toString}]"
     )
-    // login to Kibana once and reuse cookie for concurrent requests
-    val cookie = this.getCookie()
-    // Allow 20 requests to be executing at once
+    // Allow specific amount of requests to be executing at once
     implicit val executionContext = ExecutionContext.fromExecutor(
       new java.util.concurrent.ForkJoinPool(
-        20
+        MAX_CONCURRENT_CONNECTIONS
       )
     )
 
     val requestsFuture = Future.sequence(
       savedObjects.map(so =>
         Future {
-          val client = HttpClientBuilder.create.build
+          var response: CloseableHttpResponse = null
+          val url =
+            s"${config.baseUrl}/api/saved_objects/${so.soType}/${so.id}?force=true"
           try {
-            val url = s"${config.baseUrl}/api/saved_objects/${so.soType}/${so.id}?force=true"
             val deleteRequest = new HttpDelete(url)
             deleteRequest.addHeader("Connection", "keep-alive")
             deleteRequest.addHeader("kbn-version", config.buildVersion)
-            deleteRequest.addHeader("Cookie", cookie)
-            val response = client.execute(deleteRequest)
+            response = client.execute(deleteRequest)
             response.getStatusLine
-          } finally client.close()
+          } catch {
+            case e: Throwable =>
+              throw new RuntimeException(
+                s"[$url] SavedObject deletion failed",
+                e
+              )
+          } finally {
+            if (response != null) response.close()
+          }
         }
       )
     )
 
     requestsFuture.onComplete {
       case Success(res) =>
-        val successCount = res.count(r => r.getStatusCode == 200)
+        client.close()
+        connManager.close()
+        val successCount = res.count(r => r.getStatusCode == HttpStatus.SC_OK)
         if (successCount == res.length) {
           logger.info("All saved objects deleted")
         } else {
@@ -164,6 +179,8 @@ class KbnClient(config: KibanaConfiguration) {
           )
         }
       case Failure(e) =>
+        client.close()
+        connManager.close()
         throw new RuntimeException("Failed to delete saved objects", e)
     }
     Await.ready(requestsFuture, 120.seconds) // 2 min timeout
