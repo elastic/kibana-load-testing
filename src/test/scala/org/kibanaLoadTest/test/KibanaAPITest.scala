@@ -72,5 +72,4 @@ class KibanaAPITest {
     val loginClosure: Executable = () => helper.loginIfNeeded(httpClient)
     assertDoesNotThrow(loginClosure, "helper.loginIfNeeded throws exception")
   }
-
 }

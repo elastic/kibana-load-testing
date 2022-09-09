@@ -23,8 +23,7 @@ import java.io.ByteArrayInputStream
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Path, Paths}
 import scala.concurrent.{Await, ExecutionContext, Future}
-import scala.util.Success
-import scala.util.Failure
+import scala.util.{Failure, Success, Using}
 import scala.concurrent.duration.DurationInt
 
 case class SavedObject(id: String, soType: String)
@@ -41,7 +40,9 @@ class KbnClient(config: KibanaConfiguration) {
       withAuth: Boolean = true
   ): (CloseableHttpClient, PoolingHttpClientConnectionManager) = {
     val connManager = new PoolingHttpClientConnectionManager()
+    // default value is 2
     connManager.setDefaultMaxPerRoute(perRouteConnections)
+    // default value is 100, updating for consistency
     connManager.setMaxTotal(perRouteConnections)
     val client = HttpClients
       .custom()
@@ -69,57 +70,60 @@ class KbnClient(config: KibanaConfiguration) {
   def load(path: Path): Unit = {
     val archivePath = this.getJsonPath(path)
     checkFilesExist(archivePath)
-    val savedObjectStringList = Helper.readArchiveFile(archivePath)
-    logger.info(
-      s"Importing ${savedObjectStringList.length} saved objects from [${archivePath.toString}]"
-    )
-    val importRequest = new HttpPost(
-      config.baseUrl + "/api/saved_objects/_import?overwrite=true"
-    )
-    importRequest.addHeader("Connection", "keep-alive")
-    importRequest.addHeader("kbn-version", config.buildVersion)
-
-    val builder = MultipartEntityBuilder.create
-    builder.addBinaryBody(
-      "file",
-      new ByteArrayInputStream(
-        savedObjectStringList.mkString("\n").getBytes(StandardCharsets.UTF_8)
-      ),
-      ContentType.APPLICATION_OCTET_STREAM,
-      "import.ndjson"
-    )
-    val multipart = builder.build()
-    importRequest.setEntity(multipart)
-    var response: CloseableHttpResponse = null
     val (client, connManager) = getClientAndConnectionManager()
-    try {
-      response = client.execute(importRequest)
-      val responseBody = EntityUtils.toString(response.getEntity)
+    Using.resources(client, connManager) { (client, connManager) =>
+      val savedObjectStringList = Helper.readArchiveFile(archivePath)
+      logger.info(
+        s"Importing ${savedObjectStringList.length} saved objects from [${archivePath.toString}]"
+      )
+      val importRequest = new HttpPost(
+        config.baseUrl + "/api/saved_objects/_import?overwrite=true"
+      )
+      importRequest.addHeader("Connection", "keep-alive")
+      importRequest.addHeader("kbn-version", config.buildVersion)
+      val builder = MultipartEntityBuilder.create
+      builder.addBinaryBody(
+        "file",
+        new ByteArrayInputStream(
+          savedObjectStringList.mkString("\n").getBytes(StandardCharsets.UTF_8)
+        ),
+        ContentType.APPLICATION_OCTET_STREAM,
+        "import.ndjson"
+      )
+      val multipart = builder.build()
+      importRequest.setEntity(multipart)
+      var response: CloseableHttpResponse = null
+      try {
+        response = client.execute(importRequest)
+        val responseBody = EntityUtils.toString(response.getEntity)
 
-      val isSuccess = responseBody
-        .extract[Boolean](Symbol("success"))
-      val successCount = responseBody
-        .extract[Int](Symbol("successCount"))
-      if (isSuccess && (successCount == savedObjectStringList.length)) {
-        logger.info("Import finished successfully")
-      } else {
-        logger.error(
-          s"Import finished with errors, $successCount out of ${savedObjectStringList.length} saved objects imported"
-        )
+        val isSuccess = responseBody
+          .extract[Boolean](Symbol("success"))
+        val successCount = responseBody
+          .extract[Int](Symbol("successCount"))
+        if (isSuccess && (successCount == savedObjectStringList.length)) {
+          logger.info("Import finished successfully")
+        } else {
+          logger.error(
+            s"Import finished with errors, $successCount out of ${savedObjectStringList.length} saved objects imported"
+          )
+        }
+      } catch {
+        case e: Throwable =>
+          throw new RuntimeException("Exception during saved objects import", e)
+      } finally {
+        if (response != null) response.close()
       }
-    } catch {
-      case e: Throwable =>
-        throw new RuntimeException("Exception during saved objects import", e)
-    } finally {
-      if (response != null) response.close()
-      client.close()
-      connManager.close()
     }
   }
 
-  def unload(path: Path): Unit = {
-    val (client, connManager) = getClientAndConnectionManager()
+  private def doUnload(
+      path: Path,
+      client: CloseableHttpClient,
+      connManager: PoolingHttpClientConnectionManager
+  ): Unit = {}
 
+  def unload(path: Path): Unit = {
     val archivePath = this.getJsonPath(path)
     checkFilesExist(archivePath)
     val savedObjects = Helper
@@ -130,59 +134,60 @@ class KbnClient(config: KibanaConfiguration) {
         val soType = json.hcursor.get[String]("type").getOrElse(null)
         SavedObject(id, soType)
       })
-
     logger.info(
       s"Deleting ${savedObjects.length} saved objects from [${archivePath.toString}]"
     )
-    // Allow specific amount of requests to be executing at once
-    implicit val executionContext = ExecutionContext.fromExecutor(
-      new java.util.concurrent.ForkJoinPool(
-        MAX_CONCURRENT_CONNECTIONS
-      )
-    )
-
-    val requestsFuture = Future.sequence(
-      savedObjects.map(so =>
-        Future {
-          var response: CloseableHttpResponse = null
-          val url =
-            s"${config.baseUrl}/api/saved_objects/${so.soType}/${so.id}?force=true"
-          try {
-            val deleteRequest = new HttpDelete(url)
-            deleteRequest.addHeader("Connection", "keep-alive")
-            deleteRequest.addHeader("kbn-version", config.buildVersion)
-            response = client.execute(deleteRequest)
-            response.getStatusLine
-          } catch {
-            case e: Throwable =>
-              throw new RuntimeException(
-                s"[$url] SavedObject deletion failed",
-                e
-              )
-          } finally {
-            if (response != null) response.close()
-          }
-        }
-      )
-    )
-
-    requestsFuture.onComplete {
-      case Success(res) =>
-        client.close()
-        connManager.close()
-        val successCount = res.count(r => r.getStatusCode == HttpStatus.SC_OK)
-        if (successCount == res.length) {
-          logger.info("All saved objects deleted")
-        } else {
-          logger.info(
-            s"${res.length - successCount} out of ${res.length} saved objects were not deleted"
+    val (client, connManager) = getClientAndConnectionManager()
+    Using.resources(client, connManager) { (client, connManager) =>
+      {
+        // Allow specific amount of requests to be executing at once
+        implicit val executionContext = ExecutionContext.fromExecutor(
+          new java.util.concurrent.ForkJoinPool(
+            MAX_CONCURRENT_CONNECTIONS
           )
+        )
+
+        val requestsFuture = Future.sequence(
+          savedObjects.map(so =>
+            Future {
+              var response: CloseableHttpResponse = null
+              val url =
+                s"${config.baseUrl}/api/saved_objects/${so.soType}/${so.id}?force=true"
+              try {
+                val deleteRequest = new HttpDelete(url)
+                deleteRequest.addHeader("Connection", "keep-alive")
+                deleteRequest.addHeader("kbn-version", config.buildVersion)
+                response = client.execute(deleteRequest)
+                response.getStatusLine
+              } catch {
+                case e: Throwable =>
+                  throw new RuntimeException(
+                    s"[$url] SavedObject deletion failed",
+                    e
+                  )
+              } finally {
+                if (response != null) response.close()
+              }
+            }
+          )
+        )
+
+        requestsFuture.onComplete {
+          case Success(res) =>
+            val successCount =
+              res.count(r => r.getStatusCode == HttpStatus.SC_OK)
+            if (successCount == res.length) {
+              logger.info("All saved objects deleted")
+            } else {
+              logger.info(
+                s"${res.length - successCount} out of ${res.length} saved objects were not deleted"
+              )
+            }
+          case Failure(e) =>
+            throw new RuntimeException("Failed to delete saved objects", e)
         }
-      case Failure(e) =>
-        client.close()
-        connManager.close()
-        throw new RuntimeException("Failed to delete saved objects", e)
+        Await.ready(requestsFuture, 120.seconds) // 2 min timeout
+      }
     }
-    Await.ready(requestsFuture, 120.seconds) // 2 min timeout
   }
 }
