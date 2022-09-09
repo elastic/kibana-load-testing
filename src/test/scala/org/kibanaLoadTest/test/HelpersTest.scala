@@ -3,10 +3,15 @@ package org.kibanaLoadTest.test
 import org.junit.jupiter.api.Assertions.{assertEquals, assertThrows, assertTrue}
 import org.junit.jupiter.api.Test
 import org.kibanaLoadTest.KibanaConfiguration
-import org.kibanaLoadTest.helpers.Helper.{generateUUID, getTargetPath}
+import org.kibanaLoadTest.helpers.Helper.{
+  generateUUID,
+  getTargetPath,
+  readArchiveFile
+}
 import org.kibanaLoadTest.helpers.{Helper, Version}
 
-import java.io.File
+import java.io.{File, FileNotFoundException}
+import java.nio.file.Paths
 import java.util.Calendar
 import scala.reflect.io.Directory
 
@@ -148,5 +153,26 @@ class HelpersTest {
     assertEquals(9220, url.getPort)
     assertEquals("http", url.getProtocol)
     assertEquals("localhost", url.getHost)
+  }
+
+  @Test
+  def checkFilesExistTest(): Unit = {
+    val invalidPath = "/xyz/so.json"
+    val exception = assertThrows(
+      classOf[FileNotFoundException],
+      () => Helper.checkFilesExist(Paths.get(invalidPath))
+    )
+    assertEquals(
+      s"File does not exist: $invalidPath",
+      exception.getMessage
+    )
+  }
+
+  @Test
+  def readArchiveFileTest(): Unit = {
+    val savedObjectPath =
+      Paths.get(getClass.getResource("/test/so.json").getPath)
+    val list = readArchiveFile(savedObjectPath)
+    assertEquals(2, list.length)
   }
 }

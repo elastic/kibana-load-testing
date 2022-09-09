@@ -1,6 +1,6 @@
 package org.kibanaLoadTest.simulation.generic.mapping
 
-import StageJsonProtocol._
+import StepJsonProtocol._
 import spray.json.DefaultJsonProtocol
 
 case class ScalabilitySetup(

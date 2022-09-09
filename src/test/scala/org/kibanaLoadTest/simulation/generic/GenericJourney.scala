@@ -11,13 +11,14 @@ import io.gatling.http.Predef._
 import io.gatling.http.protocol.HttpProtocolBuilder
 import io.gatling.http.request.builder.HttpRequestBuilder
 import org.kibanaLoadTest.KibanaConfiguration
-import org.kibanaLoadTest.helpers.Helper
-import org.kibanaLoadTest.helpers.HttpHelper
+import org.kibanaLoadTest.helpers.{ESArchiver, Helper, HttpHelper, KbnClient}
 import org.kibanaLoadTest.simulation.generic
-import org.kibanaLoadTest.simulation.generic.mapping.{Step, Journey}
+import org.kibanaLoadTest.simulation.generic.mapping.{Journey, Step, TestData}
 import org.kibanaLoadTest.simulation.generic.mapping.JourneyJsonProtocol._
 import spray.json._
 
+import java.nio.file.Files
+import java.nio.file.{Path, Paths}
 import java.io.File
 import java.util.concurrent.TimeUnit
 import scala.collection.mutable.ListBuffer
@@ -171,8 +172,26 @@ class GenericJourney extends Simulation {
     scn.inject(steps)
   }
 
+  def testDataLoader(
+      testData: TestData,
+      kibanaRootPath: String,
+      kbnClientCallback: Path => Unit,
+      esArchiverCallback: Path => Unit
+  ): Unit = {
+    if (testData.esArchives.isDefined) {
+      testData.esArchives.get.foreach(archiveRelativePath => {
+        esArchiverCallback(Paths.get(kibanaRootPath, archiveRelativePath))
+      })
+    }
+    if (testData.kbnArchives.isDefined) {
+      testData.kbnArchives.get.foreach(archiveRelativePath => {
+        kbnClientCallback(Paths.get(kibanaRootPath, archiveRelativePath))
+      })
+    }
+  }
+
   private val journeyJson =
-    Using(fromFile(Helper.loadJsonFile("journeyPath"))) { f =>
+    Using(fromFile(Helper.loadFile("journeyPath"))) { f =>
       f.getLines().mkString("\n")
     }
   private val journey = journeyJson.get.parseJson.convertTo[Journey]
@@ -185,6 +204,7 @@ class GenericJourney extends Simulation {
   private val providerName = sys.env.getOrElse("AUTH_PROVIDER_NAME", "basic")
   private val username = sys.env.getOrElse("AUTH_LOGIN", "elastic")
   private val password = sys.env.getOrElse("AUTH_PASSWORD", "changeme")
+  private val kibanaRootPath = sys.env.get("KIBANA_DIR")
 
   private val config: KibanaConfiguration = new KibanaConfiguration(
     kibanaHost,
@@ -194,6 +214,8 @@ class GenericJourney extends Simulation {
     providerType,
     providerName
   )
+  val esArchiver = new ESArchiver(config)
+  val kbnClient = new KbnClient(config)
   private val httpProtocol: HttpProtocolBuilder =
     new HttpHelper(config).getProtocol
       .baseUrl(config.baseUrl)
@@ -211,6 +233,23 @@ class GenericJourney extends Simulation {
     s"test for ${journey.journeyName} ${config.version}"
   )
 
+  private val testData = journey.testData
+  if (testData.isDefined) {
+    if (
+      kibanaRootPath.isEmpty || !Files.exists(Paths.get(kibanaRootPath.get))
+    ) {
+      throw new IllegalArgumentException(
+        s"Loading test data requires Kibana root folder path to be set, use 'KIBANA_DIR' env var"
+      )
+    }
+    testDataLoader(
+      testData.get,
+      kibanaRootPath.get,
+      kbnClient.load,
+      esArchiver.load
+    )
+  }
+
   setUp(
     populationForStage(warmupScenario, journey.scalabilitySetup.warmup)
       .protocols(httpProtocol)
@@ -219,4 +258,16 @@ class GenericJourney extends Simulation {
           .protocols(httpProtocol)
       )
   ).maxDuration(getDuration(journey.scalabilitySetup.maxDuration))
+
+  // Using 'after' hook to cleanup Elasticsearch after journey run
+  after {
+    if (testData.isDefined) {
+      testDataLoader(
+        testData.get,
+        kibanaRootPath.get,
+        kbnClient.unload,
+        esArchiver.unload
+      )
+    }
+  }
 }
