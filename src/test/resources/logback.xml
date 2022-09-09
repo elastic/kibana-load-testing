@@ -1,44 +1,34 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger{15} - %msg%n%rEx</pattern>
+            <immediateFlush>false</immediateFlush>
+        </encoder>
+    </appender>
 
-    	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-    		<encoder>
-    			<pattern>%d{HH:mm:ss.SSS} [%-5level] %logger{15} - %msg%n%rEx</pattern>
-    		</encoder>
-    		<immediateFlush>false</immediateFlush>
-    	</appender>
-    <timestamp key="date" datePattern="yyyyMMddHHmmss"/>
-
-    <!-- uncomment and set to DEBUG to log all failing HTTP requests -->
-    <!-- uncomment and set to TRACE to log all HTTP requests -->
-    <!-- <logger name="io.gatling.http.engine.response" level="TRACE" />-->
+    <timestamp key="timestamp" datePattern="yyyyMMddHHmmss"/>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>target/simulation-${date}.log</file>
+        <file>target/gatling/response-${timestamp}.log</file>
+        <append>true</append>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger{15} - %msg%n%rEx</pattern>
         </encoder>
     </appender>
 
-<!--    <appender name="FILE_RESP" class="ch.qos.logback.core.FileAppender">-->
-<!--        <file>target/response-${date}.log</file>-->
-<!--        <encoder>-->
-<!--            <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger{15} - %msg%n%rEx</pattern>-->
-<!--        </encoder>-->
-<!--    </appender>-->
-
-    <!-- uncomment and set to DEBUG to log all failing HTTP requests -->
-    <!-- uncomment and set to TRACE to log all HTTP requests -->
-<!--    <logger name="io.gatling.http.engine.response" level="TRACE" additivity="false">-->
-<!--        <appender-ref ref="FILE_RESP"/>-->
-<!--    </logger>-->
+    <!--     uncomment and set to DEBUG to log all failing HTTP requests -->
+    <!--     uncomment and set to TRACE to log all HTTP requests -->
+    <!--    <logger name="io.gatling.http.engine.response" level="TRACE"/>-->
+    <!--    <logger name="io.gatling.http.engine.response" level="TRACE" additivity="false">-->
+    <!--        <appender-ref ref="FILE"/>-->
+    <!--    </logger>-->
 
     <root level="INFO">
+        <appender-ref ref="FILE"/>
         <appender-ref ref="CONSOLE"/>
     </root>
 
-<!--    <logger level="info" name="httpClient">-->
-<!--        <appender-ref ref="CONSOLE" />-->
-<!--    </logger>-->
-
+    <logger name="Configuration" level="WARN"/>
+    <logger name="ES_Client" level="WARN"/>
 </configuration>
