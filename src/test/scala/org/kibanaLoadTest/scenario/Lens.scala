@@ -38,27 +38,14 @@ object Lens {
       )
       .pause(1)
       .exec(
-        http("bulk_resolve: index-pattern")
-          .post("/api/saved_objects/_bulk_resolve")
-          .headers(headers)
-          .header("Referer", baseUrl + "/app/lens")
-          .body(
-            StringBody(
-              "[{\"id\":\"#{indexPatternId}\",\"type\":\"index-pattern\"}]"
-            )
-          )
-          .check(status.is(200))
-      )
-      .pause(1)
-      .exec(
         http("query index pattern meta fields")
           .get("/api/index_patterns/_fields_for_wildcard")
           .queryParam("pattern", "kibana_sample_data_ecommerce")
           .queryParam("meta_fields", "_source")
           .queryParam("meta_fields", "_id")
-          .queryParam("meta_fields", "_type")
           .queryParam("meta_fields", "_index")
           .queryParam("meta_fields", "_score")
+          .queryParam("allow_no_index", "false")
           .headers(headers)
           .header("Referer", baseUrl + "/app/lens")
           .check(status.is(200))
@@ -73,14 +60,6 @@ object Lens {
           .check(status.is(200))
       )
       .pause(1)
-      .exec(
-        http("lens/existing_fields")
-          .post("/api/lens/existing_fields/#{indexPatternId}")
-          .headers(headers)
-          .header("Referer", baseUrl + "/app/lens")
-          .body(ElFileBody(s"data/lens/$id/existing_fields.json"))
-          .check(status.is(200))
-      )
       .exec(
         http("bsearch")
           .post("/internal/bsearch")
