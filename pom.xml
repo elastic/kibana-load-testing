@@ -15,7 +15,7 @@
         <elasticsearch.client.version>8.3.1</elasticsearch.client.version>
         <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <gatling.version>3.8.3</gatling.version>
+        <gatling.version>3.8.4</gatling.version>
         <gatling-maven-plugin.version>4.2.6</gatling-maven-plugin.version>
     </properties>
 
