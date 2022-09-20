@@ -15,6 +15,7 @@ import org.kibanaLoadTest.helpers.{ESArchiver, Helper, HttpHelper, KbnClient}
 import org.kibanaLoadTest.simulation.generic
 import org.kibanaLoadTest.simulation.generic.mapping.{Journey, Step, TestData}
 import org.kibanaLoadTest.simulation.generic.mapping.JourneyJsonProtocol._
+import org.slf4j.{Logger, LoggerFactory}
 import spray.json._
 
 import java.nio.file.Files
@@ -190,6 +191,7 @@ class GenericJourney extends Simulation {
     }
   }
 
+  private val logger: Logger = LoggerFactory.getLogger("GenericJourney")
   private val journeyJson =
     Using(fromFile(Helper.loadFile("journeyPath"))) { f =>
       f.getLines().mkString("\n")
@@ -205,6 +207,8 @@ class GenericJourney extends Simulation {
   private val username = sys.env.getOrElse("AUTH_LOGIN", "elastic")
   private val password = sys.env.getOrElse("AUTH_PASSWORD", "changeme")
   private val kibanaRootPath = sys.env.get("KIBANA_DIR")
+  private val stepMaxUsersCount = sys.env.get("GATLING_STEP_MAX_USERS_COUNT")
+  private val stepDuration = sys.env.get("GATLING_STEP_DURATION")
 
   private val config: KibanaConfiguration = new KibanaConfiguration(
     kibanaHost,
@@ -250,11 +254,27 @@ class GenericJourney extends Simulation {
     )
   }
 
+  val testSteps: List[Step] =
+    if (stepMaxUsersCount.isDefined || stepDuration.isDefined) {
+      logger.info(
+        s"Overriding scalabilitySetup: stepMaxUsersCount=${stepMaxUsersCount
+          .getOrElse("")} stepDuration= ${stepDuration.getOrElse("")}"
+      )
+      journey.scalabilitySetup.test.map(step =>
+        Step(
+          step.action,
+          step.minUsersCount,
+          (stepMaxUsersCount.getOrElse(step.maxUsersCount.toString)).toInt,
+          stepDuration.getOrElse(step.duration)
+        )
+      )
+    } else journey.scalabilitySetup.test
+
   setUp(
     populationForStage(warmupScenario, journey.scalabilitySetup.warmup)
       .protocols(httpProtocol)
       .andThen(
-        populationForStage(testScenario, journey.scalabilitySetup.test)
+        populationForStage(testScenario, testSteps)
           .protocols(httpProtocol)
       )
   ).maxDuration(getDuration(journey.scalabilitySetup.maxDuration))
