@@ -250,11 +250,14 @@ class GenericJourney extends Simulation {
     )
   }
 
+  val step = Step("constantConcurrentUsers", Option.empty, 500, "5m")
+  val testSteps: List[Step] = List(step)
+
   setUp(
     populationForStage(warmupScenario, journey.scalabilitySetup.warmup)
       .protocols(httpProtocol)
       .andThen(
-        populationForStage(testScenario, journey.scalabilitySetup.test)
+        populationForStage(testScenario, testSteps)
           .protocols(httpProtocol)
       )
   ).maxDuration(getDuration(journey.scalabilitySetup.maxDuration))
