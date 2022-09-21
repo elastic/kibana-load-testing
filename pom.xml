@@ -15,7 +15,7 @@
         <elasticsearch.client.version>8.3.1</elasticsearch.client.version>
         <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <gatling.version>3.8.3</gatling.version>
+        <gatling.version>3.8.4</gatling.version>
         <gatling-maven-plugin.version>4.2.6</gatling-maven-plugin.version>
     </properties>
 
@@ -74,13 +74,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.9.0</version>
+            <version>5.9.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.9.0</version>
+            <version>5.9.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -139,7 +139,7 @@
             <plugin>
                 <!-- so that maven can create a jar -->
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>3.3.0</version>
             </plugin>
 
             <!-- this plugin is so maven can compile your scala code -->
