@@ -166,13 +166,13 @@ class GenericJourney extends Simulation {
     logger.info(s"Closed model: building ${step.toString}")
     step.action match {
       case "constantConcurrentUsers" =>
-        constantConcurrentUsers(step.maxUsersCount) during (getDuration(
-          step.duration
+        constantConcurrentUsers(step.userCount.get) during (getDuration(
+          step.duration.get
         ))
       case "rampConcurrentUsers" =>
         rampConcurrentUsers(
           step.minUsersCount.get
-        ) to step.maxUsersCount during (getDuration(step.duration))
+        ) to step.maxUsersCount.get during (getDuration(step.duration.get))
       case _ =>
         throw new IllegalArgumentException(
           s"Invalid closed model: ${step.action}"
@@ -184,18 +184,19 @@ class GenericJourney extends Simulation {
     logger.info(s"Open model: building${step.toString}")
     step.action match {
       case "atOnceUsers" =>
-        atOnceUsers(step.maxUsersCount)
+        atOnceUsers(step.userCount.get)
       case "rampUsers" =>
-        rampUsers(step.maxUsersCount).during(getDuration(step.duration))
+        rampUsers(step.userCount.get).during(getDuration(step.duration.get))
       case "constantUsersPerSec" =>
-        constantUsersPerSec(step.maxUsersCount.toDouble)
-          .during(getDuration(step.duration))
+        constantUsersPerSec(step.userCount.get.toDouble)
+          .during(getDuration(step.duration.get))
       case "stressPeakUsers" =>
-        stressPeakUsers(step.maxUsersCount).during(getDuration(step.duration))
+        stressPeakUsers(step.userCount.get)
+          .during(getDuration(step.duration.get))
       case "rampUsersPerSec" =>
         rampUsersPerSec(step.minUsersCount.get)
-          .to(step.maxUsersCount)
-          .during(getDuration(step.duration))
+          .to(step.maxUsersCount.get)
+          .during(getDuration(step.duration.get))
       case _ =>
         throw new IllegalArgumentException(
           s"Invalid open model: ${step.action}"
