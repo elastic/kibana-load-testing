@@ -7,7 +7,11 @@ case class Step(
     minUsersCount: Option[Int],
     maxUsersCount: Int,
     duration: String
-)
+) {
+  override def toString: String =
+    s"action=[$action] users=[${if (minUsersCount.isDefined) s"${minUsersCount.get},"
+    else ""}$maxUsersCount] duration=[$duration]"
+}
 
 object StepJsonProtocol extends DefaultJsonProtocol {
   implicit val stepFormat = jsonFormat4(Step)

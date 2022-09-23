@@ -2,6 +2,7 @@ package org.kibanaLoadTest.simulation.generic
 
 import io.gatling.core.Predef._
 import io.gatling.core.controller.inject.closed.ClosedInjectionStep
+import io.gatling.core.controller.inject.open.OpenInjectionStep
 import io.gatling.core.structure.{
   ChainBuilder,
   PopulationBuilder,
@@ -15,6 +16,7 @@ import org.kibanaLoadTest.helpers.{ESArchiver, Helper, HttpHelper, KbnClient}
 import org.kibanaLoadTest.simulation.generic
 import org.kibanaLoadTest.simulation.generic.mapping.{Journey, Step, TestData}
 import org.kibanaLoadTest.simulation.generic.mapping.JourneyJsonProtocol._
+import org.slf4j.{Logger, LoggerFactory}
 import spray.json._
 
 import java.nio.file.Files
@@ -107,6 +109,17 @@ object ApiCall {
 }
 
 class GenericJourney extends Simulation {
+  val logger: Logger = LoggerFactory.getLogger("GenericJourney")
+  val modelsMap = Map(
+    "constantConcurrentUsers" -> "closed",
+    "rampConcurrentUsers" -> "closed",
+    "atOnceUsers" -> "open",
+    "rampUsers" -> "open",
+    "rampUsersPerSec" -> "open",
+    "constantUsersPerSec" -> "open",
+    "stressPeakUsers" -> "open"
+  )
+
   def getDuration(duration: String) = {
     duration.takeRight(1) match {
       case "s" => duration.dropRight(1).toInt
@@ -149,27 +162,78 @@ class GenericJourney extends Simulation {
     scenario(scenarioName).exec(steps)
   }
 
+  def closedModelStep(step: Step): ClosedInjectionStep = {
+    logger.info(s"Closed model: building ${step.toString}")
+    step.action match {
+      case "constantConcurrentUsers" =>
+        constantConcurrentUsers(step.maxUsersCount) during (getDuration(
+          step.duration
+        ))
+      case "rampConcurrentUsers" =>
+        rampConcurrentUsers(
+          step.minUsersCount.get
+        ) to step.maxUsersCount during (getDuration(step.duration))
+      case _ =>
+        throw new IllegalArgumentException(
+          s"Invalid closed model: ${step.action}"
+        )
+    }
+  }
+
+  def openModelStep(step: Step): OpenInjectionStep = {
+    logger.info(s"Open model: building${step.toString}")
+    step.action match {
+      case "atOnceUsers" =>
+        atOnceUsers(step.maxUsersCount)
+      case "rampUsers" =>
+        rampUsers(step.maxUsersCount).during(getDuration(step.duration))
+      case "constantUsersPerSec" =>
+        constantUsersPerSec(step.maxUsersCount.toDouble)
+          .during(getDuration(step.duration))
+      case "stressPeakUsers" =>
+        stressPeakUsers(step.maxUsersCount).during(getDuration(step.duration))
+      case "rampUsersPerSec" =>
+        rampUsersPerSec(step.minUsersCount.get)
+          .to(step.maxUsersCount)
+          .during(getDuration(step.duration))
+      case _ =>
+        throw new IllegalArgumentException(
+          s"Invalid open model: ${step.action}"
+        )
+    }
+  }
+
   def populationForStage(
       scn: ScenarioBuilder,
-      stage: List[Step]
+      steps: List[Step]
   ): PopulationBuilder = {
-    val steps = ListBuffer[ClosedInjectionStep]()
-    for (step <- stage) {
-      val injectionStep = step.action match {
-        case "constantConcurrentUsers" =>
-          constantConcurrentUsers(step.maxUsersCount) during (getDuration(
-            step.duration
-          ))
-        case "rampConcurrentUsers" =>
-          rampConcurrentUsers(
-            step.minUsersCount.get
-          ) to step.maxUsersCount during (getDuration(step.duration))
-        case _ =>
-          throw new IllegalArgumentException(s"Invalid action: ${step.action}")
-      }
-      steps.addOne(injectionStep)
+    logger.info(s"Building population for '${scn.name}' scenario")
+    if (steps.isEmpty) {
+      throw new IllegalArgumentException(
+        s"'${scn.name}': injection steps must be defined"
+      )
     }
-    scn.inject(steps)
+    val models = steps
+      .map(step =>
+        modelsMap.getOrElse(
+          step.action,
+          throw new IllegalArgumentException(
+            s"Injection model '${step.action}' is not supported by GenericJourney"
+          )
+        )
+      )
+      .distinct
+    if (models.length > 1) {
+      throw new IllegalArgumentException(
+        s"'${scn.name}': closed and open models shouldn't be used in the same stage, fix scalabilitySetup:\n${modelsMap.toString()}"
+      )
+    }
+    models.head match {
+      case "open"   => scn.inject(steps.map(step => openModelStep(step)))
+      case "closed" => scn.inject(steps.map(step => closedModelStep(step)))
+      case _ =>
+        throw new IllegalArgumentException("Unknown step model")
+    }
   }
 
   def testDataLoader(
