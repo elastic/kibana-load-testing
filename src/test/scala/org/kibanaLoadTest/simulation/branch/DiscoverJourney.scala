@@ -2,22 +2,22 @@ package org.kibanaLoadTest.simulation.branch
 
 import io.gatling.core.Predef._
 import io.gatling.core.structure.ScenarioBuilder
-import org.kibanaLoadTest.scenario.{Discover, Login}
+import org.kibanaLoadTest.helpers.KbnClient
+import org.kibanaLoadTest.scenario.Discover
 import org.kibanaLoadTest.simulation.BaseSimulation
 
 class DiscoverJourney extends BaseSimulation {
   val scenarioName = "DiscoverJourney"
   props.maxUsers = 500
+  val client = new KbnClient(appConfig)
+  val cookiesLst = client.generateCookies(props.maxUsers)
+  val circularFeeder = Iterator
+    .continually(cookiesLst.map(i => Map("sidValue" -> i)))
+    .flatten
 
-  val steps = exec(
-    Login
-      .doLogin(
-        appConfig.isSecurityEnabled,
-        appConfig.loginPayload,
-        appConfig.loginStatusCode
-      )
-      .pause(5)
-  ).exec(Discover.load(appConfig.baseUrl, defaultHeaders).pause(10))
+  val steps = feed(circularFeeder)
+    .exec(session => session.set("Cookie", session("sidValue").as[String]))
+    .exec(Discover.load(appConfig.baseUrl, defaultHeaders).pause(10))
     .exec(Discover.do2ExtraQueries(appConfig.baseUrl, defaultHeaders).pause(10))
 
   val warmupScn: ScenarioBuilder = scenario("warmup").exec(steps)
