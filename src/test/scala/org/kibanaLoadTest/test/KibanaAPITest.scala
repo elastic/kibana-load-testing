@@ -1,7 +1,7 @@
 package org.kibanaLoadTest.test
 
 import org.apache.http.impl.client.HttpClientBuilder
-import org.junit.jupiter.api.Assertions.{assertDoesNotThrow}
+import org.junit.jupiter.api.Assertions.{assertDoesNotThrow, assertEquals, assertTrue}
 import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import org.junit.jupiter.api.function.Executable
@@ -71,5 +71,14 @@ class KibanaAPITest {
     val httpClient = HttpClientBuilder.create.build
     val loginClosure: Executable = () => helper.loginIfNeeded(httpClient)
     assertDoesNotThrow(loginClosure, "helper.loginIfNeeded throws exception")
+  }
+
+  @Test
+  def generateCookiesTest(): Unit = {
+    val cookieCount = 1000
+    val client = new KbnClient(config)
+    val cookieLst = client.generateCookies(cookieCount)
+    assertEquals(cookieCount, cookieLst.length)
+    assertTrue(cookieLst(0).startsWith("sid=Fe26.2"))
   }
 }
