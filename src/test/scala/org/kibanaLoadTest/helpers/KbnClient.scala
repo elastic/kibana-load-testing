@@ -189,7 +189,6 @@ class KbnClient(config: KibanaConfiguration) {
 
   def generateCookies(count: Int): List[String] = {
     val (client, connManager) = getClientAndConnectionManager(withAuth = false)
-    var cookies = List.empty[String]
     Using.resources(client, connManager) { (client, connManager) =>
       {
         // Allow specific amount of requests to be executing at once
@@ -218,9 +217,8 @@ class KbnClient(config: KibanaConfiguration) {
           case Failure(e) =>
             throw new RuntimeException("Failed to generate cookies", e)
         }
-        cookies = Await.result(requestsFuture, 120.seconds) // 2 min timeout
+        Await.result(requestsFuture, 120.seconds) // 2 min timeout
       }
     }
-    cookies
   }
 }
