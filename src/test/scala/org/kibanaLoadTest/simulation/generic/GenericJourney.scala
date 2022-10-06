@@ -58,10 +58,13 @@ object ApiCall {
     )
     val defaultHeaders = request.headers.--(excludeHeaders.iterator)
 
-    val headers =
-      if (request.headers.contains("Kbn-Version"))
-        defaultHeaders + ("Kbn-Version" -> config.buildVersion)
-      else defaultHeaders
+    var headers = defaultHeaders
+    if (request.headers.contains("Kbn-Version")) {
+      headers += ("Kbn-Version" -> config.buildVersion)
+    }
+    if (request.headers.contains("Cookie")) {
+      headers += ("Cookie" -> "#{Cookie}")
+    }
     val requestName = s"${request.method} ${request.path
       .replaceAll(".+?(?=\\/bundles)", "") + request.query.getOrElse("")}"
     val url = request.path + request.query.getOrElse("")
@@ -288,7 +291,21 @@ class GenericJourney extends Simulation {
       // Gatling automatically follow redirects in case of 301, 302, 303, 307 or 308 response status code
       // Disabling this behavior since we run the defined sequence of requests
       .disableFollowRedirect
-  private val steps = scenarioSteps(journey, config)
+  private val steps = if (journey.journeyName.contains("login")) {
+    exec(scenarioSteps(journey, config))
+  } else {
+    val cookiesLst =
+      kbnClient.generateCookies(
+        journey.scalabilitySetup.getMaxConcurrentUsers()
+      )
+    val circularFeeder = Iterator
+      .continually(cookiesLst.map(i => Map("sidValue" -> i)))
+      .flatten
+    feed(circularFeeder)
+      .exec(session => session.set("Cookie", session("sidValue").as[String]))
+      .exec(scenarioSteps(journey, config))
+  }
+
   private val warmupScenario = scenarioForStage(
     steps,
     s"warmup for ${journey.journeyName} ${config.version}"

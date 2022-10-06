@@ -9,6 +9,16 @@ case class Step(
     maxUsersCount: Option[Int],
     duration: Option[String]
 ) {
+  def getMaxUsersCount: Int = {
+    userCount match {
+      case Some(value) => value
+      case None =>
+        maxUsersCount match {
+          case Some(value) => value
+          case None        => 0
+        }
+    }
+  }
   override def toString: String = {
     val users = userCount match {
       case Some(count) => s"[$count]"
