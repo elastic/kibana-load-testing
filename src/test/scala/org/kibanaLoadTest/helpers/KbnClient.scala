@@ -199,14 +199,13 @@ class KbnClient(config: KibanaConfiguration) {
         )
 
         val requestsFuture = Future.sequence(
-          List
-            .empty[Future[String]]
-            .padTo(
-              count,
+          (0 to count - 1)
+            .map(i =>
               Future {
                 getCookie(client)
               }
             )
+            .toList
         )
 
         requestsFuture.onComplete {
