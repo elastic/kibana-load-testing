@@ -7,22 +7,22 @@ import io.gatling.core.Predef.{
   scenario
 }
 import io.gatling.core.structure.ScenarioBuilder
-import org.kibanaLoadTest.scenario.{Canvas, Login}
+import org.kibanaLoadTest.helpers.KbnClient
+import org.kibanaLoadTest.scenario.Canvas
 import org.kibanaLoadTest.simulation.BaseSimulation
 
 class CanvasJourney extends BaseSimulation {
   val scenarioName = "CanvasJourney"
   props.maxUsers = 200
+  val client = new KbnClient(appConfig)
+  val cookiesLst = client.generateCookies(props.maxUsers)
+  val circularFeeder = Iterator
+    .continually(cookiesLst.map(i => Map("sidValue" -> i)))
+    .flatten
 
-  val steps = exec(
-    Login
-      .doLogin(
-        appConfig.isSecurityEnabled,
-        appConfig.loginPayload,
-        appConfig.loginStatusCode
-      )
-      .pause(5)
-  ).exec(Canvas.loadWorkpad(appConfig.baseUrl, defaultHeaders))
+  val steps = feed(circularFeeder)
+    .exec(session => session.set("Cookie", session("sidValue").as[String]))
+    .exec(Canvas.loadWorkpad(appConfig.baseUrl, defaultHeaders))
 
   val warmupScn: ScenarioBuilder = scenario("warmup").exec(steps)
   val scn: ScenarioBuilder = scenario(scenarioName).exec(steps)

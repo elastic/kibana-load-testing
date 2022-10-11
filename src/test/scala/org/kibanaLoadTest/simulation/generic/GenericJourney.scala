@@ -58,10 +58,13 @@ object ApiCall {
     )
     val defaultHeaders = request.headers.--(excludeHeaders.iterator)
 
-    val headers =
-      if (request.headers.contains("Kbn-Version"))
-        defaultHeaders + ("Kbn-Version" -> config.buildVersion)
-      else defaultHeaders
+    var headers = defaultHeaders
+    if (request.headers.contains("Kbn-Version")) {
+      headers += ("Kbn-Version" -> config.buildVersion)
+    }
+    if (request.headers.contains("Cookie")) {
+      headers += ("Cookie" -> "#{Cookie}")
+    }
     val requestName = s"${request.method} ${request.path
       .replaceAll(".+?(?=\\/bundles)", "") + request.query.getOrElse("")}"
     val url = request.path + request.query.getOrElse("")
@@ -270,6 +273,13 @@ class GenericJourney extends Simulation {
   private val username = sys.env.getOrElse("AUTH_LOGIN", "elastic")
   private val password = sys.env.getOrElse("AUTH_PASSWORD", "changeme")
   private val kibanaRootPath = sys.env.get("KIBANA_DIR")
+  private def isKibanaRootPathDefined: Either[String, String] = {
+    if (kibanaRootPath.isEmpty || !Files.exists(Paths.get(kibanaRootPath.get)))
+      Left(
+        "Loading test data requires Kibana root folder path to be set, use 'KIBANA_DIR' env var"
+      )
+    else Right(kibanaRootPath.get)
+  }
 
   private val config: KibanaConfiguration = new KibanaConfiguration(
     kibanaHost,
@@ -288,7 +298,19 @@ class GenericJourney extends Simulation {
       // Gatling automatically follow redirects in case of 301, 302, 303, 307 or 308 response status code
       // Disabling this behavior since we run the defined sequence of requests
       .disableFollowRedirect
-  private val steps = scenarioSteps(journey, config)
+  private val steps = if (journey.needsAuthentication()) {
+    val cookiesLst =
+      kbnClient.generateCookies(
+        journey.scalabilitySetup.getMaxConcurrentUsers()
+      )
+    val circularFeeder = Iterator
+      .continually(cookiesLst.map(i => Map("sidValue" -> i)))
+      .flatten
+    feed(circularFeeder)
+      .exec(session => session.set("Cookie", session("sidValue").as[String]))
+      .exec(scenarioSteps(journey, config))
+  } else exec(scenarioSteps(journey, config))
+
   private val warmupScenario = scenarioForStage(
     steps,
     s"warmup for ${journey.journeyName} ${config.version}"
@@ -297,23 +319,6 @@ class GenericJourney extends Simulation {
     steps,
     s"test for ${journey.journeyName} ${config.version}"
   )
-
-  private val testData = journey.testData
-  if (testData.isDefined) {
-    if (
-      kibanaRootPath.isEmpty || !Files.exists(Paths.get(kibanaRootPath.get))
-    ) {
-      throw new IllegalArgumentException(
-        s"Loading test data requires Kibana root folder path to be set, use 'KIBANA_DIR' env var"
-      )
-    }
-    testDataLoader(
-      testData.get,
-      kibanaRootPath.get,
-      kbnClient.load,
-      esArchiver.load
-    )
-  }
 
   setUp(
     populationForStage(warmupScenario, journey.scalabilitySetup.warmup)
@@ -324,11 +329,26 @@ class GenericJourney extends Simulation {
       )
   ).maxDuration(getDuration(journey.scalabilitySetup.maxDuration))
 
+  before {
+    if (journey.testData.isDefined) {
+      isKibanaRootPathDefined match {
+        case Right(path) =>
+          testDataLoader(
+            journey.testData.get,
+            path,
+            kbnClient.load,
+            esArchiver.load
+          )
+        case Left(error) => throw new IllegalArgumentException(error)
+      }
+    }
+  }
+
   // Using 'after' hook to cleanup Elasticsearch after journey run
   after {
-    if (testData.isDefined) {
+    if (journey.testData.isDefined) {
       testDataLoader(
-        testData.get,
+        journey.testData.get,
         kibanaRootPath.get,
         kbnClient.unload,
         esArchiver.unload

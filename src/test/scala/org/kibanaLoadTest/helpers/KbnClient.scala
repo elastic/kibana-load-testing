@@ -5,11 +5,7 @@ import spray.json.lenses.JsonLenses._
 import io.circe.Json
 import io.circe.parser.parse
 import org.apache.http.HttpStatus
-import org.apache.http.client.methods.{
-  CloseableHttpResponse,
-  HttpDelete,
-  HttpPost
-}
+import org.apache.http.client.methods.{HttpDelete, HttpPost}
 import org.apache.http.entity.{ContentType, StringEntity}
 import org.apache.http.entity.mime.MultipartEntityBuilder
 import org.apache.http.impl.client.{CloseableHttpClient, HttpClients}
@@ -51,20 +47,30 @@ class KbnClient(config: KibanaConfiguration) {
 
     if (withAuth) {
       // login to Kibana
-      val loginHeaders = Map(
-        "Content-Type" -> "application/json",
-        "kbn-xsrf" -> "xsrf"
-      )
-      val url = config.baseUrl + "/internal/security/login"
-      val loginRequest = new HttpPost(url)
-      loginHeaders foreach {
-        case (key, value) => loginRequest.addHeader(key, value)
-      }
-      loginRequest.setEntity(new StringEntity(config.loginPayload))
-      client.execute(loginRequest)
+      getCookie(client)
     }
 
     (client, connManager)
+  }
+
+  private def getCookie(client: CloseableHttpClient): String = {
+    val loginRequest = new HttpPost(config.baseUrl + "/internal/security/login")
+    loginRequest.addHeader("Content-Type", "application/json")
+    loginRequest.addHeader("kbn-xsrf", "xsrf")
+    loginRequest.setEntity(new StringEntity(config.loginPayload))
+    Using(client.execute(loginRequest)) { response =>
+      response
+    } match {
+      case Success(response) =>
+        if (response.getStatusLine.getStatusCode == 200) {
+          response.getHeaders("set-cookie")(0).getValue.split(";")(0)
+        } else
+          throw new RuntimeException(
+            s"Failed to login: ${response.getStatusLine}"
+          )
+      case Failure(error) =>
+        throw new RuntimeException(s"Login request failed: $error")
+    }
   }
 
   def load(path: Path): Unit = {
@@ -92,36 +98,29 @@ class KbnClient(config: KibanaConfiguration) {
       )
       val multipart = builder.build()
       importRequest.setEntity(multipart)
-      var response: CloseableHttpResponse = null
-      try {
-        response = client.execute(importRequest)
-        val responseBody = EntityUtils.toString(response.getEntity)
-
-        val isSuccess = responseBody
-          .extract[Boolean](Symbol("success"))
-        val successCount = responseBody
-          .extract[Int](Symbol("successCount"))
-        if (isSuccess && (successCount == savedObjectStringList.length)) {
-          logger.info("Import finished successfully")
-        } else {
-          logger.error(
-            s"Import finished with errors, $successCount out of ${savedObjectStringList.length} saved objects imported"
+      Using(client.execute(importRequest)) { response =>
+        EntityUtils.toString(response.getEntity)
+      } match {
+        case Success(responseBody) =>
+          val isSuccess = responseBody
+            .extract[Boolean](Symbol("success"))
+          val successCount = responseBody
+            .extract[Int](Symbol("successCount"))
+          if (isSuccess && (successCount == savedObjectStringList.length)) {
+            logger.info("Import finished successfully")
+          } else {
+            logger.error(
+              s"Import finished with errors, $successCount out of ${savedObjectStringList.length} saved objects imported"
+            )
+          }
+        case Failure(error) =>
+          throw new RuntimeException(
+            "Exception during saved objects import",
+            error
           )
-        }
-      } catch {
-        case e: Throwable =>
-          throw new RuntimeException("Exception during saved objects import", e)
-      } finally {
-        if (response != null) response.close()
       }
     }
   }
-
-  private def doUnload(
-      path: Path,
-      client: CloseableHttpClient,
-      connManager: PoolingHttpClientConnectionManager
-  ): Unit = {}
 
   def unload(path: Path): Unit = {
     val archivePath = this.getJsonPath(path)
@@ -150,23 +149,20 @@ class KbnClient(config: KibanaConfiguration) {
         val requestsFuture = Future.sequence(
           savedObjects.map(so =>
             Future {
-              var response: CloseableHttpResponse = null
               val url =
                 s"${config.baseUrl}/api/saved_objects/${so.soType}/${so.id}?force=true"
-              try {
-                val deleteRequest = new HttpDelete(url)
-                deleteRequest.addHeader("Connection", "keep-alive")
-                deleteRequest.addHeader("kbn-version", config.buildVersion)
-                response = client.execute(deleteRequest)
+              val deleteRequest = new HttpDelete(url)
+              deleteRequest.addHeader("Connection", "keep-alive")
+              deleteRequest.addHeader("kbn-version", config.buildVersion)
+              Using(client.execute(deleteRequest)) { response =>
                 response.getStatusLine
-              } catch {
-                case e: Throwable =>
+              } match {
+                case Success(status) => status
+                case Failure(error) =>
                   throw new RuntimeException(
                     s"[$url] SavedObject deletion failed",
-                    e
+                    error
                   )
-              } finally {
-                if (response != null) response.close()
               }
             }
           )
@@ -187,6 +183,40 @@ class KbnClient(config: KibanaConfiguration) {
             throw new RuntimeException("Failed to delete saved objects", e)
         }
         Await.ready(requestsFuture, 120.seconds) // 2 min timeout
+      }
+    }
+  }
+
+  def generateCookies(count: Int): List[String] = {
+    val (client, connManager) = getClientAndConnectionManager(withAuth = false)
+    Using.resources(client, connManager) { (client, connManager) =>
+      {
+        // Allow specific amount of requests to be executing at once
+        implicit val executionContext = ExecutionContext.fromExecutor(
+          new java.util.concurrent.ForkJoinPool(
+            MAX_CONCURRENT_CONNECTIONS
+          )
+        )
+
+        val requestsFuture = Future.sequence(
+          (0 to count - 1)
+            .map(i =>
+              Future {
+                getCookie(client)
+              }
+            )
+            .toList
+        )
+
+        requestsFuture.onComplete {
+          case Success(res) =>
+            logger.info(
+              s"Successfully generated cookies: ${res.length} out of $count"
+            )
+          case Failure(e) =>
+            throw new RuntimeException("Failed to generate cookies", e)
+        }
+        Await.result(requestsFuture, 120.seconds) // 2 min timeout
       }
     }
   }
