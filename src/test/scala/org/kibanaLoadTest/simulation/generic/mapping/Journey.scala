@@ -12,6 +12,11 @@ case class Journey(
     testData: Option[TestData],
     streams: List[RequestStream]
 ) {
+
+  /**
+    * Returns true if any stream contains auth API call, otherwise falls
+    * This functions is used to check if journey does authentication itself or requires pre-generated Cookie.
+    */
   def needsAuthentication(): Boolean = {
     !streams
       .map(stream =>
