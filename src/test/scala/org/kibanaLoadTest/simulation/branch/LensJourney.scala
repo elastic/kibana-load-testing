@@ -10,7 +10,7 @@ class LensJourney extends BaseSimulation {
   val scenarioName = "LensJourney"
   props.maxUsers = 500
   val client = new KbnClient(appConfig)
-  val cookiesLst = client.generateCookies(props.maxUsers)
+  val cookiesLst = client.generateCookies(50)
   val circularFeeder = Iterator
     .continually(cookiesLst.map(i => Map("sidValue" -> i)))
     .flatten
