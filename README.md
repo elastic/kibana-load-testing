@@ -6,6 +6,15 @@
 # Running performance testing on CI
 Kibana CI has [dedicated jobs](docs/KIBANA_CI.md) to run performance testing for your Kibana branch or Cloud snapshot.
 
+# Load testing infrastructure on CI
+We are using bare metal machine [EX-62](http://web.archive.org/web/20220126205902/https://www.hetzner.com/dedicated-rootserver/matrix-ex) provided by Hezner:
+- Intel® Core™ i9-9900K (8 cores) 
+- 128 GB DDR4 RAM
+- 2 TB SSD
+- 1 GBit/s-Port connection
+
+Execution is managed by functional test runner: we have custom FTR [config file](https://github.com/elastic/kibana/blob/main/x-pack/test/load/config.ts), that defines how to start Elasticsearch and Kibana servers. We also use [custom runner](https://github.com/elastic/kibana/blob/main/x-pack/test/load/runner.ts) to start Gatling simulation file.
+At the moment both ES/Kibana and Gatling runner are hosted on the machine. 
 
 # Running performance testing on your machine
 ## Running simulation against a local instance
