@@ -10,7 +10,7 @@ class DashboardJourney extends BaseSimulation {
   val scenarioName = s"DashboardJourney"
   props.maxUsers = 500
   val client = new KbnClient(appConfig)
-  val cookiesLst = client.generateCookies(50)
+  val cookiesLst = client.generateCookies(5)
   val circularFeeder = Iterator
     .continually(cookiesLst.map(i => Map("sidValue" -> i)))
     .flatten
