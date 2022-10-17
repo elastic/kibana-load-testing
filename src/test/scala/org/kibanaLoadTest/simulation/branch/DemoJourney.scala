@@ -9,15 +9,9 @@ class DemoJourney extends BaseSimulation {
   val scenarioName = "DemoJourney"
   props.maxUsers = 200
 
-  val steps = exec(
-    Login
-      .doLogin(
-        appConfig.isSecurityEnabled,
-        appConfig.loginPayload,
-        appConfig.loginStatusCode
-      )
-      .pause(5)
-  ).exec(Home.load(appConfig.baseUrl, defaultHeaders).pause(10))
+  val steps = feed(circularFeeder)
+    .exec(session => session.set("Cookie", session("sidValue").as[String]))
+    .exec(Home.load(appConfig.baseUrl, defaultHeaders).pause(10))
     .exec(Discover.load(appConfig.baseUrl, defaultHeaders).pause(10))
     .exec(Discover.do2ExtraQueries(appConfig.baseUrl, defaultHeaders).pause(10))
     .exec(Dashboard.load(appConfig.baseUrl, defaultHeaders).pause(10))

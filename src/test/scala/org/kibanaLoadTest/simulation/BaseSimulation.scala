@@ -8,6 +8,7 @@ import org.kibanaLoadTest.helpers.{
   CloudHttpClient,
   Helper,
   HttpHelper,
+  KbnClient,
   SimulationHelper
 }
 import org.kibanaLoadTest.scenario.Login
@@ -68,6 +69,16 @@ class BaseSimulation extends Simulation {
     // use existing deployment or local instance
   } else
     new KibanaConfiguration(Helper.readResourceConfigFile(envConfig))
+
+  /**
+    * It does not make any difference to use unique cookie for individual user (tcp connection), unless we test Kibana
+    * security service. Taking it into account, we create a single session and share it.
+    */
+  val client = new KbnClient(appConfig)
+  val cookiesLst = client.generateCookies(1)
+  val circularFeeder = Iterator
+    .continually(cookiesLst.map(i => Map("sidValue" -> i)))
+    .flatten
 
   val httpHelper = new HttpHelper(appConfig)
   var httpProtocol: HttpProtocolBuilder = httpHelper.getProtocol

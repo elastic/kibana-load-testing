@@ -9,25 +9,19 @@ class TSVBGaugeJourney extends BaseSimulation {
   val scenarioName = "GaugeJourney"
   props.maxUsers = 500
 
-  val steps = exec(
-    Login
-      .doLogin(
-        appConfig.isSecurityEnabled,
-        appConfig.loginPayload,
-        appConfig.loginStatusCode
-      )
-      .pause(5)
-  ).exec(
-    Visualize
-      .load(
-        "tsvb",
-        "b80e6540-b891-11e8-a6d9-e546fe2bba5f",
-        "data/visualize/gauge_sold_per_day.json",
-        appConfig.baseUrl,
-        defaultHeaders
-      )
-      .pause(5)
-  )
+  val steps = feed(circularFeeder)
+    .exec(session => session.set("Cookie", session("sidValue").as[String]))
+    .exec(
+      Visualize
+        .load(
+          "tsvb",
+          "b80e6540-b891-11e8-a6d9-e546fe2bba5f",
+          "data/visualize/gauge_sold_per_day.json",
+          appConfig.baseUrl,
+          defaultHeaders
+        )
+        .pause(5)
+    )
 
   val warmupScn: ScenarioBuilder = scenario("warmup").exec(steps)
   val scn: ScenarioBuilder = scenario(scenarioName).exec(steps)

@@ -11,15 +11,8 @@ class LongRunJourney extends BaseSimulation {
   props.maxUsers = 200
 
   val scn: ScenarioBuilder = scenario(scenarioName)
-    .exec(
-      Login
-        .doLogin(
-          appConfig.isSecurityEnabled,
-          appConfig.loginPayload,
-          appConfig.loginStatusCode
-        )
-        .pause(5)
-    )
+  val steps = feed(circularFeeder)
+    .exec(session => session.set("Cookie", session("sidValue").as[String]))
     .exec(Home.load(appConfig.baseUrl, defaultHeaders).pause(10))
     .exec(Discover.load(appConfig.baseUrl, defaultHeaders).pause(10))
     .exec(Dashboard.load(appConfig.baseUrl, defaultHeaders).pause(10))
