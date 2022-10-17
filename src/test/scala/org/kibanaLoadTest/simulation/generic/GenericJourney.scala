@@ -299,10 +299,11 @@ class GenericJourney extends Simulation {
       // Disabling this behavior since we run the defined sequence of requests
       .disableFollowRedirect
   private val steps = if (journey.needsAuthentication()) {
-    val cookiesLst =
-      kbnClient.generateCookies(
-        journey.scalabilitySetup.getMaxConcurrentUsers()
-      )
+    /**
+      * It does not make any difference to use unique cookie for individual user (tcp connection), unless we test Kibana
+      * security service. Taking it into account, we create a single session and share it.
+      */
+    val cookiesLst = kbnClient.generateCookies(1)
     val circularFeeder = Iterator
       .continually(cookiesLst.map(i => Map("sidValue" -> i)))
       .flatten

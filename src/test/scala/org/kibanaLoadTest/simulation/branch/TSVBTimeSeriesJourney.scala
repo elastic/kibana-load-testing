@@ -9,15 +9,10 @@ class TSVBTimeSeriesJourney extends BaseSimulation {
   val scenarioName = s"TimeSeriesJourney"
   props.maxUsers = 500
 
-  val steps = exec(
-    Login
-      .doLogin(
-        appConfig.isSecurityEnabled,
-        appConfig.loginPayload,
-        appConfig.loginStatusCode
-      )
-      .pause(5)
-  ).exec(
+  val steps = feed(circularFeeder)
+    .exec(session =>
+      session.set("Cookie", session("sidValue").as[String])
+    ) exec (
     Visualize
       .load(
         "tsvb",
@@ -27,7 +22,7 @@ class TSVBTimeSeriesJourney extends BaseSimulation {
         defaultHeaders
       )
       .pause(5)
-  )
+    )
 
   val warmupScn: ScenarioBuilder = scenario("warmup").exec(steps)
   val scn: ScenarioBuilder = scenario(scenarioName).exec(steps)

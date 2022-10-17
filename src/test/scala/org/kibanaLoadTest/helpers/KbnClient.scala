@@ -188,6 +188,9 @@ class KbnClient(config: KibanaConfiguration) {
   }
 
   def generateCookies(count: Int): List[String] = {
+    if (count < 1) {
+      throw new IllegalArgumentException("'count' must be above 0")
+    }
     val (client, connManager) = getClientAndConnectionManager(withAuth = false)
     Using.resources(client, connManager) { (client, connManager) =>
       {
@@ -199,7 +202,7 @@ class KbnClient(config: KibanaConfiguration) {
         )
 
         val requestsFuture = Future.sequence(
-          (0 to count - 1)
+          (1 to count)
             .map(i =>
               Future {
                 getCookie(client)
