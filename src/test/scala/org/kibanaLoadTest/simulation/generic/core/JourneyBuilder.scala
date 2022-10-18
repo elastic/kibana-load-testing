@@ -108,6 +108,7 @@ object JourneyBuilder {
       }
 
       // temporary filter out some requests
+      // https://github.com/elastic/kibana/issues/143557
       val exludeUrls = Array("/api/status", "/api/saved_objects/_import")
       val requests =
         stream.requests.filter(req => !exludeUrls.contains(req.getRequestUrl()))
