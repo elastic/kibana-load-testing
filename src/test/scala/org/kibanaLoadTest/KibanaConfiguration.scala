@@ -39,6 +39,8 @@ class KibanaConfiguration {
   // Cloud testing
   var deploymentId: Option[String] = None
   var deleteDeploymentOnFinish = true
+  // http request header requires sid
+  var setCookieHeader = false
 
   def this(
       kibanaHost: String,
