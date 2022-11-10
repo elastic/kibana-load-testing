@@ -108,7 +108,13 @@ class KibanaConfiguration {
       s"'host.es' should be a valid ES URL"
     )
 
-    this.readKibanaBuildInfo(this.baseUrl)
+    if (this.baseUrl.contains("cloud")) {
+      logger.warn("Skipping getKibanaStatus call for Cloud deployment, make sure to provide correct 'host.version'")
+      this.version = config.getString("host.version")
+      this.buildVersion = config.getString("host.version")
+    } else {
+      this.readKibanaBuildInfo(this.baseUrl)
+    }
 
     val isAbove79x = new Version(this.buildVersion).isAbove79x
     if (
