@@ -98,24 +98,31 @@ object JourneyBuilder {
     var steps: ChainBuilder = exec()
     var priorStream: Option[mapping.RequestStream] =
       Option.empty
-    for (stream <- streams) {
-      val priorDate =
-        priorStream.map(_.endTime).getOrElse(stream.endTime)
-      val pauseDuration =
-        Math.max(0L, stream.startTime.getTime - priorDate.getTime)
-      if (pauseDuration > 0L) {
-        steps = steps.pause(pauseDuration.toString, TimeUnit.MILLISECONDS)
-      }
 
-      // temporary filter out some requests
-      // https://github.com/elastic/kibana/issues/143557
-      val exludeUrls = Array("/api/status", "/api/saved_objects/_import")
-      val requests =
-        stream.requests.filter(req => !exludeUrls.contains(req.getRequestUrl()))
+    if (streams.length == 1) {
+      steps = steps.exec(ApiCall.execute(streams(0).requests, config))
+    } else {
+      for (stream <- streams) {
+        val priorDate =
+          priorStream.map(_.endTime).getOrElse(stream.endTime)
+        val pauseDuration =
+          Math.max(0L, stream.startTime.get.getTime - priorDate.get.getTime)
+        if (pauseDuration > 0L) {
+          steps = steps.pause(pauseDuration.toString, TimeUnit.MILLISECONDS)
+        }
 
-      if (!requests.isEmpty) {
-        steps = steps.exec(ApiCall.execute(requests, config))
-        priorStream = Option(stream)
+        // temporary filter out some requests
+        // https://github.com/elastic/kibana/issues/143557
+        val exludeUrls = Array("/api/status", "/api/saved_objects/_import")
+        val requests =
+          stream.requests.filter(req =>
+            !exludeUrls.contains(req.getRequestUrl())
+          )
+
+        if (!requests.isEmpty) {
+          steps = steps.exec(ApiCall.execute(requests, config))
+          priorStream = Option(stream)
+        }
       }
     }
     steps

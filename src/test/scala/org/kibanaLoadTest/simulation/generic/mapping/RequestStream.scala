@@ -7,8 +7,8 @@ import org.kibanaLoadTest.simulation.generic.mapping.DateJsonProtocol._
 import java.util.Date
 
 case class RequestStream(
-    startTime: Date,
-    endTime: Date,
+    startTime: Option[Date],
+    endTime: Option[Date],
     requests: List[Request]
 )
 
