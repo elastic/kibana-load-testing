@@ -19,7 +19,7 @@ object ApiCall {
       exec(httpParentRequest)
     } else {
       val childHttpRequests: Seq[HttpRequestBuilder] =
-        (children.map(request => httpRequest(request.http, config))).toSeq
+        children.map(request => httpRequest(request.http, config))
       exec(httpParentRequest.resources(childHttpRequests: _*))
     }
   }

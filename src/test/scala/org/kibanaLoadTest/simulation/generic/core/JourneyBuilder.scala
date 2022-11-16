@@ -24,7 +24,8 @@ object JourneyBuilder {
     "rampUsers" -> "open",
     "rampUsersPerSec" -> "open",
     "constantUsersPerSec" -> "open",
-    "stressPeakUsers" -> "open"
+    "stressPeakUsers" -> "open",
+    "incrementUsersPerSec" -> "open"
   )
 
   /**
@@ -78,6 +79,13 @@ object JourneyBuilder {
         rampUsersPerSec(step.minUsersCount.get)
           .to(step.maxUsersCount.get)
           .during(getDuration(step.duration.get))
+      case "incrementUsersPerSec" =>
+        incrementUsersPerSec(step.userCount.get.toDouble)
+          .times(step.times.get)
+          .eachLevelLasting(getDuration(step.duration.get))
+          .separatedByRampsLasting(getDuration(step.duration.get))
+          .startingFrom(step.userCount.get.toDouble)
+
       case _ =>
         throw new IllegalArgumentException(
           s"Invalid open model: ${step.action}"

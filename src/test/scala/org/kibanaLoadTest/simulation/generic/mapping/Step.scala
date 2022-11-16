@@ -7,6 +7,7 @@ case class Step(
     userCount: Option[Int],
     minUsersCount: Option[Int],
     maxUsersCount: Option[Int],
+    times: Option[Int],
     duration: Option[String]
 ) {
   def getMaxUsersCount: Int = {
@@ -21,7 +22,12 @@ case class Step(
   }
   override def toString: String = {
     val users = userCount match {
-      case Some(count) => s"[$count]"
+      case Some(count) =>
+        times match {
+          case Some(times) =>
+            s"[start from [$count] and ramp by [$count] users every [$times]"
+          case None => s"[$count]"
+        }
       case None =>
         maxUsersCount match {
           case Some(maxCount) =>
@@ -45,5 +51,5 @@ case class Step(
 }
 
 object StepJsonProtocol extends DefaultJsonProtocol {
-  implicit val stepFormat = jsonFormat5(Step)
+  implicit val stepFormat = jsonFormat6(Step)
 }
