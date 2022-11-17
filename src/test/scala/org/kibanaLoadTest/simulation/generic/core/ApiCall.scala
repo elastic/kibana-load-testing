@@ -47,7 +47,12 @@ object ApiCall {
     }
     val requestName = s"${request.method} ${request.path
       .replaceAll(".+?(?=\\/bundles)", "") + request.query.getOrElse("")}"
-    val url = request.path + request.query.getOrElse("")
+    // Bundle path contains buildNumber which is needs to be changed the value of tested Kibana instance
+    // Example: /9007199254740991/bundles/core/core.entry.js
+    val url =
+      (if (request.path.contains("bundles"))
+         request.path.replaceAll("[^\\/]+\\d{10,}", config.buildNumber.toString)
+       else request.path) + request.query.getOrElse("")
     request.method match {
       case "GET" =>
         http(requestName)
