@@ -51,7 +51,9 @@ object ApiCall {
     // Example: /9007199254740991/bundles/core/core.entry.js
     val url =
       (if (request.path.contains("bundles"))
-         request.path.replaceAll("[^\\/]+\\d{10,}", config.buildNumber.toString)
+         request.path
+           .replaceAll("[^\\/]+\\d{10,}", config.buildNumber.toString)
+           .replaceAll("\\{buildNumber}", config.buildNumber.toString)
        else request.path) + request.query.getOrElse("")
     request.method match {
       case "GET" =>
