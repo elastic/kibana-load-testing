@@ -48,13 +48,13 @@ mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.branch.
 ```
 
 ## Running simulation against existing cloud deployment
-- Create Elastic Cloud deployment
-- Add a new configuration file, e.g. `config/cloud-7.10.0.conf`
+- Create [Elastic Cloud](https://cloud.elastic.co/) deployment
+- Add a new configuration file in `src/test/resources/config`: `cloud-8.5.0.conf`
 ```
 host {
-  kibana = "https://kibana.us-central1.gcp.cloud.io:9243"
-  es = "https://es.us-central1.gcp.cloud.io:9243"
-  version = "7.10.0"
+  kibana = "https://gcp-8-5-0-def.kb.us-central1.gcp.cloud.es.io:9243"
+  es = "https://gcp-8-5-0-def.es.us-central1.gcp.cloud.es.io"
+  version = "8.5.0"
 }
 
 security {
@@ -62,21 +62,21 @@ security {
 }
 
 auth {
-  providerType = "basic" // required starting 7.10
-  providerName = "cloud-basic" // required starting 7.10
-  username = "elastic" // user should have permissions to load sample data and access plugins
-  password = "pwd"
+  providerType = "basic"
+  providerName = "cloud-basic"
+  username = <username>
+  password = <password>
 }
 ```
-- start test scenario with specified env argument
+- start test scenario with your newly added config
 ```
 mvn clean test-compile
-mvn gatling:test -Denv=config/cloud-7.10.0.conf -Dgatling.simulationClass=org.kibanaLoadTest.simulation.cloud.DemoJourney
+mvn gatling:test -Denv=config/cloud-8.5.0.conf -Dgatling.simulationClass=org.kibanaLoadTest.simulation.cloud.LensJourney
 ```
 
 ## Running simulation against newly created cloud deployment
 - Generate API_KEY for your cloud user account
-- Check deployment template at `resources/config/deploy/default.conf`
+- Check deployment template at `src/test/resources/config/deploy/default.conf`
 - start test scenario, new deployment will be created before simulation and deleted after it is finished
 ```
 mvn clean test-compile
