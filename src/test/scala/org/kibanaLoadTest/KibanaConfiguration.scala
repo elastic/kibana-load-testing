@@ -108,7 +108,13 @@ class KibanaConfiguration {
       s"'host.es' should be a valid ES URL"
     )
 
-    if (this.baseUrl.contains("cloud")) {
+    this.isSecurityEnabled = config.getBoolean("security.on")
+    this.username = config.getString("auth.username")
+    this.password = config.getString("auth.password")
+    this.providerType = config.getString("auth.providerType")
+    this.providerName = config.getString("auth.providerName")
+
+    if (this.providerName.contains("cloud")) {
       logger.warn("Skipping getKibanaStatus call for Cloud deployment, make sure to provide correct 'host.version'")
       this.version = config.getString("host.version")
       this.buildVersion = config.getString("host.version")
@@ -127,11 +133,6 @@ class KibanaConfiguration {
       )
     }
 
-    this.isSecurityEnabled = config.getBoolean("security.on")
-    this.username = config.getString("auth.username")
-    this.password = config.getString("auth.password")
-    this.providerType = config.getString("auth.providerType")
-    this.providerName = config.getString("auth.providerName")
     this.setLoginPayloadAndStatusCode(
       isAbove79x,
       this.baseUrl,
