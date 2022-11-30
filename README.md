@@ -17,6 +17,7 @@ Execution is managed by functional test runner: we have custom FTR [config file]
 At the moment both ES/Kibana and Gatling runner are hosted on the machine. 
 
 # Running performance testing on your machine
+Note: While running locally a high load test you might face different issues, so we suggest using dedicated machines and make sure you are aware of needed [environment tunnings](https://gatling.io/docs/gatling/reference/current/core/operations/) to minimise side effects.
 ## Running simulation against a local instance
 - Start ES and Kibana instances.
 
