@@ -77,6 +77,7 @@ mvn gatling:test -Denv=config/cloud-8.5.0.conf -Dgatling.simulationClass=org.kib
 
 ## Running simulation against newly created cloud deployment
 - Generate API_KEY for your cloud user account
+  - https://cloud.elastic.co/deployment-features/keys
 - Check deployment template at `src/test/resources/config/deploy/default.conf`
 - start test scenario, new deployment will be created before simulation and deleted after it is finished
 ```
