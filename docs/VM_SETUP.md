@@ -29,7 +29,7 @@ mkdir test
 
 - In other terminal window gzip project sources and transfer archive to VM
 ```
-tar -xzf KibanaLoadTesting.tar.gz .
+tar -czf KibanaLoadTesting.tar.gz .
 sudo gcloud compute scp KibanaLoadTesting.tar.gz <user>@surname-load-testing:/home/<user>/test  --zone "us-central1-a" --project "project-id"
 ```
 
