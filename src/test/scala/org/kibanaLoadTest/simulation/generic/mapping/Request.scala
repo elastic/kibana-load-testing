@@ -16,7 +16,7 @@ import org.kibanaLoadTest.simulation.generic.mapping.HttpJsonProtocol._
 
 case class Request(
     http: Http,
-    date: Date
+    date: Option[Date]
 ) {
   def getRequestUrl(): String = http.path
 }
