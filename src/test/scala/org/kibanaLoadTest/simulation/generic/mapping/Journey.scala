@@ -7,7 +7,7 @@ import spray.json.DefaultJsonProtocol
 
 case class Journey(
     journeyName: String,
-    kibanaVersion: String,
+    kibanaVersion: Option[String],
     scalabilitySetup: ScalabilitySetup,
     testData: Option[TestData],
     streams: List[RequestStream]

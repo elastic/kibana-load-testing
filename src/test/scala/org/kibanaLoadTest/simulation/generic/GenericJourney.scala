@@ -111,11 +111,11 @@ class GenericJourney extends Simulation {
 
   private val warmupScenario = JourneyBuilder.buildScenario(
     httpSteps,
-    s"warmup for ${journey.journeyName} ${config.version}"
+    s"warmup: ${journey.journeyName} ${config.version}"
   )
   private val testScenario = JourneyBuilder.buildScenario(
     httpSteps,
-    s"test for ${journey.journeyName} ${config.version}"
+    s"test: ${journey.journeyName} ${config.version}"
   )
 
   setUp(
