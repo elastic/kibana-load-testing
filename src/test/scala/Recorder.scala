@@ -4,9 +4,10 @@ import io.gatling.recorder.config.RecorderPropertiesBuilder
 object Recorder extends App {
 
   val props = new RecorderPropertiesBuilder()
-    .simulationsFolder(IDEPathHelper.recorderSimulationsDirectory.toString)
-    .simulationPackage("org.kibanaLoadTest")
-    .resourcesFolder(IDEPathHelper.resourcesDirectory.toString)
+    .simulationsFolder(IDEPathHelper.mavenSourcesDirectory.toString)
+    .resourcesFolder(IDEPathHelper.mavenResourcesDirectory.toString)
+    .simulationPackage("computerdatabase")
+    .simulationFormatScala
 
   GatlingRecorder.fromMap(props.build, Some(IDEPathHelper.recorderConfigFile))
 }
