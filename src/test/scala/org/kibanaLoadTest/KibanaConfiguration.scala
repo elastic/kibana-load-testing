@@ -185,6 +185,7 @@ class KibanaConfiguration {
           if (this.isSnapshotBuild) s"${this.version}-SNAPSHOT"
           else this.version
       case None =>
+        logger.error("!!! Make sure Kibana is up & running before simulation start!!!")
         throw new RuntimeException(
           "Failed to parse response with Kibana status"
         )
@@ -226,7 +227,7 @@ object HttpClient {
 
   def getKibanaStatus(kibanaHost: String): Option[String] = {
     val url = kibanaHost + "/api/status"
-    logger.info(s"GET $url")
+    logger.debug(s"GET $url")
     val httpClient = HttpClientBuilder.create.build
     try {
       val request = new HttpGet(url)
@@ -251,7 +252,7 @@ object HttpClient {
       password: String
   ): Option[String] = {
     val url = esUrl
-    logger.info(s"GET $url")
+    logger.debug(s"GET $url")
     var jsonString = ""
     val provider = new BasicCredentialsProvider
     provider.setCredentials(

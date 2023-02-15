@@ -175,7 +175,7 @@ class KbnClient(config: KibanaConfiguration) {
             if (successCount == res.length) {
               logger.info("All saved objects deleted")
             } else {
-              logger.info(
+              logger.warn(
                 s"${res.length - successCount} out of ${res.length} saved objects were not deleted"
               )
             }
@@ -213,7 +213,7 @@ class KbnClient(config: KibanaConfiguration) {
 
         requestsFuture.onComplete {
           case Success(res) =>
-            logger.info(
+            logger.debug(
               s"Successfully generated cookies: ${res.length} out of $count"
             )
           case Failure(e) =>
