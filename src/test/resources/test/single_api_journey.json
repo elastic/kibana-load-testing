@@ -37,7 +37,8 @@
               "Accept-Encoding": "gzip, deflate, br",
               "Content-Type": "application/json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "timeout": 10000
           }
         }
       ]

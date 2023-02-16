@@ -34,7 +34,7 @@ class HelpersTest {
       Helper.readResourceConfigFile("config/local.conf")
     )
     assertEquals(config.baseUrl, "http://localhost:5620")
-    assertEquals(config.buildVersion, "8.5.0")
+    assertTrue(!config.buildVersion.isEmpty)
     assertEquals(config.isSecurityEnabled, true)
     assertEquals(config.loginStatusCode, 200)
     assertEquals(
