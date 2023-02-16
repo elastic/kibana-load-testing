@@ -160,6 +160,11 @@ mvn gatling:test -Dgatling.simulationClass=org.kibanaLoadTest.simulation.generic
 It is possible to override journey config by setting custom values via environment variables:
 KIBANA_HOST, ES_URL, AUTH_PROVIDER_TYPE, AUTH_PROVIDER_NAME, AUTH_LOGIN, AUTH_PASSWORD
 
+It is possible to skip unloading kbn & es archives on journey teardown (e.g. you want to inspect Kibana):
+```
+-DskipCleanupOnTeardown=true
+```
+
 ## Test results
 Gatling generates html report for each simulation run, available in `<project_root>/target/gatling/<simulation>`path
 
