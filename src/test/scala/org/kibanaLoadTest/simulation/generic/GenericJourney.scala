@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit
 import scala.collection.mutable.ListBuffer
 import scala.io.Source._
 import scala.util.Using
+import scala.util.Try
 
 class GenericJourney extends Simulation {
   val logger: Logger = LoggerFactory.getLogger("GenericJourney")
@@ -64,6 +65,7 @@ class GenericJourney extends Simulation {
   private val username = sys.env.getOrElse("AUTH_LOGIN", "elastic")
   private val password = sys.env.getOrElse("AUTH_PASSWORD", "changeme")
   private val kibanaRootPath = sys.env.get("KIBANA_DIR")
+  private val skipCleanup = Try(System.getProperty("skipCleanupOnTeardown").toBoolean).getOrElse(false)
   private def isKibanaRootPathDefined: Either[String, String] = {
     if (kibanaRootPath.isEmpty || !Files.exists(Paths.get(kibanaRootPath.get)))
       Left(
@@ -144,15 +146,19 @@ class GenericJourney extends Simulation {
     }
   }
 
-  // Using 'after' hook to cleanup Elasticsearch after journey run
+  // Using 'after' hook to cleanup Kibana/Elasticsearch after journey run
   after {
-    if (journey.testData.isDefined) {
-      testDataLoader(
-        journey.testData.get,
-        kibanaRootPath.get,
-        kbnClient.unload,
-        esArchiver.unload
-      )
+    if (skipCleanup) {
+      logger.warn("!!! Unloading archives for ES/Kibana is skipped !!!")
+    } else {
+      if (journey.testData.isDefined) {
+        testDataLoader(
+          journey.testData.get,
+          kibanaRootPath.get,
+          kbnClient.unload,
+          esArchiver.unload
+        )
+      }
     }
   }
 }
