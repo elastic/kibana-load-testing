@@ -8,9 +8,10 @@ case class Http(
     headers: Map[String, String],
     method: String,
     body: Option[String],
-    statusCode: Int
+    statusCode: Int,
+    timeout: Option[Int]
 )
 
 object HttpJsonProtocol extends DefaultJsonProtocol {
-  implicit val httpFormat = jsonFormat6(Http)
+  implicit val httpFormat = jsonFormat7(Http)
 }

@@ -6,6 +6,7 @@ import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.simulation.generic.mapping
+import scala.concurrent.duration.DurationInt
 
 object ApiCall {
   def execute(
@@ -55,7 +56,7 @@ object ApiCall {
            .replaceAll("[^\\/]+\\d{10,}", config.buildNumber.toString)
            .replaceAll("\\{buildNumber}", config.buildNumber.toString)
        else request.path) + request.query.getOrElse("")
-    request.method match {
+    val requestBuilder = request.method match {
       case "GET" =>
         http(requestName)
           .get(url)
@@ -93,6 +94,11 @@ object ApiCall {
           .check(status.is(request.statusCode))
       case _ =>
         throw new IllegalArgumentException(s"Invalid method ${request.method}")
+    }
+    if (request.timeout.isDefined) {
+      requestBuilder.requestTimeout(request.timeout.get.milli)
+    } else {
+      requestBuilder
     }
   }
 }
