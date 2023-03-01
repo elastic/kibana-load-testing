@@ -6,6 +6,7 @@ import io.circe.syntax.EncoderOps
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.Helper.checkFilesExist
 import org.slf4j.{Logger, LoggerFactory}
+
 import java.nio.file.{Path, Paths}
 
 case class Doc(indexType: String, name: String, source: Json)
@@ -60,7 +61,7 @@ class ESArchiver(config: KibanaConfiguration, bulkSize: Int = 1000) {
         case 1 =>
           val index = indexArray.last
           logger.info(s"[$archivePath] Creating ${index.name} index")
-          client.createIndex(index.name, index.source)
+          client.forceCreateIndex(index.name, index.source)
           logger.info(s"[$archivePath] Indexing docs")
           client.bulk(
             index.name,
