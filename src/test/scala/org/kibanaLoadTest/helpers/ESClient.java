@@ -113,7 +113,7 @@ public class ESClient {
             if (ex.getMessage().matches(".*\\[resource_already_exists_exception\\] index.*already exists$")) {
                 this.deleteIndex(indexName);
                 this.createIndex(indexName, source);
-            }
+            } else throw ex;
         }
     }
 
