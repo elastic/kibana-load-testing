@@ -68,6 +68,11 @@ public class ESClient {
         return INSTANCE;
     }
 
+    /**
+     * This function creates index and returns exception if index already exists.
+     * @param indexName index name
+     * @param source json with settings, mappings
+     */
     public void createIndex(String indexName, Json source) {
         CreateIndexRequest req = CreateIndexRequest.of(b -> b.index(indexName).withJson(new StringReader(source.toString())));
         try {
@@ -78,7 +83,7 @@ public class ESClient {
                 logger.error(String.format("Failed to create index '%s'", indexName));
             }
         } catch (IOException | ElasticsearchException ex) {
-            throw new RuntimeException(String.format("Failed to create index '%s'", indexName), ex);
+            throw new RuntimeException(ex);
         }
     }
 
@@ -92,7 +97,23 @@ public class ESClient {
                 logger.error(String.format("Failed to delete index '%s'", indexName));
             }
         } catch (IOException | ElasticsearchException ex) {
-            throw new RuntimeException(String.format("Failed to delete index '%s'", indexName), ex);
+            throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * This function will delete index if it exists, and create a new one.
+     * @param indexName index name
+     * @param source json with settings, mappings
+     */
+    public void forceCreateIndex(String indexName, Json source) {
+        try {
+            this.createIndex(indexName, source);
+        } catch (RuntimeException ex) {
+            if (ex.getMessage().matches(".*\\[resource_already_exists_exception\\] index.*already exists$")) {
+                this.deleteIndex(indexName);
+                this.createIndex(indexName, source);
+            } else throw ex;
         }
     }
 
