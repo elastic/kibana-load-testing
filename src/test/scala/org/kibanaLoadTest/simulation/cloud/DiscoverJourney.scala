@@ -8,7 +8,7 @@ import org.kibanaLoadTest.simulation.BaseSimulation
 class DiscoverJourney extends BaseSimulation {
   val scenarioName = s"Cloud discover journey ${appConfig.buildVersion}"
 
-  props.maxUsers = 300
+  props.maxUsers = 1000
 
   val scn: ScenarioBuilder = scenario(scenarioName)
     .exec(
@@ -26,8 +26,8 @@ class DiscoverJourney extends BaseSimulation {
   setUp(
     scn
       .inject(
-        constantConcurrentUsers(20) during (1 * 60), // 1
-        rampConcurrentUsers(20) to props.maxUsers during (3 * 60) // 2
+        constantUsersPerSec(10) during (30), // 1
+        rampUsersPerSec(10) to props.maxUsers during (6 * 60) // 2
       )
       .protocols(httpProtocol)
   ).maxDuration(props.simulationTimeout * 2)
