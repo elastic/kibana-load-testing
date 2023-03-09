@@ -50,4 +50,6 @@ spec:
         build_tags: true
       repository: elastic/kibana-load-testing
       teams:
-        ci-systems: {}
+        appex-qa: {}
+        everyone:
+          access_level: READ_ONLY
