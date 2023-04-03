@@ -1,0 +1,55 @@
+# Declare the Backstage compnent
+---
+# yaml-language-server: $schema=https://json.schemastore.org/catalog-info.json
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: kibana-load-testing
+  description: Kibana server scalability testing project
+  annotations:
+    backstage.io/source-location: url:https://github.com/elastic/kibana-load-testing/
+    github.op/project-slug: elastic/kibana-load-testing
+    github.io/team-slug: elastic/appex-qa
+    buildkite.com/project-slug: elastic/kibana-load-testing
+  tags:
+    - buildkite
+    - gatling
+  links:
+    - title: API Capacity testing Docs
+      url: https://docs.elastic.dev/kibana-dev-docs/tutorial/performance/adding_api_capacity_testing_journey
+spec:
+  type: service
+  owner: group:appex-qa
+  system: buildkite
+  lifecycle: production
+
+# Declare the prod Buildkite pipeline
+---
+# yaml-language-server: $schema=https://gist.githubusercontent.com/elasticmachine/988b80dae436cafea07d9a4a460a011d/raw/e57ee3bed7a6f73077a3f55a38e76e40ec87a7cf/rre.schema.json
+# This bit is for Backstage
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: kibana-load-testing-buildkite-pipeline
+  description: Tests for kibana-load-testing
+  links:
+    - title: Pipeline
+      url: https://buildkite.com/elastic/kibana-load-testing
+spec:
+  type: buildkite-pipeline
+  owner: group:appex-qa
+  system: buildkite
+  # This bit is for Terrazzo
+  implementation:
+    apiVersion: buildkite.elastic.dev/v1
+    kind: Pipeline
+    metadata:
+      name: kibana-load-testing
+    spec:
+      provider_settings:
+        build_tags: true
+      repository: elastic/kibana-load-testing
+      teams:
+        appex-qa: {}
+        everyone:
+          access_level: READ_ONLY
