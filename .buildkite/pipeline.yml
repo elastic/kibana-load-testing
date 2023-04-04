@@ -1,7 +1,7 @@
 steps:
   - label: ":mvn: clean test"
-  - commands:
-    - "mvn install"
-    - "mvn clean test"
-  agents:
-    image: maven:3.6.3-openjdk-8-slim
+    commands:
+      - "mvn install"
+      - "mvn clean test"
+    agents:
+      image: maven:3.6.3-openjdk-8-slim
