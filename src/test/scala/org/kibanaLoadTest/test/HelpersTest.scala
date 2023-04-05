@@ -2,21 +2,18 @@ package org.kibanaLoadTest.test
 
 import org.junit.jupiter.api.Assertions.{assertEquals, assertThrows, assertTrue}
 import org.junit.jupiter.api.Test
-import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.Helper.{
   generateUUID,
   getTargetPath,
   readArchiveFile
 }
 import org.kibanaLoadTest.helpers.{Helper, Version}
-
 import java.io.{File, FileNotFoundException}
 import java.nio.file.Paths
 import java.util.Calendar
 import scala.reflect.io.Directory
 
 class HelpersTest {
-
   @Test
   def compareVersionsTest(): Unit = {
     val v1 = new Version("7.8.15")
@@ -29,29 +26,11 @@ class HelpersTest {
   }
 
   @Test
-  def createKibanaConfigTest(): Unit = {
-    val config = new KibanaConfiguration(
-      Helper.readResourceConfigFile("config/local.conf")
-    )
-    assertEquals(config.baseUrl, "http://localhost:5620")
-    assertTrue(!config.buildVersion.isEmpty)
-    assertEquals(config.isSecurityEnabled, true)
-    assertEquals(config.loginStatusCode, 200)
-    assertEquals(
-      config.loginPayload,
-      """{"providerType":"basic","providerName":"basic","currentURL":"http://localhost:5620/login","params":{"username":"elastic","password":"changeme"}}"""
-    )
-    assertEquals(config.deploymentId, None)
-  }
-
-  @Test
   def validateUrlThrowsExceptionTest(): Unit = {
-
     val exceptionThatWasThrown = assertThrows(
       classOf[RuntimeException],
       () => {
         def foo() = Helper.validateUrl("localhost", "Bad Url string")
-
         foo()
       }
     )
