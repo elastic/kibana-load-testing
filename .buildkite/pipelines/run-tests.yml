@@ -1,5 +1,0 @@
-steps:
-  commands:
-    - mvn clean test
-  agents:
-    image: maven:3.6.3-openjdk-8-slim
