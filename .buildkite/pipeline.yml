@@ -1,6 +1,6 @@
 steps:
   - label: ":mvn: clean test"
     commands:
-      - "mvn clean test"
+      - "mvn -Dorg.slf4j.simpleLogger.defaultLogLevel=WARN -Dmockserver.logLevel=WARN clean test"
     agents:
       image: maven:3.8.6-openjdk-11
