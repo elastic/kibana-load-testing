@@ -10,14 +10,14 @@ import org.junit.jupiter.api.Assertions.{
 import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import org.junit.jupiter.api.function.Executable
-import org.junit.jupiter.api.{BeforeAll, Test, TestInstance}
+import org.junit.jupiter.api.{AfterAll, BeforeAll, Test, TestInstance}
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.{HttpHelper, KbnClient}
+import org.kibanaLoadTest.test.mocks.{ESMockServer, KibanaMockServer}
 
 import java.nio.file.Paths
 
 @TestInstance(Lifecycle.PER_CLASS)
-@EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
 class KibanaAPITest {
   private val kibanaHost =
     sys.env.getOrElse("KIBANA_HOST", "http://localhost:5620")
@@ -30,9 +30,17 @@ class KibanaAPITest {
     Paths.get(getClass.getResource("/test/so.json").getPath)
   private var config: KibanaConfiguration = null
   private var helper: HttpHelper = null
+  var kbnMock: KibanaMockServer = null
+  var esMock: ESMockServer = null
 
   @BeforeAll
-  def init: Unit = {
+  def tearUp: Unit = {
+    kbnMock = new KibanaMockServer(5620)
+    kbnMock.createKibanaStatusCallback()
+    kbnMock.createSuccessfulLoginCallback()
+    esMock = new ESMockServer(9220)
+    esMock.createStatusCallback()
+
     config = new KibanaConfiguration(
       kibanaHost,
       esHost,
@@ -44,6 +52,12 @@ class KibanaAPITest {
     helper = new HttpHelper(config)
   }
 
+  @AfterAll
+  def tearDown(): Unit = {
+    kbnMock.destroy()
+    esMock.destroy()
+  }
+
   @Test
   def kbngetClientAndConnManagerTest() = {
     val client = new KbnClient(config)
@@ -51,7 +65,11 @@ class KibanaAPITest {
     assertDoesNotThrow(closureToTest)
   }
 
+  /**
+    * This test should be run locally against real Kibana instance
+    */
   @Test
+  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
   def kbnClientLoadUloadTest() = {
     val client = new KbnClient(config)
     val loadClosure: Executable = () => client.load(savedObjectPath)
@@ -62,6 +80,9 @@ class KibanaAPITest {
 
   @Test
   def sampleDataTest(): Unit = {
+    kbnMock.createAddSampleDataCallback("ecommerce", config.buildVersion)
+    kbnMock.createDeleteSampleDataCallback("ecommerce", config.buildVersion)
+
     val loadClosure: Executable = () => helper.addSampleData("ecommerce")
     val unloadClosure: Executable = () => helper.removeSampleData("ecommerce")
     assertDoesNotThrow(loadClosure, "helper.addSampleData throws exception")

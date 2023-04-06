@@ -65,7 +65,6 @@ class HttpHelper(config: KibanaConfiguration) {
 
       val sampleDataResponse = httpClient.execute(sampleDataRequest)
       statusCode = sampleDataResponse.getStatusLine.getStatusCode
-      responseBody = EntityUtils.toString(sampleDataResponse.getEntity, "UTF-8")
     } catch {
       case _: Throwable =>
         logger.error("Exception occurred during unloading sample data")

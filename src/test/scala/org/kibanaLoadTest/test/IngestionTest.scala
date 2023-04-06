@@ -1,45 +1,21 @@
 package org.kibanaLoadTest.test
 
 import java.io.File
-import org.junit.jupiter.api.Assertions.{
-  assertDoesNotThrow,
-  assertEquals,
-  assertTrue
-}
+import org.junit.jupiter.api.Assertions.{assertDoesNotThrow, assertEquals, assertTrue}
 import org.junit.jupiter.api.TestInstance.Lifecycle
-import org.junit.jupiter.api.{BeforeAll, Test, TestInstance}
+import org.junit.jupiter.api.{AfterAll, BeforeAll, Test, TestInstance}
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import org.junit.jupiter.api.function.Executable
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.Helper.getReportFolderPaths
-import org.kibanaLoadTest.helpers.{
-  ESArchiver,
-  ESClient,
-  Helper,
-  HttpHelper,
-  LogParser,
-  ResponseParser
-}
-import org.kibanaLoadTest.ingest.Main.{
-  GLOBAL_STATS_FILENAME,
-  GLOBAL_STATS_INDEX,
-  SIMULATION_LOG_FILENAME,
-  TEST_RUN_FILENAME,
-  USERS_INDEX,
-  logger
-}
+import org.kibanaLoadTest.helpers.{ESArchiver, ESClient, Helper, HttpHelper, LogParser, ResponseParser}
+import org.kibanaLoadTest.ingest.Main.{GLOBAL_STATS_FILENAME, GLOBAL_STATS_INDEX, SIMULATION_LOG_FILENAME, TEST_RUN_FILENAME, USERS_INDEX, logger}
+import org.kibanaLoadTest.test.mocks.{ESMockServer, KibanaMockServer}
 
 import java.nio.file.Paths
 
 @TestInstance(Lifecycle.PER_CLASS)
 class IngestionTest {
-  private val kibanaHost =
-    sys.env.getOrElse("KIBANA_HOST", "http://localhost:5620")
-  private val esHost = sys.env.getOrElse("ES_URL", "http://localhost:9220")
-  private val providerType = sys.env.getOrElse("AUTH_PROVIDER_TYPE", "basic")
-  private val providerName = sys.env.getOrElse("AUTH_PROVIDER_NAME", "basic")
-  private val username = sys.env.getOrElse("AUTH_LOGIN", "elastic")
-  private val password = sys.env.getOrElse("AUTH_PASSWORD", "changeme")
   private var config: KibanaConfiguration = null
   private var helper: HttpHelper = null
   val expRequestRecordCount = 18
@@ -47,17 +23,25 @@ class IngestionTest {
   val expRequestString = "login - 1628588469069 - 1628588469812 - 743 - OK"
   val expUserString = "1628588469042 - 1"
 
+  var kbnMock: KibanaMockServer = null
+  var esMock: ESMockServer = null
+
   @BeforeAll
-  def init: Unit = {
+  def tearUp(): Unit = {
+    kbnMock = new KibanaMockServer(5620)
+    kbnMock.createKibanaStatusCallback()
+    esMock = new ESMockServer(9220)
+    esMock.createStatusCallback()
     config = new KibanaConfiguration(
-      kibanaHost,
-      esHost,
-      username,
-      password,
-      providerType,
-      providerName
+      Helper.readResourceConfigFile("config/local.conf")
     )
     helper = new HttpHelper(config)
+  }
+
+  @AfterAll
+  def tearDown(): Unit = {
+    kbnMock.destroy()
+    esMock.destroy()
   }
 
   @Test
@@ -114,6 +98,9 @@ class IngestionTest {
     assertEquals(className, "org.kibanaLoadTest.simulation.branch.DemoJourney")
   }
 
+  /**
+    * This test should be run locally against real Elasticsearch instance
+    */
   @Test
   @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
   def ingestReportTest(): Unit = {
@@ -171,7 +158,6 @@ class IngestionTest {
   }
 
   @Test
-  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
   def ESArchiverParseTest(): Unit = {
     val mappingsFilePath =
       getClass.getResource("/test/es_archive/mappings.json").getPath
@@ -184,6 +170,9 @@ class IngestionTest {
     assertEquals(111396, docsArray.length, "Docs count is incorrect")
   }
 
+  /**
+    * This test should be run locally against real Elasticsearch instance
+    */
   @Test
   @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
   def ESArchiverIngestTest(): Unit = {
@@ -195,5 +184,4 @@ class IngestionTest {
     assertDoesNotThrow(loadClosure, "esArchiver.load throws exception")
     assertDoesNotThrow(unloadClosure, "esArchiver.unload throws exception")
   }
-
 }
