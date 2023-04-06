@@ -5,26 +5,26 @@ import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.junit.jupiter.api.{AfterAll, BeforeAll, Test, TestInstance}
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.Helper
-import org.mockserver.integration.ClientAndServer
-import org.mockserver.stop.Stop.stopQuietly
+import org.kibanaLoadTest.test.mocks.{ESMockServer, KibanaMockServer}
 
 @TestInstance(Lifecycle.PER_CLASS)
 class ConfigTest {
-  var kibanaServer: ClientAndServer = null
-  var esServer: ClientAndServer = null
+  var kbnMock: KibanaMockServer = null
+  var esMock: ESMockServer = null
 
   @BeforeAll
   def tearUp(): Unit = {
-    kibanaServer = ClientAndServer.startClientAndServer(5620)
-    esServer = ClientAndServer.startClientAndServer(9220)
-    ServerHelper.mockKibanaStatus(kibanaServer)
-    ServerHelper.mockEsStatus(esServer)
+    kbnMock = new KibanaMockServer(5620)
+    kbnMock.createKibanaStatusCallback()
+
+    esMock = new ESMockServer(9220)
+    esMock.createStatusCallback()
   }
 
   @AfterAll
   def tearDown(): Unit = {
-    stopQuietly(kibanaServer)
-    stopQuietly(esServer)
+    kbnMock.destroy()
+    esMock.destroy()
   }
 
   @Test

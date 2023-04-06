@@ -1,35 +1,16 @@
 package org.kibanaLoadTest.test
 
 import java.io.File
-import org.junit.jupiter.api.Assertions.{
-  assertDoesNotThrow,
-  assertEquals,
-  assertTrue
-}
+import org.junit.jupiter.api.Assertions.{assertDoesNotThrow, assertEquals, assertTrue}
 import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.junit.jupiter.api.{AfterAll, BeforeAll, Test, TestInstance}
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import org.junit.jupiter.api.function.Executable
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.Helper.getReportFolderPaths
-import org.kibanaLoadTest.helpers.{
-  ESArchiver,
-  ESClient,
-  Helper,
-  HttpHelper,
-  LogParser,
-  ResponseParser
-}
-import org.kibanaLoadTest.ingest.Main.{
-  GLOBAL_STATS_FILENAME,
-  GLOBAL_STATS_INDEX,
-  SIMULATION_LOG_FILENAME,
-  TEST_RUN_FILENAME,
-  USERS_INDEX,
-  logger
-}
-import org.mockserver.integration.ClientAndServer
-import org.mockserver.stop.Stop.stopQuietly
+import org.kibanaLoadTest.helpers.{ESArchiver, ESClient, Helper, HttpHelper, LogParser, ResponseParser}
+import org.kibanaLoadTest.ingest.Main.{GLOBAL_STATS_FILENAME, GLOBAL_STATS_INDEX, SIMULATION_LOG_FILENAME, TEST_RUN_FILENAME, USERS_INDEX, logger}
+import org.kibanaLoadTest.test.mocks.{ESMockServer, KibanaMockServer}
 
 import java.nio.file.Paths
 
@@ -42,15 +23,15 @@ class IngestionTest {
   val expRequestString = "login - 1628588469069 - 1628588469812 - 743 - OK"
   val expUserString = "1628588469042 - 1"
 
-  var kibanaServer: ClientAndServer = null
-  var esServer: ClientAndServer = null
+  var kbnMock: KibanaMockServer = null
+  var esMock: ESMockServer = null
 
   @BeforeAll
   def tearUp(): Unit = {
-    kibanaServer = ClientAndServer.startClientAndServer(5620)
-    esServer = ClientAndServer.startClientAndServer(9220)
-    ServerHelper.mockKibanaStatus(kibanaServer)
-    ServerHelper.mockEsStatus(esServer)
+    kbnMock = new KibanaMockServer(5620)
+    kbnMock.createKibanaStatusCallback()
+    esMock = new ESMockServer(9220)
+    esMock.createStatusCallback()
     config = new KibanaConfiguration(
       Helper.readResourceConfigFile("config/local.conf")
     )
@@ -59,8 +40,8 @@ class IngestionTest {
 
   @AfterAll
   def tearDown(): Unit = {
-    stopQuietly(kibanaServer)
-    stopQuietly(esServer)
+    kbnMock.destroy()
+    esMock.destroy()
   }
 
   @Test

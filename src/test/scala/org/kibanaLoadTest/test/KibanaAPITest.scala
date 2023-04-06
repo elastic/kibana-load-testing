@@ -1,20 +1,14 @@
 package org.kibanaLoadTest.test
 
 import org.apache.http.impl.client.HttpClientBuilder
-import org.junit.jupiter.api.Assertions.{
-  assertDoesNotThrow,
-  assertEquals,
-  assertNotEquals,
-  assertTrue
-}
+import org.junit.jupiter.api.Assertions.{assertDoesNotThrow, assertEquals, assertNotEquals, assertTrue}
 import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import org.junit.jupiter.api.function.Executable
 import org.junit.jupiter.api.{AfterAll, BeforeAll, Test, TestInstance}
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.{HttpHelper, KbnClient}
-import org.mockserver.integration.ClientAndServer
-import org.mockserver.stop.Stop.stopQuietly
+import org.kibanaLoadTest.test.mocks.{ESMockServer, KibanaMockServer}
 
 import java.nio.file.Paths
 
@@ -31,16 +25,17 @@ class KibanaAPITest {
     Paths.get(getClass.getResource("/test/so.json").getPath)
   private var config: KibanaConfiguration = null
   private var helper: HttpHelper = null
-  var kibanaServer: ClientAndServer = null
-  var esServer: ClientAndServer = null
+  var kbnMock: KibanaMockServer = null
+  var esMock: ESMockServer = null
 
   @BeforeAll
   def tearUp: Unit = {
-    kibanaServer = ClientAndServer.startClientAndServer(5620)
-    esServer = ClientAndServer.startClientAndServer(9220)
-    ServerHelper.mockKibanaStatus(kibanaServer)
-    ServerHelper.mockKibanaLogin(kibanaServer)
-    ServerHelper.mockEsStatus(esServer)
+    kbnMock = new KibanaMockServer(5620)
+    kbnMock.createKibanaStatusCallback()
+    kbnMock.createSuccessfulLoginCallback()
+    esMock = new ESMockServer(9220)
+    esMock.createStatusCallback()
+
     config = new KibanaConfiguration(
       kibanaHost,
       esHost,
@@ -54,8 +49,8 @@ class KibanaAPITest {
 
   @AfterAll
   def tearDown(): Unit = {
-    stopQuietly(kibanaServer)
-    stopQuietly(esServer)
+    kbnMock.destroy()
+    esMock.destroy()
   }
 
   @Test
@@ -80,11 +75,8 @@ class KibanaAPITest {
 
   @Test
   def sampleDataTest(): Unit = {
-    ServerHelper.mockKibanaSampleData(
-      kibanaServer,
-      dataType = "ecommerce",
-      config.buildVersion
-    )
+    kbnMock.createSampleDataCallbacks("ecommerce", config.buildVersion)
+
     val loadClosure: Executable = () => helper.addSampleData("ecommerce")
     val unloadClosure: Executable = () => helper.removeSampleData("ecommerce")
     assertDoesNotThrow(loadClosure, "helper.addSampleData throws exception")

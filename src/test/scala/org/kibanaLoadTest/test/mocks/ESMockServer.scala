@@ -1,4 +1,4 @@
-package org.kibanaLoadTest.test
+package org.kibanaLoadTest.test.mocks
 
 import org.mockserver.integration.ClientAndServer
 import org.mockserver.model.HttpRequest.request

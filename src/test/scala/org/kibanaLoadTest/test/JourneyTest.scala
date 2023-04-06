@@ -33,5 +33,4 @@ class JourneyTest {
     assertEquals(http.statusCode, 200)
     assertEquals(http.timeout.get, 10000)
   }
-
 }

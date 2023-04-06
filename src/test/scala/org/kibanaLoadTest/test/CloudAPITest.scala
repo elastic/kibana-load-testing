@@ -2,15 +2,8 @@ package org.kibanaLoadTest.test
 
 import org.junit.jupiter.api.Test
 import org.kibanaLoadTest.helpers.{CloudHttpClient, DeploymentInfo, Helper}
-import org.junit.jupiter.api.Assertions.{
-  assertEquals,
-  assertFalse,
-  assertNotNull,
-  assertTrue
-}
+import org.junit.jupiter.api.Assertions.{assertFalse, assertNotNull, assertTrue}
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
-
-import java.util
 
 class CloudAPITest {
   @Test

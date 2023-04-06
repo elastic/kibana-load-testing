@@ -1,13 +1,11 @@
 package org.kibanaLoadTest.test
 
 import org.junit.jupiter.api.Assertions.{assertEquals, assertThrows, assertTrue}
-import org.junit.jupiter.api.Test
-import org.kibanaLoadTest.helpers.Helper.{
-  generateUUID,
-  getTargetPath,
-  readArchiveFile
-}
+import org.junit.jupiter.api.TestInstance.Lifecycle
+import org.junit.jupiter.api.{Test, TestInstance}
+import org.kibanaLoadTest.helpers.Helper.{generateUUID, getTargetPath, readArchiveFile}
 import org.kibanaLoadTest.helpers.{Helper, Version}
+
 import java.io.{File, FileNotFoundException}
 import java.nio.file.Paths
 import java.util.Calendar
