@@ -44,7 +44,8 @@ spec:
     apiVersion: buildkite.elastic.dev/v1
     kind: Pipeline
     metadata:
-      name: kibana-load-testing
+      description: CI for elastic/kibana-load-testing GitHub repository
+      name: appex-qa / kibana-load-testing
     spec:
       provider_settings:
         build_tags: true
