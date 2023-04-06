@@ -1,7 +1,12 @@
 package org.kibanaLoadTest.test
 
 import org.apache.http.impl.client.HttpClientBuilder
-import org.junit.jupiter.api.Assertions.{assertDoesNotThrow, assertEquals, assertNotEquals, assertTrue}
+import org.junit.jupiter.api.Assertions.{
+  assertDoesNotThrow,
+  assertEquals,
+  assertNotEquals,
+  assertTrue
+}
 import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import org.junit.jupiter.api.function.Executable
@@ -75,7 +80,8 @@ class KibanaAPITest {
 
   @Test
   def sampleDataTest(): Unit = {
-    kbnMock.createSampleDataCallbacks("ecommerce", config.buildVersion)
+    kbnMock.createAddSampleDataCallback("ecommerce", config.buildVersion)
+    kbnMock.createDeleteSampleDataCallback("ecommerce", config.buildVersion)
 
     val loadClosure: Executable = () => helper.addSampleData("ecommerce")
     val unloadClosure: Executable = () => helper.removeSampleData("ecommerce")

@@ -11,7 +11,7 @@ class KibanaMockServer(port: Int) {
   private val server = ClientAndServer.startClientAndServer(this.port)
 
   def createKibanaStatusCallback() = {
-    this.server
+    server
       .when(request.withPath("/api/status").withMethod("GET"))
       .respond(
         response()
@@ -46,7 +46,7 @@ class KibanaMockServer(port: Int) {
       )
   }
 
-  def createSampleDataCallbacks(
+  def createAddSampleDataCallback(
       dataType: String,
       buildVersion: String
   ) = {
@@ -55,18 +55,30 @@ class KibanaMockServer(port: Int) {
         request()
           .withMethod("POST")
           .withPath(s"/api/sample_data/$dataType")
+          .withHeader("Connection", "keep-alive")
           .withHeader("kbn-version", buildVersion)
       )
       .respond(
         response()
           .withStatusCode(200)
+          .withBody(
+            json(
+              s"""{"elasticsearchIndicesCreated":{"kibana_sample_data_$dataType":4675},"kibanaSavedObjectsLoaded":9}"""
+            )
+          )
       )
+  }
 
+  def createDeleteSampleDataCallback(
+      dataType: String,
+      buildVersion: String
+  ) = {
     server
       .when(
         request()
           .withMethod("DELETE")
           .withPath(s"/api/sample_data/$dataType")
+          .withHeader("Connection", "keep-alive")
           .withHeader("kbn-version", buildVersion)
       )
       .respond(
