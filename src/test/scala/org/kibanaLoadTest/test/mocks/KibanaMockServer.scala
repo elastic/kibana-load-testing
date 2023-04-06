@@ -77,7 +77,7 @@ class KibanaMockServer(port: Int) {
 
   def destroy() = {
     if (server != null && server.isRunning()) {
-      stopQuietly(this.server)
+      stopQuietly(server)
     }
   }
 }
