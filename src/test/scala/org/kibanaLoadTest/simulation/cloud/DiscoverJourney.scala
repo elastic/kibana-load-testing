@@ -13,11 +13,7 @@ class DiscoverJourney extends BaseSimulation {
   val scn: ScenarioBuilder = scenario(scenarioName)
     .exec(
       Login
-        .doLogin(
-          appConfig.isSecurityEnabled,
-          appConfig.loginPayload,
-          appConfig.loginStatusCode
-        )
+        .doLogin(appConfig.loginPayload)
         .pause(5)
     )
     .exec(Discover.load(appConfig.baseUrl, defaultHeaders).pause(10))

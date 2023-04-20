@@ -31,9 +31,8 @@ object SimulationHelper {
         config.getString("category")
       )
     } else new Version(stackVersion)
-    val providerName = if (version.isAbove79x) "cloud-basic" else "basic-cloud"
-    val payload = cloudClient.preparePayload(stackVersion, config)
-    val deployment = cloudClient.createDeployment(payload)
+    val payloadJson = cloudClient.preparePayload(version.value, config)
+    val deployment = cloudClient.createDeployment(payloadJson)
     val isReady = cloudClient.waitForClusterToStart(deployment)
     // delete deployment if it was not finished successfully
     if (!isReady) {
@@ -49,21 +48,21 @@ object SimulationHelper {
       )
       .withValue(
         "host.kibana",
-        ConfigValueFactory.fromAnyRef(hosts.get("kibanaUrl").get)
+        ConfigValueFactory.fromAnyRef(hosts.get("kibana").get)
       )
       .withValue(
         "host.es",
-        ConfigValueFactory.fromAnyRef(hosts.get("esUrl").get)
+        ConfigValueFactory.fromAnyRef(hosts.get("es").get)
       )
       .withValue(
         "host.version",
-        ConfigValueFactory.fromAnyRef(version.get)
+        ConfigValueFactory.fromAnyRef(version.value)
       )
       .withValue("security.on", ConfigValueFactory.fromAnyRef(true))
       .withValue("auth.providerType", ConfigValueFactory.fromAnyRef("basic"))
       .withValue(
         "auth.providerName",
-        ConfigValueFactory.fromAnyRef(providerName)
+        ConfigValueFactory.fromAnyRef("cloud-basic")
       )
       .withValue(
         "auth.username",
@@ -77,12 +76,9 @@ object SimulationHelper {
     new KibanaConfiguration(cloudConfig)
   }
 
-  def useExistingDeployment(id: String): KibanaConfiguration = {
-    val cloudDeploymentFilePath: String = Paths
-      .get("target")
-      .toAbsolutePath
-      .normalize
-      .toString + File.separator + "cloudDeployment.txt"
+  def useExistingDeployment(
+      cloudDeploymentFilePath: String
+  ): KibanaConfiguration = {
     val meta = Helper.readFileToMap(cloudDeploymentFilePath)
     val version = new Version(meta("version").toString)
     val providerName = if (version.isAbove79x) "cloud-basic" else "basic-cloud"
@@ -90,7 +86,7 @@ object SimulationHelper {
       .load()
       .withValue(
         "deploymentId",
-        ConfigValueFactory.fromAnyRef(id)
+        ConfigValueFactory.fromAnyRef(meta("deploymentId"))
       )
       .withValue(
         "deleteDeploymentOnFinish",
@@ -137,11 +133,7 @@ object SimulationHelper {
       "buildNumber" -> config.buildNumber,
       "version" -> config.version,
       "isSnapshotBuild" -> config.isSnapshotBuild,
-      "maxUsers" -> users,
-      "esVersion" -> config.esVersion,
-      "esBuildHash" -> config.esBuildHash,
-      "esBuildDate" -> config.esBuildDate,
-      "esLuceneVersion" -> config.esLuceneVersion
+      "maxUsers" -> users
     )
     val meta = deployMeta.++(getCIMeta)
     Helper.writeMapToFile(meta, lastRunFilePath)

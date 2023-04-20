@@ -91,6 +91,7 @@ class CloudHttpClient(var env: CloudEnv.Value = CloudEnv.STAGING) {
     def postCall(httpClient: CloseableHttpClient): CloseableHttpResponse = {
       val httpPost: HttpPost = new HttpPost(baseUrl + path)
       httpPost.addHeader("Authorization", s"ApiKey $getApiKey")
+      httpPost.addHeader("Content-Type", "application/json")
       if (body != null) httpPost.setEntity(new StringEntity(body))
       httpClient.execute(httpPost)
     }

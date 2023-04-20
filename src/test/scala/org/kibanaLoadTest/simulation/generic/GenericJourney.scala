@@ -65,13 +65,19 @@ class GenericJourney extends Simulation {
   private val username = sys.env.getOrElse("AUTH_LOGIN", "elastic")
   private val password = sys.env.getOrElse("AUTH_PASSWORD", "changeme")
   private val kibanaRootPath = sys.env.get("KIBANA_DIR")
-  private val skipCleanup = Try(System.getProperty("skipCleanupOnTeardown").toBoolean).getOrElse(false)
+  private val skipCleanup =
+    Try(System.getProperty("skipCleanupOnTeardown").toBoolean).getOrElse(false)
   private def isKibanaRootPathDefined: Either[String, String] = {
     if (kibanaRootPath.isEmpty || !Files.exists(Paths.get(kibanaRootPath.get)))
       Left(
         "Loading test data requires Kibana root folder path to be set, use 'KIBANA_DIR' env var"
       )
     else Right(kibanaRootPath.get)
+  }
+
+  private def hasDataDefined(journey: Journey): Boolean = {
+    journey.testData.isDefined &&
+    (!journey.testData.get.esArchives.isEmpty || !journey.testData.get.kbnArchives.isEmpty)
   }
 
   private val config: KibanaConfiguration = new KibanaConfiguration(
@@ -83,7 +89,13 @@ class GenericJourney extends Simulation {
     providerName
   )
   val esArchiver = new ESArchiver(config)
-  val kbnClient = new KbnClient(config)
+  val kbnClient = new KbnClient(
+    config.baseUrl,
+    config.username,
+    config.password,
+    config.providerName,
+    config.providerType
+  )
   private val httpProtocol: HttpProtocolBuilder =
     new HttpHelper(config).getProtocol
       .baseUrl(config.baseUrl)
@@ -129,10 +141,12 @@ class GenericJourney extends Simulation {
           .buildPopulation(testScenario, journey.scalabilitySetup.test)
           .protocols(httpProtocol)
       )
-  ).maxDuration(JourneyBuilder.getDuration(journey.scalabilitySetup.maxDuration))
+  ).maxDuration(
+    JourneyBuilder.getDuration(journey.scalabilitySetup.maxDuration)
+  )
 
   before {
-    if (journey.testData.isDefined) {
+    if (hasDataDefined(journey)) {
       isKibanaRootPathDefined match {
         case Right(path) =>
           testDataLoader(
@@ -151,7 +165,7 @@ class GenericJourney extends Simulation {
     if (skipCleanup) {
       logger.warn("!!! Unloading archives for ES/Kibana is skipped !!!")
     } else {
-      if (journey.testData.isDefined) {
+      if (hasDataDefined(journey)) {
         testDataLoader(
           journey.testData.get,
           kibanaRootPath.get,

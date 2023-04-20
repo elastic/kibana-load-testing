@@ -1,13 +1,8 @@
 package org.kibanaLoadTest
 
 import com.typesafe.config.Config
-import org.apache.http.HttpStatus
-import org.apache.http.auth.{AuthScope, UsernamePasswordCredentials}
-import org.apache.http.client.methods.HttpGet
-import org.apache.http.impl.client.{BasicCredentialsProvider, HttpClientBuilder}
-import org.apache.http.util.EntityUtils
-import org.kibanaLoadTest.helpers.{Helper, Version}
-import org.slf4j.{Logger, LoggerFactory}
+import org.kibanaLoadTest.helpers.{Helper, KbnClient}
+import org.slf4j.LoggerFactory
 import spray.json.DefaultJsonProtocol.{
   BooleanJsonFormat,
   LongJsonFormat,
@@ -17,28 +12,23 @@ import spray.json.lenses.JsonLenses._
 
 class KibanaConfiguration {
   val logger = LoggerFactory.getLogger("Configuration")
-  var baseUrl = ""
-  var buildHash = ""
-  var buildNumber = 0L
-  var isSnapshotBuild = false
-  var version = ""
-  var buildVersion = ""
-  var isSecurityEnabled = false
-  var username = ""
-  var password = ""
-  var providerType = ""
-  var providerName = ""
-  var loginPayload = ""
-  var loginStatusCode = 0
+  var baseUrl: String = null
+  var username: String = null
+  var password: String = null
+  var providerType: String = null
+  var providerName: String = null
   // Elasticsearch
-  var esUrl = ""
-  var esVersion = ""
-  var esBuildHash = ""
-  var esBuildDate = ""
-  var esLuceneVersion = ""
+  var esUrl: String = null
+
+  var version: String = null
+  var buildVersion: String = null
+  var isSnapshotBuild = false
+  var buildHash: String = null
+  var buildNumber = 0L
+  var loginPayload: String = null
   // Cloud testing
   var deploymentId: Option[String] = None
-  var deleteDeploymentOnFinish = true
+  var deleteDeploymentOnFinish = false
   // http request header requires sid
   var setCookieHeader = false
 
@@ -59,24 +49,13 @@ class KibanaConfiguration {
       esHost,
       s"'esHost' should be a valid Elasticsearch URL"
     )
-    this.readKibanaBuildInfo(this.baseUrl)
-    this.isSecurityEnabled = true
     this.username = username
     this.password = password
     this.providerType = providerType
     this.providerName = providerName
-
-    val isAbove79x = new Version(this.buildVersion).isAbove79x
-    this.setLoginPayloadAndStatusCode(
-      isAbove79x,
-      this.baseUrl,
-      this.username,
-      this.password,
-      this.providerType,
-      this.providerName
-    )
-
-    this.readElasticsearchBuildInfo(this.esUrl, this.username, this.password)
+    this.loginPayload =
+      s"""{"providerType":"$providerType","providerName":"$providerName","currentURL":"$baseUrl/login","params":{"username":"$username","password":"$password"}}"""
+    this.readKibanaBuildInfo()
   }
 
   def this(config: Config) = {
@@ -107,57 +86,20 @@ class KibanaConfiguration {
       config.getString("host.es"),
       s"'host.es' should be a valid ES URL"
     )
-
-    this.isSecurityEnabled = config.getBoolean("security.on")
     this.username = config.getString("auth.username")
     this.password = config.getString("auth.password")
     this.providerType = config.getString("auth.providerType")
     this.providerName = config.getString("auth.providerName")
-
-    if (this.providerName.contains("cloud")) {
-      logger.warn("Skipping getKibanaStatus call for Cloud deployment, make sure to provide correct 'host.version'")
-      this.version = config.getString("host.version")
-      this.buildVersion = config.getString("host.version")
-    } else {
-      this.readKibanaBuildInfo(this.baseUrl)
-    }
-
-    val isAbove79x = new Version(this.buildVersion).isAbove79x
-    if (
-      isAbove79x && (!config.hasPathOrNull("auth.providerType") || !config
-        .hasPathOrNull("auth.providerName"))
-    ) {
+    if (this.providerType == null || this.providerName == null) {
       throw new RuntimeException(
         "Starting 7.10.0 Kibana authentication requires 'auth.providerType' " +
           "& 'auth.providerType' in payload, add it to your config file"
       )
     }
-
-    this.setLoginPayloadAndStatusCode(
-      isAbove79x,
-      this.baseUrl,
-      this.username,
-      this.password,
-      this.providerType,
-      this.providerName
-    )
-    this.setDeploymentInfo(config)
-    this.readElasticsearchBuildInfo(this.esUrl, this.username, this.password)
-  }
-
-  def setLoginPayloadAndStatusCode(
-      isAbove79x: Boolean,
-      baseUrl: String,
-      username: String,
-      password: String,
-      providerType: String,
-      providerName: String
-  ): Unit = {
+    this.readKibanaBuildInfo()
     this.loginPayload =
-      if (isAbove79x)
-        s"""{"providerType":"$providerType","providerName":"$providerName","currentURL":"$baseUrl/login","params":{"username":"$username","password":"$password"}}"""
-      else s"""{"username":"$username","password":"$password"}"""
-    this.loginStatusCode = if (isAbove79x) 200 else 204
+      s"""{"providerType":"$providerType","providerName":"$providerName","currentURL":"$baseUrl/login","params":{"username":"$username","password":"$password"}}"""
+    this.setDeploymentInfo(config)
   }
 
   def setDeploymentInfo(config: Config): Unit = {
@@ -167,11 +109,18 @@ class KibanaConfiguration {
     this.deleteDeploymentOnFinish =
       if (config.hasPath("deleteDeploymentOnFinish"))
         config.getBoolean("deleteDeploymentOnFinish")
-      else true
+      else false
   }
 
-  def readKibanaBuildInfo(kibanaHost: String): Unit = {
-    HttpClient.getKibanaStatus(kibanaHost) match {
+  def readKibanaBuildInfo(): Unit = {
+    val client = new KbnClient(
+      this.baseUrl,
+      this.username,
+      this.password,
+      this.providerName,
+      this.providerType
+    )
+    Option(client.getKibanaStatusInfo()) match {
       case Some(value) =>
         this.buildHash =
           value.extract[String](Symbol("version") / Symbol("build_hash"))
@@ -185,31 +134,11 @@ class KibanaConfiguration {
           if (this.isSnapshotBuild) s"${this.version}-SNAPSHOT"
           else this.version
       case None =>
-        logger.error("!!! Make sure Kibana is up & running before simulation start!!!")
+        logger.error(
+          "!!! Make sure Kibana is up & running before simulation start!!!"
+        )
         throw new RuntimeException(
           "Failed to parse response with Kibana status"
-        )
-    }
-  }
-
-  def readElasticsearchBuildInfo(
-      esUrl: String,
-      username: String,
-      password: String
-  ): Unit = {
-    HttpClient.getElasticSearchInfo(esUrl, username, password) match {
-      case Some(value) =>
-        this.esVersion =
-          value.extract[String](Symbol("version") / Symbol("number"))
-        this.esBuildHash =
-          value.extract[String](Symbol("version") / Symbol("build_hash"))
-        this.esBuildDate = value
-          .extract[String](Symbol("version") / Symbol("build_date"))
-        this.esLuceneVersion =
-          value.extract[String](Symbol("version") / Symbol("lucene_version"))
-      case None =>
-        throw new RuntimeException(
-          "Failed to parse response with Elasticsearch status"
         )
     }
   }
@@ -217,63 +146,5 @@ class KibanaConfiguration {
   def print(): Unit = {
     logger.info(s"Kibana baseUrl = ${this.baseUrl}")
     logger.info(s"Kibana version = ${this.buildVersion}")
-    logger.info(s"Security Enabled = ${this.isSecurityEnabled}")
-  }
-}
-
-object HttpClient {
-  private val logger: Logger =
-    LoggerFactory.getLogger("Configuration - HttpClient")
-
-  def getKibanaStatus(kibanaHost: String): Option[String] = {
-    val url = kibanaHost + "/api/status"
-    logger.debug(s"GET $url")
-    val httpClient = HttpClientBuilder.create.build
-    try {
-      val request = new HttpGet(url)
-      val response = httpClient.execute(request)
-      response.getStatusLine.getStatusCode match {
-        case HttpStatus.SC_OK =>
-          return Some(EntityUtils.toString(response.getEntity, "UTF-8"))
-        case _ => return None
-      }
-    } catch {
-      case e:Throwable => logger.error(s"Exception occurred on getting Kibana status: ${e.getMessage}")
-    } finally {
-      httpClient.close()
-    }
-
-    None
-  }
-
-  def getElasticSearchInfo(
-      esUrl: String,
-      username: String,
-      password: String
-  ): Option[String] = {
-    val url = esUrl
-    logger.debug(s"GET $url")
-    var jsonString = ""
-    val provider = new BasicCredentialsProvider
-    provider.setCredentials(
-      AuthScope.ANY,
-      new UsernamePasswordCredentials(username, password)
-    )
-    val httpClient =
-      HttpClientBuilder.create.setDefaultCredentialsProvider(provider).build
-    try {
-      val request = new HttpGet(url)
-      val response = httpClient.execute(request)
-      response.getStatusLine.getStatusCode match {
-        case HttpStatus.SC_OK =>
-          return Some(EntityUtils.toString(response.getEntity, "UTF-8"))
-        case _ => return None
-      }
-    } catch {
-      case e:Throwable => logger.error(s"Exception occurred on getting Elasticsearch status: ${e.getMessage}")
-    } finally {
-      httpClient.close()
-    }
-    None
   }
 }

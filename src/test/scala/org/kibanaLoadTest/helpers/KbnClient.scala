@@ -5,13 +5,12 @@ import spray.json.lenses.JsonLenses._
 import io.circe.Json
 import io.circe.parser.parse
 import org.apache.http.HttpStatus
-import org.apache.http.client.methods.{HttpDelete, HttpPost}
+import org.apache.http.client.methods.{HttpDelete, HttpGet, HttpPost}
 import org.apache.http.entity.{ContentType, StringEntity}
 import org.apache.http.entity.mime.MultipartEntityBuilder
 import org.apache.http.impl.client.{CloseableHttpClient, HttpClients}
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager
 import org.apache.http.util.EntityUtils
-import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.helpers.Helper.checkFilesExist
 import org.slf4j.{Logger, LoggerFactory}
 
@@ -24,9 +23,19 @@ import scala.concurrent.duration.DurationInt
 
 case class SavedObject(id: String, soType: String)
 
-class KbnClient(config: KibanaConfiguration) {
+class KbnClient(
+    baseUrl: String,
+    username: String,
+    password: String,
+    providerName: String,
+    providerType: String
+) {
   private val logger: Logger = LoggerFactory.getLogger("KbnClient")
   private val MAX_CONCURRENT_CONNECTIONS = 20
+  private val loginPayload =
+    s"""{"providerType":"$providerType","providerName":"$providerName","currentURL":"$baseUrl/login","params":{"username":"$username","password":"$password"}}"""
+  private var version: String = null
+  private var authCookie: String = null
   private def getJsonPath(path: Path) =
     if (path.toString.endsWith(".json")) path
     else Paths.get(path.toString + ".json")
@@ -47,27 +56,58 @@ class KbnClient(config: KibanaConfiguration) {
 
     if (withAuth) {
       // login to Kibana
-      getCookie(client)
+      getAuthCookie(client)
     }
 
     (client, connManager)
   }
 
-  private def getCookie(client: CloseableHttpClient): String = {
-    val loginRequest = new HttpPost(config.baseUrl + "/internal/security/login")
+  private def getAuthCookie(client: CloseableHttpClient): String = {
+    if (this.authCookie == null) {
+      this.authCookie = doLogin(client)
+    }
+    this.authCookie
+  }
+
+  def getVersion(): String = {
+    if (this.version == null) {
+      val (client, connManager) =
+        getClientAndConnectionManager(withAuth = false)
+      val getIndexHtmlRequest = new HttpGet(s"$baseUrl/login")
+      Using.resources(client, connManager) { (client, connManager) =>
+        {
+          Using(client.execute(getIndexHtmlRequest)) { response =>
+            EntityUtils.toString(response.getEntity)
+          } match {
+            case Success(responseStr) => {
+              val regExp = "\\d\\.\\d\\.\\d(-SNAPSHOT)?".r
+              this.version = regExp.findFirstIn(responseStr).get
+            }
+            case Failure(error) => throw new RuntimeException(error)
+          }
+        }
+      }
+    }
+    // cached for client instance
+    this.version
+  }
+
+  private def doLogin(client: CloseableHttpClient): String = {
+    val loginRequest = new HttpPost(s"$baseUrl/internal/security/login")
     loginRequest.addHeader("Content-Type", "application/json")
-    loginRequest.addHeader("kbn-xsrf", "xsrf")
-    loginRequest.setEntity(new StringEntity(config.loginPayload))
+    loginRequest.addHeader("kbn-version", this.getVersion())
+    loginRequest.setEntity(new StringEntity(loginPayload))
     Using(client.execute(loginRequest)) { response =>
       response
     } match {
       case Success(response) =>
         if (response.getStatusLine.getStatusCode == 200) {
           response.getHeaders("set-cookie")(0).getValue.split(";")(0)
-        } else
+        } else {
           throw new RuntimeException(
             s"Failed to login: ${response.getStatusLine}"
           )
+        }
       case Failure(error) =>
         throw new RuntimeException(s"Login request failed: $error")
     }
@@ -82,11 +122,10 @@ class KbnClient(config: KibanaConfiguration) {
       logger.info(
         s"Importing ${savedObjectStringList.length} saved objects from [${archivePath.toString}]"
       )
-      val importRequest = new HttpPost(
-        config.baseUrl + "/api/saved_objects/_import?overwrite=true"
-      )
+      val importRequest =
+        new HttpPost(s"$baseUrl/api/saved_objects/_import?overwrite=true")
       importRequest.addHeader("Connection", "keep-alive")
-      importRequest.addHeader("kbn-version", config.buildVersion)
+      importRequest.addHeader("kbn-version", this.getVersion())
       val builder = MultipartEntityBuilder.create
       builder.addBinaryBody(
         "file",
@@ -150,10 +189,10 @@ class KbnClient(config: KibanaConfiguration) {
           savedObjects.map(so =>
             Future {
               val url =
-                s"${config.baseUrl}/api/saved_objects/${so.soType}/${so.id}?force=true"
+                s"$baseUrl/api/saved_objects/${so.soType}/${so.id}?force=true"
               val deleteRequest = new HttpDelete(url)
               deleteRequest.addHeader("Connection", "keep-alive")
-              deleteRequest.addHeader("kbn-version", config.buildVersion)
+              deleteRequest.addHeader("kbn-version", this.getVersion())
               Using(client.execute(deleteRequest)) { response =>
                 response.getStatusLine
               } match {
@@ -205,7 +244,7 @@ class KbnClient(config: KibanaConfiguration) {
           (1 to count)
             .map(i =>
               Future {
-                getCookie(client)
+                doLogin(client)
               }
             )
             .toList
@@ -220,6 +259,82 @@ class KbnClient(config: KibanaConfiguration) {
             throw new RuntimeException("Failed to generate cookies", e)
         }
         Await.result(requestsFuture, 120.seconds) // 2 min timeout
+      }
+    }
+  }
+
+  def getKibanaStatusInfo(): String = {
+    val (client, connManager) = getClientAndConnectionManager()
+    val statusRequest = new HttpGet(
+      baseUrl + "/api/status"
+    )
+    Using(client.execute(statusRequest)) { response =>
+      EntityUtils.toString(response.getEntity)
+    } match {
+      case Success(responseBody) => responseBody
+      case Failure(error) =>
+        throw new RuntimeException(s"Failed to call Kibana status api: $error")
+    }
+  }
+
+  def addSampleData(dataType: String): Unit = {
+    logger.info(s"Loading sample data: $dataType")
+    val (client, connManager) = getClientAndConnectionManager()
+    Using.resources(client, connManager) { (client, connManager) =>
+      {
+        val loadDataRequest =
+          new HttpPost(s"$baseUrl/api/sample_data/$dataType")
+        loadDataRequest.addHeader("Connection", "keep-alive")
+        loadDataRequest.addHeader("kbn-version", this.getVersion())
+        Using.resources(client, connManager) { (client, connManager) =>
+          {
+            Using(client.execute(loadDataRequest)) { response =>
+              response
+            } match {
+              case Success(response) => {
+                if (response.getStatusLine.getStatusCode != 200) {
+                  throw new RuntimeException(
+                    s"Adding sample data failed: ${response.getStatusLine}"
+                  )
+                }
+              }
+              case Failure(error) =>
+                logger.error("Exception occurred during loading sample data")
+                throw new RuntimeException(error)
+            }
+          }
+        }
+      }
+    }
+  }
+
+  def removeSampleData(dataType: String): Unit = {
+    logger.info(s"Removing sample data: $dataType")
+    val (client, connManager) = getClientAndConnectionManager()
+    Using.resources(client, connManager) { (client, connManager) =>
+      {
+        val deleteDataRequest =
+          new HttpDelete(s"$baseUrl/api/sample_data/$dataType")
+        deleteDataRequest.addHeader("Connection", "keep-alive")
+        deleteDataRequest.addHeader("kbn-version", this.getVersion())
+        Using.resources(client, connManager) { (client, connManager) =>
+          {
+            Using(client.execute(deleteDataRequest)) { response =>
+              response
+            } match {
+              case Success(response) => {
+                if (response.getStatusLine.getStatusCode != 204) {
+                  throw new RuntimeException(
+                    s"Removing sample data failed: ${response.getStatusLine}"
+                  )
+                }
+              }
+              case Failure(error) =>
+                logger.error("Exception occurred during sample data removal")
+                throw new RuntimeException(error)
+            }
+          }
+        }
       }
     }
   }

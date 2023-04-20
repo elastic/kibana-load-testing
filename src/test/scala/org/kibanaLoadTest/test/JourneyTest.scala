@@ -2,7 +2,6 @@ package org.kibanaLoadTest.test
 
 import org.junit.jupiter.api.Assertions.{assertEquals, assertTrue}
 import org.junit.jupiter.api.Test
-import org.kibanaLoadTest.helpers.Helper
 import org.kibanaLoadTest.simulation.generic.mapping.Journey
 import org.kibanaLoadTest.simulation.generic.mapping.JourneyJsonProtocol._
 

@@ -1,5 +1,6 @@
 {
   "resources":{
+    "integrations_server":[],
     "elasticsearch":[
       {
         "region":"gcp-us-central1",
@@ -7,17 +8,13 @@
           "dedicated_masters_threshold":6
         },
         "plan":{
-          "autoscaling_enabled":false,
           "cluster_topology":[
             {
-              "zone_count":2,
+              "zone_count":1,
               "elasticsearch":{
                 "node_attributes":{
                   "data":"hot"
-                },
-                "enabled_built_in_plugins":[
-
-                ]
+                }
               },
               "instance_configuration_id":"gcp.es.datahot.n2.68x10x45",
               "node_roles":[
@@ -30,8 +27,8 @@
               ],
               "id":"hot_content",
               "size":{
-                "resource":"memory",
-                "value":8192
+                "value":1024,
+                "resource":"memory"
               }
             },
             {
@@ -39,10 +36,7 @@
               "elasticsearch":{
                 "node_attributes":{
                   "data":"warm"
-                },
-                "enabled_built_in_plugins":[
-
-                ]
+                }
               },
               "instance_configuration_id":"gcp.es.datawarm.n2.68x10x190",
               "node_roles":[
@@ -60,10 +54,7 @@
               "elasticsearch":{
                 "node_attributes":{
                   "data":"cold"
-                },
-                "enabled_built_in_plugins":[
-
-                ]
+                }
               },
               "instance_configuration_id":"gcp.es.datacold.n2.68x10x190",
               "node_roles":[
@@ -81,10 +72,7 @@
               "elasticsearch":{
                 "node_attributes":{
                   "data":"frozen"
-                },
-                "enabled_built_in_plugins":[
-
-                ]
+                }
               },
               "instance_configuration_id":"gcp.es.datafrozen.n2.68x10x95",
               "node_roles":[
@@ -98,7 +86,7 @@
             },
             {
               "zone_count":3,
-              "instance_configuration_id":"gcp.es.master.n2.68x32x45",
+              "instance_configuration_id":"gcp.es.master.n2.68x32x45.2",
               "node_roles":[
                 "master",
                 "remote_cluster_client"
@@ -107,16 +95,11 @@
               "size":{
                 "resource":"memory",
                 "value":0
-              },
-              "elasticsearch":{
-                "enabled_built_in_plugins":[
-
-                ]
               }
             },
             {
               "zone_count":2,
-              "instance_configuration_id":"gcp.es.coordinating.n2.68x16x45",
+              "instance_configuration_id":"gcp.es.coordinating.n2.68x16x45.2",
               "node_roles":[
                 "ingest",
                 "remote_cluster_client"
@@ -125,16 +108,11 @@
               "size":{
                 "resource":"memory",
                 "value":0
-              },
-              "elasticsearch":{
-                "enabled_built_in_plugins":[
-
-                ]
               }
             },
             {
               "zone_count":1,
-              "instance_configuration_id":"gcp.es.ml.n2.68x16x45",
+              "instance_configuration_id":"gcp.es.ml.n2.68x32x45",
               "node_roles":[
                 "ml",
                 "remote_cluster_client"
@@ -143,27 +121,23 @@
               "size":{
                 "resource":"memory",
                 "value":0
-              },
-              "elasticsearch":{
-                "enabled_built_in_plugins":[
-
-                ]
               }
             }
           ],
           "elasticsearch":{
-            "version":"7.14.0"
+            "version":"8.7.0",
+            "enabled_built_in_plugins":[
+
+            ]
           },
           "deployment_template":{
-            "id":"gcp-storage-optimized"
+            "id":"gcp-storage-optimized-v5"
           }
         },
         "ref_id":"main-elasticsearch"
       }
     ],
-    "enterprise_search":[
-
-    ],
+    "enterprise_search":[],
     "kibana":[
       {
         "elasticsearch_cluster_ref_id":"main-elasticsearch",
@@ -180,17 +154,17 @@
             }
           ],
           "kibana":{
-            "version":"7.14.0"
+            "version":"8.7.0"
           }
         },
         "ref_id":"main-kibana"
       }
-    ],
-    "apm":[
-
     ]
   },
-  "name":"My deployment",
+  "settings":{
+    "autoscaling_enabled":false
+  },
+  "name":"My Deployment",
   "metadata":{
     "system_owned":false
   }

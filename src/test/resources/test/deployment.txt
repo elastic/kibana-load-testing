@@ -1,0 +1,7 @@
+deploymentId=dfi3n249c23mc00xkm
+deleteDeploymentOnFinish=true
+baseUrl=http://localhost:5601
+esUrl=http://localhost:9300
+version=9.9.9-SNAPSHOT
+username=user2
+password=nopassword
