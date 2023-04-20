@@ -20,7 +20,6 @@ metadata:
 spec:
   type: service
   owner: group:appex-qa
-  system: buildkite
   lifecycle: production
 
 # Declare the prod Buildkite pipeline
