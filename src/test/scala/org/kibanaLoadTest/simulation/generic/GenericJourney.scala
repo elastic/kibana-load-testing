@@ -77,7 +77,11 @@ class GenericJourney extends Simulation {
 
   private def hasDataDefined(journey: Journey): Boolean = {
     journey.testData.isDefined &&
-    (!journey.testData.get.esArchives.isEmpty || !journey.testData.get.kbnArchives.isEmpty)
+    (!journey.testData.get.esArchives
+      .getOrElse(Array[String]())
+      .isEmpty || !journey.testData.get.kbnArchives
+      .getOrElse(Array[String]())
+      .isEmpty)
   }
 
   private val config: KibanaConfiguration = new KibanaConfiguration(

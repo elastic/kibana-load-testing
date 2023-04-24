@@ -1,7 +1,8 @@
 package org.kibanaLoadTest.test.mocks
 
+import org.mockserver.configuration.Configuration
 import org.mockserver.integration.ClientAndServer
-import org.mockserver.model.ClearType
+import org.mockserver.model.{ClearType, HttpResponse, RequestDefinition}
 import org.mockserver.model.HttpRequest.request
 import org.mockserver.model.HttpResponse.response
 import org.mockserver.model.HttpTemplate.{TemplateType, template}
@@ -9,7 +10,21 @@ import org.mockserver.model.JsonBody.json
 import org.mockserver.stop.Stop.stopQuietly
 
 class KibanaMockServer(port: Int) {
-  private val server = ClientAndServer.startClientAndServer(this.port)
+  private val config = new Configuration().logLevel("WARN")
+  private val server = ClientAndServer.startClientAndServer(config, this.port)
+
+  def addApiMockCallback(
+      requestDefinition: RequestDefinition,
+      response: HttpResponse
+  ): Unit = {
+    server
+      .clear(
+        requestDefinition,
+        ClearType.EXPECTATIONS
+      )
+      .when(requestDefinition)
+      .respond(response)
+  }
 
   def createKibanaIndexPageCallback(
       version: String = "8.7.1-SNAPSHOT"
