@@ -14,6 +14,8 @@ import org.kibanaLoadTest.helpers.{
 import org.kibanaLoadTest.scenario.Login
 import org.slf4j.{Logger, LoggerFactory}
 
+import java.io.File
+import java.nio.file.Paths
 import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.FiniteDuration
 
@@ -52,12 +54,17 @@ class BaseSimulation extends Simulation {
   )
   // -DenvConfig=path/to/config, default is a local instance
   val envConfig: String = System.getProperty("env", "config/local.conf")
+  // deployment metadata file
+  val cloudDeploymentFilePath: String = Paths
+    .get("target")
+    .toAbsolutePath
+    .normalize
+    .toString + File.separator + "cloudDeployment.txt"
   // appConfig is used to run load tests
-
   val appConfig: KibanaConfiguration = if (deploymentId.isDefined) {
     logger.info(s"Using existing deployment: ${deploymentId.get}")
     SimulationHelper
-      .useExistingDeployment(deploymentId.get)
+      .useExistingDeployment(cloudDeploymentFilePath)
   } else if (cloudDeployVersion.isDefined) {
     // create new deployment on Cloud
     logger.info(s"Reading deployment configuration: $CLOUD_DEPLOY_CONFIG")
@@ -74,7 +81,13 @@ class BaseSimulation extends Simulation {
     * It does not make any difference to use unique cookie for individual user (tcp connection), unless we test Kibana
     * security service. Taking it into account, we create a single session and share it.
     */
-  val client = new KbnClient(appConfig)
+  val client = new KbnClient(
+    appConfig.baseUrl,
+    appConfig.username,
+    appConfig.password,
+    appConfig.providerName,
+    appConfig.providerType
+  )
   val cookiesLst = client.generateCookies(1)
   val circularFeeder = Iterator
     .continually(cookiesLst.map(i => Map("sidValue" -> i)))
@@ -85,17 +98,11 @@ class BaseSimulation extends Simulation {
   var defaultHeaders: Map[String, String] = httpHelper.getDefaultHeaders
   var defaultTextHeaders: Map[String, String] = httpHelper.defaultTextHeaders
 
-  if (appConfig.isSecurityEnabled) {
-    defaultHeaders += ("Cookie" -> "#{Cookie}")
-    defaultTextHeaders += ("Cookie" -> "#{Cookie}")
-  }
+  // Kibana with Security enabled by default
+  defaultHeaders += ("Cookie" -> "#{Cookie}")
+  defaultTextHeaders += ("Cookie" -> "#{Cookie}")
 
-  var loginStep: ChainBuilder = Login
-    .doLogin(
-      appConfig.isSecurityEnabled,
-      appConfig.loginPayload,
-      appConfig.loginStatusCode
-    )
+  var loginStep: ChainBuilder = Login.doLogin(appConfig.loginPayload)
 
   before {
     logger.info(
@@ -105,7 +112,7 @@ class BaseSimulation extends Simulation {
     // saving deployment info to target/lastRun.txt"
     SimulationHelper.saveRunConfiguration(appConfig, props.maxUsers)
     // load sample data
-    httpHelper.addSampleData("ecommerce")
+    client.addSampleData("ecommerce")
     // wait 30s for data ingestion to be completed
     Thread.sleep(30 * 1000)
   }
@@ -120,7 +127,7 @@ class BaseSimulation extends Simulation {
     } else {
       // remove sample data
       try {
-        httpHelper.removeSampleData("ecommerce")
+        client.removeSampleData("ecommerce")
       } catch {
         case e: java.lang.RuntimeException =>
           println(s"Can't remove sample data\n ${e.printStackTrace()}")

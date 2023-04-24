@@ -47,3 +47,6 @@ puppeteer/.vscode
 
 .bsp/
 project/
+
+# tests
+results/

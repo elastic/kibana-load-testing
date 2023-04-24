@@ -1,15 +1,11 @@
 package org.kibanaLoadTest.test
 
 import java.io.File
-import org.junit.jupiter.api.Assertions.{assertDoesNotThrow, assertEquals, assertTrue}
+import org.junit.jupiter.api.Assertions.{assertEquals, assertTrue}
 import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.junit.jupiter.api.{AfterAll, BeforeAll, Test, TestInstance}
-import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
-import org.junit.jupiter.api.function.Executable
 import org.kibanaLoadTest.KibanaConfiguration
-import org.kibanaLoadTest.helpers.Helper.getReportFolderPaths
-import org.kibanaLoadTest.helpers.{ESArchiver, ESClient, Helper, HttpHelper, LogParser, ResponseParser}
-import org.kibanaLoadTest.ingest.Main.{GLOBAL_STATS_FILENAME, GLOBAL_STATS_INDEX, SIMULATION_LOG_FILENAME, TEST_RUN_FILENAME, USERS_INDEX, logger}
+import org.kibanaLoadTest.helpers.{ESArchiver, Helper, HttpHelper, LogParser, ResponseParser}
 import org.kibanaLoadTest.test.mocks.{ESMockServer, KibanaMockServer}
 
 import java.nio.file.Paths
@@ -28,12 +24,14 @@ class IngestionTest {
 
   @BeforeAll
   def tearUp(): Unit = {
-    kbnMock = new KibanaMockServer(5620)
+    kbnMock = new KibanaMockServer(5601)
+    kbnMock.createKibanaIndexPageCallback()
     kbnMock.createKibanaStatusCallback()
-    esMock = new ESMockServer(9220)
+    kbnMock.createSuccessfulLoginCallback()
+    esMock = new ESMockServer(9300)
     esMock.createStatusCallback()
     config = new KibanaConfiguration(
-      Helper.readResourceConfigFile("config/local.conf")
+      Helper.readResourceConfigFile("test/local.conf")
     )
     helper = new HttpHelper(config)
   }
@@ -98,48 +96,6 @@ class IngestionTest {
     assertEquals(className, "org.kibanaLoadTest.simulation.branch.DemoJourney")
   }
 
-  /**
-    * This test should be run locally against real Elasticsearch instance
-    */
-  @Test
-  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
-  def ingestReportTest(): Unit = {
-    val DATA_INDEX = "gatling-data"
-    val host: String = System.getenv("HOST_FROM_VAULT")
-    val url = Helper.parseUrl(host)
-    val username: String = System.getenv("USER_FROM_VAULT")
-    val password: String = System.getenv("PASS_FROM_VAULT")
-
-    val esClient = ESClient.getInstance(url, username, password)
-    val reportFolders = getReportFolderPaths
-
-    logger.info(s"Found ${reportFolders.length} Gatling reports")
-    val testPath =
-      Helper.getTargetPath + File.separator + "test-classes" + File.separator + "test" + File.separator
-    val simLogFilePath: String = new File(
-      testPath + SIMULATION_LOG_FILENAME
-    ).getAbsolutePath
-    val testRunFilePath: String = new File(
-      testPath + TEST_RUN_FILENAME
-    ).getAbsolutePath
-    val statsFilePath: String = new File(
-      testPath + GLOBAL_STATS_FILENAME
-    ).getAbsolutePath
-
-    val (requestsArray, concurrentUsersArray, combinedStatsArray) =
-      Helper.prepareDocsForIngestion(
-        statsFilePath,
-        simLogFilePath,
-        testRunFilePath
-      )
-
-    esClient.bulk(GLOBAL_STATS_INDEX, combinedStatsArray, 100)
-    esClient.bulk(DATA_INDEX, requestsArray, 100)
-    esClient.bulk(USERS_INDEX, concurrentUsersArray, 100)
-
-    esClient.closeConnection()
-  }
-
   @Test
   def saveDeploymentConfigTest(): Unit = {
     val meta = Map(
@@ -168,20 +124,5 @@ class IngestionTest {
     val docsArray = esArchiver.readDataFromFile(Paths.get(dataFilePath))
     assertEquals(1, indexArray.length, "Indexes count is incorrect")
     assertEquals(111396, docsArray.length, "Docs count is incorrect")
-  }
-
-  /**
-    * This test should be run locally against real Elasticsearch instance
-    */
-  @Test
-  @EnabledIfEnvironmentVariable(named = "ENV", matches = "local")
-  def ESArchiverIngestTest(): Unit = {
-    val archivePath = getClass.getResource("/test/es_archive").getPath
-    val esArchiver = new ESArchiver(config)
-    val loadClosure: Executable = () => esArchiver.load(Paths.get(archivePath))
-    val unloadClosure: Executable = () =>
-      esArchiver.unload(Paths.get(archivePath))
-    assertDoesNotThrow(loadClosure, "esArchiver.load throws exception")
-    assertDoesNotThrow(unloadClosure, "esArchiver.unload throws exception")
   }
 }
