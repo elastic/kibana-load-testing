@@ -4,6 +4,7 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.ElasticsearchException;
 import co.elastic.clients.elasticsearch.core.BulkRequest;
 import co.elastic.clients.elasticsearch.core.BulkResponse;
+import co.elastic.clients.elasticsearch.core.CountRequest;
 import co.elastic.clients.elasticsearch.core.bulk.BulkResponseItem;
 import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
 import co.elastic.clients.elasticsearch.indices.DeleteIndexRequest;
@@ -19,6 +20,7 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 
@@ -70,8 +72,9 @@ public class ESClient {
 
     /**
      * This function creates index and returns exception if index already exists.
+     *
      * @param indexName index name
-     * @param source json with settings, mappings
+     * @param source    json with settings, mappings
      */
     public void createIndex(String indexName, Json source) {
         CreateIndexRequest req = CreateIndexRequest.of(b -> b.index(indexName).withJson(new StringReader(source.toString())));
@@ -103,8 +106,9 @@ public class ESClient {
 
     /**
      * This function will delete index if it exists, and create a new one.
+     *
      * @param indexName index name
-     * @param source json with settings, mappings
+     * @param source    json with settings, mappings
      */
     public void forceCreateIndex(String indexName, Json source) {
         try {
@@ -129,6 +133,7 @@ public class ESClient {
                 JsonpMapper jsonpMapper = client._transport().jsonpMapper();
                 JsonProvider jsonProvider = jsonpMapper.jsonProvider();
                 JsonData res = JsonData.from(jsonProvider.createParser(new StringReader(json.toString())), jsonpMapper);
+
                 br.operations(op -> op.create(idx -> idx.index(indexName).document(res)));
             }
             try {
@@ -150,6 +155,14 @@ public class ESClient {
         long min = TimeUnit.MILLISECONDS.toMinutes(diff);
         long sec = TimeUnit.MILLISECONDS.toSeconds(diff - min * 60 * 1000);
         logger.info(String.format("Ingestion is completed. Took: %s minutes %s seconds", min, sec));
+    }
+
+    public Long count(String indexName) {
+        try {
+            return client.count(new CountRequest.Builder().index(indexName).build()).count();
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to get the docs count");
+        }
     }
 
     public void closeConnection() {
