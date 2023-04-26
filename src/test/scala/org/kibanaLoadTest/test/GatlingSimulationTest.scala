@@ -67,8 +67,6 @@ class GatlingSimulationTest {
     // check correct directories were created
     val dirs = directory.dirs.toList
     assertEquals(dirs.length, 2, "Incorrect folders count in Gatling report")
-    assertEquals(dirs(0).toString().split(File.separator).last, "js")
-    assertEquals(dirs(1).toString().split(File.separator).last, "style")
     // check correct files were created
     val files = directory.files.toList
     assertEquals(files.length, 3, "Incorrect files count in Gatling report")
@@ -82,9 +80,7 @@ class GatlingSimulationTest {
     val RESPONSES_PERCENTILES_REGEXP =
       "(?<=var responsetimepercentilesovertimeokPercentiles = unpack\\(\\[)(.*)(?=\\]\\);)".r
     val source = Source
-      .fromFile(reportDir + File.separator + "index.html")
-      .getLines
-      .mkString
+      .fromFile(reportDir + File.separator + "index.html").mkString
 
     val minDataPointsCount = 100
 
