@@ -151,7 +151,7 @@ object SimulationHelper {
   def copyRunConfigurationToReportPath(): Unit = {
     val currentPath =
       getTargetPath + File.separator + "lastRun.txt"
-    val copyPath = Helper.getLastReportPath + File.separator + "testRun.txt"
+    val copyPath = Helper.getLastReportPath() + File.separator + "testRun.txt"
     Files.copy(
       Paths.get(currentPath),
       Paths.get(copyPath),

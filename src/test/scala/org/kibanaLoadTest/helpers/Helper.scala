@@ -91,8 +91,8 @@ object Helper {
   def getSrcPath: String =
     Paths.get("src").toAbsolutePath.normalize.toString
 
-  def getLastReportPath: String = {
-    val dir: File = new File(getTargetPath + File.separator + "gatling")
+  def getLastReportPath(reportRootPath:String = getTargetPath + File.separator + "gatling"): String = {
+    val dir: File = new File(reportRootPath)
     if (!dir.exists()) {
       return null
     }
