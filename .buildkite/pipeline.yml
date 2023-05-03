@@ -1,12 +1,12 @@
 steps:
   - label: ":mvn: run unit tests"
     command: .buildkite/scripts/run-unit-tests.sh
+    key: unit-tests
     agents:
       image: maven:3.8.6-openjdk-11
 
-  - wait
-
   - label: ":mvn: run integration tests on Cloud deployment"
     command: .buildkite/scripts/run-integration-tests.sh
+    depends_on: unit-tests
     agents:
       image: maven:3.8.6-openjdk-11
