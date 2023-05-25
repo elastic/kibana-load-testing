@@ -49,7 +49,7 @@ spec:
       provider_settings:
         build_tags: true
       repository: elastic/kibana-load-testing
-      pipeline_file: .buildkite/pipeline/run_tests.yml
+      pipeline_file: .buildkite/pipelines/run_tests.yml
       branch_configuration: main
       teams:
         appex-qa: {}
@@ -81,7 +81,7 @@ spec:
       provider_settings:
         build_tags: true
       repository: elastic/kibana-load-testing
-      pipeline_file: .buildkite/pipeline/benchmarking.yml
+      pipeline_file: .buildkite/pipelines/benchmarking.yml
       branch_configuration: main
       teams:
         appex-qa: {}
