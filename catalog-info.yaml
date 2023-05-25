@@ -61,8 +61,8 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: kibana-load-testing-buildkite-pipeline
-  description: kibana-load-testing
+  name: kibana-load-testing-scenarios-buildkite-pipeline
+  description: Running load scenarios against Kibana server
   links:
     - title: Pipeline
       url: https://buildkite.com/elastic/kibana-load-testing-scenarios
