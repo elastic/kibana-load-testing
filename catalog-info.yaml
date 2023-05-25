@@ -30,7 +30,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
   name: kibana-load-testing-buildkite-pipeline
-  description: Tests for kibana-load-testing
+  description: Tests for kibana-load-testing repo
   links:
     - title: Pipeline
       url: https://buildkite.com/elastic/kibana-load-testing
@@ -43,12 +43,46 @@ spec:
     apiVersion: buildkite.elastic.dev/v1
     kind: Pipeline
     metadata:
-      description: CI for elastic/kibana-load-testing GitHub repository
+      description: Running tests for elastic/kibana-load-testing GitHub repository
       name: appex-qa / kibana-load-testing
     spec:
       provider_settings:
         build_tags: true
       repository: elastic/kibana-load-testing
+      pipeline_file: .buildkite/pipeline/run_tests.yml
+      branch_configuration: main
+      teams:
+        appex-qa: {}
+        everyone:
+          access_level: READ_ONLY
+---
+# yaml-language-server: $schema=https://gist.githubusercontent.com/elasticmachine/988b80dae436cafea07d9a4a460a011d/raw/e57ee3bed7a6f73077a3f55a38e76e40ec87a7cf/rre.schema.json
+# This bit is for Backstage
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: kibana-load-testing-buildkite-pipeline
+  description: kibana-load-testing
+  links:
+    - title: Pipeline
+      url: https://buildkite.com/elastic/kibana-load-testing-scenarios
+spec:
+  type: buildkite-pipeline
+  owner: group:appex-qa
+  system: buildkite
+  # This bit is for Terrazzo
+  implementation:
+    apiVersion: buildkite.elastic.dev/v1
+    kind: Pipeline
+    metadata:
+      description: Running load scenarios against Kibana server
+      name: appex-qa / kibana-load-testing-scenarios
+    spec:
+      provider_settings:
+        build_tags: true
+      repository: elastic/kibana-load-testing
+      pipeline_file: .buildkite/pipeline/benchmarking.yml
+      branch_configuration: main
       teams:
         appex-qa: {}
         everyone:
