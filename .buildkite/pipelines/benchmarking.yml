@@ -1,6 +1,5 @@
 steps:
   - label: ":benchmarking: run a load scenario"
-    command: .buildkite/scripts/run-unit-tests.sh
-    key: unit-tests
+    command: .buildkite/scripts/benchmarking.sh
     agents:
       queue: kb-static-scalability-2
