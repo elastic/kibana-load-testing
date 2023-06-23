@@ -79,10 +79,12 @@ class KbnClient(
           Using(client.execute(getIndexHtmlRequest)) { response =>
             EntityUtils.toString(response.getEntity)
           } match {
-            case Success(responseStr) => {
-              val regExp = "\\d\\.\\d\\.\\d(-SNAPSHOT)?".r
-              this.version = regExp.findFirstIn(responseStr).get
-            }
+            case Success(responseStr) =>
+              val regExp = "\\d+\\.\\d+\\.\\d+(-SNAPSHOT)?".r
+              regExp.findFirstIn(responseStr) match {
+                case Some(version) => this.version = version
+                case None => throw new RuntimeException("Cannot parse kbn-version in login html page")
+              }
             case Failure(error) => throw new RuntimeException(error)
           }
         }
