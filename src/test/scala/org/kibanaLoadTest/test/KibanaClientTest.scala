@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions.{
   assertDoesNotThrow,
   assertEquals,
   assertNotEquals,
+  assertThrows,
   assertTrue
 }
 import org.junit.jupiter.api.TestInstance.Lifecycle
@@ -13,9 +14,9 @@ import org.kibanaLoadTest.helpers.KbnClient
 import org.kibanaLoadTest.test.mocks.KibanaMockServer
 import spray.json.lenses.JsonLenses._
 import spray.json.DefaultJsonProtocol.{
-  StringJsonFormat,
+  BooleanJsonFormat,
   IntJsonFormat,
-  BooleanJsonFormat
+  StringJsonFormat
 }
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -64,7 +65,7 @@ class KibanaClientTest {
   }
 
   @Test
-  def getKibanaVersionTest() = {
+  def getKibanaVersionTest(): Unit = {
     val client = new KbnClient(
       kibanaUrl,
       username,
@@ -74,6 +75,24 @@ class KibanaClientTest {
     )
     val serverVersion = client.getVersion()
     assertEquals(kbnVersion, serverVersion)
+  }
+
+  @Test
+  def failToGetVersionTest(): Unit = {
+    val client = new KbnClient(
+      kibanaUrl,
+      username,
+      password,
+      providerName,
+      providerType
+    )
+    kbnMock.createBadLoginHtmlPageCallback()
+    val getVersionClosure: Executable = () => client.getVersion()
+    val exception = assertThrows(classOf[RuntimeException], getVersionClosure)
+    assertEquals(
+      "Cannot parse kbn-version in login html page",
+      exception.getMessage
+    )
   }
 
   @Test
@@ -142,5 +161,38 @@ class KibanaClientTest {
       kbnVersion,
       responseString.extract[String](Symbol("version") / Symbol("number"))
     )
+  }
+
+  @Test
+  def failToLoginTest(): Unit = {
+    val client = new KbnClient(
+      kibanaUrl,
+      username,
+      password,
+      providerName,
+      providerType
+    )
+    kbnMock.createForbiddenLoginCallback()
+    val closure: Executable = () => client.generateCookies(1)
+    val exception = assertThrows(classOf[RuntimeException], closure)
+    assertEquals(
+      "Failed to login: HTTP/1.1 403 Forbidden",
+      exception.getMessage
+    )
+  }
+
+  @Test
+  def responseWithoutSetCookieHeaderTest(): Unit = {
+    val client = new KbnClient(
+      kibanaUrl,
+      username,
+      password,
+      providerName,
+      providerType
+    )
+    kbnMock.createNoCookieInHeadersLoginCallback()
+    val closure: Executable = () => client.generateCookies(1)
+    val exception = assertThrows(classOf[RuntimeException], closure)
+    assertEquals("Response has no 'set-cookie' header", exception.getMessage)
   }
 }

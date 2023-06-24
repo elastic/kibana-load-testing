@@ -83,7 +83,10 @@ class KbnClient(
               val regExp = "\\d+\\.\\d+\\.\\d+(-SNAPSHOT)?".r
               regExp.findFirstIn(responseStr) match {
                 case Some(version) => this.version = version
-                case None => throw new RuntimeException("Cannot parse kbn-version in login html page")
+                case None =>
+                  throw new RuntimeException(
+                    "Cannot parse kbn-version in login html page"
+                  )
               }
             case Failure(error) => throw new RuntimeException(error)
           }
@@ -104,7 +107,11 @@ class KbnClient(
     } match {
       case Success(response) =>
         if (response.getStatusLine.getStatusCode == 200) {
-          response.getHeaders("set-cookie")(0).getValue.split(";")(0)
+          Option(response.getFirstHeader("set-cookie")) match {
+            case Some(value) => value.getValue.split(";")(0)
+            case _ =>
+              throw new RuntimeException("Response has no 'set-cookie' header")
+          }
         } else {
           throw new RuntimeException(
             s"Failed to login: ${response.getStatusLine}"

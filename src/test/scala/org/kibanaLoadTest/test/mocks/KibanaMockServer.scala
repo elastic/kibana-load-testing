@@ -2,7 +2,12 @@ package org.kibanaLoadTest.test.mocks
 
 import org.mockserver.configuration.Configuration
 import org.mockserver.integration.ClientAndServer
-import org.mockserver.model.{ClearType, HttpResponse, RequestDefinition}
+import org.mockserver.model.{
+  ClearType,
+  HttpResponse,
+  MediaType,
+  RequestDefinition
+}
 import org.mockserver.model.HttpRequest.request
 import org.mockserver.model.HttpResponse.response
 import org.mockserver.model.HttpTemplate.{TemplateType, template}
@@ -91,6 +96,23 @@ class KibanaMockServer(port: Int) {
       )
   }
 
+  def createForbiddenLoginCallback() = {
+    server
+      .clear(
+        request.withPath("/internal/security/login").withMethod("POST"),
+        ClearType.EXPECTATIONS
+      ) // clear previous behaviour, if any
+      .when(
+        request()
+          .withMethod("POST")
+          .withPath("/internal/security/login")
+      )
+      .respond(
+        response()
+          .withStatusCode(403)
+      )
+  }
+
   def createAddSampleDataCallback(
       dataType: String,
       docsCount: Int = 4675,
@@ -136,5 +158,36 @@ class KibanaMockServer(port: Int) {
     if (server != null && server.isRunning()) {
       stopQuietly(server)
     }
+  }
+
+  def createBadLoginHtmlPageCallback() = {
+    server
+      .clear(
+        request.withMethod("GET").withPath("/login"),
+        ClearType.EXPECTATIONS
+      )
+      .when(request().withMethod("GET").withPath("/login"))
+      .respond(
+        response()
+          .withStatusCode(200)
+          .withBody("Please upgrade your browser", MediaType.TEXT_HTML)
+      )
+  }
+
+  def createNoCookieInHeadersLoginCallback() = {
+    server
+      .clear(
+        request.withPath("/internal/security/login").withMethod("POST"),
+        ClearType.EXPECTATIONS
+      ) // clear previous behaviour, if any
+      .when(
+        request()
+          .withMethod("POST")
+          .withPath("/internal/security/login")
+      )
+      .respond(
+        response()
+          .withStatusCode(200)
+      )
   }
 }
