@@ -1,23 +1,13 @@
 package org.kibanaLoadTest.test
 
-import org.junit.jupiter.api.Assertions.{
-  assertDoesNotThrow,
-  assertEquals,
-  assertNotEquals,
-  assertThrows,
-  assertTrue
-}
+import org.junit.jupiter.api.Assertions.{assertDoesNotThrow, assertEquals, assertNotEquals, assertThrows, assertTrue}
 import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.junit.jupiter.api.function.Executable
-import org.junit.jupiter.api.{AfterAll, BeforeAll, Test, TestInstance}
+import org.junit.jupiter.api.{AfterAll, BeforeAll, BeforeEach, Test, TestInstance}
 import org.kibanaLoadTest.helpers.KbnClient
 import org.kibanaLoadTest.test.mocks.KibanaMockServer
 import spray.json.lenses.JsonLenses._
-import spray.json.DefaultJsonProtocol.{
-  BooleanJsonFormat,
-  IntJsonFormat,
-  StringJsonFormat
-}
+import spray.json.DefaultJsonProtocol.{BooleanJsonFormat, IntJsonFormat, StringJsonFormat}
 
 @TestInstance(Lifecycle.PER_CLASS)
 class KibanaClientTest {
@@ -36,13 +26,17 @@ class KibanaClientTest {
   @BeforeAll
   def tearUp: Unit = {
     kbnMock = new KibanaMockServer(port)
-    kbnMock.createKibanaIndexPageCallback(version = kbnVersion)
     kbnMock.createKibanaStatusCallback(
       build_hash = buildHash,
       build_number = buildNumber,
       build_snapshot = buildSnapshot,
       number = kbnVersion
     )
+  }
+
+  @BeforeEach
+  def beforeEach(): Unit = {
+    kbnMock.createKibanaIndexPageCallback(version = kbnVersion)
     kbnMock.createSuccessfulLoginCallback()
   }
 
@@ -52,7 +46,7 @@ class KibanaClientTest {
   }
 
   @Test
-  def kbngetClientAndConnManagerTest() = {
+  def kbnGetClientAndConnManagerTest() = {
     val client = new KbnClient(
       kibanaUrl,
       username,
@@ -79,6 +73,7 @@ class KibanaClientTest {
 
   @Test
   def failToGetVersionTest(): Unit = {
+    kbnMock.createBadLoginHtmlPageCallback()
     val client = new KbnClient(
       kibanaUrl,
       username,
@@ -86,7 +81,6 @@ class KibanaClientTest {
       providerName,
       providerType
     )
-    kbnMock.createBadLoginHtmlPageCallback()
     val getVersionClosure: Executable = () => client.getVersion()
     val exception = assertThrows(classOf[RuntimeException], getVersionClosure)
     assertEquals(
@@ -97,6 +91,8 @@ class KibanaClientTest {
 
   @Test
   def sampleDataTest(): Unit = {
+    kbnMock.createAddSampleDataCallback(dataType = "ecommerce")
+    kbnMock.createDeleteSampleDataCallback("ecommerce")
     val client = new KbnClient(
       kibanaUrl,
       username,
@@ -104,9 +100,6 @@ class KibanaClientTest {
       providerName,
       providerType
     )
-    kbnMock.createAddSampleDataCallback(dataType = "ecommerce")
-    kbnMock.createDeleteSampleDataCallback("ecommerce")
-
     val loadClosure: Executable = () => client.addSampleData("ecommerce")
     val unloadClosure: Executable = () => client.removeSampleData("ecommerce")
     assertDoesNotThrow(loadClosure, "client.addSampleData throws exception")
@@ -141,7 +134,6 @@ class KibanaClientTest {
       providerName,
       providerType
     )
-
     val responseString = client.getKibanaStatusInfo()
     assertEquals(
       buildHash,
@@ -165,6 +157,7 @@ class KibanaClientTest {
 
   @Test
   def failToLoginTest(): Unit = {
+    kbnMock.createForbiddenLoginCallback()
     val client = new KbnClient(
       kibanaUrl,
       username,
@@ -172,7 +165,6 @@ class KibanaClientTest {
       providerName,
       providerType
     )
-    kbnMock.createForbiddenLoginCallback()
     val closure: Executable = () => client.generateCookies(1)
     val exception = assertThrows(classOf[RuntimeException], closure)
     assertEquals(
@@ -183,6 +175,7 @@ class KibanaClientTest {
 
   @Test
   def responseWithoutSetCookieHeaderTest(): Unit = {
+    kbnMock.createNoCookieInHeadersLoginCallback()
     val client = new KbnClient(
       kibanaUrl,
       username,
@@ -190,7 +183,6 @@ class KibanaClientTest {
       providerName,
       providerType
     )
-    kbnMock.createNoCookieInHeadersLoginCallback()
     val closure: Executable = () => client.generateCookies(1)
     val exception = assertThrows(classOf[RuntimeException], closure)
     assertEquals("Response has no 'set-cookie' header", exception.getMessage)
