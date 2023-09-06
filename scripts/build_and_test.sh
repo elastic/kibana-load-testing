@@ -64,12 +64,6 @@ fi
 #  popd
 #fi
 
-pushd ../kibana-load-testing
-echo " -> Building puppeteer project"
-cd puppeteer
-yarn install && yarn build
-popd
-
 # doesn't persist, also set in kibanaPipeline.groovy
 export KBN_NP_PLUGINS_BUILT=true
 
