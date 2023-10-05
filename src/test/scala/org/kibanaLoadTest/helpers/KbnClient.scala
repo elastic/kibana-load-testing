@@ -100,6 +100,8 @@ class KbnClient(
   private def doLogin(client: CloseableHttpClient): String = {
     val loginRequest = new HttpPost(s"$baseUrl/internal/security/login")
     loginRequest.addHeader("Content-Type", "application/json")
+    // required for serverless API call
+    loginRequest.addHeader("x-elastic-internal-origin", "Kibana")
     loginRequest.addHeader("kbn-version", this.getVersion())
     loginRequest.setEntity(new StringEntity(loginPayload))
     Using(client.execute(loginRequest)) { response =>

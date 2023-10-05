@@ -1,0 +1,225 @@
+{
+  "journeyName": "discover_bsearch",
+  "kibanaVersion": "8.11.0",
+  "scalabilitySetup": {
+    "warmup": [
+      {
+        "action": "constantConcurrentUsers",
+        "userCount": 5,
+        "duration": "30s"
+      },
+      {
+        "action": "rampConcurrentUsers",
+        "minUsersCount": 5,
+        "maxUsersCount": 50,
+        "duration": "5m"
+      }
+    ],
+    "test": [
+      {
+        "action": "constantConcurrentUsers",
+        "userCount": 50,
+        "duration": "5m"
+      }
+    ],
+    "maxDuration": "15m"
+  },
+  "testData": {
+    "esArchives": [],
+    "kbnArchives": []
+  },
+  "streams": [
+    {
+      "startTime": "2023-09-22T01:50:08.788Z",
+      "endTime": "2023-09-22T01:50:08.793Z",
+      "requests": [
+        {
+          "transactionId": "x123",
+          "name": "GET /api/saved_objects_tagging/tags",
+          "date": "2023-09-22T01:50:08.788Z",
+          "duration": 5231,
+          "http": {
+            "method": "GET",
+            "path": "/api/saved_objects_tagging/tags",
+            "headers": {
+              "Cookie":"",
+              "authority": "qaf-default-1695129017-a5d5db.kb.eu-west-1.aws.qa.elastic.cloud",
+              "method": "GET",
+              "path": "/api/saved_objects_tagging/tags",
+              "Kbn-Build-Number": "67218",
+              "Kbn-System-Request:": "true",
+              "X-Elastic-Internal-Origin": "Kibana",
+              "Sec-Ch-Ua": "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"HeadlessChrome\";v=\"116\"",
+              "Accept": "*/*",
+              "Sec-Ch-Ua-Platform": "\"macOS\"",
+              "Connection": "keep-alive",
+              "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/116.0.5845.82 Safari/537.36",
+              "Sec-Fetch-Site": "same-origin",
+              "Sec-Fetch-Dest": "empty",
+              "Pragma": "no-cache",
+              "Accept-Encoding": "gzip, deflate, br",
+              "Traceparent": "00-d05bc85c0f055616d811d439321de117-c95237314566fe4e-01",
+              "Sec-Fetch-Mode": "cors",
+              "Cache-Control": "no-cache",
+              "Sec-Fetch-User": "?1",
+              "Sec-Ch-Ua-Mobile": "?0",
+              "X-Kbn-Context:": "%7B%22type%22%3A%22application%22%2C%22name%22%3A%22discover%22%2C%22url%22%3A%22%2Fapp%2Fdiscover%22%7D"
+            },
+            "statusCode": 200
+          },
+          "spanCount": 0
+        },
+        {
+          "transactionId": "x123",
+          "name": "GET /internal/data_views/has_data_views",
+          "date": "2023-09-22T01:50:08.788Z",
+          "duration": 5231,
+          "http": {
+            "method": "GET",
+            "path": "/internal/data_views/has_data_views",
+            "headers": {
+              "Cookie":"",
+              "authority": "qaf-default-1695129017-a5d5db.kb.eu-west-1.aws.qa.elastic.cloud",
+              "method": "GET",
+              "path": "/internal/data_views/has_data_views",
+              "scheme": "https",
+              "Elastic-Api-Version": "1",
+              "Kbn-Build-Number": "67218",
+              "X-Elastic-Internal-Origin": "Kibana",
+              "Sec-Ch-Ua": "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"HeadlessChrome\";v=\"116\"",
+              "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+              "Sec-Ch-Ua-Platform": "\"macOS\"",
+              "Connection": "keep-alive",
+              "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/116.0.5845.82 Safari/537.36",
+              "Sec-Fetch-Site": "same-origin",
+              "Sec-Fetch-Dest": "empty",
+              "Pragma": "no-cache",
+              "Accept-Encoding": "gzip, deflate, br",
+              "Traceparent": "00-9e9e549c9e10a48e7a0d6580af095445-05f9d89becf402b9-01",
+              "Sec-Fetch-Mode": "navigate",
+              "Cache-Control": "no-cache",
+              "Upgrade-Insecure-Requests": "1",
+              "Sec-Fetch-User": "?1",
+              "Sec-Ch-Ua-Mobile": "?0"
+            },
+            "statusCode": 200
+          },
+          "spanCount": 0
+        },
+        {
+          "transactionId": "x124",
+          "name": "GET /internal/data_views/_fields_for_wildcard",
+          "date": "2023-09-22T01:50:08.788Z",
+          "duration": 5231,
+          "http": {
+            "method": "GET",
+            "path": "/internal/data_views/_fields_for_wildcard",
+            "query": "?pattern=logstash-*&meta_fields=_source&meta_fields=_id&meta_fields=_index&meta_fields=_score&allow_no_index=true",
+            "headers": {
+              "Cookie":"",
+              "authority": "qaf-default-1695129017-a5d5db.kb.eu-west-1.aws.qa.elastic.cloud",
+              "method": "GET",
+              "path": "/internal/data_views/_fields_for_wildcard?pattern=logstash-*&meta_fields=_source&meta_fields=_id&meta_fields=_index&meta_fields=_score&allow_no_index=true",
+              "scheme": "https",
+              "Elastic-Api-Version": "1",
+              "Kbn-Build-Number": "67218",
+              "X-Elastic-Internal-Origin": "Kibana",
+              "Sec-Ch-Ua": "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"HeadlessChrome\";v=\"116\"",
+              "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+              "Sec-Ch-Ua-Platform": "\"macOS\"",
+              "Connection": "keep-alive",
+              "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/116.0.5845.82 Safari/537.36",
+              "Sec-Fetch-Site": "same-origin",
+              "Sec-Fetch-Dest": "empty",
+              "Pragma": "no-cache",
+              "Accept-Encoding": "gzip, deflate, br",
+              "Traceparent": "00-9e9e549c9e10a48e7a0d6580af095445-05f9d89becf402b9-01",
+              "Sec-Fetch-Mode": "navigate",
+              "Cache-Control": "no-cache",
+              "Upgrade-Insecure-Requests": "1",
+              "Sec-Fetch-User": "?1",
+              "Sec-Ch-Ua-Mobile": "?0"
+            },
+            "body": "{\"index_filter\":{\"bool\":{\"filter\":[{\"range\":{\"@timestamp\":{\"format\":\"strict_date_optional_time\",\"gte\":\"2023-06-20T22:16:24.290Z\",\"lte\":\"2023-06-21T23:33:37.522Z\"}}},{\"bool\":{\"must\":[],\"filter\":[],\"should\":[],\"must_not\":[]}}]}}}",
+            "statusCode": 200
+          },
+          "spanCount": 0
+        },
+        {
+          "transactionId": "9cab425c3f58ad14",
+          "name": "POST /api/core/capabilities",
+          "date": "2023-09-29T10:06:56.029Z",
+          "duration": 1190039,
+          "http": {
+            "method": "POST",
+            "path": "/api/core/capabilities",
+            "headers": {
+              "Cookie":"",
+              "authority": "qaf-default-1695129017-a5d5db.kb.eu-west-1.aws.qa.elastic.cloud",
+              "content-type": "application/json",
+              "method": "POST",
+              "path": "/api/core/capabilities",
+              "Kbn-Build-Number": "67218",
+              "kbn-version": "8.11.0",
+              "X-Elastic-Internal-Origin": "Kibana",
+              "X-Kbn-Context": "%7B%22type%22%3A%22application%22%2C%22url%22%3A%22%2Fapp%2Fdiscover%22%7D",
+              "Sec-Ch-Ua": "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"HeadlessChrome\";v=\"116\"",
+              "Accept": "*/*",
+              "Sec-Ch-Ua-Platform": "\"macOS\"",
+              "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/116.0.5845.82 Safari/537.36",
+              "Sec-Fetch-Site": "same-origin",
+              "Sec-Fetch-Dest": "empty",
+              "Pragma": "no-cache",
+              "referer": "https://qaf-default-1695129017-a5d5db.kb.eu-west-1.aws.qa.elastic.cloud/app/discover",
+              "Accept-Encoding": "gzip, deflate, br",
+              "Traceparent": "00-a94af6f127b00e82dd387ad54a691bc2-536c9601e6bcedce-01",
+              "Sec-Fetch-Mode": "cors",
+              "Cache-Control": "no-cache",
+              "Sec-Fetch-User": "?1",
+              "Sec-Ch-Ua-Mobile": "?0"
+            },
+            "body": "{\"applications\":[\"error\",\"status\",\"kibana\",\"dev_tools\",\"r\",\"short_url_redirect\",\"home\",\"management\",\"security_access_agreement\",\"security_capture_url\",\"security_login\",\"security_logout\",\"security_logged_out\",\"security_overwritten_session\",\"security_account\",\"visualize\",\"dashboards\",\"lens\",\"maps\",\"discover\",\"reportingRedirect\",\"osquery\",\"observabilityAIAssistant\",\"exploratory-view\",\"ml\",\"serverlessElasticsearch\",\"serverlessConnectors\",\"kibanaOverview\"]}",
+            "statusCode": 200
+          },
+          "spanCount": 0
+        },
+        {
+          "transactionId": "x125",
+          "name": "POST /internal/bsearch?compress=true",
+          "date": "2023-09-22T01:50:08.788Z",
+          "duration": 5231,
+          "http": {
+            "method": "POST",
+            "path": "/internal/bsearch",
+            "query": "?compress=true",
+            "headers": {
+              "Cookie":"",
+              "authority": "qaf-default-1695129017-a5d5db.kb.eu-west-1.aws.qa.elastic.cloud",
+              "method": "POST",
+              "path": "/internal/bsearch?compress=true",
+              "content-type": "application/json",
+              "scheme": "https",
+              "elastic-api-version": "1",
+              "kbn-version": "8.11.0",
+              "origin": "https://qaf-default-1695129017-a5d5db.kb.eu-west-1.aws.qa.elastic.cloud",
+              "pragma": "no-cache",
+              "referer": "https://qaf-default-1695129017-a5d5db.kb.eu-west-1.aws.qa.elastic.cloud/app/discover",
+              "Sec-Fetch-User": "?1",
+              "Sec-Ch-Ua-Mobile": "?0",
+              "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/116.0.5845.82 Safari/537.36",
+              "Sec-Ch-Ua-Platform": "\"macOS\"",
+              "Sec-Fetch-Dest": "empty",
+              "Sec-Fetch-Mode": "cors",
+              "Sec-Fetch-Site": "same-origin",
+              "Traceparent": "00-9e9e549c9e10a48e7a0d6580af095445-05f9d89becf402b9-01",
+              "x-elastic-internal-origin": "Kibana"
+            },
+            "body": "{\"batch\":[{\"request\":{\"params\":{\"index\":\"logstash-*\",\"body\":{\"sort\":[{\"@timestamp\":{\"order\":\"desc\",\"format\":\"strict_date_optional_time\",\"unmapped_type\":\"boolean\"}},{\"_doc\":{\"order\":\"desc\",\"unmapped_type\":\"boolean\"}}],\"fields\":[{\"field\":\"*\",\"include_unmapped\":\"true\"},{\"field\":\"@timestamp\",\"format\":\"strict_date_optional_time\"},{\"field\":\"relatedContent.article:modified_time\",\"format\":\"strict_date_optional_time\"},{\"field\":\"relatedContent.article:published_time\",\"format\":\"strict_date_optional_time\"},{\"field\":\"utc_time\",\"format\":\"strict_date_optional_time\"}],\"size\":500,\"version\":true,\"script_fields\":{},\"stored_fields\":[\"*\"],\"runtime_mappings\":{},\"_source\":false,\"query\":{\"bool\":{\"must\":[],\"filter\":[{\"range\":{\"@timestamp\":{\"format\":\"strict_date_optional_time\",\"gte\":\"2023-06-20T11:30:00.000Z\",\"lte\":\"2023-06-23T16:18:18.305Z\"}}}],\"should\":[],\"must_not\":[]}},\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"fragment_size\":2147483647}},\"track_total_hits\":false,\"preference\":1696242418157}},\"options\":{\"sessionId\":\"914846a5-1ce4-4068-9d2f-a6944e88b5e6\",\"isRestore\":false,\"strategy\":\"ese\",\"isStored\":false,\"isSearchStored\":false,\"executionContext\":{\"type\":\"application\",\"name\":\"discover\",\"url\":\"/app/discover\",\"page\":\"app\",\"id\":\"new\",\"description\":\"fetch documents\"}}},{\"request\":{\"params\":{\"index\":\"logstash-*\",\"body\":{\"aggs\":{\"0\":{\"date_histogram\":{\"field\":\"@timestamp\",\"calendar_interval\":\"1h\",\"time_zone\":\"Europe/Berlin\",\"min_doc_count\":1}}},\"size\":0,\"fields\":[{\"field\":\"@timestamp\",\"format\":\"date_time\"},{\"field\":\"relatedContent.article:modified_time\",\"format\":\"date_time\"},{\"field\":\"relatedContent.article:published_time\",\"format\":\"date_time\"},{\"field\":\"utc_time\",\"format\":\"date_time\"}],\"script_fields\":{},\"stored_fields\":[\"*\"],\"runtime_mappings\":{},\"_source\":{\"excludes\":[]},\"query\":{\"bool\":{\"must\":[],\"filter\":[{\"range\":{\"@timestamp\":{\"format\":\"strict_date_optional_time\",\"gte\":\"2023-06-20T11:30:00.000Z\",\"lte\":\"2023-06-23T16:18:18.305Z\"}}}],\"should\":[],\"must_not\":[]}}},\"preference\":1696242418157}},\"options\":{\"sessionId\":\"914846a5-1ce4-4068-9d2f-a6944e88b5e6\",\"isRestore\":false,\"strategy\":\"ese\",\"isStored\":false,\"isSearchStored\":false,\"executionContext\":{\"type\":\"application\",\"name\":\"discover\",\"url\":\"/app/discover\",\"page\":\"app\",\"id\":\"new\",\"description\":\"fetch chart data and total hits\",\"child\":{\"type\":\"lens\",\"name\":\"lnsXY\",\"id\":\"unifiedHistogramLensComponent\",\"description\":\"Edit visualization\",\"url\":\"/app/lens#/edit_by_value\"}}}}]}",
+            "statusCode": 200
+          },
+          "spanCount": 0
+        }
+      ]
+    }
+  ]
+}
