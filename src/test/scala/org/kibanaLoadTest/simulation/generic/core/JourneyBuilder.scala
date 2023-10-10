@@ -3,11 +3,7 @@ package org.kibanaLoadTest.simulation.generic.core
 import io.gatling.core.Predef._
 import io.gatling.core.controller.inject.closed.ClosedInjectionStep
 import io.gatling.core.controller.inject.open.OpenInjectionStep
-import io.gatling.core.structure.{
-  ChainBuilder,
-  PopulationBuilder,
-  ScenarioBuilder
-}
+import io.gatling.core.structure.{ChainBuilder, PopulationBuilder, ScenarioBuilder}
 import org.kibanaLoadTest.KibanaConfiguration
 import org.kibanaLoadTest.simulation.generic.mapping
 import org.kibanaLoadTest.simulation.generic.mapping.{RequestStream, Step}
@@ -16,8 +12,8 @@ import org.slf4j.{Logger, LoggerFactory}
 import java.util.concurrent.TimeUnit
 
 object JourneyBuilder {
-  val logger: Logger = LoggerFactory.getLogger("Scenario")
-  val modelsMap = Map(
+  private val logger: Logger = LoggerFactory.getLogger("Scenario")
+  private val modelsMap = Map(
     "constantConcurrentUsers" -> "closed",
     "rampConcurrentUsers" -> "closed",
     "atOnceUsers" -> "open",
@@ -27,71 +23,6 @@ object JourneyBuilder {
     "stressPeakUsers" -> "open",
     "incrementUsersPerSec" -> "open"
   )
-
-  /**
-    * Converts string to Gatling duration format
-    * @param duration string in 'xs'/'xm' format, e.g. '30s' or '5m'
-    * @return milliseconds
-    */
-  def getDuration(duration: String): Int = {
-    duration.takeRight(1) match {
-      case "s" => duration.dropRight(1).toInt
-      case "m" => duration.dropRight(1).toInt * 60
-      case _ =>
-        throw new IllegalArgumentException(
-          s"Invalid duration format: ${duration}"
-        )
-    }
-  }
-
-  private def getClosedInjectionStep(step: Step): ClosedInjectionStep = {
-    logger.info(s"Closed model: building ${step.toString}")
-    step.action match {
-      case "constantConcurrentUsers" =>
-        constantConcurrentUsers(step.userCount.get) during (getDuration(
-          step.duration.get
-        ))
-      case "rampConcurrentUsers" =>
-        rampConcurrentUsers(
-          step.minUsersCount.get
-        ) to step.maxUsersCount.get during (getDuration(step.duration.get))
-      case _ =>
-        throw new IllegalArgumentException(
-          s"Invalid closed model: ${step.action}"
-        )
-    }
-  }
-
-  private def getOpenInjectionStep(step: Step): OpenInjectionStep = {
-    logger.info(s"Open model: building${step.toString}")
-    step.action match {
-      case "atOnceUsers" =>
-        atOnceUsers(step.userCount.get)
-      case "rampUsers" =>
-        rampUsers(step.userCount.get).during(getDuration(step.duration.get))
-      case "constantUsersPerSec" =>
-        constantUsersPerSec(step.userCount.get.toDouble)
-          .during(getDuration(step.duration.get))
-      case "stressPeakUsers" =>
-        stressPeakUsers(step.userCount.get)
-          .during(getDuration(step.duration.get))
-      case "rampUsersPerSec" =>
-        rampUsersPerSec(step.minUsersCount.get)
-          .to(step.maxUsersCount.get)
-          .during(getDuration(step.duration.get))
-      case "incrementUsersPerSec" =>
-        incrementUsersPerSec(step.userCount.get.toDouble)
-          .times(step.times.get)
-          .eachLevelLasting(getDuration(step.duration.get))
-          .separatedByRampsLasting(getDuration(step.duration.get))
-          .startingFrom(step.userCount.get.toDouble)
-
-      case _ =>
-        throw new IllegalArgumentException(
-          s"Invalid open model: ${step.action}"
-        )
-    }
-  }
 
   /**
     * Builds a chain of http requests
@@ -108,7 +39,7 @@ object JourneyBuilder {
       Option.empty
 
     if (streams.length == 1) {
-      steps = steps.exec(ApiCall.execute(streams(0).requests, config))
+      steps = steps.exec(ApiCall.execute(streams.head.requests, config))
     } else {
       for (stream <- streams) {
         val priorDate =
@@ -121,13 +52,13 @@ object JourneyBuilder {
 
         // temporary filter out some requests
         // https://github.com/elastic/kibana/issues/143557
-        val exludeUrls = Array("/api/status", "/api/saved_objects/_import")
+        val excludeUrls = Array("/api/status", "/api/saved_objects/_import")
         val requests =
           stream.requests.filter(req =>
-            !exludeUrls.contains(req.getRequestUrl())
+            !excludeUrls.contains(req.getRequestUrl())
           )
 
-        if (!requests.isEmpty) {
+        if (requests.nonEmpty) {
           steps = steps.exec(ApiCall.execute(requests, config))
           priorStream = Option(stream)
         }
@@ -189,6 +120,190 @@ object JourneyBuilder {
         scn.inject(steps.map(step => getClosedInjectionStep(step)))
       case _ =>
         throw new IllegalArgumentException("Unknown step model")
+    }
+  }
+
+  private def getClosedInjectionStep(step: Step): ClosedInjectionStep = {
+    logger.info(s"Closed model: building ${step.toString}")
+    step.action match {
+      case "constantConcurrentUsers" =>
+        step.userCount match {
+          case Some(count) =>
+            step.duration match {
+              case Some(duration) =>
+                constantConcurrentUsers(count).during(getDuration(duration))
+              case None =>
+                throw new RuntimeException(
+                  "'constantConcurrentUsers' step requires 'duration' prop"
+                )
+            }
+          case None =>
+            throw new RuntimeException(
+              "'constantConcurrentUsers' step requires 'userCount' prop"
+            )
+        }
+      case "rampConcurrentUsers" =>
+        step.minUsersCount match {
+          case Some(min) =>
+            step.maxUsersCount match {
+              case Some(max) =>
+                step.duration match {
+                  case Some(duration) =>
+                    rampConcurrentUsers(min)
+                      .to(max)
+                      .during(getDuration(duration))
+                  case None =>
+                    throw new RuntimeException(
+                      "'rampConcurrentUsers' step requires 'duration' prop"
+                    )
+                }
+              case None =>
+                throw new RuntimeException(
+                  "'rampConcurrentUsers' step requires 'maxUsersCount' prop"
+                )
+            }
+          case None =>
+            throw new RuntimeException(
+              "'rampConcurrentUsers' step requires 'minUsersCount' prop"
+            )
+        }
+      case _ =>
+        throw new IllegalArgumentException(
+          s"Invalid closed model: ${step.action}"
+        )
+    }
+  }
+
+  private def getOpenInjectionStep(step: Step): OpenInjectionStep = {
+    logger.info(s"Open model: building${step.toString}")
+    step.action match {
+      case "atOnceUsers" =>
+        step.userCount match {
+          case Some(count) => atOnceUsers(count)
+          case None =>
+            throw new RuntimeException(
+              "'atOnceUsers' step requires 'userCount' prop"
+            )
+        }
+      case "rampUsers" =>
+        step.userCount match {
+          case Some(count) =>
+            step.duration match {
+              case Some(duration) =>
+                rampUsers(count).during(getDuration(duration))
+              case None =>
+                throw new RuntimeException(
+                  "'rampUsers' step requires 'duration' prop"
+                )
+            }
+          case None =>
+            throw new RuntimeException(
+              "'rampUsers' step requires 'userCount' prop"
+            )
+        }
+      case "constantUsersPerSec" =>
+        step.userCount match {
+          case Some(count) =>
+            step.duration match {
+              case Some(duration) =>
+                constantUsersPerSec(count.toDouble)
+                  .during(getDuration(duration))
+              case None =>
+                throw new RuntimeException(
+                  "'constantUsersPerSec' step requires 'duration' prop"
+                )
+            }
+          case None =>
+            throw new RuntimeException(
+              "'constantUsersPerSec' step requires 'userCount' prop"
+            )
+        }
+      case "stressPeakUsers" =>
+        step.userCount match {
+          case Some(count) =>
+            step.duration match {
+              case Some(duration) =>
+                stressPeakUsers(count).during(getDuration(duration))
+              case None =>
+                throw new RuntimeException(
+                  "'stressPeakUsers' step requires 'duration' prop"
+                )
+            }
+          case None =>
+            throw new RuntimeException(
+              "'stressPeakUsers' step requires 'userCount' prop"
+            )
+        }
+      case "rampUsersPerSec" =>
+        step.minUsersCount match {
+          case Some(min) =>
+            step.maxUsersCount match {
+              case Some(max) =>
+                step.duration match {
+                  case Some(duration) =>
+                    rampUsersPerSec(min).to(max).during(getDuration(duration))
+                  case None =>
+                    throw new RuntimeException(
+                      "'rampUsersPerSec' step requires 'duration' prop"
+                    )
+                }
+              case None =>
+                throw new RuntimeException(
+                  "'rampUsersPerSec' step requires 'maxUsersCount' prop"
+                )
+            }
+          case None =>
+            throw new RuntimeException(
+              "'rampUsersPerSec' step requires 'minUsersCount' prop"
+            )
+        }
+      case "incrementUsersPerSec" =>
+        step.userCount match {
+          case Some(count) =>
+            step.times match {
+              case Some(times) =>
+                step.duration match {
+                  case Some(duration) =>
+                    incrementUsersPerSec(count.toDouble)
+                      .times(times)
+                      .eachLevelLasting(getDuration(duration))
+                      .separatedByRampsLasting(getDuration(duration))
+                      .startingFrom(count.toDouble)
+                  case None =>
+                    throw new RuntimeException(
+                      "'rampUsersPerSec' step requires 'duration' prop"
+                    )
+                }
+              case None =>
+                throw new RuntimeException(
+                  "'rampUsersPerSec' step requires 'times' prop"
+                )
+            }
+          case None =>
+            throw new RuntimeException(
+              "'rampUsersPerSec' step requires 'userCount' prop"
+            )
+        }
+      case _ =>
+        throw new IllegalArgumentException(
+          s"Invalid open model: ${step.action}"
+        )
+    }
+  }
+
+  /**
+    * Converts string to Gatling duration format
+    * @param duration string in 'xs'/'xm' format, e.g. '30s' or '5m'
+    * @return milliseconds
+    */
+  def getDuration(duration: String): Int = {
+    duration.takeRight(1) match {
+      case "s" => duration.dropRight(1).toInt
+      case "m" => duration.dropRight(1).toInt * 60
+      case _ =>
+        throw new IllegalArgumentException(
+          s"Invalid duration format: $duration"
+        )
     }
   }
 }
