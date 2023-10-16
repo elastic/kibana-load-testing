@@ -1,25 +1,25 @@
 package org.kibanaLoadTest.helpers
 
-import spray.json.DefaultJsonProtocol.{BooleanJsonFormat, IntJsonFormat}
-import spray.json.lenses.JsonLenses._
 import io.circe.Json
 import io.circe.parser.parse
 import org.apache.http.HttpStatus
 import org.apache.http.client.methods.{HttpDelete, HttpGet, HttpPost}
-import org.apache.http.entity.{ContentType, StringEntity}
 import org.apache.http.entity.mime.MultipartEntityBuilder
+import org.apache.http.entity.{ContentType, StringEntity}
 import org.apache.http.impl.client.{CloseableHttpClient, HttpClients}
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager
 import org.apache.http.util.EntityUtils
 import org.kibanaLoadTest.helpers.Helper.checkFilesExist
 import org.slf4j.{Logger, LoggerFactory}
+import spray.json.DefaultJsonProtocol.{BooleanJsonFormat, IntJsonFormat}
+import spray.json.lenses.JsonLenses._
 
 import java.io.ByteArrayInputStream
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Path, Paths}
+import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.util.{Failure, Success, Using}
-import scala.concurrent.duration.DurationInt
 
 case class SavedObject(id: String, soType: String)
 
@@ -36,9 +36,6 @@ class KbnClient(
     s"""{"providerType":"$providerType","providerName":"$providerName","currentURL":"$baseUrl/login","params":{"username":"$username","password":"$password"}}"""
   private var version: String = null
   private var authCookie: String = null
-  private def getJsonPath(path: Path) =
-    if (path.toString.endsWith(".json")) path
-    else Paths.get(path.toString + ".json")
 
   def getClientAndConnectionManager(
       perRouteConnections: Int = MAX_CONCURRENT_CONNECTIONS,
@@ -62,13 +59,6 @@ class KbnClient(
     (client, connManager)
   }
 
-  private def getAuthCookie(client: CloseableHttpClient): String = {
-    if (this.authCookie == null) {
-      this.authCookie = doLogin(client)
-    }
-    this.authCookie
-  }
-
   def getVersion(): String = {
     if (this.version == null) {
       val (client, connManager) =
@@ -84,6 +74,7 @@ class KbnClient(
               regExp.findFirstIn(responseStr) match {
                 case Some(version) => this.version = version
                 case None =>
+                  println(responseStr)
                   throw new RuntimeException(
                     "Cannot parse kbn-version in login html page"
                   )
@@ -95,33 +86,6 @@ class KbnClient(
     }
     // cached for client instance
     this.version
-  }
-
-  private def doLogin(client: CloseableHttpClient): String = {
-    val loginRequest = new HttpPost(s"$baseUrl/internal/security/login")
-    loginRequest.addHeader("Content-Type", "application/json")
-    // required for serverless API call
-    loginRequest.addHeader("x-elastic-internal-origin", "Kibana")
-    loginRequest.addHeader("kbn-version", this.getVersion())
-    loginRequest.setEntity(new StringEntity(loginPayload))
-    Using(client.execute(loginRequest)) { response =>
-      response
-    } match {
-      case Success(response) =>
-        if (response.getStatusLine.getStatusCode == 200) {
-          Option(response.getFirstHeader("set-cookie")) match {
-            case Some(value) => value.getValue.split(";")(0)
-            case _ =>
-              throw new RuntimeException("Response has no 'set-cookie' header")
-          }
-        } else {
-          throw new RuntimeException(
-            s"Failed to login: ${response.getStatusLine}"
-          )
-        }
-      case Failure(error) =>
-        throw new RuntimeException(s"Login request failed: $error")
-    }
   }
 
   def load(path: Path): Unit = {
@@ -347,6 +311,44 @@ class KbnClient(
           }
         }
       }
+    }
+  }
+
+  private def getJsonPath(path: Path) =
+    if (path.toString.endsWith(".json")) path
+    else Paths.get(path.toString + ".json")
+
+  private def getAuthCookie(client: CloseableHttpClient): String = {
+    if (this.authCookie == null) {
+      this.authCookie = doLogin(client)
+    }
+    this.authCookie
+  }
+
+  private def doLogin(client: CloseableHttpClient): String = {
+    val loginRequest = new HttpPost(s"$baseUrl/internal/security/login")
+    loginRequest.addHeader("Content-Type", "application/json")
+    // required for serverless API call
+    loginRequest.addHeader("x-elastic-internal-origin", "Kibana")
+    loginRequest.addHeader("kbn-version", this.getVersion())
+    loginRequest.setEntity(new StringEntity(loginPayload))
+    Using(client.execute(loginRequest)) { response =>
+      response
+    } match {
+      case Success(response) =>
+        if (response.getStatusLine.getStatusCode == 200) {
+          Option(response.getFirstHeader("set-cookie")) match {
+            case Some(value) => value.getValue.split(";")(0)
+            case _ =>
+              throw new RuntimeException("Response has no 'set-cookie' header")
+          }
+        } else {
+          throw new RuntimeException(
+            s"Failed to login: ${response.getStatusLine}"
+          )
+        }
+      case Failure(error) =>
+        throw new RuntimeException(s"Login request failed: $error")
     }
   }
 }

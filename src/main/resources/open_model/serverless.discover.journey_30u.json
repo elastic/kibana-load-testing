@@ -1,24 +1,24 @@
 {
-  "journeyName": "discover_50u",
-  "kibanaVersion": "8.11.0",
+  "journeyName": "discover_open_model_30",
+  "kibanaVersion": "8.12.0",
   "scalabilitySetup": {
     "warmup": [
       {
-        "action": "constantConcurrentUsers",
+        "action": "constantUsersPerSec",
         "userCount": 5,
         "duration": "30s"
       },
       {
-        "action": "rampConcurrentUsers",
+        "action": "rampUsersPerSec",
         "minUsersCount": 5,
-        "maxUsersCount": 50,
+        "maxUsersCount": 30,
         "duration": "2m"
       }
     ],
     "test": [
       {
-        "action": "constantConcurrentUsers",
-        "userCount": 50,
+        "action": "constantUsersPerSec",
+        "userCount": 30,
         "duration": "5m"
       }
     ],
@@ -33,6 +33,37 @@
       "startTime": "2023-09-22T01:50:08.788Z",
       "endTime": "2023-09-22T01:50:08.793Z",
       "requests": [
+        {
+          "transactionId": "x127",
+          "name": "GET /api/status",
+          "date": "2023-09-22T01:50:08.788Z",
+          "duration": 5231,
+          "http": {
+            "method": "GET",
+            "path": "/api/status",
+            "headers": {
+              "Cookie": "",
+              "authority": "qaf-default-1697027398-e068d0.kb.eu-west-1.aws.qa.elastic.cloud",
+              "method": "GET",
+              "path": "/api/status",
+              "Sec-Ch-Ua": "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"HeadlessChrome\";v=\"116\"",
+              "Accept": "*/*",
+              "Sec-Ch-Ua-Platform": "\"macOS\"",
+              "Connection": "keep-alive",
+              "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/116.0.5845.82 Safari/537.36",
+              "Sec-Fetch-Site": "none",
+              "Sec-Fetch-Dest": "document",
+              "Pragma": "no-cache",
+              "Accept-Encoding": "gzip, deflate, br",
+              "Sec-Fetch-Mode": "navigate",
+              "Cache-Control": "no-cache",
+              "Sec-Fetch-User": "?1",
+              "Sec-Ch-Ua-Mobile": "?0"
+            },
+            "statusCode": 200
+          },
+          "spanCount": 0
+        },
         {
           "transactionId": "x123",
           "name": "GET /api/saved_objects_tagging/tags",
@@ -117,7 +148,7 @@
             "query": "?pattern=logstash-*&meta_fields=_source&meta_fields=_id&meta_fields=_index&meta_fields=_score&allow_no_index=true",
             "headers": {
               "Cookie": "",
-              "authority": "qaf-default-1697027398-e068d0.kb.eu-west-1.aws.qa.elastic.cloud",
+              "authority": "qaf-default-1695129017-a5d5db.kb.eu-west-1.aws.qa.elastic.cloud",
               "method": "GET",
               "path": "/internal/data_views/_fields_for_wildcard?pattern=logstash-*&meta_fields=_source&meta_fields=_id&meta_fields=_index&meta_fields=_score&allow_no_index=true",
               "scheme": "https",
@@ -155,7 +186,7 @@
             "path": "/api/core/capabilities",
             "headers": {
               "Cookie": "",
-              "authority": "qaf-default-1695129017-a5d5db.kb.eu-west-1.aws.qa.elastic.cloud",
+              "authority": "qaf-default-1697027398-e068d0.kb.eu-west-1.aws.qa.elastic.cloud",
               "content-type": "application/json",
               "method": "POST",
               "path": "/api/core/capabilities",
