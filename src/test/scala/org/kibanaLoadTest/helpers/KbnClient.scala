@@ -4,10 +4,12 @@ import io.circe.Json
 import io.circe.parser.parse
 import org.apache.http.HttpStatus
 import org.apache.http.client.methods.{HttpDelete, HttpGet, HttpPost}
+import org.apache.http.conn.ssl.{NoopHostnameVerifier, TrustAllStrategy}
 import org.apache.http.entity.mime.MultipartEntityBuilder
 import org.apache.http.entity.{ContentType, StringEntity}
 import org.apache.http.impl.client.{CloseableHttpClient, HttpClients}
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager
+import org.apache.http.ssl.SSLContextBuilder
 import org.apache.http.util.EntityUtils
 import org.kibanaLoadTest.helpers.Helper.checkFilesExist
 import org.slf4j.{Logger, LoggerFactory}
@@ -48,7 +50,13 @@ class KbnClient(
     connManager.setMaxTotal(perRouteConnections)
     val client = HttpClients
       .custom()
-      .setConnectionManager(connManager)
+      //.setConnectionManager(connManager)
+      .setSSLContext(
+        new SSLContextBuilder()
+          .loadTrustMaterial(null, TrustAllStrategy.INSTANCE)
+          .build()
+      )
+      .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
       .build()
 
     if (withAuth) {
