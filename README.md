@@ -17,6 +17,27 @@ Execution is managed by functional test runner: we have custom FTR [config file]
 At the moment both ES/Kibana and Gatling runner are hosted on the machine. 
 
 # Running performance testing on your machine
+Before you run Gatling locally configure your machine
+- increase the limit of total file descriptors on the entire system nad per process
+```
+$ sysctl kern.maxfiles
+kern.maxfiles: 12288
+$ sysctl kern.maxfilesperproc
+kern.maxfilesperproc: 10240
+$ sudo sysctl -w kern.maxfiles=1048600
+kern.maxfiles: 12288 -> 1048600
+$ sudo sysctl -w kern.maxfilesperproc=1048576
+kern.maxfilesperproc: 10240 -> 1048576
+```
+- increase process file size limits
+```
+$ ulimit -S -n
+256
+$ ulimit -S -n 1048576
+$ ulimit -S -n
+1048576
+```
+
 Note: While running locally a high load test you might face different issues, so we suggest using dedicated machines and make sure you are aware of needed [environment tunnings](https://gatling.io/docs/gatling/reference/current/core/operations/) to minimise side effects.
 ## Running simulation against a local instance
 - Start ES and Kibana instances.

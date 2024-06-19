@@ -302,7 +302,7 @@ object JourneyBuilder {
       case "m" => duration.dropRight(1).toInt * 60
       case _ =>
         throw new IllegalArgumentException(
-          s"Invalid duration format: $duration"
+          s"Invalid duration format: '$duration', valid examples: '30s', '2m'"
         )
     }
   }
