@@ -7,7 +7,7 @@ import org.kibanaLoadTest.simulation.BaseSimulation
 
 class LensJourney extends BaseSimulation {
   val scenarioName = "LensJourney"
-  props.maxUsers = 500
+  props.maxUsers = 30
 
   val steps = feed(circularFeeder)
     .exec(session => session.set("Cookie", session("sidValue").as[String]))
@@ -27,14 +27,14 @@ class LensJourney extends BaseSimulation {
   setUp(
     warmupScn
       .inject(
-        constantConcurrentUsers(20) during (1 * 30),
-        rampConcurrentUsers(20) to props.maxUsers during (2 * 60)
+        constantUsersPerSec(1) during (1 * 15),
+        rampUsersPerSec(1) to props.maxUsers during (2 * 60)
       )
       .protocols(httpProtocol)
       .andThen(
         scn
           .inject(
-            constantConcurrentUsers(props.maxUsers) during (4 * 60)
+            constantUsersPerSec(props.maxUsers) during (5 * 60)
           )
           .protocols(httpProtocol)
       )

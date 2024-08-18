@@ -7,7 +7,7 @@ import org.kibanaLoadTest.simulation.BaseSimulation
 
 class DiscoverJourney extends BaseSimulation {
   val scenarioName = "DiscoverJourney"
-  props.maxUsers = 500
+  props.maxUsers = 200
 
   val steps = feed(circularFeeder)
     .exec(session => session.set("Cookie", session("sidValue").as[String]))
@@ -20,14 +20,14 @@ class DiscoverJourney extends BaseSimulation {
   setUp(
     warmupScn
       .inject(
-        constantConcurrentUsers(20) during (1 * 30),
-        rampConcurrentUsers(20) to props.maxUsers during (2 * 60)
+        constantUsersPerSec(20) during (1 * 30),
+        rampUsersPerSec(20) to props.maxUsers during (3 * 60)
       )
       .protocols(httpProtocol)
       .andThen(
         scn
           .inject(
-            constantConcurrentUsers(props.maxUsers) during (4 * 60)
+            constantConcurrentUsers(props.maxUsers) during (5 * 60)
           )
           .protocols(httpProtocol)
       )
