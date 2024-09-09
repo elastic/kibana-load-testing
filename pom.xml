@@ -110,7 +110,7 @@
         <dependency>
             <groupId>io.circe</groupId>
             <artifactId>circe-literal_2.13</artifactId>
-            <version>0.14.6</version>
+            <version>0.14.10</version>
         </dependency>
         <dependency>
             <groupId>io.circe</groupId>
